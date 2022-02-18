@@ -97,13 +97,6 @@ public class NetworkCard extends SlimefunItem implements DistinctiveItem {
 
     @Override
     public boolean canStack(@Nonnull ItemMeta sfItemMeta, @Nonnull ItemMeta itemMeta) {
-        boolean hasLoreItem = itemMeta.hasLore();
-        boolean hasLoreSfItem = sfItemMeta.hasLore();
-
-        if (hasLoreItem && hasLoreSfItem &&
-            sfItemMeta.getPersistentDataContainer().equals(itemMeta.getPersistentDataContainer())) {
-            return true;
-        }
-        return !hasLoreItem && !hasLoreSfItem;
+        return sfItemMeta.getPersistentDataContainer().equals(itemMeta.getPersistentDataContainer());
     }
 }
