@@ -129,10 +129,16 @@
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
             <version>b8f7dc</version>
+            <scope>provided</scope>
+        </dependency-->
+        <dependency>
+            <groupId>com.github.StarWishsama</groupId>
+            <artifactId>Slimefun4</artifactId>
+            <version>1543157e4c</version>
             <scope>provided</scope>
         </dependency>
 
