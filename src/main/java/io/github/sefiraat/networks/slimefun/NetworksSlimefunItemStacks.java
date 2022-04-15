@@ -685,6 +685,8 @@ public class NetworksSlimefunItemStacks {
             "远程打开绑定的网格",
             "需要加载网格所在区块",
             "",
+            MessageFormat.format("{0}Shift+右键点击 {1}普通网格以进行绑定", Theme.CLICK_INFO, Theme.PASSIVE),
+            "",
             MessageFormat.format("{0}范围: {1}{2}格", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[0])
         );
 
@@ -695,6 +697,8 @@ public class NetworksSlimefunItemStacks {
             "充能网络远程访问器",
             "远程打开绑定的网格",
             "需要加载网格所在区块",
+            "",
+            MessageFormat.format("{0}Shift+右键点击 {1}普通网格以进行绑定", Theme.CLICK_INFO, Theme.PASSIVE),
             "",
             MessageFormat.format("{0}范围: {1}{2}格", Theme.CLICK_INFO, Theme.PASSIVE, NetworkRemote.getRanges()[1])
         );
@@ -707,6 +711,8 @@ public class NetworksSlimefunItemStacks {
             "远程打开绑定的网格",
             "需要加载网格所在区块",
             "",
+            MessageFormat.format("{0}Shift+右键点击 {1}普通网格以进行绑定", Theme.CLICK_INFO, Theme.PASSIVE),
+            "",
             MessageFormat.format("{0}范围: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "无限制(仅同一世界)")
         );
 
@@ -717,6 +723,8 @@ public class NetworksSlimefunItemStacks {
             "终极网络远程访问器",
             "远程打开绑定的网格",
             "需要加载网格所在区块",
+            "",
+            MessageFormat.format("{0}Shift+右键点击 {1}普通网格以进行绑定", Theme.CLICK_INFO, Theme.PASSIVE),
             "",
             MessageFormat.format("{0}范围: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "跨维度")
         );
