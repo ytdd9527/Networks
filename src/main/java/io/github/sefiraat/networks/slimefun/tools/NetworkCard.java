@@ -12,7 +12,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.DistinctiveItem;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.entity.Player;
