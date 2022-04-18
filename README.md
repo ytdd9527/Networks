@@ -10,8 +10,6 @@
 
 点击这里下载 Networks: [下载 Networks](https://builds.guizhanss.net/ybw0014/Networks-CN/master)
 
-对于近期利用货运漏洞刷物品的修复请见：[粘液科技修复版下载](https://github.com/StarWishsama/Slimefun4/issues/489)，[网络修复版下载](https://builds.guizhanss.net/ybw0014/Networks-CN/test)
-
 <p align="center">
   <a href="https://github.com/ybw0014/Networks-CN/actions/workflows/maven.yml">
     <img src="https://github.com/ybw0014/Networks-CN/actions/workflows/maven.yml/badge.svg" alt="Java CI"/>
@@ -23,7 +21,7 @@
 
 ## Wiki / 文档
 
-你可以在这里查看所有物品的功能：[点击查看](https://networks-wiki.guizhanss.cn/)
+你可以在这里查看所有物品的功能：[点击查看](https://slimefun-addons-wiki.guizhanss.cn/networks/)
 
 ## 网格 / 带合成的网格
 
