@@ -68,8 +68,6 @@ public abstract class AbstractGrid extends NetworkObject {
         Theme.CLICK_INFO.getColor() + "设置过滤器 (右键点击以清除)"
     );
 
-    private static final Collator CHINESE_COMPARATOR = Collator.getInstance(Locale.CHINA);
-
     private static final Comparator<Map.Entry<ItemStack, Integer>> ALPHABETICAL_SORT = Comparator.comparing(
         itemStackIntegerEntry -> {
             ItemStack itemStack = itemStackIntegerEntry.getKey();
@@ -80,7 +78,7 @@ public abstract class AbstractGrid extends NetworkObject {
                 return ChatColor.stripColor(ItemStackHelper.getDisplayName(itemStack));
             }
         },
-        CHINESE_COMPARATOR::compare
+        Collator.getInstance(Locale.CHINA)::compare
     );
 
     private static final Comparator<Map.Entry<ItemStack, Integer>> NUMERICAL_SORT = Map.Entry.comparingByValue();
