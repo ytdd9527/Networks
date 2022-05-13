@@ -24,7 +24,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import net.guizhanss.guizhanlib.language.BooleanHelper;
+import net.guizhanss.guizhanlib.java.BooleanHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
