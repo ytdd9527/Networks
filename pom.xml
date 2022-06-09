@@ -99,7 +99,6 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>**/*.*</include>
-                    <include>tags/*.json</include>
                 </includes>
             </resource>
         </resources>
@@ -136,9 +135,9 @@
             <scope>provided</scope>
         </dependency-->
         <dependency>
-            <groupId>com.github.StarWishsama</groupId>
+            <groupId>net.guizhanss</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>2022.05</version>
+            <version>44a2921db6</version>
             <scope>provided</scope>
         </dependency>
 
