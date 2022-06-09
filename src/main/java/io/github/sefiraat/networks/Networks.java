@@ -7,17 +7,19 @@ import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import net.guizhanss.guizhanlib.updater.GuizhanBuildsUpdater;
-import net.guizhanss.slimefun4.utils.WikiUtils;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class Networks extends JavaPlugin implements SlimefunAddon {
 
@@ -68,7 +70,15 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
-        WikiUtils.setupJson(this);
+
+        // 设置 Wiki
+        try {
+            Class<?> clazz = Class.forName("net.guizhanss.slimefun4.utils.WikiUtils");
+            clazz.getMethod("setupJson", Plugin.class).invoke(null, this);
+        } catch (ClassNotFoundException | NoSuchMethodException | NullPointerException
+            | IllegalAccessException | InvocationTargetException e) {
+            getLogger().log(Level.WARNING, "无法进行Wiki设置，请确保使用了最新的开发版");
+        }
     }
 
     public void setupMetrics() {
