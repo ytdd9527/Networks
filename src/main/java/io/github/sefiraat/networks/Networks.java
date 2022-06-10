@@ -6,6 +6,7 @@ import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import net.guizhanss.guizhanlib.slimefun.addon.WikiSetup;
 import net.guizhanss.guizhanlib.updater.GuizhanBuildsUpdater;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
@@ -67,6 +68,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
+        WikiSetup.setupJson(this);
     }
 
     public void setupMetrics() {
@@ -91,6 +93,11 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     @Override
     public String getBugTrackerURL() {
         return MessageFormat.format("https://github.com/{0}/{1}/issues/", this.username, this.repo);
+    }
+
+    @Nonnull
+    public String getWikiURL() {
+        return "https://slimefun-addons-wiki.guizhanss.cn/networks/{0}";
     }
 
     @Nonnull

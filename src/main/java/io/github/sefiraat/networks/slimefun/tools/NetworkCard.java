@@ -12,6 +12,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.DistinctiveItem;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
+import net.guizhanss.guizhanlib.slimefun.addon.WikiSetup;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.entity.Player;
@@ -32,6 +33,8 @@ public class NetworkCard extends SlimefunItem implements DistinctiveItem {
         1073741824,
         Integer.MAX_VALUE
     };
+
+    private static final String WIKI_PAGE = "Network-Memory-Card";
 
     private final int size;
 
@@ -92,6 +95,11 @@ public class NetworkCard extends SlimefunItem implements DistinctiveItem {
 
     public static int[] getSizes() {
         return SIZES;
+    }
+
+    @Override
+    public void postRegister() {
+        WikiSetup.setupItem(this, WIKI_PAGE);
     }
 
     @Override
