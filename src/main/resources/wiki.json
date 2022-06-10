@@ -24,13 +24,14 @@
   "NTW_CELL": "Network-Cell",
   "NTW_MEMORY_SHELL": "Network-Memory-Shell",
   "NTW_QUANTUM_WORKBENCH": "Quantum-Workbench",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell",
-  "NTW_CELL": "Network-Cell"
+  "NTW_CAPACITOR_1": "Network-Capacitor",
+  "NTW_CAPACITOR_2": "Network-Capacitor",
+  "NTW_POWER_DISPLAY": "Network-Power-Display",
+  "NTW_RECIPE_ENCODER": "Network-Encoder",
+  "NTW_AUTO_CRAFTER": "Network-Autocrafter",
+  "NTW_AUTO_CRAFTER_WITHHOLDING": "Network-Autocrafter",
+  "NTW_CRAFTING_BLUEPRINT": "Crafting-Blueprint",
+  "NTW_PROBE": "Network-Probe",
+  "NTW_CONFIGURATOR": "Network-Configurator",
+  "NTW_CRAYON": "Network-Crayon"
 }

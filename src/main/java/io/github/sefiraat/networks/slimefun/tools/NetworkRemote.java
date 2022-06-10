@@ -15,6 +15,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import net.guizhanss.guizhanlib.slimefun.addon.WikiSetup;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -26,6 +27,8 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class NetworkRemote extends SlimefunItem {
+
+    private static final String WIKI_PAGE = "Network-Remote";
 
     private static final NamespacedKey KEY = Keys.newKey("location");
     private static final int[] RANGES = new int[]{
@@ -118,5 +121,10 @@ public class NetworkRemote extends SlimefunItem {
 
     public static int[] getRanges() {
         return RANGES;
+    }
+
+    @Override
+    public void postRegister() {
+        WikiSetup.setupItem(this, WIKI_PAGE);
     }
 }

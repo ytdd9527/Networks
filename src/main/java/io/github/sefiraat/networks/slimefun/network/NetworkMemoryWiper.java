@@ -24,6 +24,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import net.guizhanss.guizhanlib.slimefun.addon.WikiSetup;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -35,6 +36,8 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class NetworkMemoryWiper extends NetworkObject {
+
+    private static final String WIKI_PAGE = "Network-Memory-Wiper";
 
     private static final int CARD_SLOT = 4;
 
@@ -140,6 +143,7 @@ public class NetworkMemoryWiper extends NetworkObject {
 
     @Override
     public void postRegister() {
+        WikiSetup.setupItem(this, WIKI_PAGE);
         new BlockMenuPreset(this.getId(), this.getItemName()) {
 
             @Override
