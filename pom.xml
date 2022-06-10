@@ -135,9 +135,9 @@
             <scope>provided</scope>
         </dependency-->
         <dependency>
-            <groupId>net.guizhanss</groupId>
+            <groupId>com.github.StarWishsama</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>44a2921db6</version>
+            <version>5e4349490e</version>
             <scope>provided</scope>
         </dependency>
 
