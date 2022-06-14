@@ -15,6 +15,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,10 +29,8 @@ public class MainFlexGroup extends FlexItemGroup {
     private static final ItemStack DOCS_ITEM_STACK = Theme.themedItemStack(
         Material.BOOK,
         Theme.GUIDE,
-        "Documentation Wiki",
-        "Click to get the link to the",
-        "documentation Wiki for Networks",
-        "and other Sefiraat addons."
+        "附属 Wiki",
+        "点击获取网络的 Wiki 链接"
     );
 
     private static final int GUIDE_BACK = 1;
@@ -83,12 +82,16 @@ public class MainFlexGroup extends FlexItemGroup {
             menu.addMenuClickHandler(slot, ((player1, i, itemStack, clickAction) -> false));
         }
 
+        // Sound
+        menu.addMenuOpeningHandler((p) -> p.playSound(p.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0F, 1.0F));
+
         // Back
         menu.replaceExistingItem(
             GUIDE_BACK,
             ChestMenuUtils.getBackButton(
                 player,
-                Slimefun.getLocalization().getMessage("guide.back.guide")
+                "",
+                ChatColor.GRAY + Slimefun.getLocalization().getMessage(player, "guide.back.guide")
             )
         );
         menu.addMenuClickHandler(GUIDE_BACK, (player1, slot, itemStack, clickAction) -> {
@@ -99,9 +102,9 @@ public class MainFlexGroup extends FlexItemGroup {
         // Docs
         menu.replaceExistingItem(DOCS, DOCS_ITEM_STACK);
         menu.addMenuClickHandler(DOCS, (player1, i1, itemStack1, clickAction) -> {
-            final TextComponent link = new TextComponent("To access the documentation Wiki, please click here");
+            final TextComponent link = new TextComponent("单击此处访问Wiki");
             link.setColor(ChatColor.YELLOW);
-            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sefiraat.dev/"));
+            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://slimefun-addons-wiki.guizhanss.cn/networks/"));
             player.spigot().sendMessage(link);
             return false;
         });
