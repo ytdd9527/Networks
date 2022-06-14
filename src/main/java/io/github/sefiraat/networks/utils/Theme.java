@@ -30,7 +30,8 @@ public enum Theme {
     MECHANISM(ChatColor.of("#3295a8"), "装置"),
     FUEL(ChatColor.of("#112211"), "染料"),
     MATERIAL_CLASS(ChatColor.of("#a4c2ba"), "材料"),
-    RECIPE_TYPE(ChatColor.of("#ffe89c"), "配方类型");
+    RECIPE_TYPE(ChatColor.of("#ffe89c"), "配方类型"),
+    GUIDE(ChatColor.of("#444444"), "指南");
 
     @Getter
     protected static final Theme[] cachedValues = values();
