@@ -47,6 +47,8 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRABBER;
     public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_VANILLA_GRABBER;
+    public static final SlimefunItemStack NETWORK_VANILLA_PUSHER;
     public static final SlimefunItemStack NETWORK_PURGER;
     public static final SlimefunItemStack NETWORK_GRID;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
@@ -262,6 +264,32 @@ public class NetworksSlimefunItemStacks {
             "网络推送器",
             "网络推送器会尝试将",
             "指定的物品送入机器中"
+        );
+
+        NETWORK_VANILLA_GRABBER = Theme.themedSlimefunItemStack(
+            "NTW_VANILLA_GRABBER",
+            new ItemStack(Material.ORANGE_STAINED_GLASS),
+            Theme.MACHINE,
+            "网络原版容器抓取器",
+            "网络原版容器抓取器会尝试",
+            "抓取指定原版容器中的第一个物品.",
+            "",
+            "该机器不能与网络直接交互,",
+            "你还需要一个网络抓取器",
+            "将本机器中的物品输入到网络中."
+        );
+
+        NETWORK_VANILLA_PUSHER = Theme.themedSlimefunItemStack(
+            "NTW_VANILLA_PUSHER",
+            new ItemStack(Material.LIME_STAINED_GLASS),
+            Theme.MACHINE,
+            "网络原版容器推送器",
+            "网络原版容器推送器会尝试",
+            "推送其中的物品到指定原版容器中.",
+            "",
+            "该机器不能与网络直接交互,",
+            "你还需要一个网络推送推送器",
+            "将网络中的物品推送到本机器中."
         );
 
         NETWORK_PURGER = Theme.themedSlimefunItemStack(
