@@ -78,7 +78,7 @@ public class NetworkVanillaGrabber extends NetworkDirectional {
             ItemStack stack = furnaceInventory.getResult();
             grabItem(blockMenu, stack);
         } else {
-            for (ItemStack stack : holder.getInventory().getContents()) {
+            for (ItemStack stack : inventory.getContents()) {
                 if (grabItem(blockMenu, stack)) {
                     return;
                 }
