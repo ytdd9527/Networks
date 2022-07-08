@@ -317,8 +317,8 @@ public abstract class NetworkDirectional extends NetworkObject {
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
         itemMeta.setLore(List.of(
-            Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
-            Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+            Theme.CLICK_INFO + "左键点击: " + Theme.PASSIVE + "设置朝向",
+            Theme.CLICK_INFO + "Shift+左键点击: " + Theme.PASSIVE + "打开目标方块"
         ));
         displayStack.setItemMeta(itemMeta);
         return displayStack;
