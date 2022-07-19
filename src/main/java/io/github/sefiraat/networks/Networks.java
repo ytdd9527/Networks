@@ -74,7 +74,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
             try {
                 NetheoPlants.setup();
             } catch (NoClassDefFoundError e) {
-                getLogger().severe("Netheopoiesis must be updated to meet Networks' requirements.");
+                getLogger().severe("你必须更新下界乌托邦才能让网络添加相关功能.");
             }
         }
     }

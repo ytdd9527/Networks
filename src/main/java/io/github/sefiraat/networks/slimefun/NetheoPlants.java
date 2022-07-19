@@ -22,45 +22,45 @@ public class NetheoPlants {
         "NTW_STONE_CHUNK_SEED",
         Skulls.SEED_PURPLE.getPlayerHead(),
         Theme.SEED,
-        "Stone Chunk Seed",
-        new String[]{"This seed, when fully grown, will", "provide Stone Chunks when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Nether Grass (or better)")
+        "石块之种",
+        new String[]{"这种植物成熟后,", "收获时将获得石块."},
+        Stacks.getCanBePlacedOnLore("下界草方块", "(或净化等级更高的)")
     );
 
     public static final SlimefunItemStack SYNTHETIC_SEED = Theme.themedSeed(
         "NTW_SYNTHETIC_SEED",
         Skulls.SEED_ORANGE.getPlayerHead(),
         Theme.SEED,
-        "Synthetic Seed",
-        new String[]{"This seed does nothing."},
-        Stacks.getCanBePlacedOnLore("Nether Grass (or better)")
+        "人造之种",
+        new String[]{"这个种子没有任何效果."},
+        Stacks.getCanBePlacedOnLore("下界草方块", "(或净化等级更高的)")
     );
 
     public static final SlimefunItemStack SYNTHETIC_EMERALD_SEED = Theme.themedSeed(
         "NTW_SYNTHETIC_EMERALD_SEED",
         Skulls.SEED_GREEN.getPlayerHead(),
         Theme.SEED,
-        "Synthetic Emerald Seed",
-        new String[]{"This seed, when fully grown, will", "provide Synthetic Emeralds when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Voracious Dirt (or better)")
+        "人造绿宝石之种",
+        new String[]{"这种植物成熟后,", "收获时将获得人造绿宝石."},
+        Stacks.getCanBePlacedOnLore("贪婪泥土", "(或净化等级更高的)")
     );
 
     public static final SlimefunItemStack SYNTHETIC_DIAMOND_SEED = Theme.themedSeed(
         "NTW_SYNTHETIC_DIAMOND_SEED",
         Skulls.SEED_GREEN.getPlayerHead(),
         Theme.SEED,
-        "Synthetic Diamond Seed",
-        new String[]{"This seed, when fully grown, will", "provide Synthetic Diamonds when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Voracious Dirt (or better)")
+        "人造钻石之种",
+        new String[]{"这种植物成熟后,", "收获时将获得人造钻石."},
+        Stacks.getCanBePlacedOnLore("贪婪泥土", "(或净化等级更高的)")
     );
 
     public static final SlimefunItemStack FRAGMENTED_SEED = Theme.themedSeed(
         "NTW_FRAGMENTED_SEED",
         Skulls.SEED_GREEN.getPlayerHead(),
         Theme.SEED,
-        "Fragmented Seed",
-        new String[]{"This seed, when fully grown, will", "provide Synthetic Emerald Shards when", "harvested."},
-        Stacks.getCanBePlacedOnLore("Voracious Dirt (or better)")
+        "碎片之种",
+        new String[]{"这种植物成熟后,", "收获时将获得人造绿宝石碎片."},
+        Stacks.getCanBePlacedOnLore("贪婪泥土", "(或净化等级更高的)")
     );
 
     public static void setup() {
