@@ -3,6 +3,7 @@ package io.github.sefiraat.networks;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
+import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -42,18 +43,18 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         instance = this;
 
         getLogger().info("########################################");
-        getLogger().info("                 Networks               ");
+        getLogger().info("            Networks - 网络              ");
         getLogger().info("       作者: Sefiraat 汉化: ybw0014      ");
         getLogger().info("########################################");
 
         saveDefaultConfig();
         tryUpdate();
 
+        this.supportedPluginManager = new SupportedPluginManager();
+
         setupSlimefun();
 
         this.listenerManager = new ListenerManager();
-        this.supportedPluginManager = new SupportedPluginManager();
-
         this.getCommand("networks").setExecutor(new NetworksMain());
 
         setupMetrics();
@@ -69,6 +70,13 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
         WikiSetup.setupJson(this);
+        if (supportedPluginManager.isNetheopoiesis()){
+            try {
+                NetheoPlants.setup();
+            } catch (NoClassDefFoundError e) {
+                getLogger().severe("你必须更新下界乌托邦才能让网络添加相关功能.");
+            }
+        }
     }
 
     public void setupMetrics() {

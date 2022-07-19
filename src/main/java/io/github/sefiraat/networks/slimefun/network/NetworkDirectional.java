@@ -56,7 +56,7 @@ public abstract class NetworkDirectional extends NetworkObject {
     private static final int DOWN_SLOT = 33;
 
     protected static final String DIRECTION = "direction";
-    protected static final String UUID = "uuid";
+    protected static final String OWNER_KEY = "uuid";
 
     private static final Set<BlockFace> VALID_FACES = EnumSet.of(
         BlockFace.UP,
@@ -80,7 +80,7 @@ public abstract class NetworkDirectional extends NetworkObject {
             new BlockPlaceHandler(false) {
                 @Override
                 public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
-                    BlockStorage.addBlockInfo(event.getBlock(), UUID, event.getPlayer().getUniqueId().toString());
+                    BlockStorage.addBlockInfo(event.getBlock(), OWNER_KEY, event.getPlayer().getUniqueId().toString());
                     BlockStorage.addBlockInfo(event.getBlock(), DIRECTION, BlockFace.SELF.name());
                 }
             },
@@ -317,8 +317,8 @@ public abstract class NetworkDirectional extends NetworkObject {
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
         itemMeta.setLore(List.of(
-            Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
-            Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+            Theme.CLICK_INFO + "左键点击: " + Theme.PASSIVE + "设置朝向",
+            Theme.CLICK_INFO + "Shift+左键点击: " + Theme.PASSIVE + "打开目标方块"
         ));
         displayStack.setItemMeta(itemMeta);
         return displayStack;
