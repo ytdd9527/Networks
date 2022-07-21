@@ -42,7 +42,7 @@ public class NetworkWirelessReceiver extends NetworkObject {
 
     private static final CustomItemStack RECEIVED_BACKGROUND_STACK = new CustomItemStack(
         Material.GREEN_STAINED_GLASS_PANE,
-        Theme.SUCCESS + "Received items"
+        Theme.SUCCESS + "接收的物品"
     );
 
     public NetworkWirelessReceiver(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
