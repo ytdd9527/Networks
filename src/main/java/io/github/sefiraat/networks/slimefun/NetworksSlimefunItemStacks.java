@@ -302,27 +302,24 @@ public class NetworksSlimefunItemStacks {
             "NTW_NETWORK_WIRELESS_TRANSMITTER",
             new ItemStack(Material.CYAN_STAINED_GLASS),
             Theme.MACHINE,
-            "Network Wireless Transmitter",
-            "The Network Wireless Transmitter will",
-            "try to transmit any item inside itself",
-            "to a linked Network Wireless Receiver",
-            "located within the same world.",
-            "Use the Wireless Configurator to",
-            "setup the Wireless Transmitter.",
-            "Requires 15,000 Network Power per transfer."
+            "网络无线发射器",
+            "网络无线发射器可以",
+            "将其中的物品传输到绑定的",
+            "网络无线接收器中(只能在同一世界).",
+            "使用网络无线配置器来进行绑定.",
+            "每次传输会消耗 15,000 J 网络电力."
         );
 
         NETWORK_WIRELESS_RECEIVER = Theme.themedSlimefunItemStack(
             "NTW_NETWORK_WIRELESS_RECEIVER",
             new ItemStack(Material.PURPLE_STAINED_GLASS),
             Theme.MACHINE,
-            "Network Wireless Receiver",
-            "The Network Wireless Receiver is",
-            "able to receive items from a linked",
-            "wireless transmitter located within",
-            "the same world.",
-            "It will try to push received items",
-            "into the Network each tick."
+            "网络无线接收器",
+            "网络无线接收器可以",
+            "接收来自绑定的网络无线发射器",
+            "中的物品(只能在同一世界).",
+            "每粘液刻会把接收到的物品",
+            "尝试推送到网络中."
         );
 
         NETWORK_PURGER = Theme.themedSlimefunItemStack(
@@ -369,13 +366,12 @@ public class NetworksSlimefunItemStacks {
             "NTW_GREEDY_BLOCK",
             new ItemStack(Material.SHROOMLIGHT),
             Theme.MACHINE,
-            "Network Greedy Block",
-            "The Network Greedy Block can",
-            "be set to one item which it will",
-            "then greedily hold on to a single",
-            "stack of. If more incoming items",
-            "do not fit, they will not enter",
-            "the network."
+            "网络阻断器",
+            "网络阻断器可以设置一个物品,",
+            "然后会从网络各处输入中",
+            "收集指定的物品,最多为1组.",
+            "收集满后,会阻断该物品在网络中的传输,",
+            "任何其他网络方块都不会收到该物品."
         );
 
         NETWORK_MEMORY_SHELL = Theme.themedSlimefunItemStack(
@@ -858,12 +854,12 @@ public class NetworksSlimefunItemStacks {
             "NTW_WIRELESS_CONFIGURATOR",
             new ItemStack(Material.BLAZE_ROD),
             Theme.TOOL,
-            "Network Wireless Configurator",
-            "Used to store a Receiver location",
-            "and then to apply to a Transmitter",
+            "网络无线配置器",
+            "用于储存一个接收器的位置,",
+            "并设置到发射器中.",
             "",
-            MessageFormat.format("{0}Right Click: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Store Receiver Location"),
-            MessageFormat.format("{0}Shift Right Click: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "Set Location to Transmitter")
+            MessageFormat.format("{0}右键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "储存接收器的位置"),
+            MessageFormat.format("{0}左键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "将位置设置到发射器中")
         );
 
         NETWORK_RAKE_1 = Theme.themedSlimefunItemStack(
