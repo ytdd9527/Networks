@@ -547,30 +547,28 @@ public class NetworksSlimefunItemStacks {
             "NTW_POWER_OUTLET_1",
             new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA),
             Theme.MACHINE,
-            "Network Power Outlet (1)",
-            "The Network Capacitor can take",
-            "power from the Network to power",
-            "machines or feed back into an",
-            "EnergyNet network.",
+            "网络插口 (1)",
+            "网络插口可以将网络中存储的电力",
+            "传输回电力网络中.",
+            "将网络插口理解为发电机.",
             "",
-            "Operates at a 20% loss rate.",
+            "会有 20% 的损耗.",
             "",
-            MessageFormat.format("{0}Max Transfer: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 500)
+            MessageFormat.format("{0}可存储: {1}{2}J", Theme.CLICK_INFO, Theme.PASSIVE, 500)
         );
 
         NETWORK_POWER_OUTLET_2 = Theme.themedSlimefunItemStack(
             "NTW_POWER_OUTLET_2",
             new ItemStack(Material.RED_GLAZED_TERRACOTTA),
             Theme.MACHINE,
-            "Network Power Outlet (2)",
-            "The Network Capacitor can take",
-            "power from the Network to power",
-            "machines or feed back into an",
-            "EnergyNet network.",
+            "网络插口 (2)",
+            "网络插口可以将网络中存储的电力",
+            "传输回电力网络中.",
+            "将网络插口理解为发电机.",
             "",
-            "Operates at a 20% loss rate.",
+            "会有 20% 的损耗.",
             "",
-            MessageFormat.format("{0}Max Transfer: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 2000)
+            MessageFormat.format("{0}可存储: {1}{2}J", Theme.CLICK_INFO, Theme.PASSIVE, 2000)
         );
 
         NETWORK_POWER_DISPLAY = Theme.themedSlimefunItemStack(
