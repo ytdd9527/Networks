@@ -1,7 +1,6 @@
 package io.github.sefiraat.networks.slimefun;
 
-import io.github.sefiraat.networks.slimefun.network.NetworkMemoryWiper;
-import io.github.sefiraat.networks.slimefun.tools.NetworkCard;
+import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -56,7 +55,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_GREEDY_BLOCK;
-    public static final SlimefunItemStack NETWORK_MEMORY_SHELL;
     public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_1;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_2;
@@ -66,12 +64,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_6;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_7;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_8;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_1;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_2;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_3;
-    public static final SlimefunItemStack NETWORK_MEMORY_WIPER_4;
     public static final SlimefunItemStack NETWORK_CAPACITOR_1;
     public static final SlimefunItemStack NETWORK_CAPACITOR_2;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_3;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_1;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_2;
     public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
@@ -80,14 +75,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_AUTO_CRAFTER_WITHHOLDING;
 
     // Tools
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_1;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_2;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_3;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_4;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_5;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_6;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_7;
-    public static final SlimefunItemStack NETWORK_MEMORY_CARD_8;
     public static final SlimefunItemStack CRAFTING_BLUEPRINT;
     public static final SlimefunItemStack NETWORK_PROBE;
     public static final SlimefunItemStack NETWORK_REMOTE;
@@ -307,7 +294,7 @@ public class NetworksSlimefunItemStacks {
             "将其中的物品传输到绑定的",
             "网络无线接收器中(只能在同一世界).",
             "使用网络无线配置器来进行绑定.",
-            "每次传输会消耗 15,000 J 网络电力."
+            "每次传输会消耗 7,500 J 网络电力."
         );
 
         NETWORK_WIRELESS_RECEIVER = Theme.themedSlimefunItemStack(
@@ -374,15 +361,6 @@ public class NetworksSlimefunItemStacks {
             "任何其他网络方块都不会收到该物品."
         );
 
-        NETWORK_MEMORY_SHELL = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_SHELL",
-            new ItemStack(Material.DEEPSLATE_TILES),
-            Theme.MACHINE,
-            "网络读卡器",
-            "网络读卡器是一个可以让",
-            "网络访问其中内存卡内容的方块"
-        );
-
         NETWORK_QUANTUM_WORKBENCH = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_WORKBENCH",
             new ItemStack(Material.DRIED_KELP_BLOCK),
@@ -396,7 +374,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.WHITE_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (4K)",
-            "可存储 " + NetworkCard.getSizes()[0] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[0] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -406,7 +384,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.LIGHT_GRAY_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (32K)",
-            "可存储 " + NetworkCard.getSizes()[1] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[1] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -416,7 +394,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.GRAY_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (262K)",
-            "可存储 " + NetworkCard.getSizes()[2] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[2] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -426,7 +404,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BROWN_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (2M)",
-            "可存储 " + NetworkCard.getSizes()[3] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[3] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -436,7 +414,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLACK_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (16M)",
-            "可存储 " + NetworkCard.getSizes()[4] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[4] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -446,7 +424,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.PURPLE_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (134M)",
-            "可存储 " + NetworkCard.getSizes()[5] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[5] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -456,7 +434,7 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.MAGENTA_TERRACOTTA),
             Theme.MACHINE,
             "网络量子存储 (1B)",
-            "可存储 " + NetworkCard.getSizes()[6] + " 个物品",
+            "可存储 " + NetworkQuantumStorage.getSizes()[6] + " 个物品",
             "",
             "在量子奇点中存储大量物品"
         );
@@ -469,54 +447,6 @@ public class NetworksSlimefunItemStacks {
             "可存储几乎无限多个物品",
             "",
             "在量子奇点中存储大量物品"
-        );
-
-        NETWORK_MEMORY_WIPER_1 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_1",
-            new ItemStack(Material.BASALT),
-            Theme.MACHINE,
-            "网络内存清除器 α",
-            "网络内存清除器会不断地",
-            "从内存卡中缓慢提取物品",
-            "到网络中",
-            "",
-            MessageFormat.format("{0}速度: {1}{2} 组/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[0])
-        );
-
-        NETWORK_MEMORY_WIPER_2 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_2",
-            new ItemStack(Material.POLISHED_BASALT),
-            Theme.MACHINE,
-            "网络内存清除器 β",
-            "网络内存清除器会不断地",
-            "从内存卡中缓慢提取物品",
-            "到网络中",
-            "",
-            MessageFormat.format("{0}速度: {1}{2} 组/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[1])
-        );
-
-        NETWORK_MEMORY_WIPER_3 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_3",
-            new ItemStack(Material.SMOOTH_BASALT),
-            Theme.MACHINE,
-            "网络内存清除器 γ",
-            "网络内存清除器会不断地",
-            "从内存卡中缓慢提取物品",
-            "到网络中",
-            "",
-            MessageFormat.format("{0}速度: {1}{2} 组/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[2])
-        );
-
-        NETWORK_MEMORY_WIPER_4 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_WIPER_4",
-            new ItemStack(Material.POLISHED_BLACKSTONE),
-            Theme.MACHINE,
-            "网络内存清除器 δ",
-            "网络内存清除器会不断地",
-            "从内存卡中缓慢提取物品",
-            "到网络中",
-            "",
-            MessageFormat.format("{0}速度: {1}{2} 组/t", Theme.CLICK_INFO, Theme.PASSIVE, NetworkMemoryWiper.getStacksToPush()[3])
         );
 
         NETWORK_CAPACITOR_1 = Theme.themedSlimefunItemStack(
@@ -541,6 +471,18 @@ public class NetworksSlimefunItemStacks {
             "以供其他网络设备使用",
             "",
             MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
+        );
+
+        NETWORK_CAPACITOR_3 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_3",
+            new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "网络电容 (3)",
+            "网络电容可以接收来自",
+            "能源网络的电力并存储起来",
+            "以供其他网络设备使用",
+            "",
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000)
         );
 
         NETWORK_POWER_OUTLET_1 = Theme.themedSlimefunItemStack(
@@ -619,142 +561,6 @@ public class NetworksSlimefunItemStacks {
             "也可以通过货运系统取出",
             "",
             MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 128)
-        );
-
-        NETWORK_MEMORY_CARD_1 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_1",
-            new ItemStack(Material.LIGHT_GRAY_DYE),
-            Theme.TOOL,
-            "网络内存卡 (4K)",
-            "可存储 " + NetworkCard.getSizes()[0] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_2 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_2",
-            new ItemStack(Material.GRAY_DYE),
-            Theme.TOOL,
-            "网络内存卡 (32K)",
-            "可存储 " + NetworkCard.getSizes()[1] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_3 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_3",
-            new ItemStack(Material.LIME_DYE),
-            Theme.TOOL,
-            "网络内存卡 (262K)",
-            "可存储 " + NetworkCard.getSizes()[2] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_4 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_4",
-            new ItemStack(Material.GREEN_DYE),
-            Theme.TOOL,
-            "网络内存卡 (2M)",
-            "可存储 " + NetworkCard.getSizes()[3] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_5 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_5",
-            new ItemStack(Material.LIGHT_BLUE_DYE),
-            Theme.TOOL,
-            "网络内存卡 (16M)",
-            "可存储 " + NetworkCard.getSizes()[4] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_6 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_6",
-            new ItemStack(Material.BLUE_DYE),
-            Theme.TOOL,
-            "网络内存卡 (134M)",
-            "可存储 " + NetworkCard.getSizes()[5] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_7 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_7",
-            new ItemStack(Material.PINK_DYE),
-            Theme.TOOL,
-            "网络内存卡 (1B)",
-            "可存储 " + NetworkCard.getSizes()[6] + " 物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
-        );
-
-        NETWORK_MEMORY_CARD_8 = Theme.themedSlimefunItemStack(
-            "NTW_MEMORY_CARD_8",
-            new ItemStack(Material.RED_DYE),
-            Theme.TOOL,
-            "网络内存卡 (∞)",
-            "可无限制存储物品",
-            "",
-            "副手中拿着需要设置的物品时",
-            "右键点击以设置该卡片使用的物品",
-            "只有卡片为空时才能进行设置",
-            "",
-            Theme.WARNING + "存储满时会丢弃后续输入的物品",
-            Theme.WARNING + "升级会清空其中的物品",
-            "",
-            Theme.WARNING + "空"
         );
 
         CRAFTING_BLUEPRINT = Theme.themedSlimefunItemStack(

@@ -120,4 +120,8 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     public static SupportedPluginManager getSupportedPluginManager() {
         return Networks.getInstance().supportedPluginManager;
     }
+
+    public static ListenerManager getListenerManager() {
+        return Networks.getInstance().listenerManager;
+    }
 }
