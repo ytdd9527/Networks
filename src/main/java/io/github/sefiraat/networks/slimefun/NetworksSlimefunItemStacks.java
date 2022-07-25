@@ -663,7 +663,7 @@ public class NetworksSlimefunItemStacks {
             "并设置到发射器中.",
             "",
             MessageFormat.format("{0}右键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "储存接收器的位置"),
-            MessageFormat.format("{0}左键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "将位置设置到发射器中")
+            MessageFormat.format("{0}Shift+右键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "将位置设置到发射器中")
         );
 
         NETWORK_RAKE_1 = Theme.themedSlimefunItemStack(

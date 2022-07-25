@@ -1,8 +1,8 @@
-![](https://cdn.jsdelivr.net/gh/ybw0014/Networks-CN@master/images/logo/logo_large.png)
+![](https://cdn.jsdelivr.net/gh/SlimefunGuguProject/Networks@master/images/logo/logo_large.png)
 
 网络是一个Slimefun附属插件，可以创建一个简单有效的物品存储与运输系统，并可以与货运系统交互。
 
-![](https://cdn.jsdelivr.net/gh/ybw0014/Networks-CN@master/images/wiki/setup.png)
+![](https://cdn.jsdelivr.net/gh/SlimefunGuguProject/Networks@master/images/wiki/setup.png)
 
 ## 下载
 
