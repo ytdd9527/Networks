@@ -67,6 +67,7 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_CAPACITOR_1;
     public static final SlimefunItemStack NETWORK_CAPACITOR_2;
     public static final SlimefunItemStack NETWORK_CAPACITOR_3;
+    public static final SlimefunItemStack NETWORK_CAPACITOR_4;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_1;
     public static final SlimefunItemStack NETWORK_POWER_OUTLET_2;
     public static final SlimefunItemStack NETWORK_POWER_DISPLAY;
@@ -478,6 +479,18 @@ public class NetworksSlimefunItemStacks {
             new ItemStack(Material.BLACK_GLAZED_TERRACOTTA),
             Theme.MACHINE,
             "网络电容 (3)",
+            "网络电容可以接收来自",
+            "能源网络的电力并存储起来",
+            "以供其他网络设备使用",
+            "",
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 100000)
+        );
+
+        NETWORK_CAPACITOR_4 = Theme.themedSlimefunItemStack(
+            "NTW_CAPACITOR_4",
+            new ItemStack(Material.GRAY_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "网络电容 (4)",
             "网络电容可以接收来自",
             "能源网络的电力并存储起来",
             "以供其他网络设备使用",
