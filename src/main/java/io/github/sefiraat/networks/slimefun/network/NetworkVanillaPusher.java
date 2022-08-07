@@ -77,7 +77,12 @@ public class NetworkVanillaPusher extends NetworkDirectional {
         final UUID uuid = UUID.fromString(ownerUUID);
         final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
-        if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, targetBlock, Interaction.INTERACT_BLOCK)) {
+        // dirty fix
+        try {
+            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, targetBlock, Interaction.INTERACT_BLOCK)) {
+                return;
+            }
+        } catch (NullPointerException ex) {
             return;
         }
 
