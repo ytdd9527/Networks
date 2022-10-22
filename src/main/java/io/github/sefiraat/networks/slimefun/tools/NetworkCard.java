@@ -12,7 +12,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.DistinctiveItem;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import net.guizhanss.guizhanlib.slimefun.addon.WikiSetup;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.entity.Player;
@@ -99,7 +98,7 @@ public class NetworkCard extends SlimefunItem implements DistinctiveItem {
 
     @Override
     public void postRegister() {
-        WikiSetup.setupItem(this, WIKI_PAGE);
+        addWikiPage(WIKI_PAGE);
     }
 
     @Override

@@ -66,10 +66,6 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>io.github.sefiraat.networks.bstats</shadedPattern>
                         </relocation>
-                        <relocation>
-                            <pattern>net.guizhanss.guizhanlib</pattern>
-                            <shadedPattern>io.github.sefiraat.networks.guizhanlib</shadedPattern>
-                        </relocation>
                     </relocations>
                     <filters>
                         <filter>
@@ -188,9 +184,9 @@
         <!-- 汉化库 -->
         <dependency>
             <groupId>net.guizhanss</groupId>
-            <artifactId>GuizhanLib</artifactId>
-            <version>0.9.9</version>
-            <scope>compile</scope>
+            <artifactId>GuizhanLibPlugin</artifactId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

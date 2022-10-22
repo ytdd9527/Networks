@@ -20,7 +20,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.items.LimitedUseItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import net.guizhanss.guizhanlib.slimefun.addon.WikiSetup;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -100,6 +99,6 @@ public class NetworkRake extends LimitedUseItem {
 
     @Override
     public void postRegister() {
-        WikiSetup.setupItem(this, WIKI_PAGE);
+        addWikiPage(WIKI_PAGE);
     }
 }

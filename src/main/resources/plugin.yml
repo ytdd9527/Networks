@@ -7,6 +7,7 @@ version: ${project.version}
 api-version: 1.17
 depend:
   - Slimefun
+  - GuizhanLibPlugin
 softdepend:
   - InfinityExpansion
   - Netheopoiesis
