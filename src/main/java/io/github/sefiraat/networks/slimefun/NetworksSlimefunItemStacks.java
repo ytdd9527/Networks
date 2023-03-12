@@ -46,6 +46,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRABBER;
     public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_CONTROL_X;
+    public static final SlimefunItemStack NETWORK_CONTROL_V;
+    public static final SlimefunItemStack NETWORK_VACUUM;
     public static final SlimefunItemStack NETWORK_VANILLA_GRABBER;
     public static final SlimefunItemStack NETWORK_VANILLA_PUSHER;
     public static final SlimefunItemStack NETWORK_WIRELESS_TRANSMITTER;
@@ -260,6 +263,42 @@ public class NetworksSlimefunItemStacks {
             "指定的物品送入机器中"
         );
 
+        NETWORK_CONTROL_X = Theme.themedSlimefunItemStack(
+            "NTW_CONTROL_X",
+            new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "网络剪切器",
+            "网络剪切器会尝试将",
+            "方块从世界中\"剪切\"到网络中",
+            "仅支持原版非容器方块.",
+            "",
+            MessageFormat.format("{0}网络电力消耗: {1}每次操作 {2}J", Theme.CLICK_INFO, Theme.PASSIVE, 100)
+        );
+
+        NETWORK_CONTROL_V = Theme.themedSlimefunItemStack(
+            "NTW_CONTROL_V",
+            new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "网络粘贴器",
+            "网络粘贴器会尝试将",
+            "方块从网络中\"粘贴\"到世界中",
+            "仅支持原版方块.",
+            "",
+            MessageFormat.format("{0}网络电力消耗: {1}每次操作 {2}J", Theme.CLICK_INFO, Theme.PASSIVE, 100)
+        );
+
+        NETWORK_VACUUM = Theme.themedSlimefunItemStack(
+            "NTW_VACUUM",
+            new ItemStack(Material.ORANGE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "网络吸尘器",
+            "网络吸尘器可以将周围",
+            "4x4范围内的掉落物品吸收,",
+            "然后尝试将这些物品送入网络中.",
+            "",
+            MessageFormat.format("{0}网络电力消耗: {1}{2}J/粘液刻", Theme.CLICK_INFO, Theme.PASSIVE, 100)
+        );
+
         NETWORK_VANILLA_GRABBER = Theme.themedSlimefunItemStack(
             "NTW_VANILLA_GRABBER",
             new ItemStack(Material.ORANGE_STAINED_GLASS),
@@ -295,7 +334,7 @@ public class NetworksSlimefunItemStacks {
             "将其中的物品传输到绑定的",
             "网络无线接收器中(只能在同一世界).",
             "使用网络无线配置器来进行绑定.",
-            "每次传输会消耗 7,500 J 网络电力."
+            "每次传输会消耗 500 J 网络电力."
         );
 
         NETWORK_WIRELESS_RECEIVER = Theme.themedSlimefunItemStack(
