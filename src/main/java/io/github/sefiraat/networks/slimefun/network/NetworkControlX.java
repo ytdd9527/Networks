@@ -49,8 +49,8 @@ public class NetworkControlX extends NetworkDirectional {
 
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE,
-        Theme.PASSIVE + "Cut items matching template.",
-        Theme.PASSIVE + "Leaving blank will cut anything"
+        Theme.PASSIVE + "剪切物品模版",
+        Theme.PASSIVE + "留空将剪切任何方块"
     );
     private static final Particle.DustOptions DUST_OPTIONS = new Particle.DustOptions(Color.GRAY, 1);
 

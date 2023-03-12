@@ -49,7 +49,7 @@ public class NetworkControlV extends NetworkDirectional {
     private static final int REQUIRED_POWER = 100;
 
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Paste items matching template"
+        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "粘贴物品模版"
     );
 
     public NetworkControlV(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
