@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -18,9 +20,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.Persis
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -127,7 +127,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                 }
 
                 @Override
-                public void tick(Block b, SlimefunItem item, Config data) {
+                public void tick(Block b, SlimefunItem item, SlimefunBlockData data) {
                     onTick(b);
                 }
             },
@@ -148,7 +148,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     }
 
     private void onTick(Block block) {
-        final BlockMenu blockMenu = BlockStorage.getInventory(block);
+        final BlockMenu blockMenu = StorageCacheUtils.getMenu(block.getLocation());
 
         if (blockMenu == null) {
             CACHES.remove(block.getLocation());
@@ -277,8 +277,9 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     private QuantumCache addCache(@Nonnull BlockMenu blockMenu) {
         final Location location = blockMenu.getLocation();
-        final String amountString = BlockStorage.getLocationInfo(location, BS_AMOUNT);
-        final String voidString = BlockStorage.getLocationInfo(location, BS_VOID);
+        var blockData = StorageCacheUtils.getBlock(location);
+        final String amountString = blockData.getData(BS_AMOUNT);
+        final String voidString = blockData.getData(BS_VOID);
         final int amount = amountString == null ? 0 : Integer.parseInt(amountString);
         final boolean voidExcess = voidString == null || Boolean.parseBoolean(voidString);
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
@@ -316,7 +317,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     protected void onBreak(@Nonnull BlockBreakEvent event) {
         final Location location = event.getBlock().getLocation();
-        final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
+        final BlockMenu blockMenu = StorageCacheUtils.getMenu(event.getBlock().getLocation());
 
         if (blockMenu != null) {
             final QuantumCache cache = CACHES.remove(blockMenu.getLocation());
@@ -441,8 +442,9 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     }
 
     private static void syncBlock(@Nonnull Location location, @Nonnull QuantumCache cache) {
-        BlockStorage.addBlockInfo(location, BS_AMOUNT, String.valueOf(cache.getAmount()));
-        BlockStorage.addBlockInfo(location, BS_VOID, String.valueOf(cache.isVoidExcess()));
+        var blockData = StorageCacheUtils.getBlock(location);
+        blockData.setData(BS_AMOUNT, String.valueOf(cache.getAmount()));
+        blockData.setData(BS_VOID, String.valueOf(cache.isVoidExcess()));
     }
 
     public static Map<Location, QuantumCache> getCaches() {

@@ -1,10 +1,10 @@
 package io.github.sefiraat.networks.network.barrel;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.network.stackcaches.BarrelIdentity;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,7 @@ public class NetworkStorage extends BarrelIdentity {
     @Override
     @Nullable
     public ItemStack requestItem(@Nonnull ItemRequest itemRequest) {
-        final BlockMenu blockMenu = BlockStorage.getInventory(this.getLocation());
+        final BlockMenu blockMenu = StorageCacheUtils.getMenu(this.getLocation());
 
         if (blockMenu == null) {
             return null;
@@ -38,8 +38,8 @@ public class NetworkStorage extends BarrelIdentity {
 
     @Override
     public void depositItemStack(ItemStack[] itemsToDeposit) {
-        if (BlockStorage.check(this.getLocation()) instanceof NetworkQuantumStorage) {
-            final BlockMenu blockMenu = BlockStorage.getInventory(this.getLocation());
+        if (StorageCacheUtils.getSfItem(this.getLocation()) instanceof NetworkQuantumStorage) {
+            final BlockMenu blockMenu = StorageCacheUtils.getMenu(this.getLocation());
             final QuantumCache cache = NetworkQuantumStorage.getCaches().get(this.getLocation());
             if (cache != null) {
                 NetworkQuantumStorage.tryInputItem(blockMenu.getLocation(), itemsToDeposit, cache);

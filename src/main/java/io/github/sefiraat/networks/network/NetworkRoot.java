@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.mooy1.infinityexpansion.items.storage.StorageUnit;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.barrel.InfinityBarrel;
@@ -13,8 +14,6 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Location;
@@ -294,11 +293,11 @@ public class NetworkRoot extends NetworkNode {
                 addedLocations.add(testLocation);
             }
 
-            final SlimefunItem slimefunItem = BlockStorage.check(testLocation);
+            final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(testLocation);
 
             if (Networks.getSupportedPluginManager()
                 .isInfinityExpansion() && slimefunItem instanceof StorageUnit unit) {
-                final BlockMenu menu = BlockStorage.getInventory(testLocation);
+                final BlockMenu menu = StorageCacheUtils.getMenu(testLocation);
                 final InfinityBarrel infinityBarrel = getInfinityBarrel(menu, unit);
                 if (infinityBarrel != null) {
                     barrelSet.add(infinityBarrel);
@@ -307,7 +306,7 @@ public class NetworkRoot extends NetworkNode {
             }
 
             if (slimefunItem instanceof NetworkQuantumStorage) {
-                final BlockMenu menu = BlockStorage.getInventory(testLocation);
+                final BlockMenu menu = StorageCacheUtils.getMenu(testLocation);
                 final NetworkStorage storage = getNetworkStorage(menu);
                 if (storage != null) {
                     barrelSet.add(storage);
@@ -323,8 +322,8 @@ public class NetworkRoot extends NetworkNode {
     @Nullable
     private InfinityBarrel getInfinityBarrel(@Nonnull BlockMenu blockMenu, @Nonnull StorageUnit storageUnit) {
         final ItemStack itemStack = blockMenu.getItemInSlot(16);
-        final Config config = BlockStorage.getLocationInfo(blockMenu.getLocation());
-        final String storedString = config.getString("stored");
+        final var data = StorageCacheUtils.getBlock(blockMenu.getLocation());
+        final String storedString = data.getData("stored");
 
         if (storedString == null) {
             return null;
@@ -388,7 +387,7 @@ public class NetworkRoot extends NetworkNode {
     public Set<BlockMenu> getCellMenus() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location cellLocation : this.cells) {
-            BlockMenu menu = BlockStorage.getInventory(cellLocation);
+            BlockMenu menu = StorageCacheUtils.getMenu(cellLocation);
             if (menu != null) {
                 menus.add(menu);
             }
@@ -400,7 +399,7 @@ public class NetworkRoot extends NetworkNode {
     public Set<BlockMenu> getCrafterOutputs() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location location : this.crafters) {
-            BlockMenu menu = BlockStorage.getInventory(location);
+            BlockMenu menu = StorageCacheUtils.getMenu(location);
             if (menu != null) {
                 menus.add(menu);
             }
@@ -412,7 +411,7 @@ public class NetworkRoot extends NetworkNode {
     public Set<BlockMenu> getGreedyBlocks() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location location : this.greedyBlocks) {
-            BlockMenu menu = BlockStorage.getInventory(location);
+            BlockMenu menu = StorageCacheUtils.getMenu(location);
             if (menu != null) {
                 menus.add(menu);
             }
@@ -801,7 +800,7 @@ public class NetworkRoot extends NetworkNode {
     public void removeRootPower(long power) {
         int removed = 0;
         for (Location node : powerNodes) {
-            final SlimefunItem item = BlockStorage.check(node);
+            final SlimefunItem item = StorageCacheUtils.getSfItem(node);
             if (item instanceof NetworkPowerNode powerNode) {
                 final int charge = powerNode.getCharge(node);
                 if (charge <= 0) {

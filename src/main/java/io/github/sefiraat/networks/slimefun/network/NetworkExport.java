@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -16,9 +18,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -70,9 +70,9 @@ public class NetworkExport extends NetworkObject {
                 }
 
                 @Override
-                public void tick(Block block, SlimefunItem item, Config data) {
+                public void tick(Block block, SlimefunItem item, SlimefunBlockData data) {
                     if (tick <= 1) {
-                        final BlockMenu blockMenu = BlockStorage.getInventory(block);
+                        final BlockMenu blockMenu = data.getBlockMenu();
                         addToRegistry(block);
                         tryFetchItem(blockMenu);
                     }
@@ -86,7 +86,7 @@ public class NetworkExport extends NetworkObject {
             new BlockBreakHandler(true, true) {
                 @Override
                 public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
-                    BlockMenu blockMenu = BlockStorage.getInventory(e.getBlock());
+                    BlockMenu blockMenu = StorageCacheUtils.getMenu(e.getBlock().getLocation());
                     blockMenu.dropItems(blockMenu.getLocation(), TEST_ITEM_SLOT);
                     blockMenu.dropItems(blockMenu.getLocation(), OUTPUT_ITEM_SLOT);
                 }

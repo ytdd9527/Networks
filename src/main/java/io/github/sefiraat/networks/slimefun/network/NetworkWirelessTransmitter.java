@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -13,9 +15,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -76,25 +76,16 @@ public class NetworkWirelessTransmitter extends NetworkObject {
                 }
 
                 @Override
-                public void tick(Block block, SlimefunItem slimefunItem, Config config) {
-                    BlockMenu blockMenu = BlockStorage.getInventory(block);
+                public void tick(Block block, SlimefunItem slimefunItem, SlimefunBlockData data) {
+                    BlockMenu blockMenu = data.getBlockMenu();
                     if (blockMenu != null) {
                         addToRegistry(block);
 
                         boolean isFirstTick = firstTick.getOrDefault(block.getLocation(), true);
                         if (isFirstTick) {
-                            final String xString = BlockStorage.getLocationInfo(
-                                block.getLocation(),
-                                LINKED_LOCATION_KEY_X
-                            );
-                            final String yString = BlockStorage.getLocationInfo(
-                                block.getLocation(),
-                                LINKED_LOCATION_KEY_Y
-                            );
-                            final String zString = BlockStorage.getLocationInfo(
-                                block.getLocation(),
-                                LINKED_LOCATION_KEY_Z
-                            );
+                            final String xString = data.getData(LINKED_LOCATION_KEY_X);
+                            final String yString = data.getData(LINKED_LOCATION_KEY_Y);
+                            final String zString = data.getData(LINKED_LOCATION_KEY_Z);
                             if (xString != null && yString != null && zString != null) {
                                 final Location linkedLocation = new Location(
                                     block.getWorld(),
@@ -136,14 +127,18 @@ public class NetworkWirelessTransmitter extends NetworkObject {
             return;
         }
 
-        final SlimefunItem slimefunItem = BlockStorage.check(linkedLocation);
+        final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(linkedLocation);
 
         if (!(slimefunItem instanceof NetworkWirelessReceiver)) {
             linkedLocations.remove(location);
             return;
         }
 
-        final BlockMenu linkedBlockMenu = BlockStorage.getInventory(linkedLocation);
+        final BlockMenu linkedBlockMenu = StorageCacheUtils.getMenu(linkedLocation);
+        if (linkedBlockMenu == null) {
+            return;
+        }
+
         final ItemStack itemStack = linkedBlockMenu.getItemInSlot(NetworkWirelessReceiver.RECEIVED_SLOT);
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
@@ -221,9 +216,9 @@ public class NetworkWirelessTransmitter extends NetworkObject {
 
     public void addLinkedLocation(@Nonnull Block block, @Nonnull Location linkedLocation) {
         linkedLocations.put(block.getLocation(), linkedLocation);
-        BlockStorage.addBlockInfo(block, LINKED_LOCATION_KEY_X, String.valueOf(linkedLocation.getBlockX()));
-        BlockStorage.addBlockInfo(block, LINKED_LOCATION_KEY_Y, String.valueOf(linkedLocation.getBlockY()));
-        BlockStorage.addBlockInfo(block, LINKED_LOCATION_KEY_Z, String.valueOf(linkedLocation.getBlockZ()));
+        var blockData = StorageCacheUtils.getBlock(block.getLocation());
+        blockData.setData(LINKED_LOCATION_KEY_X, String.valueOf(linkedLocation.getBlockX()));
+        blockData.setData(LINKED_LOCATION_KEY_Y, String.valueOf(linkedLocation.getBlockY()));
+        blockData.setData(LINKED_LOCATION_KEY_Z, String.valueOf(linkedLocation.getBlockZ()));
     }
-
 }

@@ -1,11 +1,13 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.callback.IAsyncReadCallback;
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import de.jeff_media.morepersistentdatatypes.DataType;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -13,8 +15,6 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -43,15 +43,13 @@ public class NetworkRemote extends SlimefunItem {
         super(itemGroup, item, recipeType, recipe);
         this.range = range;
         addItemHandler(
-            new ItemUseHandler() {
-                @Override
-                public void onRightClick(PlayerRightClickEvent e) {
+                (ItemUseHandler) e -> {
                     final Player player = e.getPlayer();
                     if (player.isSneaking()) {
                         final Optional<Block> optional = e.getClickedBlock();
                         if (optional.isPresent()) {
                             final Block block = optional.get();
-                            final SlimefunItem slimefunItem = BlockStorage.check(block);
+                            final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(block.getLocation());
                             if (Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK)
                                 && slimefunItem instanceof NetworkGrid
                             ) {
@@ -65,7 +63,6 @@ public class NetworkRemote extends SlimefunItem {
                     }
                     e.cancel();
                 }
-            }
         );
     }
 
@@ -103,15 +100,30 @@ public class NetworkRemote extends SlimefunItem {
     }
 
     public static void openGrid(@Nonnull Location location, @Nonnull Player player) {
-        BlockMenu blockMenu = BlockStorage.getInventory(location);
-        SlimefunItem slimefunItem = BlockStorage.check(location);
-        if (slimefunItem instanceof NetworkGrid
-            && Slimefun.getProtectionManager().hasPermission(player, location, Interaction.INTERACT_BLOCK)
-        ) {
-            blockMenu.open(player);
-        } else {
-            player.sendMessage(Theme.ERROR + "无法找到绑定的网格");
-        }
+        var controller = Slimefun.getDatabaseManager().getBlockDataController();
+        controller.getBlockDataAsync(
+                location,
+                new IAsyncReadCallback<>() {
+                    @Override
+                    public void onResult(SlimefunBlockData result) {
+                        if (!result.isDataLoaded()) {
+                            controller.loadBlockData(result);
+                        }
+
+                        if (SlimefunItem.getById(result.getSfId()) instanceof NetworkGrid
+                                && Slimefun.getProtectionManager().hasPermission(player, location, Interaction.INTERACT_BLOCK)) {
+                            result.getBlockMenu().open(player);
+                        } else {
+                            player.sendMessage(Theme.ERROR + "无法找到绑定的网格");
+                        }
+                    }
+
+                    @Override
+                    public void onResultNotFound() {
+                        player.sendMessage(Theme.ERROR + "无法找到绑定的网格");
+                    }
+                }
+        );
     }
 
     public int getRange() {

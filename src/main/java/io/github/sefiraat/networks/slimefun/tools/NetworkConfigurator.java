@@ -1,14 +1,13 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import de.jeff_media.morepersistentdatatypes.DataType;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
-import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.NetworkUtils;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -17,10 +16,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -35,18 +31,16 @@ public class NetworkConfigurator extends SlimefunItem {
     public NetworkConfigurator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         addItemHandler(
-            new ItemUseHandler() {
-                @Override
-                public void onRightClick(PlayerRightClickEvent e) {
+                (ItemUseHandler) e -> {
                     final Player player = e.getPlayer();
                     final Optional<Block> optional = e.getClickedBlock();
                     if (optional.isPresent()) {
                         final Block block = optional.get();
-                        final SlimefunItem slimefunItem = BlockStorage.check(block);
+                        final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(block.getLocation());
                         if (Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK)
                             && slimefunItem instanceof NetworkDirectional directional
                         ) {
-                            final BlockMenu blockMenu = BlockStorage.getInventory(block);
+                            final var blockMenu = StorageCacheUtils.getMenu(block.getLocation());
                             if (player.isSneaking()) {
                                 setConfigurator(directional, e.getItem(), blockMenu, player);
                             } else {
@@ -58,7 +52,6 @@ public class NetworkConfigurator extends SlimefunItem {
                     }
                     e.cancel();
                 }
-            }
         );
     }
 

@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
@@ -9,7 +10,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -47,13 +47,23 @@ public class NetworkPowerOutlet extends NetworkDirectional {
 
         final BlockFace blockFace = getCurrentDirection(menu);
         final Block targetBlock = b.getRelative(blockFace);
-        final SlimefunItem slimefunItem = BlockStorage.check(targetBlock);
 
+        var blockData = StorageCacheUtils.getBlock(targetBlock.getLocation());
+        if (blockData == null) {
+            return;
+        }
+
+        if (!blockData.isDataLoaded()) {
+            StorageCacheUtils.requestLoad(blockData);
+            return;
+        }
+
+        final SlimefunItem slimefunItem = SlimefunItem.getById(blockData.getSfId());
         if (!(slimefunItem instanceof EnergyNetComponent component) || slimefunItem instanceof NetworkObject) {
             return;
         }
 
-        final String charge = BlockStorage.getLocationInfo(targetBlock.getLocation(), "energy-charge");
+        final String charge = blockData.getData("energy-charge");
         int chargeInt = 0;
         if (charge != null) {
             chargeInt = Integer.parseInt(charge);
