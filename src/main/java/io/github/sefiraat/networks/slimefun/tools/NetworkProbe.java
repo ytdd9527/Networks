@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.utils.Theme;
@@ -9,7 +10,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -41,7 +41,12 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final Block block = optional.get();
             final Player player = e.getPlayer();
             if (canBeUsed(player, e.getItem())) {
-                final SlimefunItem slimefunItem = BlockStorage.check(block);
+                var blockData = StorageCacheUtils.getBlock(block.getLocation());
+                if (blockData == null) {
+                    return;
+                }
+
+                var slimefunItem = SlimefunItem.getById(blockData.getSfId());
                 if (slimefunItem instanceof NetworkController) {
                     e.cancel();
                     displayToPlayer(block, player);

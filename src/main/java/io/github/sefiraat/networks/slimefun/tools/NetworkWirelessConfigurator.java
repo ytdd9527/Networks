@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import de.jeff_media.morepersistentdatatypes.DataType;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
@@ -14,7 +15,6 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -44,10 +44,10 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
                     final Optional<Block> optional = e.getClickedBlock();
                     if (optional.isPresent()) {
                         final Block block = optional.get();
-                        final SlimefunItem slimefunItem = BlockStorage.check(block);
+                        final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(block.getLocation());
                         if (Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK)) {
                             final ItemStack heldItem = player.getInventory().getItemInMainHand();
-                            final BlockMenu blockMenu = BlockStorage.getInventory(block);
+                            final BlockMenu blockMenu = StorageCacheUtils.getMenu(block.getLocation());
                             if (slimefunItem instanceof NetworkWirelessTransmitter transmitter && player.isSneaking()) {
                                 setTransmitter(transmitter, heldItem, blockMenu, player);
                             } else if (slimefunItem instanceof NetworkWirelessReceiver && !player.isSneaking()) {

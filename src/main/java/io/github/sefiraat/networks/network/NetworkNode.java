@@ -1,15 +1,13 @@
 package io.github.sefiraat.networks.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
@@ -121,14 +119,13 @@ public class NetworkNode {
     }
 
     private void killAdditionalController(@Nonnull Location location) {
-        final Block block = location.getBlock();
-        final ItemStack toDrop = BlockStorage.retrieve(block);
-        if (toDrop != null) {
+        var sfItem = StorageCacheUtils.getSfItem(location);
+        if (sfItem != null) {
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    location.getWorld().dropItemNaturally(location, toDrop);
-                    block.setType(Material.AIR);
+                    location.getWorld().dropItemNaturally(location, sfItem.getItem());
+                    location.getBlock().setType(Material.AIR);
                 }
             };
             runnable.runTask(Networks.getInstance());
@@ -139,7 +136,7 @@ public class NetworkNode {
     protected long retrieveBlockCharge() {
         if (this.nodeType == NodeType.POWER_NODE) {
             int blockCharge = 0;
-            final SlimefunItem item = BlockStorage.check(this.nodePosition);
+            final SlimefunItem item = StorageCacheUtils.getSfItem(this.nodePosition);
             if (item instanceof NetworkPowerNode powerNode) {
                 blockCharge = powerNode.getCharge(this.nodePosition);
             }

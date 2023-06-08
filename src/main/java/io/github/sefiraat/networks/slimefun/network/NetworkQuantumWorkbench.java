@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
@@ -14,7 +15,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -81,7 +81,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return BlockStorage.check(block).canUse(player, false)
+                return StorageCacheUtils.getSfItem(block.getLocation()).canUse(player, false)
                     && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
@@ -176,7 +176,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(BlockBreakEvent event, ItemStack itemStack, List<ItemStack> drops) {
-                BlockMenu menu = BlockStorage.getInventory(event.getBlock());
+                BlockMenu menu = StorageCacheUtils.getMenu(event.getBlock().getLocation());
                 menu.dropItems(menu.getLocation(), RECIPE_SLOTS);
                 menu.dropItems(menu.getLocation(), OUTPUT_SLOT);
             }

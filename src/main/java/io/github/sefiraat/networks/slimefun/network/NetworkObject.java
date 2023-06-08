@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
@@ -8,10 +10,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.Getter;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -46,7 +47,7 @@ public abstract class NetworkObject extends SlimefunItem {
                 }
 
                 @Override
-                public void tick(Block b, SlimefunItem item, Config data) {
+                public void tick(Block b, SlimefunItem item, SlimefunBlockData data) {
                     addToRegistry(b);
                 }
             },
@@ -74,7 +75,7 @@ public abstract class NetworkObject extends SlimefunItem {
 
     protected void onBreak(@Nonnull BlockBreakEvent event) {
         final Location location = event.getBlock().getLocation();
-        final BlockMenu blockMenu = BlockStorage.getInventory(event.getBlock());
+        final BlockMenu blockMenu = StorageCacheUtils.getMenu(event.getBlock().getLocation());
 
         if (blockMenu != null) {
             for (int i : this.slotsToDrop) {
@@ -87,7 +88,7 @@ public abstract class NetworkObject extends SlimefunItem {
             NetworkController.wipeNetwork(location);
         }
 
-        BlockStorage.clearBlockInfo(location);
+        Slimefun.getDatabaseManager().getBlockDataController().removeBlock(location);
     }
 
     public boolean runSync() {

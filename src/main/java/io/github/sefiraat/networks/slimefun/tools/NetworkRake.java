@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
@@ -19,7 +20,6 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.items.LimitedUseItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -73,7 +73,7 @@ public class NetworkRake extends LimitedUseItem {
         if (optional.isPresent()) {
             final Block block = optional.get();
             final Player player = e.getPlayer();
-            final SlimefunItem slimefunItem = BlockStorage.check(block);
+            final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(block.getLocation());
             if (slimefunItem != null
                 && viableObjects.contains(slimefunItem.getClass())
                 && Slimefun.getProtectionManager().hasPermission(player, block, Interaction.BREAK_BLOCK)
@@ -85,7 +85,7 @@ public class NetworkRake extends LimitedUseItem {
                 }
 
                 block.setType(Material.AIR);
-                BlockStorage.clearBlockInfo(block);
+                Slimefun.getDatabaseManager().getBlockDataController().removeBlock(block.getLocation());
                 damageItem(e.getPlayer(), e.getItem());
             }
         }

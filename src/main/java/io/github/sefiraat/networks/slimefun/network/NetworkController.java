@@ -1,5 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkNode;
 import io.github.sefiraat.networks.network.NetworkRoot;
@@ -10,9 +12,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -46,7 +46,7 @@ public class NetworkController extends NetworkObject {
                 }
 
                 @Override
-                public void tick(Block block, SlimefunItem item, Config data) {
+                public void tick(Block block, SlimefunItem item, SlimefunBlockData data) {
 
                     if (!firstTickMap.containsKey(block.getLocation())) {
                         onFirstTick(block, data);
@@ -68,8 +68,8 @@ public class NetworkController extends NetworkObject {
         );
     }
 
-    private void onFirstTick(@Nonnull Block block, @Nonnull Config data) {
-        final String crayon = data.getString(CRAYON);
+    private void onFirstTick(@Nonnull Block block, @Nonnull SlimefunBlockData data) {
+        final String crayon = data.getData(CRAYON);
         if (Boolean.parseBoolean(crayon)) {
             CRAYONS.add(block.getLocation());
         }
@@ -84,12 +84,12 @@ public class NetworkController extends NetworkObject {
     }
 
     public static void addCrayon(@Nonnull Location location) {
-        BlockStorage.addBlockInfo(location, CRAYON, String.valueOf(true));
+        StorageCacheUtils.setData(location, CRAYON, String.valueOf(true));
         CRAYONS.add(location);
     }
 
     public static void removeCrayon(@Nonnull Location location) {
-        BlockStorage.addBlockInfo(location, CRAYON, null);
+        StorageCacheUtils.removeData(location, CRAYON);
         CRAYONS.remove(location);
     }
 
