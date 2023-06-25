@@ -6,8 +6,6 @@
 
 ## 下载
 
-**自动更新**: 汉化版构建#16及以上版本包含自动更新功能，默认开启。
-
 点击这里下载 Networks: [下载 Networks](https://builds.guizhanss.net/ybw0014/Networks-CN/master)
 
 <p align="center">
