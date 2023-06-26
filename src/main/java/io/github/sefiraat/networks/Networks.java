@@ -7,6 +7,7 @@ import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.guizhanss.guizhanlibplugin.updater.GuizhanUpdater;
 import net.guizhanss.slimefun4.utils.WikiUtils;
 import org.bstats.bukkit.Metrics;
@@ -46,6 +47,15 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         if (!getServer().getPluginManager().isPluginEnabled("GuizhanLibPlugin")) {
             getLogger().log(Level.SEVERE, "本插件需要 鬼斩前置库插件(GuizhanLibPlugin) 才能运行!");
             getLogger().log(Level.SEVERE, "从此处下载: https://50l.cc/gzlib");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        if (!Slimefun.getVersion().endsWith("DEV")) {
+            getLogger().log(Level.SEVERE, "由于目前版本中存在一个的问题并未在 Slimefun 的公开版本中修复，");
+            getLogger().log(Level.SEVERE, "本插件目前仅支持 Slimefun 的开发版（赞助版本），");
+            getLogger().log(Level.SEVERE, "请退回 #75 版本，并关闭自动更新。");
+            getLogger().log(Level.SEVERE, "等待KOOK频道/Q群的后续更新通知。");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
