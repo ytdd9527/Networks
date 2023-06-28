@@ -756,9 +756,8 @@ public class NetworksSlimefunItemStacks {
             "NTW_DEBUG_STICK",
             getPreEnchantedItemStack(Material.STICK, true, new Pair<>(Enchantment.LUCK, 1)),
             Theme.TOOL,
-            "Network Debug Stick",
-            "Right click a Network Object to",
-            "turn on debugging."
+            "网络调试棒",
+            "右键点击一个网络方块开启调试。"
         );
     }
 

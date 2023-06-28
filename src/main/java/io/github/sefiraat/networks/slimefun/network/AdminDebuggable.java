@@ -1,8 +1,8 @@
 package io.github.sefiraat.networks.slimefun.network;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.utils.Theme;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -14,21 +14,21 @@ public interface AdminDebuggable {
     String DEBUG_KEY = "network_debugging";
 
     default boolean isDebug(@Nonnull Location location) {
-        String debug = BlockStorage.getLocationInfo(location, DEBUG_KEY);
+        String debug = StorageCacheUtils.getData(location, DEBUG_KEY);
         return Boolean.parseBoolean(debug);
     }
 
     default void setDebug(@Nonnull Location location, boolean value) {
-        BlockStorage.addBlockInfo(location, DEBUG_KEY, String.valueOf(value));
+        StorageCacheUtils.setData(location, DEBUG_KEY, String.valueOf(value));
     }
 
     default void toggle(@Nonnull Location location, @Nonnull Player player) {
         final boolean isDebug = isDebug(location);
         final boolean nextState = !isDebug;
         setDebug(location, nextState);
-        player.sendMessage(Theme.SUCCESS + "Debugging for this block has been set to: " + nextState + ".");
+        player.sendMessage(Theme.SUCCESS + "该方块的调试模式已设置为：" + nextState + "。");
         if (nextState) {
-            player.sendMessage(Theme.SUCCESS + "It will last until a restart or you toggle it off.");
+            player.sendMessage(Theme.SUCCESS + "该模式将持续至服务器关闭，或者手动关闭。");
         }
     }
 

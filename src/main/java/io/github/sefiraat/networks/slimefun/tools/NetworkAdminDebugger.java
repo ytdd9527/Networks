@@ -38,7 +38,7 @@ public class NetworkAdminDebugger extends SlimefunItem {
             final Player player = e.getPlayer();
             final SlimefunItem slimefunItem = BlockStorage.check(block);
             if (!player.isOp()) {
-                player.sendMessage(Theme.ERROR + "You can only use this tool as an op'd player.");
+                player.sendMessage(Theme.ERROR + "该物品只能由OP玩家使用。");
                 return;
             }
             if (slimefunItem instanceof AdminDebuggable debuggable) {
