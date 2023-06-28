@@ -2,6 +2,7 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.utils.NetworkUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -80,6 +81,7 @@ public abstract class NetworkDirectional extends NetworkObject {
             new BlockPlaceHandler(false) {
                 @Override
                 public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
+                    NetworkStorage.removeNode(event.getBlock().getLocation());
                     var blockData = StorageCacheUtils.getBlock(event.getBlock().getLocation());
                     blockData.setData(OWNER_KEY, event.getPlayer().getUniqueId().toString());
                     blockData.setData(DIRECTION, BlockFace.SELF.name());

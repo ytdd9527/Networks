@@ -11,6 +11,7 @@ softdepend:
   - GuizhanLibPlugin
   - InfinityExpansion
   - Netheopoiesis
+  - WildChests
 commands:
   networks:
     description: /networks
