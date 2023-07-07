@@ -5,6 +5,7 @@ import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -121,6 +122,7 @@ public class NetworkNode {
     private void killAdditionalController(@Nonnull Location location) {
         var sfItem = StorageCacheUtils.getSfItem(location);
         if (sfItem != null) {
+            Slimefun.getDatabaseManager().getBlockDataController().removeBlock(location);
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
