@@ -46,6 +46,8 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_EXPORT;
     public static final SlimefunItemStack NETWORK_GRABBER;
     public static final SlimefunItemStack NETWORK_PUSHER;
+    public static final SlimefunItemStack NETWORK_MORE_PUSHER;
+    public static final SlimefunItemStack NETWORK_BEST_PUSHER;
     public static final SlimefunItemStack NETWORK_CONTROL_X;
     public static final SlimefunItemStack NETWORK_CONTROL_V;
     public static final SlimefunItemStack NETWORK_VACUUM;
@@ -261,7 +263,28 @@ public class NetworksSlimefunItemStacks {
             Theme.MACHINE,
             "网络推送器",
             "网络推送器会尝试将",
-            "指定的物品送入机器中"
+                "指定的物品送入机器中",
+                "本推送器有3个槽位供推送"
+        );
+
+        NETWORK_MORE_PUSHER = Theme.themedSlimefunItemStack(
+                "NTW_MOREPUSHER",
+                new ItemStack(Material.BROWN_STAINED_GLASS),
+                Theme.MACHINE,
+                "网络推送器V2",
+                "网络推送器会尝试将",
+                "指定的物品送入机器中",
+                "本推送器有6个槽位供推送"
+        );
+
+        NETWORK_BEST_PUSHER = Theme.themedSlimefunItemStack(
+                "NTW_BESTPUSHER",
+                new ItemStack(Material.BROWN_STAINED_GLASS),
+                Theme.MACHINE,
+                "网络推送器V3",
+                "网络推送器会尝试将",
+                "指定的物品送入机器中",
+                "本推送器有9个槽位供推送"
         );
 
         NETWORK_CONTROL_X = Theme.themedSlimefunItemStack(
@@ -499,7 +522,7 @@ public class NetworksSlimefunItemStacks {
             "能源网络的电力并存储起来",
             "以供其他网络设备使用",
             "",
-            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000)
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
         );
 
         NETWORK_CAPACITOR_2 = Theme.themedSlimefunItemStack(
@@ -511,7 +534,7 @@ public class NetworksSlimefunItemStacks {
             "能源网络的电力并存储起来",
             "以供其他网络设备使用",
             "",
-            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000)
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 100000)
         );
 
         NETWORK_CAPACITOR_3 = Theme.themedSlimefunItemStack(
@@ -523,7 +546,7 @@ public class NetworksSlimefunItemStacks {
             "能源网络的电力并存储起来",
             "以供其他网络设备使用",
             "",
-            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 100000)
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000)
         );
 
         NETWORK_CAPACITOR_4 = Theme.themedSlimefunItemStack(
@@ -535,7 +558,7 @@ public class NetworksSlimefunItemStacks {
             "能源网络的电力并存储起来",
             "以供其他网络设备使用",
             "",
-            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000)
+            MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 10000000)
         );
 
         NETWORK_POWER_OUTLET_1 = Theme.themedSlimefunItemStack(
@@ -727,7 +750,7 @@ public class NetworksSlimefunItemStacks {
             "右键点击一个网络节点",
             "可以立即破坏",
             "",
-            LoreBuilder.usesLeft(250)
+            LoreBuilder.usesLeft(2500)
         );
 
         NETWORK_RAKE_2 = Theme.themedSlimefunItemStack(
@@ -738,7 +761,7 @@ public class NetworksSlimefunItemStacks {
             "右键点击一个网络节点",
             "可以立即破坏",
             "",
-            LoreBuilder.usesLeft(1000)
+            LoreBuilder.usesLeft(10000)
         );
 
         NETWORK_RAKE_3 = Theme.themedSlimefunItemStack(
@@ -749,7 +772,7 @@ public class NetworksSlimefunItemStacks {
             "右键点击一个网络节点",
             "可以立即破坏",
             "",
-            LoreBuilder.usesLeft(9999)
+            LoreBuilder.usesLeft(99999)
         );
 
         NETWORK_DEBUG_STICK = Theme.themedSlimefunItemStack(

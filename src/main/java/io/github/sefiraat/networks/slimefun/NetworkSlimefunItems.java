@@ -17,6 +17,8 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
 import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
+import io.github.sefiraat.networks.slimefun.network.NetworkMorePusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkBestPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
@@ -66,6 +68,8 @@ public class NetworkSlimefunItems {
     public static final NetworkExport NETWORK_EXPORT;
     public static final NetworkGrabber NETWORK_GRABBER;
     public static final NetworkPusher NETWORK_PUSHER;
+    public static final NetworkMorePusher NETWORK_MORE_PUSHER;
+    public static final NetworkBestPusher NETWORK_BEST_PUSHER;
     public static final NetworkControlX NETWORK_CONTROL_X;
     public static final NetworkControlV NETWORK_CONTROL_V;
     public static final NetworkVacuum NETWORK_VACUUM;
@@ -327,6 +331,28 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_MORE_PUSHER = new NetworkMorePusher(
+                NetworksItemGroups.NETWORK_ITEMS,
+                NetworksSlimefunItemStacks.NETWORK_MORE_PUSHER,
+                RecipeType.ENHANCED_CRAFTING_TABLE,
+                new ItemStack[]{
+                        NETWORK_PUSHER.getItem(), OPTIC_CABLE.getItem(), NETWORK_PUSHER.getItem(),
+                        OPTIC_CABLE.getItem(), NETWORK_PUSHER.getItem(), OPTIC_CABLE.getItem(),
+                        OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+                }
+        );
+
+        NETWORK_BEST_PUSHER = new NetworkBestPusher(
+                NetworksItemGroups.NETWORK_ITEMS,
+                NetworksSlimefunItemStacks.NETWORK_BEST_PUSHER,
+                RecipeType.ENHANCED_CRAFTING_TABLE,
+                new ItemStack[]{
+                        NETWORK_MORE_PUSHER.getItem(), OPTIC_CABLE.getItem(), NETWORK_MORE_PUSHER.getItem(),
+                        OPTIC_CABLE.getItem(), NETWORK_MORE_PUSHER.getItem(), OPTIC_CABLE.getItem(),
+                        OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
+                }
+        );
+
         NETWORK_CONTROL_X = new NetworkControlX(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_CONTROL_X,
@@ -575,7 +601,7 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), SlimefunItems.MEDIUM_CAPACITOR, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
             },
-            1000
+            10000
         );
 
         NETWORK_CAPACITOR_2 = new NetworkPowerNode(
@@ -587,7 +613,7 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_1.getItem(), SlimefunItems.BIG_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
             },
-            10000
+            100000
         );
 
         NETWORK_CAPACITOR_3 = new NetworkPowerNode(
@@ -599,7 +625,7 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_2.getItem(), SlimefunItems.LARGE_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
             },
-            100000
+            1000000
         );
 
         NETWORK_CAPACITOR_4 = new NetworkPowerNode(
@@ -611,7 +637,7 @@ public class NetworkSlimefunItems {
                         NETWORK_CAPACITOR_3.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
                         NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
                 },
-                1000000
+                10000000
         );
 
         NETWORK_POWER_OUTLET_1 = new NetworkPowerOutlet(
@@ -798,7 +824,7 @@ public class NetworkSlimefunItems {
                 null, new ItemStack(Material.DIAMOND_SWORD), null,
                 null, SYNTHETIC_EMERALD_SHARD.getItem(), null
             },
-            250
+            2500
         );
 
         NETWORK_RAKE_2 = new NetworkRake(
@@ -810,7 +836,7 @@ public class NetworkSlimefunItems {
                 null, NETWORK_RAKE_1.getItem(), null,
                 null, AI_CORE.getItem(), null
             },
-            1000
+            10000
         );
 
         NETWORK_RAKE_3 = new NetworkRake(
@@ -822,7 +848,7 @@ public class NetworkSlimefunItems {
                 null, NETWORK_RAKE_2.getItem(), null,
                 null, EMPOWERED_AI_CORE.getItem(), null
             },
-            9999
+            99999
         );
 
         NETWORK_ADMIN_DEBUGGER = new NetworkAdminDebugger(
@@ -856,6 +882,8 @@ public class NetworkSlimefunItems {
         NETWORK_EXPORT.register(plugin);
         NETWORK_GRABBER.register(plugin);
         NETWORK_PUSHER.register(plugin);
+        NETWORK_MORE_PUSHER.register(plugin);
+        NETWORK_BEST_PUSHER.register(plugin);
         NETWORK_CONTROL_X.register(plugin);
         NETWORK_CONTROL_V.register(plugin);
         NETWORK_VACUUM.register(plugin);
