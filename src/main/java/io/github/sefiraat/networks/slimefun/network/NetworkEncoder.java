@@ -46,7 +46,7 @@ public class NetworkEncoder extends NetworkObject {
     private static final int ENCODE_SLOT = 16;
     private static final int OUTPUT_SLOT = 34;
 
-    private static final int CHARGE_COST = 20000;
+    private static final int CHARGE_COST = 2000;
 
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "空白蓝图"
