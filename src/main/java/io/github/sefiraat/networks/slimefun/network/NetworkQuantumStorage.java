@@ -47,7 +47,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     private static final int[] SIZES = new int[]{
         64,
-        512,
+        256,
         1024,
         4096,
         32768,
