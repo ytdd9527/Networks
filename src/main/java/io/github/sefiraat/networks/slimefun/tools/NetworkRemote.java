@@ -100,30 +100,15 @@ public class NetworkRemote extends SlimefunItem {
     }
 
     public static void openGrid(@Nonnull Location location, @Nonnull Player player) {
-        var controller = Slimefun.getDatabaseManager().getBlockDataController();
-        controller.getBlockDataAsync(
-                location,
-                new IAsyncReadCallback<>() {
-                    @Override
-                    public void onResult(SlimefunBlockData result) {
-                        if (!result.isDataLoaded()) {
-                            controller.loadBlockData(result);
-                        }
-
-                        if (SlimefunItem.getById(result.getSfId()) instanceof NetworkGrid
-                                && Slimefun.getProtectionManager().hasPermission(player, location, Interaction.INTERACT_BLOCK)) {
-                            result.getBlockMenu().open(player);
-                        } else {
-                            player.sendMessage(Theme.ERROR + "无法找到绑定的网格");
-                        }
-                    }
-
-                    @Override
-                    public void onResultNotFound() {
-                        player.sendMessage(Theme.ERROR + "无法找到绑定的网格");
-                    }
-                }
-        );
+        SlimefunBlockData blockData = StorageCacheUtils.getBlock(location);
+        StorageCacheUtils.executeAfterLoad(blockData, () -> {
+            if (SlimefunItem.getById(blockData.getSfId()) instanceof NetworkGrid
+                && Slimefun.getProtectionManager().hasPermission(player, location, Interaction.INTERACT_BLOCK)) {
+                blockData.getBlockMenu().open(player);
+            } else {
+                player.sendMessage(Theme.ERROR + "无法找到绑定的网格");
+            }
+        }, false);
     }
 
     public int getRange() {
