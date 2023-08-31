@@ -4,7 +4,7 @@ description: No idea yet
 main: io.github.sefiraat.networks.Networks
 website: https://github.com/Sefiraat/Networks
 version: ${project.version}
-api-version: 1.19
+api-version: 1.17
 depend:
   - Slimefun
 softdepend:
