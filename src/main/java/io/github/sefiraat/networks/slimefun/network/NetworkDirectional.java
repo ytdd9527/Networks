@@ -107,6 +107,9 @@ public abstract class NetworkDirectional extends NetworkObject {
                 @Override
                 public void uniqueTick() {
                     tick = tick <= 1 ? tickRate.getValue() : tick - 1;
+                    if (tick <= 1) {
+                        onUniqueTick();
+                    }
                 }
             }
         );
@@ -163,6 +166,8 @@ public abstract class NetworkDirectional extends NetworkObject {
         addToRegistry(block);
         updateGui(blockMenu);
     }
+
+    protected void onUniqueTick() {}
 
     @Override
     public void postRegister() {
