@@ -183,12 +183,6 @@
 
         <!-- Supported Plugins -->
         <dependency>
-            <groupId>io.github.mooy1</groupId>
-            <artifactId>InfinityExpansion</artifactId>
-            <version>90e11bc</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.Sefiraat</groupId>
             <artifactId>Netheopoiesis</artifactId>
             <version>8d1af6c570</version>
@@ -204,6 +198,13 @@
             <groupId>com.gmail.nossr50.mcMMO</groupId>
             <artifactId>mcMMO</artifactId>
             <version>2.1.221</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.mooy1</groupId>
+            <artifactId>InfinityExpansion</artifactId>
+            <version>90e11bc</version>
             <scope>provided</scope>
         </dependency>
 
