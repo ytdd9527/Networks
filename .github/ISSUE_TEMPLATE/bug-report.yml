@@ -9,7 +9,7 @@ body:
       value: |
         ## 欢迎来到 SlimefunGuguProject 的问题追踪器
         你正在反馈 Networks 汉化版出现的 Bug。
-        任何意见，建议请前往[QQ群](https://ybw0014.net/go/sf-qgroup)进行反馈。
+        任何意见，建议请前往[QQ群](https://50l.cc/gugu-qgroup)进行反馈。
         建议先阅读[这篇文章](https://slimefun-wiki.guizhanss.cn/How-to-report-bugs)了解如何正确地汇报Bug。
 
         <strong><i>你必须填写标注为星号（*）的表单项</i></strong>
@@ -20,13 +20,11 @@ body:
       label: 检查项目
       description: 在汇报之前，你需要确认
       options:
-        - label: 你使用的是从构建站下载的版本 (https://builds.guizhanss.net)
+        - label: 你使用的是从构建站下载的版本
           required: true
-        - label: 你已经检验过下载的文件的校验和，确认已完整下载文件 (暂未推出)
-          required: false
+        - label: 你已经检验过下载的文件的校验和，确认已完整下载文件
+          required: true
         - label: 你没有对下载的文件内容进行任何更改
-          required: true
-        - label: 你没有安装`CS-CoreLib`
           required: true
         - label: 你已经寻找过[已知问题列表](https://github.com/SlimefunGuguProject/Networks/issues)，且没有找到相同的问题
           required: true
@@ -102,29 +100,13 @@ body:
     validations:
       required: true
 
-  - type: dropdown
+  - type: input
     id: minecraft-version
     attributes:
       label: Minecraft 版本
-      description: 请选择你的 Minecraft 版本
-      options:
-        - 1.19.x
-        - 1.18.x
-        - 1.17.x
-        - 本插件不支持旧版本
+      description: 请填写你的 Minecraft 版本
     validations:
       required: true
-
-  - type: checkboxes
-    id: cscorelib-version
-    attributes:
-      label: CS-CoreLib 版本
-      description: |
-        从2021年1月30日起，Slimefun以及其附属插件都不再需要安装CS-CoreLib。
-        保留CS-CoreLib可能导致一些未知的问题。
-      options:
-        - label: 我没有安装CS-CoreLib
-          required: true
 
   - type: textarea
     id: slimefun-version
@@ -143,7 +125,6 @@ body:
       label: 插件版本
       description: |
         请填写插件版本
-        只需填写Build后面的数字版本即可
-        (`Build 7 zh-CN(ybw0014) (git 9ef7fee)`只需填写`7`即可)
+        (例如 Build 1 (git x114514))
     validations:
       required: true
