@@ -57,7 +57,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         getLogger().info("########################################");
 
         saveDefaultConfig();
-        tryUpdate();
+        //tryUpdate();
 
         this.supportedPluginManager = new SupportedPluginManager();
 
