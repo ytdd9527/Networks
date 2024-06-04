@@ -301,8 +301,12 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             final ItemStack clone = itemStack.clone();
             final ItemMeta itemMeta = clone.getItemMeta();
             final List<String> lore = itemMeta.getLore();
-            for (int i = 0; i < 3; i++) {
-                lore.remove(lore.size() - 1);
+            if (lore != null){
+                for (int i = 0; i < 3; i++) {
+                    if (lore.size() > 0){
+                        lore.remove(lore.size() - 1);
+                    }
+                }
             }
             itemMeta.setLore(lore.isEmpty() ? null : lore);
             clone.setItemMeta(itemMeta);

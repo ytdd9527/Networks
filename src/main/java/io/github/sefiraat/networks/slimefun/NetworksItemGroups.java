@@ -62,7 +62,7 @@ public final class NetworksItemGroups {
         Keys.newKey("disabled_items"),
         new CustomItemStack(
             new ItemStack(Material.BARRIER),
-            Theme.MAIN.getColor() + "已禁用/移除的物品"
+            Theme.MAIN.getColor() + "隐藏物品"
         )
     );
 

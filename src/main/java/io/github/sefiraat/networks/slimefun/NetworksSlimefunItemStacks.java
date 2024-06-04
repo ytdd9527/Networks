@@ -454,7 +454,7 @@ public class NetworksSlimefunItemStacks {
             "",
             "在量子奇点中存储大量物品"
         );
-        
+
         NETWORK_QUANTUM_STORAGE_10 = Theme.themedSlimefunItemStack(
             "NTW_QUANTUM_STORAGE_10",
             new ItemStack(Material.LIME_TERRACOTTA),
@@ -637,7 +637,7 @@ public class NetworksSlimefunItemStacks {
             "网络配方编码器",
             "可以根据输入的物品来制作合成蓝图",
             "",
-            MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000)
+            MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 2000)
         );
 
         NETWORK_AUTO_CRAFTER = Theme.themedSlimefunItemStack(
