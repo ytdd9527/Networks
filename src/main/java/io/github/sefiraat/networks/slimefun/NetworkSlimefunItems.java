@@ -640,7 +640,7 @@ public class NetworkSlimefunItems {
                 OPTIC_CABLE.getItem(), SlimefunItems.MEDIUM_CAPACITOR, OPTIC_CABLE.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
             },
-            1000
+            10000
         );
 
         NETWORK_CAPACITOR_2 = new NetworkPowerNode(
@@ -652,7 +652,7 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_1.getItem(), SlimefunItems.BIG_CAPACITOR, NETWORK_CAPACITOR_1.getItem(),
                 NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(), NETWORK_CAPACITOR_1.getItem(),
             },
-            10000
+            100000
         );
 
         NETWORK_CAPACITOR_3 = new NetworkPowerNode(
@@ -664,7 +664,7 @@ public class NetworkSlimefunItems {
                 NETWORK_CAPACITOR_2.getItem(), SlimefunItems.LARGE_CAPACITOR, NETWORK_CAPACITOR_2.getItem(),
                 NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(), NETWORK_CAPACITOR_2.getItem(),
             },
-            100000
+            1000000
         );
 
         NETWORK_CAPACITOR_4 = new NetworkPowerNode(
@@ -676,7 +676,7 @@ public class NetworkSlimefunItems {
                         NETWORK_CAPACITOR_3.getItem(), SlimefunItems.CARBONADO_EDGED_CAPACITOR, NETWORK_CAPACITOR_3.getItem(),
                         NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(), NETWORK_CAPACITOR_3.getItem(),
                 },
-                1000000
+                10000000
         );
 
         NETWORK_POWER_OUTLET_1 = new NetworkPowerOutlet(
@@ -688,7 +688,7 @@ public class NetworkSlimefunItems {
                 OPTIC_GLASS.getItem(), SlimefunItems.ENERGY_CONNECTOR, OPTIC_GLASS.getItem(),
                 OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(), OPTIC_GLASS.getItem(),
             },
-            500
+            5000
         );
 
         NETWORK_POWER_OUTLET_2 = new NetworkPowerOutlet(
@@ -700,7 +700,7 @@ public class NetworkSlimefunItems {
                 OPTIC_GLASS.getItem(), SlimefunItems.ENERGY_CONNECTOR, OPTIC_GLASS.getItem(),
                 NETWORK_POWER_OUTLET_1.getItem(), OPTIC_GLASS.getItem(), NETWORK_POWER_OUTLET_1.getItem(),
             },
-            2000
+            20000
         );
 
         NETWORK_POWER_DISPLAY = new NetworkPowerDisplay(
@@ -863,7 +863,7 @@ public class NetworkSlimefunItems {
                 null, new ItemStack(Material.DIAMOND_SWORD), null,
                 null, SYNTHETIC_EMERALD_SHARD.getItem(), null
             },
-            250
+            2500
         );
 
         NETWORK_RAKE_2 = new NetworkRake(
@@ -875,7 +875,7 @@ public class NetworkSlimefunItems {
                 null, NETWORK_RAKE_1.getItem(), null,
                 null, AI_CORE.getItem(), null
             },
-            1000
+            10000
         );
 
         NETWORK_RAKE_3 = new NetworkRake(
@@ -887,7 +887,7 @@ public class NetworkSlimefunItems {
                 null, NETWORK_RAKE_2.getItem(), null,
                 null, EMPOWERED_AI_CORE.getItem(), null
             },
-            9999
+            99999
         );
 
         NETWORK_ADMIN_DEBUGGER = new NetworkAdminDebugger(
