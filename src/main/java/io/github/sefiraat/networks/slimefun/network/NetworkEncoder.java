@@ -46,7 +46,7 @@ public class NetworkEncoder extends NetworkObject {
     private static final int ENCODE_SLOT = 16;
     private static final int OUTPUT_SLOT = 34;
 
-    private static final int CHARGE_COST = 20000;
+    private static final int CHARGE_COST = 2000;
 
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "空白蓝图"
@@ -116,11 +116,6 @@ public class NetworkEncoder extends NetworkObject {
 
         final ItemStack outputStack = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
-        if (outputStack != null && outputStack.getType() != Material.AIR) {
-            player.sendMessage(Theme.WARNING + "需要清空输出栏");
-            return;
-        }
-
         ItemStack blueprint = blockMenu.getItemInSlot(BLANK_BLUEPRINT_SLOT);
 
         if (!(SlimefunItem.getByItem(blueprint) instanceof CraftingBlueprint)) {
@@ -163,17 +158,19 @@ public class NetworkEncoder extends NetworkObject {
 
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
 
-        blueprint.setAmount(blueprint.getAmount() - 1);
         CraftingBlueprint.setBlueprint(blueprintClone, inputs, crafted);
 
-        for (int recipeSlot : RECIPE_SLOTS) {
-            ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
-            if (slotItem != null) {
-                slotItem.setAmount(slotItem.getAmount() - 1);
+        if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
+            blueprint.setAmount(blueprint.getAmount() - 1);
+            for (int recipeSlot : RECIPE_SLOTS) {
+                ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
+                if (slotItem != null) {
+                    slotItem.setAmount(slotItem.getAmount() - 1);
+                }
             }
+            blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         }
 
-        blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         root.removeRootPower(CHARGE_COST);
     }
 }
