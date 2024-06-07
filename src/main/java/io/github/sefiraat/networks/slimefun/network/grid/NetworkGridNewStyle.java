@@ -9,42 +9,47 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetworkGrid extends AbstractGrid {
+public class NetworkGridNewStyle extends AbstractGridNewStyle {
 
     private static final int[] BACKGROUND_SLOTS = {
-        17, 26
+        36, 38, 39, 40, 41, 42, 44, 48
     };
 
     private static final int[] DISPLAY_SLOTS = {
-        0, 1, 2, 3, 4, 5, 6, 7,
-        9, 10, 11, 12, 13, 14, 15, 16,
-        18, 19, 20, 21, 22, 23, 24, 25,
-        27, 28, 29, 30, 31, 32, 33, 34,
-        36, 37, 38, 39, 40, 41, 42, 43,
-        45, 46, 47, 48, 49, 50, 51, 52
+        0, 1, 2, 3, 4, 5, 6, 7, 8,
+        9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26,
+        27, 28, 29, 30, 31, 32, 33, 34, 35
     };
 
-    private static final int INPUT_SLOT = 8;
+    private static final int[] INPUT_SLOTS = {
+        49, 50, 51, 52, 53
+    };
 
-    private static final int CHANGE_SORT = 26;
-    private static final int FILTER = 35;
-    private static final int PAGE_PREVIOUS = 44;
-    private static final int PAGE_NEXT = 53;
+    private static final int CHANGE_SORT = 45;
+    private static final int FILTER = 47;
+    private static final int AUTO_FILTER_SLOT = 46;
+    private static final int PAGE_PREVIOUS = 37;
+    private static final int PAGE_NEXT = 43;
+    private static final int ORANGE_BACKGROUND = 48;
 
     private static final Map<Location, GridCache> CACHE_MAP = new HashMap<>();
 
-    public NetworkGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkGridNewStyle(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.getSlotsToDrop().add(getInputSlot());
+        for(int slot: getInputSlots()){
+            this.getSlotsToDrop().add(slot);
+        }
+        this.getSlotsToDrop().add(AUTO_FILTER_SLOT);
     }
 
     @Override
@@ -66,6 +71,9 @@ public class NetworkGrid extends AbstractGrid {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
+                if (flow == ItemTransportFlow.INSERT) {
+                    return getInputSlots();
+                }
                 return new int[0];
             }
 
@@ -108,10 +116,14 @@ public class NetworkGrid extends AbstractGrid {
                     return setFilter(p, menu, gridCache, action);
                 });
 
+                menu.replaceExistingItem(getOrangeBackgroud(), getAutoFilterStack());
+
                 for (int displaySlot : getDisplaySlots()) {
                     menu.replaceExistingItem(displaySlot, null);
                     menu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
                 }
+
+                
             }
         };
     }
@@ -129,8 +141,8 @@ public class NetworkGrid extends AbstractGrid {
         return DISPLAY_SLOTS;
     }
 
-    public int getInputSlot() {
-        return INPUT_SLOT;
+    public int[] getInputSlots() {
+        return INPUT_SLOTS;
     }
 
     public int getChangeSort() {
@@ -143,6 +155,13 @@ public class NetworkGrid extends AbstractGrid {
 
     public int getPageNext() {
         return PAGE_NEXT;
+    }
+    public int getOrangeBackgroud() {
+        return ORANGE_BACKGROUND;
+    }
+
+    public int getAutoFilterSlot() {
+        return AUTO_FILTER_SLOT;
     }
 
     @Override
