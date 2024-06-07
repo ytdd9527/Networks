@@ -27,7 +27,7 @@ import java.util.Optional;
 
 public class NetworkRemote extends SlimefunItem {
 
-    private static final String WIKI_PAGE = "Network-Remote";
+    private static final String WIKI_PAGE = "tools/network-remote";
 
     private static final NamespacedKey KEY = Keys.newKey("location");
     private static final int[] RANGES = new int[]{

@@ -59,7 +59,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         Integer.MAX_VALUE
     };
 
-    private static final String WIKI_PAGE = "Quantum-Storage";
+    private static final String WIKI_PAGE = "network-storage/quantum-storage";
 
     public static final String BS_AMOUNT = "stored_amount";
     public static final String BS_VOID = "void_excess";
