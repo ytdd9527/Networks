@@ -22,6 +22,7 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import net.guizhanss.guizhanlib.minecraft.helper.inventory.ItemStackHelper;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,7 +43,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @SuppressWarnings("deprecation")
-public abstract class AbstractGrid extends NetworkObject {
+public abstract class AbstractGridNewStyle extends NetworkObject {
 
     private static final CustomItemStack BLANK_SLOT_STACK = new CustomItemStack(
         Material.LIGHT_GRAY_STAINED_GLASS_PANE,
@@ -66,7 +67,12 @@ public abstract class AbstractGrid extends NetworkObject {
 
     private static final CustomItemStack FILTER_STACK = new CustomItemStack(
         Material.NAME_TAG,
-        Theme.CLICK_INFO.getColor() + "设置过滤器 (右键点击以清除)"
+        Theme.CLICK_INFO.getColor() + "左键设置过滤器 (右键点击以清除)"
+    );
+
+    private static final CustomItemStack AUTO_FILTER_STACK = new CustomItemStack(
+        Material.ORANGE_STAINED_GLASS_PANE,
+        Theme.CLICK_INFO.getColor() + "存入物品 →"
     );
 
     private static final Comparator<Map.Entry<ItemStack, Integer>> ALPHABETICAL_SORT = Comparator.comparing(
@@ -86,10 +92,12 @@ public abstract class AbstractGrid extends NetworkObject {
 
     private final ItemSetting<Integer> tickRate;
 
-    protected AbstractGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    protected AbstractGridNewStyle(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.GRID);
 
-        this.getSlotsToDrop().add(getInputSlot());
+        for(int slot: getInputSlots()){
+            this.getSlotsToDrop().add(slot);
+        }
 
         this.tickRate = new IntRangeSetting(this, "tick_rate", 1, 1, 10);
         addItemSetting(this.tickRate);
@@ -123,18 +131,19 @@ public abstract class AbstractGrid extends NetworkObject {
     }
 
     protected void tryAddItem(@Nonnull BlockMenu blockMenu) {
-        final ItemStack itemStack = blockMenu.getItemInSlot(getInputSlot());
-
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            return;
-        }
-
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+        
         if (definition.getNode() == null) {
             return;
         }
 
-        definition.getNode().getRoot().addItemStack(itemStack);
+        for(int slot: getInputSlots()){
+            final ItemStack itemStack = blockMenu.getItemInSlot(slot);
+
+            if (itemStack != null && itemStack.getType() != Material.AIR) {
+                definition.getNode().getRoot().addItemStack(itemStack);
+            }
+        }
     }
 
     protected void updateDisplay(@Nonnull BlockMenu blockMenu) {
@@ -230,17 +239,36 @@ public abstract class AbstractGrid extends NetworkObject {
         if (action.isRightClicked()) {
             gridCache.setFilter(null);
         } else {
-            player.closeInventory();
-            player.sendMessage(Theme.WARNING + "请输入你想要过滤的物品名称(显示名)或类型");
-            ChatUtils.awaitInput(player, s -> {
-                if (s.isBlank()) {
-                    return;
-                }
-                gridCache.setFilter(s.toLowerCase(Locale.ROOT));
-                player.sendMessage(Theme.SUCCESS + "已启用过滤器");
-            });
+            if (autoSetFilter(player, blockMenu, gridCache, action)){
+                player.closeInventory();
+                player.sendMessage(Theme.WARNING + "请输入你想要过滤的物品名称(显示名)或类型");
+                ChatUtils.awaitInput(player, s -> {
+                    if (s.isBlank()) {
+                        return;
+                    }
+                    gridCache.setFilter(s.toLowerCase(Locale.ROOT));
+                    player.sendMessage(Theme.SUCCESS + "已启用过滤器");
+                });
+            }
         }
         return false;
+    }
+
+    protected boolean autoSetFilter(@Nonnull Player player, @Nonnull BlockMenu blockMenu, @Nonnull GridCache gridCache, @Nonnull ClickAction action) {
+        final ItemStack itemStack = blockMenu.getItemInSlot(getAutoFilterSlot());
+        if (itemStack != null && itemStack.getType() != Material.AIR) {
+            SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+            String itemName = null;
+            if (slimefunItem != null) {
+                itemName = ChatColor.stripColor(slimefunItem.getItemName());
+            } else {
+                itemName = ChatColor.stripColor(ItemStackHelper.getDisplayName(itemStack));
+            }
+
+            gridCache.setFilter(itemName.toLowerCase(Locale.ROOT));
+            return false;
+        }
+        return true;
     }
 
     @ParametersAreNonnullByDefault
@@ -334,7 +362,7 @@ public abstract class AbstractGrid extends NetworkObject {
 
     protected abstract int[] getDisplaySlots();
 
-    protected abstract int getInputSlot();
+    protected abstract int[] getInputSlots();
 
     protected abstract int getChangeSort();
 
@@ -343,6 +371,8 @@ public abstract class AbstractGrid extends NetworkObject {
     protected abstract int getPageNext();
 
     protected abstract int getFilterSlot();
+
+    protected abstract int getAutoFilterSlot();
 
     protected CustomItemStack getBlankSlotStack() {
         return BLANK_SLOT_STACK;
@@ -364,6 +394,9 @@ public abstract class AbstractGrid extends NetworkObject {
         return FILTER_STACK;
     }
 
+    public CustomItemStack getAutoFilterStack() {
+        return AUTO_FILTER_STACK;
+    }
 
     @Nonnull
     private static List<String> getLoreAddition(int amount) {

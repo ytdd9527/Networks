@@ -16,71 +16,76 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetworkCraftingGrid extends AbstractGrid {
+public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
 
     private static final int[] BACKGROUND_SLOTS = {
-        0, 1, 3, 4, 5, 14, 23, 32, 33, 35, 41, 42, 44, 45, 47, 49, 50, 51, 52, 53
+        5, 14, 23, 32, 33, 36, 38, 39, 40, 41, 42, 44, 48
     };
 
     private static final int[] DISPLAY_SLOTS = {
-        9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 27, 28, 29, 30, 31, 36, 37, 38, 39, 40
+        0, 1, 2, 3, 4,
+        9, 10, 11, 12, 13,
+        18, 19, 20, 21, 22,
+        27, 28, 29, 30, 31,
     };
 
     private static final int[] CRAFT_ITEMS = {
         6, 7, 8, 15, 16, 17, 24, 25, 26
     };
 
-    private static final int INPUT_SLOT = 2;
-    private static final int FILTER = 45;
-    private static final int PAGE_PREVIOUS = 46;
-    private static final int CHANGE_SORT = 47;
-    private static final int PAGE_NEXT = 48;
+    private static final int[] INPUT_SLOTS = {
+        49, 50, 51, 52, 53
+    };
 
+    private static final int CHANGE_SORT = 45;
+    private static final int FILTER = 47;
+    private static final int AUTO_FILTER_SLOT = 46;
+    private static final int PAGE_PREVIOUS = 37;
+    private static final int PAGE_NEXT = 43;
+    private static final int ORANGE_BACKGROUND = 48;
     private static final int CRAFT_BUTTON_SLOT = 34;
-    private static final int CRAFT_OUTPUT_SLOT = 43;
+    private static final int CRAFT_OUTPUT_SLOT = 35;
 
     private static final CustomItemStack CRAFT_BUTTON_STACK = new CustomItemStack(
         Material.CRAFTING_TABLE,
         Theme.CLICK_INFO.getColor() + "合成",
-        Theme.CLICK_INFO + "左键点击: " + Theme.PASSIVE + "合成",
-        Theme.CLICK_INFO + "Shift+左键点击: " + Theme.PASSIVE + "将合成台内物品送回网络"
+        Theme.CLICK_INFO + "左键点击: " + Theme.PASSIVE + "返回物品到网络并合成"
     );
-
+    
     private static final Map<Location, GridCache> CACHE_MAP = new HashMap<>();
 
-
-    public NetworkCraftingGrid(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkCraftingGridNewStyle(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        for (int craftItem : CRAFT_ITEMS) {
-            this.getSlotsToDrop().add(craftItem);
+        for(int slot: getInputSlots()){
+            this.getSlotsToDrop().add(slot);
         }
-        this.getSlotsToDrop().add(CRAFT_OUTPUT_SLOT);
+        for(int slot: getCraftSlots()){
+            this.getSlotsToDrop().add(slot);
+        }
+        this.getSlotsToDrop().add(getAutoFilterSlot());
+        this.getSlotsToDrop().add(getCraftOutputSlot());
     }
 
     @Override
-    public void postRegister() {
-        getPreset();
-    }
-
     @Nonnull
-    @Override
-    public BlockMenuPreset getPreset() {
+    protected BlockMenuPreset getPreset() {
         return new BlockMenuPreset(this.getId(), this.getItemName()) {
 
             @Override
             public void init() {
-                drawBackground(BACKGROUND_SLOTS);
+                drawBackground(getBackgroundSlots());
+                setSize(54);
             }
 
             @Override
@@ -91,19 +96,22 @@ public class NetworkCraftingGrid extends AbstractGrid {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
+                if (flow == ItemTransportFlow.INSERT) {
+                    return getInputSlots();
+                }
                 return new int[0];
             }
 
             @SuppressWarnings("deprecation")
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                CACHE_MAP.put(menu.getLocation(), new GridCache(0, 0, GridCache.SortOrder.ALPHABETICAL));
+                getCacheMap().put(menu.getLocation(), new GridCache(0, 0, GridCache.SortOrder.ALPHABETICAL));
 
                 menu.replaceExistingItem(getPagePrevious(), getPagePreviousStack());
                 menu.addMenuClickHandler(getPagePrevious(), (p, slot, item, action) -> {
                     GridCache gridCache = getCacheMap().get(menu.getLocation());
                     gridCache.setPage(gridCache.getPage() <= 0 ? 0 : gridCache.getPage() - 1);
-                    CACHE_MAP.put(menu.getLocation(), gridCache);
+                    getCacheMap().put(menu.getLocation(), gridCache);
                     return false;
                 });
 
@@ -133,6 +141,8 @@ public class NetworkCraftingGrid extends AbstractGrid {
                     return setFilter(p, menu, gridCache, action);
                 });
 
+                menu.replaceExistingItem(getOrangeBackgroud(), getAutoFilterStack());
+
                 for (int displaySlot : getDisplaySlots()) {
                     menu.replaceExistingItem(displaySlot, null);
                     menu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
@@ -140,51 +150,56 @@ public class NetworkCraftingGrid extends AbstractGrid {
 
                 menu.replaceExistingItem(CRAFT_BUTTON_SLOT, CRAFT_BUTTON_STACK);
                 menu.addMenuClickHandler(CRAFT_BUTTON_SLOT, (player, slot, item, action) -> {
-                    if (action.isShiftClicked()) {
-                        tryReturnItems(menu);
-                    } else {
-                        tryCraft(menu, player);
-                    }
+                    tryCraft(menu, player);
                     return false;
                 });
-            }
+            };
         };
-    }
+    };
+    
 
     @Nonnull
-    @Override
-    protected Map<Location, GridCache> getCacheMap() {
+    public Map<Location, GridCache> getCacheMap() {
         return CACHE_MAP;
     }
 
-    @Override
     public int[] getBackgroundSlots() {
         return BACKGROUND_SLOTS;
     }
 
-    @Override
     public int[] getDisplaySlots() {
         return DISPLAY_SLOTS;
     }
 
-    @Override
-    public int getInputSlot() {
-        return INPUT_SLOT;
+    public int[] getInputSlots() {
+        return INPUT_SLOTS;
     }
 
-    @Override
+    public int[] getCraftSlots() {
+        return CRAFT_ITEMS;
+    }
+
     public int getChangeSort() {
         return CHANGE_SORT;
     }
 
-    @Override
     public int getPagePrevious() {
         return PAGE_PREVIOUS;
     }
 
-    @Override
     public int getPageNext() {
         return PAGE_NEXT;
+    }
+    public int getOrangeBackgroud() {
+        return ORANGE_BACKGROUND;
+    }
+
+    public int getAutoFilterSlot() {
+        return AUTO_FILTER_SLOT;
+    }
+
+    public int getCraftOutputSlot() {
+        return CRAFT_OUTPUT_SLOT;
     }
 
     @Override
@@ -198,6 +213,13 @@ public class NetworkCraftingGrid extends AbstractGrid {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
         if (definition.getNode() == null) {
             return;
+        }
+
+        // Return items to network
+        final ItemStack itemCache = menu.getItemInSlot(CRAFT_OUTPUT_SLOT);
+
+        if (itemCache != null && itemCache.getType() != Material.AIR) {
+            definition.getNode().getRoot().addItemStack(itemCache);
         }
 
         // Get the recipe input
@@ -250,25 +272,6 @@ public class NetworkCraftingGrid extends AbstractGrid {
                     }
                 }
             }
-        }
-    }
-
-    private void tryReturnItems(@Nonnull BlockMenu menu) {
-        // Get node and, if it doesn't exist - escape
-        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
-
-        if (definition.getNode() == null) {
-            return;
-        }
-
-        for (int recipeSlot : CRAFT_ITEMS) {
-            @SuppressWarnings("deprecation")
-            final ItemStack stack = menu.getItemInSlot(recipeSlot);
-
-            if (stack == null || stack.getType() == Material.AIR) {
-                continue;
-            }
-            definition.getNode().getRoot().addItemStack(stack);
         }
     }
 }

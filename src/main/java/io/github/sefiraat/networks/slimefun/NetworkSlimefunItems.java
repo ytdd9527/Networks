@@ -28,7 +28,10 @@ import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessReceiver;
 import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGridNewStyle;
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkEncodingGridNewStyle;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkGridNewStyle;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.slimefun.tools.NetworkAdminDebugger;
 import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
@@ -38,7 +41,6 @@ import io.github.sefiraat.networks.slimefun.tools.NetworkRake;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.slimefun.tools.NetworkWirelessConfigurator;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
@@ -81,6 +83,9 @@ public class NetworkSlimefunItems {
     public static final NetworkPurger NETWORK_TRASH;
     public static final NetworkGrid NETWORK_GRID;
     public static final NetworkCraftingGrid NETWORK_CRAFTING_GRID;
+    public static final NetworkGridNewStyle NETWORK_GRID_NEW_STYLE;
+    public static final NetworkCraftingGridNewStyle NETWORK_CRAFTING_GRID_NEW_STYLE;
+    public static final NetworkEncodingGridNewStyle NETWORK_ENCODING_GRID_NEW_STYLE;
     public static final NetworkCell NETWORK_CELL;
     public static final NetworkGreedyBlock NETWORK_GREEDY_BLOCK;
     public static final NetworkQuantumWorkbench NETWORK_QUANTUM_WORKBENCH;
@@ -444,6 +449,17 @@ public class NetworkSlimefunItems {
             }
         );
 
+        NETWORK_RECIPE_ENCODER = new NetworkEncoder(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_RECIPE_ENCODER,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
+                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ENHANCED_AUTO_CRAFTER, SlimefunItems.BASIC_CIRCUIT_BOARD,
+                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD
+            }
+        );
+
         NETWORK_GRID = new NetworkGrid(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_GRID,
@@ -463,6 +479,39 @@ public class NetworkSlimefunItems {
                 OPTIC_STAR.getItem(), OPTIC_STAR.getItem(), OPTIC_STAR.getItem(),
                 OPTIC_STAR.getItem(), NETWORK_GRID.getItem(), OPTIC_STAR.getItem(),
                 OPTIC_STAR.getItem(), OPTIC_STAR.getItem(), OPTIC_STAR.getItem(),
+            }
+        );
+
+        NETWORK_GRID_NEW_STYLE = new NetworkGridNewStyle(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_GRID_NEW_STYLE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_GRID.getItem(), OPTIC_CABLE.getItem(),
+                NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
+            }
+        );
+
+        NETWORK_CRAFTING_GRID_NEW_STYLE = new NetworkCraftingGridNewStyle(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_CRAFTING_GRID_NEW_STYLE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                OPTIC_STAR.getItem(), OPTIC_STAR.getItem(), OPTIC_STAR.getItem(),
+                OPTIC_STAR.getItem(), NETWORK_CRAFTING_GRID.getItem(), OPTIC_STAR.getItem(),
+                OPTIC_STAR.getItem(), OPTIC_STAR.getItem(), OPTIC_STAR.getItem(),
+            }
+        );
+
+        NETWORK_ENCODING_GRID_NEW_STYLE = new NetworkEncodingGridNewStyle(
+            NetworksItemGroups.NETWORK_ITEMS,
+            NetworksSlimefunItemStacks.NETWORK_ENCODING_GRID_NEW_STYLE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[]{
+                NETWORK_BRIDGE.getItem(), NETWORK_RECIPE_ENCODER.getItem(), NETWORK_BRIDGE.getItem(),
+                OPTIC_CABLE.getItem(), NETWORK_CRAFTING_GRID_NEW_STYLE.getItem(), OPTIC_CABLE.getItem(),
+                NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
             }
         );
 
@@ -714,17 +763,6 @@ public class NetworkSlimefunItems {
             }
         );
 
-        NETWORK_RECIPE_ENCODER = new NetworkEncoder(
-            NetworksItemGroups.NETWORK_ITEMS,
-            NetworksSlimefunItemStacks.NETWORK_RECIPE_ENCODER,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
-            new ItemStack[]{
-                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
-                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ENHANCED_AUTO_CRAFTER, SlimefunItems.BASIC_CIRCUIT_BOARD,
-                SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD
-            }
-        );
-
         NETWORK_AUTO_CRAFTER = new NetworkAutoCrafter(
             NetworksItemGroups.NETWORK_ITEMS,
             NetworksSlimefunItemStacks.NETWORK_AUTO_CRAFTER,
@@ -933,6 +971,9 @@ public class NetworkSlimefunItems {
         NETWORK_TRASH.register(plugin);
         NETWORK_GRID.register(plugin);
         NETWORK_CRAFTING_GRID.register(plugin);
+        NETWORK_GRID_NEW_STYLE.register(plugin);
+        NETWORK_CRAFTING_GRID_NEW_STYLE.register(plugin);
+        NETWORK_ENCODING_GRID_NEW_STYLE.register(plugin);
         NETWORK_CELL.register(plugin);
         NETWORK_GREEDY_BLOCK.register(plugin);
         NETWORK_QUANTUM_WORKBENCH.register(plugin);

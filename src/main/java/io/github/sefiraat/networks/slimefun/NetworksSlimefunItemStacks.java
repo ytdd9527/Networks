@@ -58,6 +58,9 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_PURGER;
     public static final SlimefunItemStack NETWORK_GRID;
     public static final SlimefunItemStack NETWORK_CRAFTING_GRID;
+    public static final SlimefunItemStack NETWORK_GRID_NEW_STYLE;
+    public static final SlimefunItemStack NETWORK_CRAFTING_GRID_NEW_STYLE;
+    public static final SlimefunItemStack NETWORK_ENCODING_GRID_NEW_STYLE;
     public static final SlimefunItemStack NETWORK_CELL;
     public static final SlimefunItemStack NETWORK_GREEDY_BLOCK;
     public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
@@ -403,6 +406,37 @@ public class NetworksSlimefunItemStacks {
             "但会显示更少的物品",
             "不过你可以直接使用网络中的物品",
             "进行合成"
+        );
+
+        NETWORK_GRID_NEW_STYLE = Theme.themedSlimefunItemStack(
+            "NTW_GRID_NEW_STYLE",
+            new ItemStack(Material.NOTE_BLOCK),
+            Theme.MACHINE,
+            "高级网格",
+            "高级网格允许你查看网络中所有的物品",
+            "你也可以直接放入或取出物品"
+        );
+
+        NETWORK_CRAFTING_GRID_NEW_STYLE = Theme.themedSlimefunItemStack(
+            "NTW_CRAFTING_GRID_NEW_STYLE",
+            new ItemStack(Material.JUKEBOX),
+            Theme.MACHINE,
+            "高级网格(带合成)",
+            "这种网格与普通网格类似",
+            "但会显示更少的物品",
+            "不过你可以直接使用网络中的物品",
+            "进行合成"
+        );
+
+        NETWORK_ENCODING_GRID_NEW_STYLE = Theme.themedSlimefunItemStack(
+            "NTW_ENCODING_GRID_NEW_STYLE",
+            new ItemStack(Material.TARGET),
+            Theme.MACHINE,
+            "高级网格(带编码)",
+            "这种网格与高级网格类似",
+            "但会显示更少的物品",
+            "不过你可以直接使用网络中的物品",
+            "进行编码"
         );
 
         NETWORK_CELL = Theme.themedSlimefunItemStack(
