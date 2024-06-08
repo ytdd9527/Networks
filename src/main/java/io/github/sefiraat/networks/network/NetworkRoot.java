@@ -51,6 +51,12 @@ public class NetworkRoot extends NetworkNode {
     private final Set<Location> powerDisplays = ConcurrentHashMap.newKeySet();
     private final Set<Location> encoders = ConcurrentHashMap.newKeySet();
     private final Set<Location> greedyBlocks = ConcurrentHashMap.newKeySet();
+    private final Set<Location> cutters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> pasters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> powerOutlets = ConcurrentHashMap.newKeySet();
+    private final Set<Location> vacuums = ConcurrentHashMap.newKeySet();
+    private final Set<Location> wireless_receivers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> wireless_transmitters = ConcurrentHashMap.newKeySet();
 
     private Set<BarrelIdentity> barrels = null;
 
@@ -85,6 +91,15 @@ public class NetworkRoot extends NetworkNode {
             case POWER_DISPLAY -> powerDisplays.add(location);
             case ENCODER -> encoders.add(location);
             case GREEDY_BLOCK -> greedyBlocks.add(location);
+            case CUTTER -> cutters.add(location);
+            case PASTER -> pasters.add(location);
+            case POWER_OUTLET -> powerOutlets.add(location);
+            case VACUUM -> vacuums.add(location);
+            case WIRELESS_RECEIVER -> wireless_receivers.add(location);
+            case WIRELESS_TRANSMITTER -> wireless_transmitters.add(location);
+            default -> {
+                // Nothing here guvnor
+            }
         }
     }
 
@@ -174,20 +189,44 @@ public class NetworkRoot extends NetworkNode {
         return this.encoders;
     }
 
+    public Set<Location> getCutters() {
+        return this.cutters;
+    }
+
+    public Set<Location> getPasters() {
+        return this.pasters;
+    }
+
+    public Set<Location> getPowerOutlets() {
+        return this.powerOutlets;
+    }
+
+    public Set<Location> getVacuums() {
+        return this.vacuums;
+    }
+
+    public Set<Location> getWirelessReceivers() {
+        return this.wireless_receivers;
+    }
+
+    public Set<Location> getWirelessTransmitters() {
+        return this.wireless_transmitters;
+    }
+
     @Nonnull
-    public Map<ItemStack, Integer> getAllNetworkItems() {
-        final Map<ItemStack, Integer> itemStacks = new HashMap<>();
+    public Map<ItemStack, Long> getAllNetworkItems() {
+        final Map<ItemStack, Long> itemStacks = new HashMap<>();
 
         // Barrels
         for (BarrelIdentity barrelIdentity : getBarrels()) {
-            final Integer currentAmount = itemStacks.get(barrelIdentity.getItemStack());
-            final int newAmount;
+            final Long currentAmount = itemStacks.get(barrelIdentity.getItemStack());
+            final long newAmount;
             if (currentAmount == null) {
                 newAmount = barrelIdentity.getAmount();
             } else {
                 long newLong = (long) currentAmount + (long) barrelIdentity.getAmount();
-                if (newLong > Integer.MAX_VALUE) {
-                    newAmount = Integer.MAX_VALUE;
+                if (newLong > Long.MAX_VALUE) {
+                    newAmount = Long.MAX_VALUE;
                 } else {
                     newAmount = currentAmount + barrelIdentity.getAmount();
                 }
@@ -201,14 +240,14 @@ public class NetworkRoot extends NetworkNode {
                 continue;
             }
             final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
-            final Integer currentAmount = itemStacks.get(clone);
-            final int newAmount;
+            final Long currentAmount = itemStacks.get(clone);
+            final long newAmount;
             if (currentAmount == null) {
                 newAmount = itemStack.getAmount();
             } else {
                 long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                if (newLong > Integer.MAX_VALUE) {
-                    newAmount = Integer.MAX_VALUE;
+                if (newLong > Long.MAX_VALUE) {
+                    newAmount = Long.MAX_VALUE;
                 } else {
                     newAmount = currentAmount + itemStack.getAmount();
                 }
@@ -224,14 +263,14 @@ public class NetworkRoot extends NetworkNode {
                     continue;
                 }
                 final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
-                final Integer currentAmount = itemStacks.get(clone);
-                final int newAmount;
+                final Long currentAmount = itemStacks.get(clone);
+                final long newAmount;
                 if (currentAmount == null) {
                     newAmount = itemStack.getAmount();
                 } else {
                     long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                    if (newLong > Integer.MAX_VALUE) {
-                        newAmount = Integer.MAX_VALUE;
+                    if (newLong > Long.MAX_VALUE) {
+                        newAmount = Long.MAX_VALUE;
                     } else {
                         newAmount = currentAmount + itemStack.getAmount();
                     }
@@ -247,15 +286,15 @@ public class NetworkRoot extends NetworkNode {
 
                     clone.setAmount(1);
 
-                    final Integer currentAmount = itemStacks.get(clone);
-                    int newAmount;
+                    final Long currentAmount = itemStacks.get(clone);
+                    long newAmount;
 
                     if (currentAmount == null) {
                         newAmount = itemStack.getAmount();
                     } else {
                         long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                        if (newLong > Integer.MAX_VALUE) {
-                            newAmount = Integer.MAX_VALUE;
+                        if (newLong > Long.MAX_VALUE) {
+                            newAmount = Long.MAX_VALUE;
                         } else {
                             newAmount = currentAmount + itemStack.getAmount();
                         }

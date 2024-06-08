@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractGridNewStyle extends NetworkObject {
@@ -75,7 +76,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         Theme.CLICK_INFO.getColor() + "存入物品 →"
     );
 
-    private static final Comparator<Map.Entry<ItemStack, Integer>> ALPHABETICAL_SORT = Comparator.comparing(
+    private static final Comparator<? super Entry<ItemStack, Long>> ALPHABETICAL_SORT = Comparator.comparing(
         itemStackIntegerEntry -> {
             ItemStack itemStack = itemStackIntegerEntry.getKey();
             SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
@@ -88,7 +89,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         Collator.getInstance(Locale.CHINA)::compare
     );
 
-    private static final Comparator<Map.Entry<ItemStack, Integer>> NUMERICAL_SORT = Map.Entry.comparingByValue();
+    private static final Comparator<Map.Entry<ItemStack, Long>> NUMERICAL_SORT = Map.Entry.comparingByValue();
 
     private final ItemSetting<Integer> tickRate;
 
@@ -163,7 +164,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         // Update Screen
         final NetworkRoot root = definition.getNode().getRoot();
         final GridCache gridCache = getCacheMap().get(blockMenu.getLocation().clone());
-        final List<Map.Entry<ItemStack, Integer>> entries = getEntries(root, gridCache);
+        final List<Map.Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
         final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
 
         gridCache.setMaxPages(pages);
@@ -181,13 +182,13 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
 
         final int start = gridCache.getPage() * getDisplaySlots().length;
         final int end = Math.min(start + getDisplaySlots().length, entries.size());
-        final List<Map.Entry<ItemStack, Integer>> validEntries = entries.subList(start, end);
+        final List<Map.Entry<ItemStack, Long>> validEntries = entries.subList(start, end);
 
         getCacheMap().put(blockMenu.getLocation(), gridCache);
 
         for (int i = 0; i < getDisplaySlots().length; i++) {
             if (validEntries.size() > i) {
-                final Map.Entry<ItemStack, Integer> entry = validEntries.get(i);
+                final Map.Entry<ItemStack, Long> entry = validEntries.get(i);
                 final ItemStack displayStack = entry.getKey().clone();
                 final ItemMeta itemMeta = displayStack.getItemMeta();
                 List<String> lore = itemMeta.getLore();
@@ -220,7 +221,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     }
 
     @Nonnull
-    protected List<Map.Entry<ItemStack, Integer>> getEntries(@Nonnull NetworkRoot networkRoot, @Nonnull GridCache cache) {
+    protected List<Map.Entry<ItemStack, Long>> getEntries(@Nonnull NetworkRoot networkRoot, @Nonnull GridCache cache) {
         return networkRoot.getAllNetworkItems().entrySet().stream()
             .filter(entry -> {
                 if (cache.getFilter() == null) {
@@ -399,11 +400,11 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     }
 
     @Nonnull
-    private static List<String> getLoreAddition(int amount) {
+    private static List<String> getLoreAddition(Long long1) {
         final MessageFormat format = new MessageFormat("{0}数量: {1}{2}", Locale.ROOT);
         return List.of(
             "",
-            format.format(new Object[]{Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), amount}, new StringBuffer(), null).toString()
+            format.format(new Object[]{Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), long1}, new StringBuffer(), null).toString()
         );
     }
 }
