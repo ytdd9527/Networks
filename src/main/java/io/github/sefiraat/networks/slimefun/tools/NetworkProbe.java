@@ -81,7 +81,7 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final int powerOutlets = root.getPowerOutlets().size();
             final int greedyBlocks = root.getGreedyBlocks().size();
 
-            final Map<ItemStack, Integer> allNetworkItems = root.getAllNetworkItems();
+            final Map<ItemStack, Long> allNetworkItems = root.getAllNetworkItems();
             final int distinctItems = allNetworkItems.size();
             long totalItems = allNetworkItems.values().stream().mapToLong(integer -> integer).sum();
 
