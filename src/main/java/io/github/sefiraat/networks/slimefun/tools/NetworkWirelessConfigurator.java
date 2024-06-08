@@ -54,7 +54,7 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
                                 setReceiver(heldItem, blockMenu, player);
                             }
                         } else {
-                            player.sendMessage(Theme.ERROR + "Must target a Network Wireless block.");
+                            player.sendMessage(Theme.ERROR + "必须对着网络无线方块使用。");
                         }
                     }
                     e.cancel();
@@ -72,17 +72,17 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
         final Location location = PersistentDataAPI.get(itemMeta, TARGET_LOCATION, DataType.LOCATION);
 
         if (location == null) {
-            player.sendMessage(Theme.ERROR + "No Wireless Receiver has been set.");
+            player.sendMessage(Theme.ERROR + "需要先设置接收器位置。");
             return;
         }
 
         if (location.getWorld() != blockMenu.getLocation().getWorld()) {
-            player.sendMessage(Theme.ERROR + "The Wireless Receiver is in a different world.");
+            player.sendMessage(Theme.ERROR + "网络无线接收器在不同的世界中。");
             return;
         }
 
         transmitter.addLinkedLocation(blockMenu.getBlock(), location);
-        player.sendMessage(Theme.SUCCESS + "Set Transmitter's receiver location.");
+        player.sendMessage(Theme.SUCCESS + "已设置网络无线发射器。");
     }
 
     private void setReceiver(@Nonnull ItemStack itemStack, @Nonnull BlockMenu blockMenu, @Nonnull Player player) {
@@ -90,6 +90,6 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
         final ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataAPI.set(itemMeta, TARGET_LOCATION, DataType.LOCATION, location);
         itemStack.setItemMeta(itemMeta);
-        player.sendMessage(Theme.SUCCESS + "Wireless Receiver set.");
+        player.sendMessage(Theme.SUCCESS + "已存储网络无线接收器的位置。");
     }
 }
