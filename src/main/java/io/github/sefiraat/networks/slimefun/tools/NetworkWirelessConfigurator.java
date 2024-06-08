@@ -31,9 +31,9 @@ public class NetworkWirelessConfigurator extends SlimefunItem {
     private static final NamespacedKey TARGET_LOCATION = Keys.newKey("target-location");
 
     public NetworkWirelessConfigurator(ItemGroup itemGroup,
-                                       SlimefunItemStack item,
-                                       RecipeType recipeType,
-                                       ItemStack[] recipe
+                                        SlimefunItemStack item,
+                                        RecipeType recipeType,
+                                        ItemStack[] recipe
     ) {
         super(itemGroup, item, recipeType, recipe);
         addItemHandler(
