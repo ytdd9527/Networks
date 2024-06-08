@@ -53,10 +53,10 @@ public class NetworkRoot extends NetworkNode {
     private final Set<Location> greedyBlocks = ConcurrentHashMap.newKeySet();
     private final Set<Location> cutters = ConcurrentHashMap.newKeySet();
     private final Set<Location> pasters = ConcurrentHashMap.newKeySet();
-    private final Set<Location> powerOutlets = ConcurrentHashMap.newKeySet();
     private final Set<Location> vacuums = ConcurrentHashMap.newKeySet();
-    private final Set<Location> wireless_receivers = ConcurrentHashMap.newKeySet();
-    private final Set<Location> wireless_transmitters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> wirelessTransmitters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> wirelessReceivers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> powerOutlets = ConcurrentHashMap.newKeySet();
 
     private Set<BarrelIdentity> barrels = null;
 
@@ -93,13 +93,10 @@ public class NetworkRoot extends NetworkNode {
             case GREEDY_BLOCK -> greedyBlocks.add(location);
             case CUTTER -> cutters.add(location);
             case PASTER -> pasters.add(location);
-            case POWER_OUTLET -> powerOutlets.add(location);
             case VACUUM -> vacuums.add(location);
-            case WIRELESS_RECEIVER -> wireless_receivers.add(location);
-            case WIRELESS_TRANSMITTER -> wireless_transmitters.add(location);
-            default -> {
-                // Nothing here guvnor
-            }
+            case WIRELESS_TRANSMITTER -> wirelessTransmitters.add(location);
+            case WIRELESS_RECEIVER -> wirelessReceivers.add(location);
+            case POWER_OUTLET -> powerOutlets.add(location);
         }
     }
 
@@ -197,20 +194,20 @@ public class NetworkRoot extends NetworkNode {
         return this.pasters;
     }
 
-    public Set<Location> getPowerOutlets() {
-        return this.powerOutlets;
-    }
-
     public Set<Location> getVacuums() {
         return this.vacuums;
     }
 
-    public Set<Location> getWirelessReceivers() {
-        return this.wireless_receivers;
+    public Set<Location> getWirelessTransmitters() {
+        return this.wirelessTransmitters;
     }
 
-    public Set<Location> getWirelessTransmitters() {
-        return this.wireless_transmitters;
+    public Set<Location> getWirelessReceivers() {
+        return this.wirelessReceivers;
+    }
+
+    public Set<Location> getPowerOutlets() {
+        return this.powerOutlets;
     }
 
     @Nonnull

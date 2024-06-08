@@ -183,9 +183,9 @@
 
         <!-- Supported Plugins -->
         <dependency>
-            <groupId>io.github.mooy1</groupId>
+            <groupId>com.github.SlimefunGuguProject</groupId>
             <artifactId>InfinityExpansion</artifactId>
-            <version>90e11bc</version>
+            <version>3c5db3650a</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -211,7 +211,7 @@
         <dependency>
             <groupId>net.guizhanss</groupId>
             <artifactId>GuizhanLibPlugin</artifactId>
-            <version>1.5.0</version>
+            <version>1.7.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

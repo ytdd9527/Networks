@@ -75,14 +75,14 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final int encoders = root.getEncoders().size();
             final int cutters = root.getCutters().size();
             final int pasters = root.getPasters().size();
-            final int power_outlets = root.getPowerOutlets().size();
             final int vacuums = root.getVacuums().size();
-            final int greedy_blocks = root.getGreedyBlocks().size();
-            final int wireless_receivers = root.getWirelessReceivers().size();
-            final int wireless_transmitters = root.getWirelessTransmitters().size();
+            final int wirelessTransmitters = root.getWirelessTransmitters().size();
+            final int wirelessReceivers = root.getWirelessReceivers().size();
+            final int powerOutlets = root.getPowerOutlets().size();
+            final int greedyBlocks = root.getGreedyBlocks().size();
 
-            final Map<ItemStack, Long> allNetworkItems = root.getAllNetworkItems();
-            final long distinctItems = allNetworkItems.size();
+            final Map<ItemStack, Integer> allNetworkItems = root.getAllNetworkItems();
+            final int distinctItems = allNetworkItems.size();
             long totalItems = allNetworkItems.values().stream().mapToLong(integer -> integer).sum();
 
             final String nodeCount = root.getNodeCount() >= root.getMaxNodes()
@@ -112,13 +112,13 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络配方编码器", p, encoders}, new StringBuffer(), null).toString());
             player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络剪切器", p, cutters}, new StringBuffer(), null).toString());
             player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络粘贴器", p, pasters}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络插口", p, power_outlets}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络阻断器", p, greedy_blocks}, new StringBuffer(), null).toString());
             player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络吸尘器", p, vacuums}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络无线发射器", p, wireless_transmitters}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络无线接收器", p, wireless_receivers}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "已存储物品类型数量", p, distinctItems}, new StringBuffer(), null).toString());
-            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "累计已存储物品数量", p, totalItems}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络无线发射器", p, wirelessTransmitters}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络无线接收器", p, wirelessReceivers}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络插口", p, powerOutlets}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "网络阻断器", p, greedyBlocks}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "物品类型数量", p, distinctItems}, new StringBuffer(), null).toString());
+            player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "累计物品数量", p, totalItems}, new StringBuffer(), null).toString());
 
             player.sendMessage("------------------------------");
             player.sendMessage(MESSAGE_FORMAT.format(new Object[]{c, "累计节点", p, nodeCount + "/" + root.getMaxNodes()}, new StringBuffer(), null).toString());
