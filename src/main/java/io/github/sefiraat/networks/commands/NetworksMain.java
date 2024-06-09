@@ -10,17 +10,22 @@ import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class NetworksMain implements CommandExecutor {
+public class NetworksMain implements TabExecutor {
 
     private static final Map<Integer, NetworkQuantumStorage> QUANTUM_REPLACEMENT_MAP = new HashMap<>();
 
@@ -54,6 +59,9 @@ public class NetworksMain implements CommandExecutor {
                     }
                 }
             }
+        } else {
+            sender.sendMessage(Theme.ERROR + "只有玩家才能执行该命令");
+            return false;
         }
         return true;
     }
@@ -89,5 +97,24 @@ public class NetworksMain implements CommandExecutor {
         quantumCache.updateMetaLore(meta);
         itemStack.setItemMeta(meta);
         player.sendMessage(Theme.SUCCESS + "已更新物品");
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(
+            @NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        List<String> raw = onTabCompleteRaw(args);
+        return StringUtil.copyPartialMatches(args[args.length - 1], raw, new ArrayList<>());
+    }
+
+    public @NotNull List<String> onTabCompleteRaw(@NotNull String[] args) {
+        if (args.length == 1) {
+            return List.of("fillquantum");
+        } else if (args.length == 2) {
+            return switch (args[0]) {
+                case "fillquantum" -> List.of("<amount>");
+                default -> new ArrayList<>();
+            };
+        }
+        return new ArrayList<>();
     }
 }

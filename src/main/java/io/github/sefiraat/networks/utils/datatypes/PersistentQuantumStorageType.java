@@ -57,7 +57,7 @@ public class PersistentQuantumStorageType implements PersistentDataType<Persiste
     @Nonnull
     public QuantumCache fromPrimitive(@Nonnull PersistentDataContainer primitive, @Nonnull PersistentDataAdapterContext context) {
         final ItemStack item = primitive.get(ITEM, DataType.ITEM_STACK);
-        final int amount = primitive.get(AMOUNT, DataType.INTEGER);
+        final long amount = primitive.get(AMOUNT, DataType.LONG);
         final int limit = primitive.get(MAX_AMOUNT, DataType.INTEGER);
         final boolean voidExcess = primitive.get(VOID, DataType.BOOLEAN);
 

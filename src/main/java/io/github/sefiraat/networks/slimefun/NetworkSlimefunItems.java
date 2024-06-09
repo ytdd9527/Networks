@@ -731,7 +731,7 @@ public class NetworkSlimefunItems {
 
         NETWORK_CAPACITOR_5 = new NetworkPowerNode(
                 NetworksItemGroups.NETWORK_ITEMS,
-                NetworksSlimefunItemStacks.NETWORK_CAPACITOR_4,
+                NetworksSlimefunItemStacks.NETWORK_CAPACITOR_5,
                 RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{
                         NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(),
