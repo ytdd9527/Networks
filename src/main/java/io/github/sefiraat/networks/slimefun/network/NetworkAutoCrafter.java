@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("deprecation")
 public class NetworkAutoCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{

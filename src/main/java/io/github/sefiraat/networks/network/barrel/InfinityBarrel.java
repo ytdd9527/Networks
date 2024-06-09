@@ -23,6 +23,7 @@ public class InfinityBarrel extends BarrelIdentity {
         this.cache = cache;
     }
 
+    @SuppressWarnings("deprecation")
     @Nullable
     @Override
     public ItemStack requestItem(@Nonnull ItemRequest itemRequest) {

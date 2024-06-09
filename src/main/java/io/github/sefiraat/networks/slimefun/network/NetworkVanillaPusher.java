@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class NetworkVanillaPusher extends NetworkDirectional {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{

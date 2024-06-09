@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class NetworkQuantumWorkbench extends SlimefunItem {
 
     private static final int[] BACKGROUND_SLOTS = {
@@ -104,8 +105,6 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
     }
 
     public void craft(@Nonnull BlockMenu menu) {
-        final ItemStack itemInOutput = menu.getItemInSlot(OUTPUT_SLOT);
-
         final ItemStack[] inputs = new ItemStack[RECIPE_SLOTS.length];
         int i = 0;
 

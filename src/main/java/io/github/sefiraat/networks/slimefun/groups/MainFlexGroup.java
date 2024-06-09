@@ -24,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 /**
  * @noinspection deprecation
  */
+@SuppressWarnings("deprecation")
 public class MainFlexGroup extends FlexItemGroup {
 
     private static final ItemStack DOCS_ITEM_STACK = Theme.themedItemStack(

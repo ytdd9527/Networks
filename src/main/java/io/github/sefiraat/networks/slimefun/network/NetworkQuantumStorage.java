@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
 
     private static final int[] SIZES = new int[]{

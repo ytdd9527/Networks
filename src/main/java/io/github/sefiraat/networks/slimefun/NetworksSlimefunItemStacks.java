@@ -7,7 +7,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import lombok.experimental.UtilityClass;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -630,7 +629,7 @@ public class NetworksSlimefunItemStacks {
 
         NETWORK_CAPACITOR_5 = Theme.themedSlimefunItemStack(
             "NTW_CAPACITOR_5",
-            new ItemStack(Material.GRAY_GLAZED_TERRACOTTA),
+            new ItemStack(Material.CYAN_GLAZED_TERRACOTTA),
             Theme.MACHINE,
             "网络电容 (5)",
             "网络电容可以接收来自",

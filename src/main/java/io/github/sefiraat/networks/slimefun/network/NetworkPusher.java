@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class NetworkPusher extends NetworkDirectional {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{

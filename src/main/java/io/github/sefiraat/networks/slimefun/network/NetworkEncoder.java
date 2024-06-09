@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class NetworkEncoder extends NetworkObject {
 
     private static final int[] BACKGROUND = new int[]{
@@ -113,8 +114,6 @@ public class NetworkEncoder extends NetworkObject {
             player.sendMessage(Theme.WARNING + "网络中的电力不足，无法完成该任务");
             return;
         }
-
-        final ItemStack outputStack = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
         ItemStack blueprint = blockMenu.getItemInSlot(BLANK_BLUEPRINT_SLOT);
 
