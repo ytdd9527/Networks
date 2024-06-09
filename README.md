@@ -1,3 +1,21 @@
+## 构建前须知
+
+**@src/main/resources/plugin.yml**
+
+在 plugin.yml 中：
+
+1. 官方版 / 汉化版切换至此版本请改为
+
+```yaml
+name: Networks
+```
+
+2. 心孜版切换至此版本请改为
+
+```yaml
+name: Networks-Changed
+```
+
 ![](https://cdn.jsdelivr.net/gh/SlimefunGuguProject/Networks@master/images/logo/logo_large.png)
 
 网络是一个Slimefun附属插件，可以创建一个简单有效的物品存储与运输系统，并可以与货运系统交互。
