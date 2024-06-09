@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 public class NetworkStorage extends BarrelIdentity {
 
-    public NetworkStorage(Location location, ItemStack itemStack, int amount) {
+    public NetworkStorage(Location location, ItemStack itemStack, long amount) {
         super(location, itemStack, amount, BarrelType.NETWORKS);
     }
 

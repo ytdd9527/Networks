@@ -30,7 +30,7 @@ import java.util.Map;
 public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
 
     private static final int[] BACKGROUND_SLOTS = {
-        5, 14, 23, 32, 33, 36, 38, 39, 40, 41, 42, 44, 48
+        5, 14, 23, 32, 33, 38, 39, 40, 41, 42, 44, 45, 48
     };
 
     private static final int[] DISPLAY_SLOTS = {
@@ -48,8 +48,9 @@ public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
         49, 50, 51, 52, 53
     };
 
-    private static final int CHANGE_SORT = 45;
+    private static final int CHANGE_SORT = 36;
     private static final int FILTER = 47;
+    private static final int CLICK_SEARCH_SLOT = 45;
     private static final int AUTO_FILTER_SLOT = 46;
     private static final int PAGE_PREVIOUS = 37;
     private static final int PAGE_NEXT = 43;
@@ -153,6 +154,12 @@ public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
                     tryCraft(menu, player);
                     return false;
                 });
+
+                menu.replaceExistingItem(getClickSearchSlot(), getClickSearchStack());
+                menu.addMenuClickHandler(getClickSearchSlot(), (p, slot, item, action) -> {
+                    GridCache gridCache = getCacheMap().get(menu.getLocation());
+                    return autoSetFilter(p, menu, gridCache, action);
+                });
             };
         };
     };
@@ -181,6 +188,10 @@ public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
 
     public int getChangeSort() {
         return CHANGE_SORT;
+    }
+
+    public int getClickSearchSlot() {
+        return CLICK_SEARCH_SLOT;
     }
 
     public int getPagePrevious() {

@@ -14,10 +14,10 @@ public class QuantumCache extends ItemStackCache {
     @Nullable
     private final ItemMeta storedItemMeta;
     private final int limit;
-    private int amount;
+    private long amount;
     private boolean voidExcess;
 
-    public QuantumCache(@Nullable ItemStack storedItem, int amount, int limit, boolean voidExcess) {
+    public QuantumCache(@Nullable ItemStack storedItem, long amount, int limit, boolean voidExcess) {
         super(storedItem);
         this.storedItemMeta = storedItem == null ? null : storedItem.getItemMeta();
         this.amount = amount;
@@ -30,7 +30,7 @@ public class QuantumCache extends ItemStackCache {
         return this.storedItemMeta;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
@@ -73,7 +73,7 @@ public class QuantumCache extends ItemStackCache {
             return null;
         }
         final ItemStack clone = this.getItemStack().clone();
-        clone.setAmount(Math.min(this.amount, amount));
+        clone.setAmount((int) Math.min(this.amount, amount));
         reduceAmount(clone.getAmount());
         return clone;
     }

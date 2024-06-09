@@ -16,6 +16,7 @@ import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -220,13 +221,25 @@ public class NetworkRoot extends NetworkNode {
             final long newAmount;
             if (currentAmount == null) {
                 newAmount = barrelIdentity.getAmount();
+
+                java.util.logging.Logger.getLogger("NetworkRoot.getAllNetworkItems").log(java.util.logging.Level.INFO,
+                    "Adding " + barrelIdentity.getItemStack() +
+                    " | New amount " + newAmount
+                );
             } else {
+
                 long newLong = (long) currentAmount + (long) barrelIdentity.getAmount();
-                if (newLong > Long.MAX_VALUE) {
-                    newAmount = Long.MAX_VALUE;
+                if (newLong > Long.MAX_VALUE || newLong < 0) {
+                    newAmount = 0;
                 } else {
                     newAmount = currentAmount + barrelIdentity.getAmount();
                 }
+
+                java.util.logging.Logger.getLogger("NetworkRoot.getAllNetworkItems").log(java.util.logging.Level.INFO,
+                    "Current amount " + currentAmount +
+                    " | Adding " + barrelIdentity.getItemStack() +
+                    " | New amount " + newAmount
+                );
             }
             itemStacks.put(barrelIdentity.getItemStack(), newAmount);
         }
@@ -399,7 +412,7 @@ public class NetworkRoot extends NetworkNode {
 
         final ItemStack output = blockMenu.getItemInSlot(NetworkQuantumStorage.OUTPUT_SLOT);
         final ItemStack itemStack = cache.getItemStack();
-        int storedInt = cache.getAmount();
+        long storedInt = cache.getAmount();
 
         if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
             storedInt = storedInt + output.getAmount();
