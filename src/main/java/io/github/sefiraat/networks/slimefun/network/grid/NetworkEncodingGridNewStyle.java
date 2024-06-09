@@ -31,40 +31,50 @@ import java.util.Map;
 
 public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
 
-    private static final int[] BACKGROUND_SLOTS = {
-        5, 14, 23, 36, 38, 39, 40, 41, 42, 44, 48
+    private static final int[] BACKGROUND_SLOTS = {     // B
+        5, 14, 23, 38, 39, 40, 41, 42, 44, 45, 48
     };
 
-    private static final int[] DISPLAY_SLOTS = {
+    private static final int[] DISPLAY_SLOTS = {        // D
         0, 1, 2, 3, 4,
         9, 10, 11, 12, 13,
         18, 19, 20, 21, 22,
         27, 28, 29, 30, 31
     };
 
-    private static final int[] INPUT_SLOTS = {
+    private static final int[] INPUT_SLOTS = {          // I
         49, 50, 51, 52, 53
     };
 
-    private static final int[] RECIPE_SLOTS = new int[]{
+    private static final int[] RECIPE_SLOTS = {         // C
         6, 7, 8,
         15, 16, 17,
         24, 25, 26
     };
 
-    private static final int BLUEPRINT_BACK = 32;
+    private static final int BLUEPRINT_BACK = 32;       // P
 
-    private static final int CHANGE_SORT = 45;
-    private static final int FILTER = 47;
-    private static final int AUTO_FILTER_SLOT = 46;
-    private static final int PAGE_PREVIOUS = 37;
-    private static final int PAGE_NEXT = 43;
-    private static final int ORANGE_BACKGROUND = 48;
+    private static final int CHANGE_SORT = 36;          // S
+    private static final int CLICK_SEARCH_SLOT = 45;    // T
+    private static final int FILTER = 47;               // E
+    private static final int AUTO_FILTER_SLOT = 46;     // K
+    private static final int PAGE_PREVIOUS = 37;        // U
+    private static final int PAGE_NEXT = 43;            // N
+    private static final int ORANGE_BACKGROUND = 48;    // Q
 
-    private static final int BLANK_BLUEPRINT_SLOT = 33;
+    private static final int BLANK_BLUEPRINT_SLOT = 33; // M
     private static final int CHARGE_COST = 2000;
-    private static final int ENCODE_SLOT = 34;
-    private static final int OUTPUT_SLOT = 35;
+    private static final int ENCODE_SLOT = 34;          // G
+    private static final int OUTPUT_SLOT = 35;          // O
+
+    /*
+     * DDDDDBCCC
+     * DDDDDBCCC
+     * DDDDDBCCC
+     * DDDDDPMGO
+     * SUBBBBBNB
+     * TKEQIIIII
+     */
 
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "空白蓝图 →"
@@ -167,6 +177,13 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
                     tryEncode(player, menu);
                     return false;
                 });
+
+                menu.replaceExistingItem(getClickSearchSlot(), getClickSearchStack());
+                menu.addMenuClickHandler(getClickSearchSlot(), (p, slot, item, action) -> {
+                    GridCache gridCache = getCacheMap().get(menu.getLocation());
+                    return autoSetFilter(p, menu, gridCache, action);
+                });
+
             }
         };
     }
@@ -194,6 +211,10 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
 
     public int getChangeSort() {
         return CHANGE_SORT;
+    }
+
+    public int getClickSearchSlot() {
+        return CLICK_SEARCH_SLOT;
     }
 
     public int getPagePrevious() {

@@ -12,6 +12,7 @@ softdepend:
   - InfinityExpansion
   - Netheopoiesis
   - WildChests
+  - mcMMO
 commands:
   networks:
     description: /networks

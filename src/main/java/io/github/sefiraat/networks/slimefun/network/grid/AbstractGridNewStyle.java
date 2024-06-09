@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network.grid;
 
+import com.gmail.nossr50.datatypes.mods.CustomTool;
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.GridItemRequest;
@@ -30,6 +31,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -69,6 +71,11 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     private static final CustomItemStack FILTER_STACK = new CustomItemStack(
         Material.NAME_TAG,
         Theme.CLICK_INFO.getColor() + "左键设置过滤器 (右键点击以清除)"
+    );
+
+    private static final CustomItemStack CLICK_SEARCH_STACK = new CustomItemStack(
+        Material.WHITE_STAINED_GLASS_PANE,
+        Theme.CLICK_INFO.getColor() + "点击搜索物品 →"
     );
 
     private static final CustomItemStack AUTO_FILTER_STACK = new CustomItemStack(
@@ -222,7 +229,9 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
 
     @Nonnull
     protected List<Map.Entry<ItemStack, Long>> getEntries(@Nonnull NetworkRoot networkRoot, @Nonnull GridCache cache) {
-        return networkRoot.getAllNetworkItems().entrySet().stream()
+        return networkRoot.getAllNetworkItems()
+            .entrySet()
+            .stream()
             .filter(entry -> {
                 if (cache.getFilter() == null) {
                     return true;
@@ -240,17 +249,15 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         if (action.isRightClicked()) {
             gridCache.setFilter(null);
         } else {
-            if (autoSetFilter(player, blockMenu, gridCache, action)){
-                player.closeInventory();
-                player.sendMessage(Theme.WARNING + "请输入你想要过滤的物品名称(显示名)或类型");
-                ChatUtils.awaitInput(player, s -> {
-                    if (s.isBlank()) {
-                        return;
-                    }
-                    gridCache.setFilter(s.toLowerCase(Locale.ROOT));
-                    player.sendMessage(Theme.SUCCESS + "已启用过滤器");
-                });
-            }
+            player.closeInventory();
+            player.sendMessage(Theme.WARNING + "请输入你想要过滤的物品名称(显示名)或类型");
+            ChatUtils.awaitInput(player, s -> {
+                if (s.isBlank()) {
+                    return;
+                }
+                gridCache.setFilter(s.toLowerCase(Locale.ROOT));
+                player.sendMessage(Theme.SUCCESS + "已启用过滤器");
+            });
         }
         return false;
     }
@@ -397,6 +404,10 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
 
     public CustomItemStack getAutoFilterStack() {
         return AUTO_FILTER_STACK;
+    }
+
+    public CustomItemStack getClickSearchStack() {
+        return CLICK_SEARCH_STACK;
     }
 
     @Nonnull

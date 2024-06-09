@@ -18,7 +18,7 @@ public class InfinityBarrel extends BarrelIdentity {
     private final StorageCache cache;
 
     @ParametersAreNonnullByDefault
-    public InfinityBarrel(Location location, ItemStack itemStack, int amount, StorageCache cache) {
+    public InfinityBarrel(Location location, ItemStack itemStack, long amount, StorageCache cache) {
         super(location, itemStack, amount, BarrelType.INFINITY);
         this.cache = cache;
     }

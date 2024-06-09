@@ -21,7 +21,7 @@ import java.util.Map;
 public class NetworkGridNewStyle extends AbstractGridNewStyle {
 
     private static final int[] BACKGROUND_SLOTS = {
-        36, 38, 39, 40, 41, 42, 44, 48
+        38, 39, 40, 41, 42, 44, 45, 48
     };
 
     private static final int[] DISPLAY_SLOTS = {
@@ -35,7 +35,8 @@ public class NetworkGridNewStyle extends AbstractGridNewStyle {
         49, 50, 51, 52, 53
     };
 
-    private static final int CHANGE_SORT = 45;
+    private static final int CHANGE_SORT = 36;
+    private static final int CLICK_SEARCH_SLOT = 45;
     private static final int FILTER = 47;
     private static final int AUTO_FILTER_SLOT = 46;
     private static final int PAGE_PREVIOUS = 37;
@@ -123,6 +124,12 @@ public class NetworkGridNewStyle extends AbstractGridNewStyle {
                     menu.addMenuClickHandler(displaySlot, (p, slot, item, action) -> false);
                 }
 
+                menu.replaceExistingItem(getClickSearchSlot(), getClickSearchStack());
+                menu.addMenuClickHandler(getClickSearchSlot(), (p, slot, item, action) -> {
+                    GridCache gridCache = getCacheMap().get(menu.getLocation());
+                    return autoSetFilter(p, menu, gridCache, action);
+                });
+
                 
             }
         };
@@ -147,6 +154,10 @@ public class NetworkGridNewStyle extends AbstractGridNewStyle {
 
     public int getChangeSort() {
         return CHANGE_SORT;
+    }
+
+    public int getClickSearchSlot() {
+        return CLICK_SEARCH_SLOT;
     }
 
     public int getPagePrevious() {
