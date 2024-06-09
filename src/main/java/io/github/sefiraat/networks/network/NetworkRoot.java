@@ -211,6 +211,7 @@ public class NetworkRoot extends NetworkNode {
         return this.powerOutlets;
     }
 
+    @SuppressWarnings("deprecation")
     @Nonnull
     public Map<ItemStack, Long> getAllNetworkItems() {
         final Map<ItemStack, Long> itemStacks = new HashMap<>();
@@ -221,25 +222,13 @@ public class NetworkRoot extends NetworkNode {
             final long newAmount;
             if (currentAmount == null) {
                 newAmount = barrelIdentity.getAmount();
-
-                java.util.logging.Logger.getLogger("NetworkRoot.getAllNetworkItems").log(java.util.logging.Level.INFO,
-                    "Adding " + barrelIdentity.getItemStack() +
-                    " | New amount " + newAmount
-                );
             } else {
-
                 long newLong = (long) currentAmount + (long) barrelIdentity.getAmount();
-                if (newLong > Long.MAX_VALUE || newLong < 0) {
+                if (newLong < 0) {
                     newAmount = 0;
                 } else {
                     newAmount = currentAmount + barrelIdentity.getAmount();
                 }
-
-                java.util.logging.Logger.getLogger("NetworkRoot.getAllNetworkItems").log(java.util.logging.Level.INFO,
-                    "Current amount " + currentAmount +
-                    " | Adding " + barrelIdentity.getItemStack() +
-                    " | New amount " + newAmount
-                );
             }
             itemStacks.put(barrelIdentity.getItemStack(), newAmount);
         }
@@ -256,8 +245,8 @@ public class NetworkRoot extends NetworkNode {
                 newAmount = itemStack.getAmount();
             } else {
                 long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                if (newLong > Long.MAX_VALUE) {
-                    newAmount = Long.MAX_VALUE;
+                if (newLong < 0) {
+                    newAmount = 0;
                 } else {
                     newAmount = currentAmount + itemStack.getAmount();
                 }
@@ -279,8 +268,8 @@ public class NetworkRoot extends NetworkNode {
                     newAmount = itemStack.getAmount();
                 } else {
                     long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                    if (newLong > Long.MAX_VALUE) {
-                        newAmount = Long.MAX_VALUE;
+                    if (newLong < 0) {
+                        newAmount = 0;
                     } else {
                         newAmount = currentAmount + itemStack.getAmount();
                     }
@@ -303,8 +292,8 @@ public class NetworkRoot extends NetworkNode {
                         newAmount = itemStack.getAmount();
                     } else {
                         long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                        if (newLong > Long.MAX_VALUE) {
-                            newAmount = Long.MAX_VALUE;
+                        if (newLong < 0) {
+                            newAmount = 0;
                         } else {
                             newAmount = currentAmount + itemStack.getAmount();
                         }
@@ -368,6 +357,7 @@ public class NetworkRoot extends NetworkNode {
         return barrelSet;
     }
 
+    @SuppressWarnings("deprecation")
     @Nullable
     private InfinityBarrel getInfinityBarrel(@Nonnull BlockMenu blockMenu, @Nonnull StorageUnit storageUnit) {
         final ItemStack itemStack = blockMenu.getItemInSlot(16);
@@ -401,6 +391,7 @@ public class NetworkRoot extends NetworkNode {
         );
     }
 
+    @SuppressWarnings("deprecation")
     @Nullable
     private NetworkStorage getNetworkStorage(@Nonnull BlockMenu blockMenu) {
 
@@ -479,6 +470,7 @@ public class NetworkRoot extends NetworkNode {
      * @param request The {@link ItemRequest} being requested from the Network
      * @return The {@link ItemStack} matching the request with as many as could be found. Null if none.
      */
+    @SuppressWarnings("deprecation")
     @Nullable
     public ItemStack getItemStack(@Nonnull ItemRequest request) {
         ItemStack stackToReturn = null;
@@ -654,6 +646,7 @@ public class NetworkRoot extends NetworkNode {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean contains(@Nonnull ItemRequest request) {
         int found = 0;
 
@@ -740,6 +733,7 @@ public class NetworkRoot extends NetworkNode {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     public void addItemStack(@Nonnull ItemStack incoming) {
         // Run for matching greedy blocks
         for (BlockMenu blockMenu : getGreedyBlocks()) {

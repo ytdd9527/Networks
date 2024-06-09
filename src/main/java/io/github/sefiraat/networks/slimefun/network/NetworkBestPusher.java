@@ -22,6 +22,8 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+@SuppressWarnings("deprecation")
 public class NetworkBestPusher extends NetworkDirectional {
     private static final int[] BACKGROUND_SLOTS = new int[]{
             0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 18, 20, 22, 23, 27, 28, 30, 31, 36, 37, 38, 39, 40, 41

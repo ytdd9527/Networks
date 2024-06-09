@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("deprecation")
 public class NetworkWirelessReceiver extends NetworkObject {
 
     public static final int RECEIVED_SLOT = 13;

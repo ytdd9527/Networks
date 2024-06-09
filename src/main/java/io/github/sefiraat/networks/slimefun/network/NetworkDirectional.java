@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("deprecation")
 public abstract class NetworkDirectional extends NetworkObject {
 
     private static final int NORTH_SLOT = 12;

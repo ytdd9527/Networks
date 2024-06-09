@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class NetworkControlV extends NetworkDirectional {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
