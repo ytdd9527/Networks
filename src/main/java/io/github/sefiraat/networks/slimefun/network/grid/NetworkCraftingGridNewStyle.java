@@ -5,6 +5,7 @@ import io.github.sefiraat.networks.network.GridItemRequest;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.SupportedRecipes;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
+import io.github.sefiraat.networks.slimefun.network.grid.GridCache.DisplayMode;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -30,7 +31,7 @@ import java.util.Map;
 public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
 
     private static final int[] BACKGROUND_SLOTS = {
-        5, 14, 23, 32, 33, 38, 39, 40, 41, 42, 44, 45, 48
+        5, 14, 23, 32, 33, 40, 41, 42, 43, 44, 45, 48
     };
 
     private static final int[] DISPLAY_SLOTS = {
@@ -53,7 +54,8 @@ public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
     private static final int CLICK_SEARCH_SLOT = 45;
     private static final int AUTO_FILTER_SLOT = 46;
     private static final int PAGE_PREVIOUS = 37;
-    private static final int PAGE_NEXT = 43;
+    private static final int PAGE_NEXT = 38;
+    private static final int TOGGLE_MODE_SLOT = 39;
     private static final int ORANGE_BACKGROUND = 48;
     private static final int CRAFT_BUTTON_SLOT = 34;
     private static final int CRAFT_OUTPUT_SLOT = 35;
@@ -160,6 +162,14 @@ public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
                     GridCache gridCache = getCacheMap().get(menu.getLocation());
                     return autoSetFilter(p, menu, gridCache, action);
                 });
+
+                menu.replaceExistingItem(getToggleModeSlot(), getModeStack(DisplayMode.DISPLAY));
+                menu.addMenuClickHandler(getToggleModeSlot(), (p, slot, item, action) -> {
+                    GridCache gridCache = getCacheMap().get(menu.getLocation());
+                    gridCache.toggleDisplayMode();
+                    menu.replaceExistingItem(getToggleModeSlot(), getModeStack(gridCache));
+                    return false;
+                });
             };
         };
     };
@@ -211,6 +221,10 @@ public class NetworkCraftingGridNewStyle extends AbstractGridNewStyle {
 
     public int getCraftOutputSlot() {
         return CRAFT_OUTPUT_SLOT;
+    }
+
+    public int getToggleModeSlot() {
+        return TOGGLE_MODE_SLOT;
     }
 
     @Override

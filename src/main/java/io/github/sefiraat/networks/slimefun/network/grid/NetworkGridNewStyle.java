@@ -1,6 +1,7 @@
 package io.github.sefiraat.networks.slimefun.network.grid;
 
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
+import io.github.sefiraat.networks.slimefun.network.grid.GridCache.DisplayMode;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class NetworkGridNewStyle extends AbstractGridNewStyle {
 
     private static final int[] BACKGROUND_SLOTS = {
-        38, 39, 40, 41, 42, 44, 45, 48
+        40, 41, 42, 43, 44, 45, 48
     };
 
     private static final int[] DISPLAY_SLOTS = {
@@ -40,7 +41,8 @@ public class NetworkGridNewStyle extends AbstractGridNewStyle {
     private static final int FILTER = 47;
     private static final int AUTO_FILTER_SLOT = 46;
     private static final int PAGE_PREVIOUS = 37;
-    private static final int PAGE_NEXT = 43;
+    private static final int PAGE_NEXT = 38;
+    private static final int TOGGLE_MODE_SLOT = 39;
     private static final int ORANGE_BACKGROUND = 48;
 
     private static final Map<Location, GridCache> CACHE_MAP = new HashMap<>();
@@ -130,6 +132,14 @@ public class NetworkGridNewStyle extends AbstractGridNewStyle {
                     return autoSetFilter(p, menu, gridCache, action);
                 });
 
+                menu.replaceExistingItem(getToggleModeSlot(), getModeStack(DisplayMode.DISPLAY));
+                menu.addMenuClickHandler(getToggleModeSlot(), (p, slot, item, action) -> {
+                    GridCache gridCache = getCacheMap().get(menu.getLocation());
+                    gridCache.toggleDisplayMode();
+                    menu.replaceExistingItem(getToggleModeSlot(), getModeStack(gridCache));
+                    return false;
+                });
+
                 
             }
         };
@@ -173,6 +183,10 @@ public class NetworkGridNewStyle extends AbstractGridNewStyle {
 
     public int getAutoFilterSlot() {
         return AUTO_FILTER_SLOT;
+    }
+
+    public int getToggleModeSlot() {
+        return TOGGLE_MODE_SLOT;
     }
 
     @Override

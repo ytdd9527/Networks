@@ -7,6 +7,7 @@ import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
+import io.github.sefiraat.networks.slimefun.network.grid.GridCache.DisplayMode;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -57,7 +58,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     );
 
     private static final CustomItemStack PAGE_NEXT_STACK = new CustomItemStack(
-        Material.RED_STAINED_GLASS_PANE,
+        Material.GREEN_STAINED_GLASS_PANE,
         Theme.CLICK_INFO.getColor() + "下一页"
     );
 
@@ -79,6 +80,19 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     private static final CustomItemStack AUTO_FILTER_STACK = new CustomItemStack(
         Material.ORANGE_STAINED_GLASS_PANE,
         Theme.CLICK_INFO.getColor() + "存入物品 →"
+    );
+
+    private static final CustomItemStack DISPLAY_MODE_STACK = new CustomItemStack(
+        Material.OBSERVER,
+        Theme.CLICK_INFO.getColor() + "点击切换显示模式",
+        Theme.CLICK_INFO.getColor() + "当前模式：显示网络所有物品"
+    );
+
+    private static final CustomItemStack HISTORY_MODE_STACK = new CustomItemStack(
+        Material.OBSERVER,
+        Theme.CLICK_INFO.getColor() + "点击切换显示模式",
+        Theme.CLICK_INFO.getColor() + "当前模式：显示取出物品历史",
+        Theme.CLICK_INFO.getColor() + "当前模式不可使用排序或搜索！"
     );
 
     private static final Comparator<? super Entry<ItemStack, Long>> ALPHABETICAL_SORT = Comparator.comparing(
@@ -169,51 +183,101 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         // Update Screen
         final NetworkRoot root = definition.getNode().getRoot();
         final GridCache gridCache = getCacheMap().get(blockMenu.getLocation().clone());
-        final List<Map.Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
-        final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
+        if (gridCache.getDisplayMode() == DisplayMode.DISPLAY){
+            final List<Map.Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
+            final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
 
-        gridCache.setMaxPages(pages);
+            gridCache.setMaxPages(pages);
 
-        // Set everything to blank and return if there are no pages (no items)
-        if (pages < 0) {
-            clearDisplay(blockMenu);
-            return;
-        }
+            // Set everything to blank and return if there are no pages (no items)
+            if (pages < 0) {
+                clearDisplay(blockMenu);
+                return;
+            }
 
-        // Reset selected page if it no longer exists due to items being removed
-        if (gridCache.getPage() > pages) {
-            gridCache.setPage(0);
-        }
+            // Reset selected page if it no longer exists due to items being removed
+            if (gridCache.getPage() > pages) {
+                gridCache.setPage(0);
+            }
 
-        final int start = gridCache.getPage() * getDisplaySlots().length;
-        final int end = Math.min(start + getDisplaySlots().length, entries.size());
-        final List<Map.Entry<ItemStack, Long>> validEntries = entries.subList(start, end);
+            final int start = gridCache.getPage() * getDisplaySlots().length;
+            final int end = Math.min(start + getDisplaySlots().length, entries.size());
+            final List<Map.Entry<ItemStack, Long>> validEntries = entries.subList(start, end);
 
-        getCacheMap().put(blockMenu.getLocation(), gridCache);
+            getCacheMap().put(blockMenu.getLocation(), gridCache);
 
-        for (int i = 0; i < getDisplaySlots().length; i++) {
-            if (validEntries.size() > i) {
-                final Map.Entry<ItemStack, Long> entry = validEntries.get(i);
-                final ItemStack displayStack = entry.getKey().clone();
-                final ItemMeta itemMeta = displayStack.getItemMeta();
-                List<String> lore = itemMeta.getLore();
+            for (int i = 0; i < getDisplaySlots().length; i++) {
+                if (validEntries.size() > i) {
+                    final Map.Entry<ItemStack, Long> entry = validEntries.get(i);
+                    final ItemStack displayStack = entry.getKey().clone();
+                    final ItemMeta itemMeta = displayStack.getItemMeta();
+                    List<String> lore = itemMeta.getLore();
 
-                if (lore == null) {
-                    lore = getLoreAddition(entry.getValue());
+                    if (lore == null) {
+                        lore = getLoreAddition(entry.getValue());
+                    } else {
+                        lore.addAll(getLoreAddition(entry.getValue()));
+                    }
+
+                    itemMeta.setLore(lore);
+                    displayStack.setItemMeta(itemMeta);
+                    blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
+                    blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
+                        retrieveItem(player, definition, item, action, blockMenu);
+                        return false;
+                    });
                 } else {
-                    lore.addAll(getLoreAddition(entry.getValue()));
+                    blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
+                    blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
                 }
+            }
+        } else {
+            final List<ItemStack> history = gridCache.getPullItemHistory();
 
-                itemMeta.setLore(lore);
-                displayStack.setItemMeta(itemMeta);
-                blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
-                blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
-                    retrieveItem(player, definition, item, action, blockMenu);
-                    return false;
-                });
-            } else {
-                blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
-                blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
+            if (history == null) {
+                clearDisplay(blockMenu);
+                return;
+            }
+
+            final int pages = (int) Math.ceil(history.size() / (double) getDisplaySlots().length) - 1;
+
+            gridCache.setMaxPages(pages);
+
+            // Set everything to blank and return if there are no pages (no items)
+            if (pages < 0) {
+                clearDisplay(blockMenu);
+                return;
+            }
+
+            // Reset selected page if it no longer exists due to items being removed
+            if (gridCache.getPage() > pages) {
+                gridCache.setPage(0);
+            }
+
+            final int start = gridCache.getPage() * getDisplaySlots().length;
+            final int end = Math.min(start + getDisplaySlots().length, history.size());
+            final List<ItemStack> vaildHistory = history.subList(start, end);
+
+            getCacheMap().put(blockMenu.getLocation(), gridCache);
+
+            for (int i = 0; i < getDisplaySlots().length; i++) {
+                if (vaildHistory.size() > i) {
+                    final ItemStack displayStack = vaildHistory.get(i);
+                    final ItemMeta itemMeta = displayStack.getItemMeta();
+                    List<String> lore = itemMeta.getLore();
+
+                    lore = getHistoryLoreAddtion();
+                    itemMeta.setLore(lore);
+                    displayStack.setItemMeta(itemMeta);
+                    blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
+                    blockMenu.addMenuClickHandler(getDisplaySlots()[i], (player, slot, item, action) -> {
+                        retrieveItem(player, definition, item, action, blockMenu);
+                        return false;
+                    });
+                } else {
+                    blockMenu.replaceExistingItem(getDisplaySlots()[i], BLANK_SLOT_STACK);
+                    blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
+                }
             }
         }
     }
@@ -253,7 +317,8 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
                 if (s.isBlank()) {
                     return;
                 }
-                gridCache.setFilter(s.toLowerCase(Locale.ROOT));
+                s = s.toLowerCase(Locale.ROOT);
+                gridCache.setFilter(s);
                 player.sendMessage(Theme.SUCCESS + "已启用过滤器");
             });
         }
@@ -261,20 +326,23 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     }
 
     protected boolean autoSetFilter(@Nonnull Player player, @Nonnull BlockMenu blockMenu, @Nonnull GridCache gridCache, @Nonnull ClickAction action) {
-        final ItemStack itemStack = blockMenu.getItemInSlot(getAutoFilterSlot());
-        if (itemStack != null && itemStack.getType() != Material.AIR) {
-            SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
-            String itemName = null;
-            if (slimefunItem != null) {
-                itemName = ChatColor.stripColor(slimefunItem.getItemName());
-            } else {
-                itemName = ChatColor.stripColor(ItemStackHelper.getDisplayName(itemStack));
-            }
+        if (action.isRightClicked()) {
+            gridCache.setFilter(null);
+        } else {
+            final ItemStack itemStack = blockMenu.getItemInSlot(getAutoFilterSlot());
+            if (itemStack != null && itemStack.getType() != Material.AIR) {
+                SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+                String itemName = null;
+                if (slimefunItem != null) {
+                    itemName = ChatColor.stripColor(slimefunItem.getItemName());
+                } else {
+                    itemName = ChatColor.stripColor(ItemStackHelper.getDisplayName(itemStack));
+                }
 
-            gridCache.setFilter(itemName.toLowerCase(Locale.ROOT));
-            return false;
+                gridCache.setFilter(itemName.toLowerCase(Locale.ROOT));
+            }
         }
-        return true;
+        return false;
     }
 
     @ParametersAreNonnullByDefault
@@ -285,6 +353,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         }
 
         final ItemStack clone = itemStack.clone();
+        
         final ItemMeta cloneMeta = clone.getItemMeta();
         final List<String> cloneLore = cloneMeta.getLore();
 
@@ -292,6 +361,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         cloneLore.remove(cloneLore.size() - 1);
         cloneMeta.setLore(cloneLore);
         clone.setItemMeta(cloneMeta);
+
         int amount = 1;
 
         if (action.isRightClicked()) {
@@ -305,7 +375,10 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         } else {
             addToCursor(player, definition, request, action);
         }
-
+        GridCache gridCache = getCacheMap().get(blockMenu.getLocation());
+        if (gridCache.getDisplayMode() == DisplayMode.DISPLAY) {
+            gridCache.addPullItemHistory(clone);
+        }
         updateDisplay(blockMenu);
     }
 
@@ -380,6 +453,8 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
 
     protected abstract int getAutoFilterSlot();
 
+    protected abstract int getToggleModeSlot();
+
     protected CustomItemStack getBlankSlotStack() {
         return BLANK_SLOT_STACK;
     }
@@ -408,12 +483,36 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         return CLICK_SEARCH_STACK;
     }
 
+    public CustomItemStack getModeStack(GridCache gridCache) {
+        if (gridCache.getDisplayMode() == DisplayMode.DISPLAY) {
+            return DISPLAY_MODE_STACK;
+        } else {
+            return HISTORY_MODE_STACK;
+        }
+    }
+
+    public CustomItemStack getModeStack(DisplayMode displayMode) {
+        if (displayMode == DisplayMode.DISPLAY) {
+            return DISPLAY_MODE_STACK;
+        } else {
+            return HISTORY_MODE_STACK;
+        }
+    }
+
     @Nonnull
     private static List<String> getLoreAddition(Long long1) {
         final MessageFormat format = new MessageFormat("{0}数量: {1}{2}", Locale.ROOT);
         return List.of(
             "",
             format.format(new Object[]{Theme.CLICK_INFO.getColor(), Theme.PASSIVE.getColor(), long1}, new StringBuffer(), null).toString()
+        );
+    }
+
+    @Nonnull
+    private static List<String> getHistoryLoreAddtion() {
+        return List.of(
+            " ",
+            Theme.PASSIVE.getColor() + "点击取出物品"
         );
     }
 }
