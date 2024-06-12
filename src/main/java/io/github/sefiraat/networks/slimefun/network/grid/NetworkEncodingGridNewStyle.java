@@ -5,6 +5,7 @@ import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.SupportedRecipes;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
+import io.github.sefiraat.networks.slimefun.network.grid.GridCache.DisplayMode;
 import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -31,50 +32,42 @@ import java.util.Map;
 
 public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
 
-    private static final int[] BACKGROUND_SLOTS = {     // B
-        5, 14, 23, 38, 39, 40, 41, 42, 44, 45, 48
+    private static final int[] BACKGROUND_SLOTS = {
+        5, 14, 23, 40, 41, 42, 43, 44, 45, 48
     };
 
-    private static final int[] DISPLAY_SLOTS = {        // D
+    private static final int[] DISPLAY_SLOTS = {
         0, 1, 2, 3, 4,
         9, 10, 11, 12, 13,
         18, 19, 20, 21, 22,
         27, 28, 29, 30, 31
     };
 
-    private static final int[] INPUT_SLOTS = {          // I
+    private static final int[] INPUT_SLOTS = {
         49, 50, 51, 52, 53
     };
 
-    private static final int[] RECIPE_SLOTS = {         // C
+    private static final int[] RECIPE_SLOTS = {
         6, 7, 8,
         15, 16, 17,
         24, 25, 26
     };
 
-    private static final int BLUEPRINT_BACK = 32;       // P
+    private static final int BLUEPRINT_BACK = 32;
 
-    private static final int CHANGE_SORT = 36;          // S
-    private static final int CLICK_SEARCH_SLOT = 45;    // T
-    private static final int FILTER = 47;               // E
-    private static final int AUTO_FILTER_SLOT = 46;     // K
-    private static final int PAGE_PREVIOUS = 37;        // U
-    private static final int PAGE_NEXT = 43;            // N
-    private static final int ORANGE_BACKGROUND = 48;    // Q
+    private static final int CHANGE_SORT = 36;
+    private static final int CLICK_SEARCH_SLOT = 45;
+    private static final int FILTER = 47;
+    private static final int AUTO_FILTER_SLOT = 46;
+    private static final int PAGE_PREVIOUS = 37;
+    private static final int PAGE_NEXT = 38;
+    private static final int TOGGLE_MODE_SLOT = 39;
+    private static final int ORANGE_BACKGROUND = 48;
 
-    private static final int BLANK_BLUEPRINT_SLOT = 33; // M
+    private static final int BLANK_BLUEPRINT_SLOT = 33;
     private static final int CHARGE_COST = 2000;
-    private static final int ENCODE_SLOT = 34;          // G
-    private static final int OUTPUT_SLOT = 35;          // O
-
-    /*
-     * DDDDDBCCC
-     * DDDDDBCCC
-     * DDDDDBCCC
-     * DDDDDPMGO
-     * SUBBBBBNB
-     * TKEQIIIII
-     */
+    private static final int ENCODE_SLOT = 34;
+    private static final int OUTPUT_SLOT = 35;
 
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "空白蓝图 →"
@@ -184,6 +177,14 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
                     return autoSetFilter(p, menu, gridCache, action);
                 });
 
+                menu.replaceExistingItem(getToggleModeSlot(), getModeStack(DisplayMode.DISPLAY));
+                menu.addMenuClickHandler(getToggleModeSlot(), (p, slot, item, action) -> {
+                    GridCache gridCache = getCacheMap().get(menu.getLocation());
+                    gridCache.toggleDisplayMode();
+                    menu.replaceExistingItem(getToggleModeSlot(), getModeStack(gridCache));
+                    return false;
+                });
+
             }
         };
     }
@@ -238,6 +239,10 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
 
     public int getBlankBlueprintSlot() {
         return BLANK_BLUEPRINT_SLOT;
+    }
+
+    public int getToggleModeSlot() {
+        return TOGGLE_MODE_SLOT;
     }
 
     @Override

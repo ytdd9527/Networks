@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.sefiraat</groupId>
     <artifactId>Networks-Changed-by-tinalness</artifactId>
-    <version>Stable-v1.1.0</version>
+    <version>Stable-v1.2.0</version>
 
     <distributionManagement>
         <repository>

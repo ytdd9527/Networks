@@ -284,7 +284,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         var blockData = StorageCacheUtils.getBlock(location);
         final String amountString = blockData.getData(BS_AMOUNT);
         final String voidString = blockData.getData(BS_VOID);
-        final int amount = amountString == null ? 0 : Integer.parseInt(amountString);
+        final long amount = amountString == null ? 0 : Integer.parseInt(amountString);
         final boolean voidExcess = voidString == null || Boolean.parseBoolean(voidString);
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
 
@@ -294,7 +294,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         return cache;
     }
 
-    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, boolean voidExcess) {
+    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, long amount, boolean voidExcess) {
         if (itemStack == null || itemStack.getType() == Material.AIR || isDisplayItem(itemStack)) {
             menu.addItem(ITEM_SLOT, NO_ITEM);
             return new QuantumCache(null, 0, this.maxAmount, true);
