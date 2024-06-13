@@ -1,2 +1,2 @@
 # 启用自动更新 (从构建站自动更新，重启服务器后新版本生效)
-auto-update: true
+auto-update: false

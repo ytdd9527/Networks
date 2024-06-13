@@ -19,6 +19,8 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
 import io.github.sefiraat.networks.slimefun.network.NetworkPurger;
+import io.github.sefiraat.networks.slimefun.network.NetworkMorePusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkBestPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
@@ -100,6 +102,8 @@ public class NetworkSlimefunItems {
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_6;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_7;
     public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_8;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_9;
+    public static final NetworkQuantumStorage NETWORK_QUANTUM_STORAGE_10;
     public static final NetworkPowerNode NETWORK_CAPACITOR_1;
     public static final NetworkPowerNode NETWORK_CAPACITOR_2;
     public static final NetworkPowerNode NETWORK_CAPACITOR_3;
