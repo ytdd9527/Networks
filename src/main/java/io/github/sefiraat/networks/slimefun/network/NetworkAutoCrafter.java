@@ -62,6 +62,7 @@ public class NetworkAutoCrafter extends NetworkObject {
 
     private final int chargePerCraft;
     private final boolean withholding;
+    private Map.Entry<ItemStack[], ItemStack> fastRecipe = null;
 
     private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
@@ -189,12 +190,24 @@ public class NetworkAutoCrafter extends NetworkObject {
         }
 
         ItemStack crafted = null;
+        ItemStack expectedOutput = instance.getItemStack();
 
-        // Go through each slimefun recipe, test and set the ItemStack if found
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedRecipes.getRecipes().entrySet()) {
-            if (SupportedRecipes.testRecipe(inputs, entry.getKey())) {
-                crafted = entry.getValue().clone();
-                break;
+        if (fastRecipe != null) {
+            if (SupportedRecipes.testRecipe(inputs, fastRecipe.getKey()) && fastRecipe.getValue().isSimilar(expectedOutput)) {
+                crafted = fastRecipe.getValue().clone();
+            } else if (Arrays.equals(fastRecipe.getKey(), inputs)) {
+                crafted = fastRecipe.getValue().clone();
+            }
+        }
+
+        if (crafted == null){
+            // Go through each slimefun recipe, test and set the ItemStack if found
+            for (Map.Entry<ItemStack[], ItemStack> entry : SupportedRecipes.getRecipes().entrySet()) {
+                if (SupportedRecipes.testRecipe(inputs, entry.getKey()) && entry.getValue().isSimilar(expectedOutput)) {
+                    crafted = entry.getValue().clone();
+                    fastRecipe = new HashMap.SimpleEntry<ItemStack[], ItemStack>(inputs, crafted);
+                    break;
+                }
             }
         }
 
@@ -207,6 +220,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
                 setCache(blockMenu, instance);
                 crafted = instance.getRecipe().getResult();
+                fastRecipe = new HashMap.SimpleEntry<ItemStack[], ItemStack>(inputs, crafted);
             }
         }
 

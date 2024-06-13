@@ -475,44 +475,46 @@ public class NetworkRoot extends NetworkNode {
     public ItemStack getItemStack(@Nonnull ItemRequest request) {
         ItemStack stackToReturn = null;
 
-        // Cells first
-        for (BlockMenu blockMenu : getCellMenus()) {
-            for (ItemStack itemStack : blockMenu.getContents()) {
-                if (itemStack == null
-                    || itemStack.getType() == Material.AIR
-                    || !StackUtils.itemsMatch(request, itemStack, true)
-                ) {
-                    continue;
-                }
+        // Barrels
+        for (BarrelIdentity barrelIdentity : getBarrels()) {
 
-                // Mark the Cell as dirty otherwise the changes will not save on shutdown
-                blockMenu.markDirty();
+            final ItemStack itemStack = barrelIdentity.getItemStack();
 
-                // If the return stack is null, we need to set it up
-                if (stackToReturn == null) {
-                    stackToReturn = itemStack.clone();
-                    stackToReturn.setAmount(1);
-                    request.receiveAmount(1);
-                    itemStack.setAmount(itemStack.getAmount() - 1);
-                }
-
-                // Escape if fulfilled request
-                if (request.getAmount() <= 0) {
-                    return stackToReturn;
-                }
-
-                if (request.getAmount() <= itemStack.getAmount()) {
-                    // We can't take more than this stack. Level to request amount, remove items and then return
-                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
-                    return stackToReturn;
-                } else {
-                    // We can take more than what is here, consume before trying to take more
-                    stackToReturn.setAmount(stackToReturn.getAmount() + itemStack.getAmount());
-                    request.receiveAmount(itemStack.getAmount());
-                    itemStack.setAmount(0);
-                }
+            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, true)) {
+                continue;
             }
+
+            boolean infinity = barrelIdentity instanceof InfinityBarrel;
+            final ItemStack fetched = barrelIdentity.requestItem(request);
+            if (fetched == null || fetched.getType() == Material.AIR || (infinity && fetched.getAmount() == 1)) {
+                continue;
+            }
+
+            // Stack is null, so we can fill it here
+            if (stackToReturn == null) {
+                stackToReturn = fetched.clone();
+                stackToReturn.setAmount(1);
+                request.receiveAmount(1);
+                fetched.setAmount(fetched.getAmount() - 1);
+            }
+
+            // Escape if fulfilled request
+            if (request.getAmount() <= 0) {
+                return stackToReturn;
+            }
+
+            final int preserveAmount = infinity ? fetched.getAmount() - 1 : fetched.getAmount();
+
+            if (request.getAmount() <= preserveAmount) {
+                stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
+                fetched.setAmount(fetched.getAmount() - request.getAmount());
+                return stackToReturn;
+            } else {
+                stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
+                request.receiveAmount(preserveAmount);
+                fetched.setAmount(fetched.getAmount() - preserveAmount);
+            }
+
         }
 
         // Crafters
@@ -592,46 +594,44 @@ public class NetworkRoot extends NetworkNode {
             }
         }
 
-        // Barrels
-        for (BarrelIdentity barrelIdentity : getBarrels()) {
+        // Cells
+        for (BlockMenu blockMenu : getCellMenus()) {
+            for (ItemStack itemStack : blockMenu.getContents()) {
+                if (itemStack == null
+                    || itemStack.getType() == Material.AIR
+                    || !StackUtils.itemsMatch(request, itemStack, true)
+                ) {
+                    continue;
+                }
 
-            final ItemStack itemStack = barrelIdentity.getItemStack();
+                // Mark the Cell as dirty otherwise the changes will not save on shutdown
+                blockMenu.markDirty();
 
-            if (itemStack == null || !StackUtils.itemsMatch(request, itemStack, true)) {
-                continue;
+                // If the return stack is null, we need to set it up
+                if (stackToReturn == null) {
+                    stackToReturn = itemStack.clone();
+                    stackToReturn.setAmount(1);
+                    request.receiveAmount(1);
+                    itemStack.setAmount(itemStack.getAmount() - 1);
+                }
+
+                // Escape if fulfilled request
+                if (request.getAmount() <= 0) {
+                    return stackToReturn;
+                }
+
+                if (request.getAmount() <= itemStack.getAmount()) {
+                    // We can't take more than this stack. Level to request amount, remove items and then return
+                    stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
+                    itemStack.setAmount(itemStack.getAmount() - request.getAmount());
+                    return stackToReturn;
+                } else {
+                    // We can take more than what is here, consume before trying to take more
+                    stackToReturn.setAmount(stackToReturn.getAmount() + itemStack.getAmount());
+                    request.receiveAmount(itemStack.getAmount());
+                    itemStack.setAmount(0);
+                }
             }
-
-            boolean infinity = barrelIdentity instanceof InfinityBarrel;
-            final ItemStack fetched = barrelIdentity.requestItem(request);
-            if (fetched == null || fetched.getType() == Material.AIR || (infinity && fetched.getAmount() == 1)) {
-                continue;
-            }
-
-            // Stack is null, so we can fill it here
-            if (stackToReturn == null) {
-                stackToReturn = fetched.clone();
-                stackToReturn.setAmount(1);
-                request.receiveAmount(1);
-                fetched.setAmount(fetched.getAmount() - 1);
-            }
-
-            // Escape if fulfilled request
-            if (request.getAmount() <= 0) {
-                return stackToReturn;
-            }
-
-            final int preserveAmount = infinity ? fetched.getAmount() - 1 : fetched.getAmount();
-
-            if (request.getAmount() <= preserveAmount) {
-                stackToReturn.setAmount(stackToReturn.getAmount() + request.getAmount());
-                fetched.setAmount(fetched.getAmount() - request.getAmount());
-                return stackToReturn;
-            } else {
-                stackToReturn.setAmount(stackToReturn.getAmount() + preserveAmount);
-                request.receiveAmount(preserveAmount);
-                fetched.setAmount(fetched.getAmount() - preserveAmount);
-            }
-
         }
 
         return stackToReturn;
