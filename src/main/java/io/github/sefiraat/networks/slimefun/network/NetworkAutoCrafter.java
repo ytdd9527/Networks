@@ -217,7 +217,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             if (instance.getRecipe() == null) {
                 returnItems(root, inputs);
                 return false;
-            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
+            } else if (Arrays.equals(instance.getRecipeItems(), inputs) && instance.getRecipe().getResult().isSimilar(expectedOutput)) {
                 setCache(blockMenu, instance);
                 crafted = instance.getRecipe().getResult();
                 fastRecipe = new HashMap.SimpleEntry<ItemStack[], ItemStack>(inputs, crafted);
