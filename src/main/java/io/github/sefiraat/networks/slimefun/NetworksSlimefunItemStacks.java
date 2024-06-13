@@ -64,8 +64,6 @@ public class NetworksSlimefunItemStacks {
     public static final SlimefunItemStack NETWORK_GREEDY_BLOCK;
     public static final SlimefunItemStack NETWORK_QUANTUM_WORKBENCH;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_0;
-    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_9;
-    public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_10;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_1;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_2;
     public static final SlimefunItemStack NETWORK_QUANTUM_STORAGE_3;
@@ -271,28 +269,8 @@ public class NetworksSlimefunItemStacks {
             Theme.MACHINE,
             "网络推送器",
             "网络推送器会尝试将",
-                "指定的物品送入机器中",
-                "本推送器有3个槽位供推送"
-        );
-
-        NETWORK_MORE_PUSHER = Theme.themedSlimefunItemStack(
-                "NTW_MOREPUSHER",
-                new ItemStack(Material.BROWN_STAINED_GLASS),
-                Theme.MACHINE,
-                "网络推送器V2",
-                "网络推送器会尝试将",
-                "指定的物品送入机器中",
-                "本推送器有6个槽位供推送"
-        );
-
-        NETWORK_BEST_PUSHER = Theme.themedSlimefunItemStack(
-                "NTW_BESTPUSHER",
-                new ItemStack(Material.BROWN_STAINED_GLASS),
-                Theme.MACHINE,
-                "网络推送器V3",
-                "网络推送器会尝试将",
-                "指定的物品送入机器中",
-                "本推送器有9个槽位供推送"
+            "指定的物品送入机器中",
+            "本推送器有4个槽位供推送"
         );
 
         NETWORK_MORE_PUSHER = Theme.themedSlimefunItemStack(
