@@ -1,6 +1,7 @@
 package io.github.sefiraat.networks.listeners;
 
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.network.NetworkNode;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
@@ -25,11 +26,10 @@ public class BlockListener implements Listener {
     private void removeNetwork(Location location) {
         NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(location);
         if (definition == null) return;
-        if (definition.getNode() == null) return;
-        NetworkStorage.removeNode(location);
-
-        if (definition.getNode().getNodeType() == NodeType.CONTROLLER) {
+        NetworkNode node = definition.getNode();
+        if (node != null && node.getNodeType() == NodeType.CONTROLLER) {
             NetworkController.wipeNetwork(location);
         }
+        NetworkStorage.removeNode(location);
     }
 }
