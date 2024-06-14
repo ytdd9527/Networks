@@ -62,12 +62,14 @@ public class GridCache {
     }
 
     public void addPullItemHistory(@Nullable ItemStack itemStack) {
-        if (this.pullItemHistory != null){
-            if (this.pullItemHistory.contains(itemStack)) {
-                this.pullItemHistory.remove(itemStack);
+        for (ItemStack i : getPullItemHistory()) {
+            if (i.getItemMeta() == itemStack.getItemMeta()) {
+                getPullItemHistory().remove(itemStack);
+                break;
             }
         }
-        this.pullItemHistory.add(0, itemStack);
+
+        getPullItemHistory().add(0, itemStack);
     }
 
     public void setFilter(@Nullable String filter) {

@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @SuppressWarnings("deprecation")
 public class NetworkAutoCrafter extends NetworkObject {
@@ -190,10 +191,10 @@ public class NetworkAutoCrafter extends NetworkObject {
         }
 
         ItemStack crafted = null;
-        ItemStack expectedOutput = instance.getItemStack();
+        // ItemStack expectedOutput = instance.getItemStack();
 
         if (fastRecipe != null) {
-            if (SupportedRecipes.testRecipe(inputs, fastRecipe.getKey()) && fastRecipe.getValue().isSimilar(expectedOutput)) {
+            if (SupportedRecipes.testRecipe(inputs, fastRecipe.getKey())) {
                 crafted = fastRecipe.getValue().clone();
             } else if (Arrays.equals(fastRecipe.getKey(), inputs)) {
                 crafted = fastRecipe.getValue().clone();
@@ -203,7 +204,7 @@ public class NetworkAutoCrafter extends NetworkObject {
         if (crafted == null){
             // Go through each slimefun recipe, test and set the ItemStack if found
             for (Map.Entry<ItemStack[], ItemStack> entry : SupportedRecipes.getRecipes().entrySet()) {
-                if (SupportedRecipes.testRecipe(inputs, entry.getKey()) && entry.getValue().isSimilar(expectedOutput)) {
+                if (SupportedRecipes.testRecipe(inputs, entry.getKey())) {
                     crafted = entry.getValue().clone();
                     fastRecipe = new HashMap.SimpleEntry<ItemStack[], ItemStack>(inputs, crafted);
                     break;
@@ -217,7 +218,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             if (instance.getRecipe() == null) {
                 returnItems(root, inputs);
                 return false;
-            } else if (Arrays.equals(instance.getRecipeItems(), inputs) && instance.getRecipe().getResult().isSimilar(expectedOutput)) {
+            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
                 setCache(blockMenu, instance);
                 crafted = instance.getRecipe().getResult();
                 fastRecipe = new HashMap.SimpleEntry<ItemStack[], ItemStack>(inputs, crafted);
