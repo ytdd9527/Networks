@@ -36,8 +36,8 @@ public class MainFlexGroup extends FlexItemGroup {
     private static final ItemStack EXPANSION_DOCS_ITEM_STACK = Theme.themedItemStack(
             Material.BOOK,
             Theme.GUIDE,
-            "网络拓展 Wiki",
-            "点击获取网络的 Wiki 链接"
+            "网络拓展 Github",
+            "点击获取网络拓展的 Github 链接"
     );
 
     private static final int GUIDE_BACK = 1;
@@ -120,9 +120,9 @@ public class MainFlexGroup extends FlexItemGroup {
         });
         menu.replaceExistingItem(EXPANSION_DOCS, EXPANSION_DOCS_ITEM_STACK);
         menu.addMenuClickHandler(EXPANSION_DOCS, (player1, i1, itemStack1, clickAction) -> {
-            final TextComponent link = new TextComponent("单击此处访问Wiki");
+            final TextComponent link = new TextComponent("单击此处访问网络拓展 Github");
             link.setColor(ChatColor.YELLOW);
-            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=6BXQf2l_DMlLOAugRUpqHSOQwZB9mUao&authKey=zD6APIsvMSXQD2EIki9lUzZiG2La4%2BhIRyWWZ6OjzVFT2lYToREpVskNADwascW0&noverify=0&group_code=959367679"));
+            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/ytdd9527/NetworksExpansion"));
             player.spigot().sendMessage(link);
             return false;
         });
