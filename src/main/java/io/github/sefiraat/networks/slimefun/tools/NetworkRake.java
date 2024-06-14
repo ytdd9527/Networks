@@ -9,9 +9,21 @@ import io.github.sefiraat.networks.slimefun.network.NetworkImport;
 import io.github.sefiraat.networks.slimefun.network.NetworkMonitor;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.*;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkBestPusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkMorePusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
+import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
+import io.github.sefiraat.networks.slimefun.network.NetworkCell;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlV;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlX;
+import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
+import io.github.sefiraat.networks.slimefun.network.NetworkGreedyBlock;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
+import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
+
+
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -52,15 +64,19 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkGrabber.class);
         viableObjects.add(NetworkImport.class);
         viableObjects.add(NetworkExport.class);
-        viableObjects.add(NetworkMorePusher.class);
-        viableObjects.add(NetworkBestPusher.class);
-
-        viableObjects.add(ChaingPusher.class);
-        //viableObjects.add(ChaingPusherPlus.class);
-        viableObjects.add(ChainGrabber.class);
-        viableObjects.add(ChainGrabberPlus.class);
-
-        viableObjects.add(AdvancedImport.class);
+        viableObjects.add(NetworkVanillaGrabber.class);
+        viableObjects.add(NetworkVanillaPusher.class);
+        viableObjects.add(NetworkWirelessTransmitter.class);
+        viableObjects.add(NetworkAutoCrafter.class);
+        viableObjects.add(NetworkCell.class);
+        viableObjects.add(NetworkControlV.class);
+        viableObjects.add(NetworkControlX.class);
+        viableObjects.add(NetworkEncoder.class);
+        viableObjects.add(NetworkGreedyBlock.class);
+        viableObjects.add(NetworkPowerDisplay.class);
+        viableObjects.add(NetworkPowerNode.class);
+        viableObjects.add(NetworkPowerOutlet.class);
+        viableObjects.add(NetworkVacuum.class);
     }
 
     @Override
