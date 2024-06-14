@@ -22,6 +22,16 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
 import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedExport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedImport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusherPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabber;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabberPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateReceiver;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkBestPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkMorePusher;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -56,7 +66,8 @@ public class NetworkRake extends LimitedUseItem {
     public NetworkRake(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int amount) {
         super(itemGroup, item, recipeType, recipe);
         setMaxUseCount(amount);
-
+        viableObjects.add(NetworkBridge.class);
+        viableObjects.add(NetworkMonitor.class);
         viableObjects.add(NetworkPusher.class);
         viableObjects.add(NetworkGrabber.class);
         viableObjects.add(NetworkImport.class);
@@ -74,6 +85,17 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkPowerNode.class);
         viableObjects.add(NetworkPowerOutlet.class);
         viableObjects.add(NetworkVacuum.class);
+        viableObjects.add(NetworkMorePusher.class);
+        viableObjects.add(NetworkBestPusher.class);
+        viableObjects.add(ChaingPusher.class);
+        viableObjects.add(ChaingPusherPlus.class);
+        viableObjects.add(ChainGrabber.class);
+        viableObjects.add(ChainGrabberPlus.class);
+        viableObjects.add(AdvancedExport.class);
+        viableObjects.add(AdvancedImport.class);
+        viableObjects.add(CoordinateReceiver.class);
+        viableObjects.add(CoordinateTransmitter.class);
+
 
     }
 
