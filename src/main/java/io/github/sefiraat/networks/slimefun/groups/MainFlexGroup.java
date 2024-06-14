@@ -26,11 +26,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class MainFlexGroup extends FlexItemGroup {
 
+
     private static final ItemStack DOCS_ITEM_STACK = Theme.themedItemStack(
-        Material.BOOK,
-        Theme.GUIDE,
-        "附属 Wiki",
-        "点击获取网络的 Wiki 链接"
+            Material.BOOK,
+            Theme.GUIDE,
+            "附属 Wiki",
+            "点击获取网络的 Wiki 链接"
+    );
+    private static final ItemStack EXPANSION_DOCS_ITEM_STACK = Theme.themedItemStack(
+            Material.BOOK,
+            Theme.GUIDE,
+            "网络拓展 Wiki",
+            "点击获取网络的 Wiki 链接"
     );
 
     private static final int GUIDE_BACK = 1;
@@ -38,17 +45,20 @@ public class MainFlexGroup extends FlexItemGroup {
     private static final int MATERIALS = 10;
     private static final int TOOLS = 11;
     private static final int NETWORK_ITEMS = 12;
+    private static final int EXPANSION_DOCS = 18;
+    private static final int NETWORK_TRANSPORTATION = 19;
+    private static final int NETWORK_ITEMS_EXPANSION = 20;
     private static final int NETWORK_QUANTUMS = 13;
 
     private static final int[] HEADER = new int[]{
-        0, 1, 2, 3, 4, 5, 6, 7, 8
+            0, 1, 2, 3, 4, 5, 6, 7, 8
     };
     private static final int[] FOOTER = new int[]{
-        45, 46, 47, 48, 49, 50, 51, 52, 53
+            45, 46, 47, 48, 49, 50, 51, 52, 53
     };
 
-    public MainFlexGroup(NamespacedKey key, ItemStack item) {
-        super(key, item);
+    public MainFlexGroup(NamespacedKey key, ItemStack item,int tier) {
+        super(key, item,tier);
     }
 
     @Override
@@ -87,12 +97,12 @@ public class MainFlexGroup extends FlexItemGroup {
 
         // Back
         menu.replaceExistingItem(
-            GUIDE_BACK,
-            ChestMenuUtils.getBackButton(
-                player,
-                "",
-                ChatColor.GRAY + Slimefun.getLocalization().getMessage(player, "guide.back.guide")
-            )
+                GUIDE_BACK,
+                ChestMenuUtils.getBackButton(
+                        player,
+                        "",
+                        ChatColor.GRAY + Slimefun.getLocalization().getMessage(player, "guide.back.guide")
+                )
         );
         menu.addMenuClickHandler(GUIDE_BACK, (player1, slot, itemStack, clickAction) -> {
             SlimefunGuide.openMainMenu(profile, mode, 1);
@@ -108,29 +118,45 @@ public class MainFlexGroup extends FlexItemGroup {
             player.spigot().sendMessage(link);
             return false;
         });
+        menu.replaceExistingItem(EXPANSION_DOCS, EXPANSION_DOCS_ITEM_STACK);
+        menu.addMenuClickHandler(EXPANSION_DOCS, (player1, i1, itemStack1, clickAction) -> {
+            final TextComponent link = new TextComponent("单击此处访问Wiki");
+            link.setColor(ChatColor.YELLOW);
+            link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=6BXQf2l_DMlLOAugRUpqHSOQwZB9mUao&authKey=zD6APIsvMSXQD2EIki9lUzZiG2La4%2BhIRyWWZ6OjzVFT2lYToREpVskNADwascW0&noverify=0&group_code=959367679"));
+            player.spigot().sendMessage(link);
+            return false;
+        });
 
         // Materials
         menu.replaceExistingItem(MATERIALS, NetworksItemGroups.MATERIALS.getItem(player));
         menu.addMenuClickHandler(MATERIALS, (player1, i1, itemStack1, clickAction) ->
-            openPage(profile, NetworksItemGroups.MATERIALS, mode, 1)
+                openPage(profile, NetworksItemGroups.MATERIALS, mode, 1)
         );
 
         // Tools
         menu.replaceExistingItem(TOOLS, NetworksItemGroups.TOOLS.getItem(player));
         menu.addMenuClickHandler(TOOLS, (player1, i1, itemStack1, clickAction) ->
-            openPage(profile, NetworksItemGroups.TOOLS, mode, 1)
+                openPage(profile, NetworksItemGroups.TOOLS, mode, 1)
         );
 
         // Network Items
         menu.replaceExistingItem(NETWORK_ITEMS, NetworksItemGroups.NETWORK_ITEMS.getItem(player));
         menu.addMenuClickHandler(NETWORK_ITEMS, (player1, i1, itemStack1, clickAction) ->
-            openPage(profile, NetworksItemGroups.NETWORK_ITEMS, mode, 1)
+                openPage(profile, NetworksItemGroups.NETWORK_ITEMS, mode, 1)
+        );
+        menu.replaceExistingItem(NETWORK_TRANSPORTATION, NetworksItemGroups.NETWORK_TRANSPORTATION.getItem(player));
+        menu.addMenuClickHandler(NETWORK_TRANSPORTATION, (player1, i1, itemStack1, clickAction) ->
+                openPage(profile, NetworksItemGroups.NETWORK_TRANSPORTATION, mode, 1)
+        );
+        menu.replaceExistingItem(NETWORK_ITEMS_EXPANSION, NetworksItemGroups.NETWORK_ITEMS_EXPANSION.getItem(player));
+        menu.addMenuClickHandler(NETWORK_ITEMS_EXPANSION, (player1, i1, itemStack1, clickAction) ->
+                openPage(profile, NetworksItemGroups.NETWORK_ITEMS_EXPANSION, mode, 1)
         );
 
         // Network Quantums
         menu.replaceExistingItem(NETWORK_QUANTUMS, NetworksItemGroups.NETWORK_QUANTUMS.getItem(player));
         menu.addMenuClickHandler(NETWORK_QUANTUMS, (player1, i1, itemStack1, clickAction) ->
-            openPage(profile, NetworksItemGroups.NETWORK_QUANTUMS, mode, 1)
+                openPage(profile, NetworksItemGroups.NETWORK_QUANTUMS, mode, 1)
         );
     }
 

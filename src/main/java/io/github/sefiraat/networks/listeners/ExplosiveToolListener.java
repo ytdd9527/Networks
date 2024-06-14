@@ -24,4 +24,5 @@ public class ExplosiveToolListener implements Listener {
         }
         event.getAdditionalBlocks().removeAll(blocksToRemove);
     }
+
 }

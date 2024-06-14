@@ -37,4 +37,5 @@ public class BlueprintInstance extends ItemStackCache {
             this.recipe = Bukkit.getCraftingRecipe(this.recipeItems, world);
         }
     }
+
 }

@@ -41,7 +41,7 @@ public class NetworkImport extends NetworkObject {
         }
 
         addItemHandler(
-            new BlockTicker() {
+            new BlockTicker() {                                                                                                                                                                                                                                                                                                                                             
 
                 private int tick = 1;
 

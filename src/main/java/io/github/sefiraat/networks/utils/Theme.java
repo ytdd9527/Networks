@@ -16,6 +16,9 @@ import java.util.List;
 
 @Getter
 public enum Theme {
+    GOLD(ChatColor.GOLD, ""),
+    WHITE(ChatColor.WHITE, ""),
+    AQUA(ChatColor.AQUA, ""),
     WARNING(ChatColor.YELLOW, "警告"),
     ERROR(ChatColor.RED, "错误"),
     NOTICE(ChatColor.WHITE, "通知"),
@@ -26,12 +29,17 @@ public enum Theme {
     RESEARCH(ChatColor.of("#a60e03"), "研究"),
     CRAFTING(ChatColor.of("#dbcea9"), "合成材料"),
     MACHINE(ChatColor.of("#3295a8"), "机器"),
+
     TOOL(ChatColor.of("#6b32a8"), "工具"),
     MECHANISM(ChatColor.of("#3295a8"), "装置"),
     FUEL(ChatColor.of("#112211"), "染料"),
     MATERIAL_CLASS(ChatColor.of("#a4c2ba"), "材料"),
     RECIPE_TYPE(ChatColor.of("#ffe89c"), "配方类型"),
+
+
+
     GUIDE(ChatColor.of("#444444"), "指南");
+
 
     @Getter
     protected static final Theme[] cachedValues = values();

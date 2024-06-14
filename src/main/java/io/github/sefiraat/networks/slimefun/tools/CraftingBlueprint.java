@@ -24,7 +24,6 @@ public class CraftingBlueprint extends UnplaceableBlock implements DistinctiveIt
     public CraftingBlueprint(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
-
     @ParametersAreNonnullByDefault
     public static void setBlueprint(ItemStack blueprint, ItemStack[] recipe, ItemStack output) {
         final ItemMeta itemMeta = blueprint.getItemMeta();

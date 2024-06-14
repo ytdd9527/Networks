@@ -24,10 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkRoot extends NetworkNode {
@@ -56,8 +53,18 @@ public class NetworkRoot extends NetworkNode {
     private final Set<Location> vacuums = ConcurrentHashMap.newKeySet();
     private final Set<Location> wirelessTransmitters = ConcurrentHashMap.newKeySet();
     private final Set<Location> wirelessReceivers = ConcurrentHashMap.newKeySet();
-    private final Set<Location> powerOutlets = ConcurrentHashMap.newKeySet();
 
+    private final Set<Location> chaingpushers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> chaingpurgersPlus = ConcurrentHashMap.newKeySet();
+    private final Set<Location> chainggrabbers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> chainggrabbersPlus = ConcurrentHashMap.newKeySet();
+    private final Set<Location> advancedimporters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> advancedexporters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> coordinateTransmitters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> coordinateReceivers = ConcurrentHashMap.newKeySet();
+
+
+    private final Set<Location> powerOutlets = ConcurrentHashMap.newKeySet();
     private Set<BarrelIdentity> barrels = null;
 
     private long rootPower = 0;
@@ -99,6 +106,15 @@ public class NetworkRoot extends NetworkNode {
             case WIRELESS_TRANSMITTER -> wirelessTransmitters.add(location);
             case WIRELESS_RECEIVER -> wirelessReceivers.add(location);
             case POWER_OUTLET -> powerOutlets.add(location);
+
+            case CHAING_PUSHER -> chaingpushers.add(location);
+            case CHAING_PUSHER_PLUS -> chaingpurgersPlus.add(location);
+            case CHAING_GRABBER -> chainggrabbers.add(location);
+            case CHAING_GRABBER_PLUS -> chainggrabbersPlus.add(location);
+            case NEA_IMPORT -> advancedimporters.add(location);
+            case NEA_EXPORT -> advancedexporters.add(location);
+            case NE_COORDINATE_TRANSMITTER ->coordinateTransmitters.add(location);
+            case NE_COORDINATE_RECEIVER ->coordinateReceivers.add(location);
         }
     }
 
@@ -187,7 +203,6 @@ public class NetworkRoot extends NetworkNode {
     public Set<Location> getEncoders() {
         return this.encoders;
     }
-
     public Set<Location> getCutters() {
         return this.cutters;
     }
@@ -212,6 +227,38 @@ public class NetworkRoot extends NetworkNode {
         return this.powerOutlets;
     }
 
+
+    public Set<Location> getChaingPusher() {
+        return this.chaingpushers;
+    }
+
+    public Set<Location> getChaingPusherPlus() {
+        return this.chaingpurgersPlus;
+    }
+
+    public Set<Location> getChainGrabber() {
+        return this.chainggrabbers;
+    }
+
+    public Set<Location> getChainGrabberPlus() {
+        return this.chainggrabbersPlus;
+    }
+
+    public Set<Location> getAdvancedImport() {
+        return this.advancedimporters;
+    }
+
+    public Set<Location> getAdvancedExport() {
+        return this.advancedexporters;
+    }
+
+    public Set<Location> getCoordinateTransmitter() {
+        return this.coordinateTransmitters;
+    }
+
+    public Set<Location> getCoordinateReceiver() {
+        return this.coordinateReceivers;
+    }
     @Nonnull
     public Map<ItemStack, Integer> getAllNetworkItems() {
         final Map<ItemStack, Integer> itemStacks = new HashMap<>();
@@ -401,7 +448,7 @@ public class NetworkRoot extends NetworkNode {
 
         final ItemStack output = blockMenu.getItemInSlot(NetworkQuantumStorage.OUTPUT_SLOT);
         final ItemStack itemStack = cache.getItemStack();
-        int storedInt = cache.getAmount();
+        int storedInt = (int) cache.getAmount();
 
         if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
             storedInt = storedInt + output.getAmount();
@@ -634,14 +681,6 @@ public class NetworkRoot extends NetworkNode {
         return stackToReturn;
     }
 
-    public boolean contains(@Nonnull ItemRequest[] requests) {
-        for (ItemRequest request : requests) {
-            if (!contains(request)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public boolean contains(@Nonnull ItemRequest request) {
         int found = 0;
@@ -728,7 +767,31 @@ public class NetworkRoot extends NetworkNode {
 
         return false;
     }
-
+    public int getAmount(@Nonnull ItemStack itemStack) {
+        int totalAmount = 0;
+        // 遍历所有贪婪方块
+        for (BlockMenu blockMenu : getGreedyBlocks()) {
+            ItemStack inputSlotItem = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
+            if (inputSlotItem != null && StackUtils.itemsMatch(inputSlotItem, itemStack)) {
+                totalAmount += inputSlotItem.getAmount();
+            }
+        }
+        // 遍历所有桶
+        for (BarrelIdentity barrel : getBarrels()) {
+            if (StackUtils.itemsMatch(barrel.getItemStack(), itemStack)) {
+                totalAmount += barrel.getAmount();
+            }
+        }
+        // 遍历所有单元格菜单
+        for (BlockMenu blockMenu : getCellMenus()) {
+            for (ItemStack cellItem : blockMenu.getContents()) {
+                if (cellItem != null && StackUtils.itemsMatch(cellItem, itemStack)) {
+                    totalAmount += cellItem.getAmount();
+                }
+            }
+        }
+        return totalAmount;
+    }
     public void addItemStack(@Nonnull ItemStack incoming) {
         // Run for matching greedy blocks
         for (BlockMenu blockMenu : getGreedyBlocks()) {
@@ -862,4 +925,19 @@ public class NetworkRoot extends NetworkNode {
     public void setDisplayParticles(boolean displayParticles) {
         this.displayParticles = displayParticles;
     }
+
+    @Nonnull
+    public List<ItemStack> getItemStacks(@Nonnull List<ItemRequest> itemRequests) {
+        List<ItemStack> retrievedItems = new ArrayList<>();
+
+        for (ItemRequest request : itemRequests) {
+            ItemStack retrieved = getItemStack(request);
+            if (retrieved != null) {
+                retrievedItems.add(retrieved);
+            }
+        }
+        return retrievedItems;
+    }
+
+
 }

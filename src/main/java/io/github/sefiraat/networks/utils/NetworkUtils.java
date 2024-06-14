@@ -4,6 +4,10 @@ import de.jeff_media.morepersistentdatatypes.DataType;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
+
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkMorePusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusherPlus;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -68,6 +72,12 @@ public class NetworkUtils {
                         player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "Not enough items to fill filter");
                     }
                 } else if (directional instanceof NetworkPusher) {
+                    player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
+                } else if (directional instanceof NetworkMorePusher) {
+                    player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
+                } else if (directional instanceof ChaingPusher) {
+                player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
+                } else if (directional instanceof ChaingPusherPlus) {
                     player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
                 }
                 i++;
