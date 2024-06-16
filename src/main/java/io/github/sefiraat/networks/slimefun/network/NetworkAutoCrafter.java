@@ -1,7 +1,6 @@
 package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
-
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
@@ -41,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@SuppressWarnings("deprecation")
 public class NetworkAutoCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
@@ -190,15 +188,12 @@ public class NetworkAutoCrafter extends NetworkObject {
         }
 
         ItemStack crafted = null;
-        ItemStack expectedOutput = instance.getItemStack();
 
-        if (crafted == null){
-            // Go through each slimefun recipe, test and set the ItemStack if found
-            for (Map.Entry<ItemStack[], ItemStack> entry : SupportedRecipes.getRecipes().entrySet()) {
-                if (SupportedRecipes.testRecipe(inputs, entry.getKey()) && entry.getValue().isSimilar(expectedOutput)) {
-                    crafted = entry.getValue().clone();
-                    break;
-                }
+        // Go through each slimefun recipe, test and set the ItemStack if found
+        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedRecipes.getRecipes().entrySet()) {
+            if (SupportedRecipes.testRecipe(inputs, entry.getKey())) {
+                crafted = entry.getValue().clone();
+                break;
             }
         }
 
@@ -208,7 +203,7 @@ public class NetworkAutoCrafter extends NetworkObject {
             if (instance.getRecipe() == null) {
                 returnItems(root, inputs);
                 return false;
-            } else if (Arrays.equals(instance.getRecipeItems(), inputs) && instance.getRecipe().getResult().isSimilar(expectedOutput)) {
+            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
                 setCache(blockMenu, instance);
                 crafted = instance.getRecipe().getResult();
             }
@@ -276,5 +271,4 @@ public class NetworkAutoCrafter extends NetworkObject {
             }
         };
     }
-
 }
