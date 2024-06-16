@@ -133,7 +133,6 @@ public class StackUtils {
         return true;
     }
 
-
     public boolean canQuickEscapeMetaVariant(@Nonnull ItemMeta metaOne, @Nonnull ItemMeta metaTwo) {
 
         // Damageable (first as everything can be damageable apparently)
@@ -351,4 +350,5 @@ public class StackUtils {
         }
         return false;
     }
+
 }

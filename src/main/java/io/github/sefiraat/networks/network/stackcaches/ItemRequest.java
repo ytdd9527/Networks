@@ -3,6 +3,7 @@ package io.github.sefiraat.networks.network.stackcaches;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 
 public class ItemRequest extends ItemStackCache {
 
@@ -12,6 +13,8 @@ public class ItemRequest extends ItemStackCache {
         super(itemStack);
         this.amount = amount;
     }
+
+
 
     public int getAmount() {
         return this.amount;

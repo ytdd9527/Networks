@@ -177,7 +177,6 @@ public abstract class NetworkDirectional extends NetworkObject {
             @Override
             public void init() {
                 drawBackground(getBackgroundSlots());
-
                 if (getOtherBackgroundSlots() != null && getOtherBackgroundStack() != null) {
                     drawBackground(getOtherBackgroundStack(), getOtherBackgroundSlots());
                 }
@@ -194,6 +193,8 @@ public abstract class NetworkDirectional extends NetworkObject {
             public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block b) {
                 final BlockFace direction;
                 final String string = StorageCacheUtils.getData(blockMenu.getLocation(), DIRECTION);
+
+
 
                 if (string == null) {
                     // This likely means a block was placed before I made it directional
@@ -216,6 +217,8 @@ public abstract class NetworkDirectional extends NetworkObject {
                     directionClick(player, clickAction, blockMenu, BlockFace.UP));
                 blockMenu.addMenuClickHandler(getDownSlot(), (player, i, itemStack, clickAction) ->
                     directionClick(player, clickAction, blockMenu, BlockFace.DOWN));
+
+
             }
 
             @Override
@@ -282,6 +285,9 @@ public abstract class NetworkDirectional extends NetworkObject {
         return null;
     }
 
+    public int getUpSlot() {
+        return UP_SLOT;
+    }
     public int getNorthSlot() {
         return NORTH_SLOT;
     }
@@ -298,9 +304,6 @@ public abstract class NetworkDirectional extends NetworkObject {
         return WEST_SLOT;
     }
 
-    public int getUpSlot() {
-        return UP_SLOT;
-    }
 
     public int getDownSlot() {
         return DOWN_SLOT;
@@ -375,4 +378,7 @@ public abstract class NetworkDirectional extends NetworkObject {
         final Location displayLocation = location.clone().add(0.5, 0.5, 0.5).add(faceVector);
         location.getWorld().spawnParticle(Particle.REDSTONE, displayLocation, 0, pushVector.getX(), pushVector.getY(), pushVector.getZ(), getDustOptions());
     }
+
+
+
 }

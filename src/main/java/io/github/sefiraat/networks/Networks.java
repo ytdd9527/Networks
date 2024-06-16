@@ -6,6 +6,7 @@ import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import net.guizhanss.guizhanlibplugin.updater.GuizhanUpdater;
 import net.guizhanss.slimefun4.utils.WikiUtils;
@@ -50,10 +51,12 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
-        getLogger().info("###########################################################");
-        getLogger().info("                   Networks-Changed - 网络改版             ");
-        getLogger().info("  作者: Sefiraat 汉化: ybw0014 改版：shixinzia、tinalness   ");
-        getLogger().info("###########################################################");
+        getLogger().info("########################################");
+        getLogger().info("            Networks - 网络              ");
+        getLogger().info("       作者: Sefiraat 汉化: ybw0014      ");
+        getLogger().info("       魔改网络: yitoudaidai、tinalness  ");
+        getLogger().info("            拓展实用网络功能              ");
+        getLogger().info("########################################");
 
         saveDefaultConfig();
         //tryUpdate();
@@ -76,6 +79,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
+        ExpansionSlimefunitems.setup();
         WikiUtils.setupJson(this);
         if (supportedPluginManager.isNetheopoiesis()){
             try {
@@ -131,4 +135,5 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     public static ListenerManager getListenerManager() {
         return Networks.getInstance().listenerManager;
     }
+
 }

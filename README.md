@@ -22,6 +22,9 @@ name: Networks-Changed
 
 ![](https://cdn.jsdelivr.net/gh/SlimefunGuguProject/Networks@master/images/wiki/setup.png)
 
+## 网络拓展
+顾名思义就是拓展网络物品 提高了网络的可玩性。
+
 ## 下载
 
 [![构建状态](https://builds.guizhanss.com/api/badge/SlimefunGuguProject/Networks/master/latest)](https://builds.guizhanss.com/SlimefunGuguProject/Networks/master)

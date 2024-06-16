@@ -31,6 +31,29 @@ import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGridNewS
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkEncodingGridNewStyle;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGridNewStyle;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaGrabber;
+import io.github.sefiraat.networks.slimefun.network.NetworkVanillaPusher;
+import io.github.sefiraat.networks.slimefun.network.NetworkWirelessTransmitter;
+import io.github.sefiraat.networks.slimefun.network.NetworkAutoCrafter;
+import io.github.sefiraat.networks.slimefun.network.NetworkCell;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlV;
+import io.github.sefiraat.networks.slimefun.network.NetworkControlX;
+import io.github.sefiraat.networks.slimefun.network.NetworkEncoder;
+import io.github.sefiraat.networks.slimefun.network.NetworkGreedyBlock;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
+import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedExport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedImport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusherPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabber;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabberPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateReceiver;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkBestPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkMorePusher;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -93,6 +116,14 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkVanillaPusher.class);
         viableObjects.add(NetworkWirelessReceiver.class);
         viableObjects.add(NetworkWirelessTransmitter.class);
+        viableObjects.add(ChaingPusher.class);
+        viableObjects.add(ChaingPusherPlus.class);
+        viableObjects.add(ChainGrabber.class);
+        viableObjects.add(ChainGrabberPlus.class);
+        viableObjects.add(AdvancedExport.class);
+        viableObjects.add(AdvancedImport.class);
+        viableObjects.add(CoordinateReceiver.class);
+        viableObjects.add(CoordinateTransmitter.class);
     }
 
     @Override

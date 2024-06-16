@@ -13,17 +13,21 @@ public class QuantumCache extends ItemStackCache {
 
     @Nullable
     private final ItemMeta storedItemMeta;
-    private final int limit;
+    private int limit;
     private long amount;
-    private boolean voidExcess;
 
-    public QuantumCache(@Nullable ItemStack storedItem, long amount, int limit, boolean voidExcess) {
+    private boolean voidExcess;
+    private boolean supportsCustomMaxAmount;
+
+    public QuantumCache(@Nullable ItemStack storedItem, long amount, int limit, boolean voidExcess, boolean supportsCustomMaxAmount) {
         super(storedItem);
         this.storedItemMeta = storedItem == null ? null : storedItem.getItemMeta();
         this.amount = amount;
         this.limit = limit;
         this.voidExcess = voidExcess;
+        this.supportsCustomMaxAmount = supportsCustomMaxAmount;
     }
+
 
     @Nullable
     public ItemMeta getStoredItemMeta() {
@@ -32,6 +36,12 @@ public class QuantumCache extends ItemStackCache {
 
     public long getAmount() {
         return amount;
+    }
+    public boolean supportsCustomMaxAmount() {
+        return this.supportsCustomMaxAmount;
+    }
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 
     public void setAmount(int amount) {
@@ -74,7 +84,8 @@ public class QuantumCache extends ItemStackCache {
         }
         final ItemStack clone = this.getItemStack().clone();
         clone.setAmount((int) Math.min(this.amount, amount));
-        reduceAmount(clone.getAmount());
+        reduceAmount(clone.
+                     ());
         return clone;
     }
 
@@ -86,27 +97,35 @@ public class QuantumCache extends ItemStackCache {
         return withdrawItem(this.getItemStack().getMaxStackSize());
     }
 
+
     public void addMetaLore(ItemMeta itemMeta) {
-        final List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+        final List<String> lore = itemMeta.hasLore() ? new ArrayList<>(itemMeta.getLore()) : new ArrayList<>();
         String itemName = "无";
         if (getItemStack() != null) {
             itemName = ItemStackHelper.getDisplayName(this.getItemStack());
         }
-
         lore.add("");
         lore.add(Theme.CLICK_INFO + "物品: " + itemName);
-        lore.add(Theme.CLICK_INFO + "数量: " + this.getAmount());
+        lore.add(Theme.CLICK_INFO + "数量: " + Theme.WHITE + this.getAmount());
+        if (this.supportsCustomMaxAmount) {
+            lore.add(Theme.CLICK_INFO + "当前容量限制: " + Theme.ERROR + this.getLimit());
+        }
+
         itemMeta.setLore(lore);
     }
-
     public void updateMetaLore(ItemMeta itemMeta) {
         final List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
         String itemName = "无";
         if (getItemStack() != null) {
             itemName = ItemStackHelper.getDisplayName(this.getItemStack());
         }
-        lore.add(Theme.CLICK_INFO + "物品: " + itemName);
-        lore.add(Theme.CLICK_INFO + "数量: " + this.getAmount());
+        final int loreIndexModifier = this.supportsCustomMaxAmount ? 1 : 0;
+        lore.set(lore.size() - 2 - loreIndexModifier, Theme.CLICK_INFO + "物品: " + itemName);
+        lore.set(lore.size() - 1 - loreIndexModifier, Theme.CLICK_INFO + "数量: " + Theme.WHITE + this.getAmount());
+        if (this.supportsCustomMaxAmount) {
+            lore.set(lore.size() - loreIndexModifier, Theme.CLICK_INFO + "当前容量限制: " + Theme.ERROR + this.getLimit());
+        }
+
         itemMeta.setLore(lore);
     }
 }

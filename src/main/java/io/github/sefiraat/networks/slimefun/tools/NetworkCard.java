@@ -40,44 +40,41 @@ public class NetworkCard extends SlimefunItem implements DistinctiveItem {
     public NetworkCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int size) {
         super(itemGroup, item, recipeType, recipe);
         this.size = size;
-        addItemHandler(new ItemUseHandler() {
-            @Override
-            public void onRightClick(PlayerRightClickEvent e) {
-                final Player player = e.getPlayer();
-                final ItemStack card = player.getInventory().getItemInMainHand();
-                final ItemStack stackToSet = player.getInventory().getItemInOffHand().clone();
+        addItemHandler((ItemUseHandler) e -> {
+            final Player player = e.getPlayer();
+            final ItemStack card = player.getInventory().getItemInMainHand();
+            final ItemStack stackToSet = player.getInventory().getItemInOffHand().clone();
 
-                e.cancel();
-                if (card.getAmount() > 1) {
-                    player.sendMessage(Theme.WARNING + "请单独拿出一张内存卡，不要堆叠");
+            e.cancel();
+            if (card.getAmount() > 1) {
+                player.sendMessage(Theme.WARNING + "请单独拿出一张内存卡，不要堆叠");
+                return;
+            }
+
+            if (isBlacklisted(stackToSet)) {
+                player.sendMessage(Theme.WARNING + "该物品无法存储至内存卡中");
+                return;
+            }
+
+            final SlimefunItem cardItem = SlimefunItem.getByItem(card);
+            if (cardItem instanceof NetworkCard networkCard) {
+                final ItemMeta cardMeta = card.getItemMeta();
+                final CardInstance cardInstance = DataTypeMethods.getCustom(
+                    cardMeta,
+                    Keys.CARD_INSTANCE,
+                    PersistentCardInstanceType.TYPE,
+                    new CardInstance(null, 0, networkCard.getSize())
+                );
+
+                if (cardInstance.getAmount() > 0) {
+                    e.getPlayer().sendMessage(Theme.WARNING + "只有空内存卡才能分配物品");
                     return;
                 }
 
-                if (isBlacklisted(stackToSet)) {
-                    player.sendMessage(Theme.WARNING + "该物品无法存储至内存卡中");
-                    return;
-                }
-
-                final SlimefunItem cardItem = SlimefunItem.getByItem(card);
-                if (cardItem instanceof NetworkCard networkCard) {
-                    final ItemMeta cardMeta = card.getItemMeta();
-                    final CardInstance cardInstance = DataTypeMethods.getCustom(
-                        cardMeta,
-                        Keys.CARD_INSTANCE,
-                        PersistentCardInstanceType.TYPE,
-                        new CardInstance(null, 0, networkCard.getSize())
-                    );
-
-                    if (cardInstance.getAmount() > 0) {
-                        e.getPlayer().sendMessage(Theme.WARNING + "只有空内存卡才能分配物品");
-                        return;
-                    }
-
-                    cardInstance.setItemStack(stackToSet);
-                    DataTypeMethods.setCustom(cardMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE, cardInstance);
-                    cardInstance.updateLore(cardMeta);
-                    card.setItemMeta(cardMeta);
-                }
+                cardInstance.setItemStack(stackToSet);
+                DataTypeMethods.setCustom(cardMeta, Keys.CARD_INSTANCE, PersistentCardInstanceType.TYPE, cardInstance);
+                cardInstance.updateLore(cardMeta);
+                card.setItemMeta(cardMeta);
             }
         });
     }

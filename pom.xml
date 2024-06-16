@@ -14,6 +14,7 @@
             <name>sefi-central</name>
             <url>https://sefiraat.jfrog.io/artifactory/default-maven-local</url>
         </repository>
+
         <snapshotRepository>
             <id>snapshots</id>
             <name>sefi-snapshot</name>
@@ -66,6 +67,12 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>io.github.sefiraat.networks.bstats</shadedPattern>
                         </relocation>
+
+                        <relocation>
+                            <pattern>io.papermc.lib</pattern>
+                            <shadedPattern>dev.sefiraat.cultivation.paperlib</shadedPattern>
+                        </relocation>
+
                     </relocations>
                     <filters>
                         <filter>
@@ -123,6 +130,10 @@
             <id>bg-repo</id>
             <url>https://repo.bg-software.com/repository/api/</url>
         </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -130,7 +141,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -139,12 +150,7 @@
             <version>2024.3</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>dev.sefiraat</groupId>
-            <artifactId>SefiLib</artifactId>
-            <version>0.2.6</version>
-            <scope>compile</scope>
-        </dependency>
+
 
         <!-- Tools etc. -->
         <dependency>
@@ -181,6 +187,7 @@
             <scope>compile</scope>
         </dependency>
 
+
         <!-- Supported Plugins -->
         <dependency>
             <groupId>com.github.SlimefunGuguProject</groupId>
@@ -206,20 +213,31 @@
             <version>2.1.221</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>io.github.mooy1</groupId>
             <artifactId>InfinityExpansion</artifactId>
             <version>90e11bc</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- 汉化库 -->
         <dependency>
             <groupId>net.guizhanss</groupId>
             <artifactId>GuizhanLibPlugin</artifactId>
             <version>1.7.6</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.7</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.sefiraat</groupId>
+            <artifactId>SefiLib</artifactId>
+            <version>0.2.6</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -20,6 +20,7 @@ public class Keys {
     public static final NamespacedKey BLUEPRINT_INSTANCE3 = customNewKey("networks-changed", "ntw_blueprint");
     public static final NamespacedKey FACE = newKey("face");
     public static final NamespacedKey ITEM = newKey("item");
+    public static final NamespacedKey networkskey = newKey("networkskey");
 
     @Nonnull
     public static NamespacedKey newKey(@Nonnull String value) {
