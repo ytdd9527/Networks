@@ -57,9 +57,15 @@ public class PersistentCraftingBlueprintType implements PersistentDataType<Persi
         if (recipe == null) {
             recipe = primitive.get(new NamespacedKey("networks", "recipe"), DataType.ITEM_STACK_ARRAY);
         }
+        if (recipe == null) {
+            recipe = primitive.get(new NamespacedKey("networks-changed", "recipe"), DataType.ITEM_STACK_ARRAY);
+        }
         ItemStack output = primitive.get(OUTPUT, DataType.ITEM_STACK);
         if (output == null) {
             output = primitive.get(new NamespacedKey("networks", "output"), DataType.ITEM_STACK);
+        }
+        if (output == null) {
+            output = primitive.get(new NamespacedKey("networks-changed", "output"), DataType.ITEM_STACK);
         }
 
         return new BlueprintInstance(recipe, output);
