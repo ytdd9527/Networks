@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("deprecation")
 public class NetworkAutoCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
@@ -130,7 +131,16 @@ public class NetworkAutoCrafter extends NetworkObject {
 
             if (instance == null) {
                 final ItemMeta blueprintMeta = blueprint.getItemMeta();
-                final Optional<BlueprintInstance> optional = DataTypeMethods.getOptionalCustom(blueprintMeta, Keys.BLUEPRINT_INSTANCE, PersistentCraftingBlueprintType.TYPE);
+                Optional<BlueprintInstance> optional;
+                optional = DataTypeMethods.getOptionalCustom(blueprintMeta, Keys.BLUEPRINT_INSTANCE, PersistentCraftingBlueprintType.TYPE);
+
+                if (optional.isEmpty()) {
+                    optional = DataTypeMethods.getOptionalCustom(blueprintMeta, Keys.BLUEPRINT_INSTANCE2, PersistentCraftingBlueprintType.TYPE);
+                }
+
+                if (optional.isEmpty()) {
+                    optional = DataTypeMethods.getOptionalCustom(blueprintMeta, Keys.BLUEPRINT_INSTANCE3, PersistentCraftingBlueprintType.TYPE);
+                }
 
                 if (optional.isEmpty()) {
                     return;

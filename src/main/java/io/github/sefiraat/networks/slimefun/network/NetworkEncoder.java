@@ -168,6 +168,8 @@ public class NetworkEncoder extends NetworkObject {
                 }
             }
             blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
+        } else {
+            player.sendMessage(Theme.WARNING + "需要清空输出烂");
         }
 
         root.removeRootPower(CHARGE_COST);

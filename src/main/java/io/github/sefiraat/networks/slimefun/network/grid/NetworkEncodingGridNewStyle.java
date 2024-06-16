@@ -308,19 +308,19 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
 
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
 
-        if (!blockMenu.fits(crafted, OUTPUT_SLOT)) {
-            player.sendMessage(Theme.WARNING + "需要清空输出栏");
-            return;
-        }
-
-        blueprint.setAmount(blueprint.getAmount() - 1);
         CraftingBlueprint.setBlueprint(blueprintClone, inputs, crafted);
 
-        for (int recipeSlot : RECIPE_SLOTS) {
-            ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
-            if (slotItem != null) {
-                slotItem.setAmount(slotItem.getAmount() - 1);
+        if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
+            blueprint.setAmount(blueprint.getAmount() - 1);
+            for (int recipeSlot : RECIPE_SLOTS) {
+                ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
+                if (slotItem != null) {
+                    slotItem.setAmount(slotItem.getAmount() - 1);
+                }
             }
+            blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
+        } else {
+            player.sendMessage(Theme.WARNING + "需要清空输出烂");
         }
 
         blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
