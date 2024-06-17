@@ -10,8 +10,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class DummyItemGroup extends ItemGroup {
 
     @ParametersAreNonnullByDefault
-    public DummyItemGroup(NamespacedKey key, ItemStack item) {
-        super(key, item);
+    public DummyItemGroup(NamespacedKey key, ItemStack item,int tier) {
+        super(key, item,tier);
     }
 
     @Override

@@ -43,13 +43,12 @@ public class NetworkUtils {
         player.sendMessage(Theme.ERROR + "Direction: " + Theme.PASSIVE + "Successfully applied");
 
 
-        if (directional.getItemSlots().length > 0) {
-            for (int slot : directional.getItemSlots()) {
-                final ItemStack stackToDrop = blockMenu.getItemInSlot(slot);
-                if (stackToDrop != null && stackToDrop.getType() != Material.AIR) {
-                    blockMenu.getLocation().getWorld().dropItem(blockMenu.getLocation(), stackToDrop.clone());
-                    stackToDrop.setAmount(0);
-                }
+        directional.getItemSlots();
+        for (int slot : directional.getItemSlots()) {
+            final ItemStack stackToDrop = blockMenu.getItemInSlot(slot);
+            if (stackToDrop != null && stackToDrop.getType() != Material.AIR) {
+                blockMenu.getLocation().getWorld().dropItem(blockMenu.getLocation(), stackToDrop.clone());
+                stackToDrop.setAmount(0);
             }
         }
 

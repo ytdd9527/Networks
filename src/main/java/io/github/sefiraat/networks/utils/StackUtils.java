@@ -125,12 +125,9 @@ public class StackUtils {
         }
 
         // Finally, check the display name
-        if (itemMeta.hasDisplayName() && (!itemMeta.getDisplayName().equals(cachedMeta.getDisplayName()))) {
-            return false;
-        }
+        return !itemMeta.hasDisplayName() || (itemMeta.getDisplayName().equals(cachedMeta.getDisplayName()));
 
         // Everything should match if we've managed to get here
-        return true;
     }
 
     public boolean canQuickEscapeMetaVariant(@Nonnull ItemMeta metaOne, @Nonnull ItemMeta metaTwo) {
@@ -312,9 +309,7 @@ public class StackUtils {
             if (!instanceOne.getBodyColor().equals(instanceTwo.getBodyColor())) {
                 return true;
             }
-            if (!instanceOne.getPatternColor().equals(instanceTwo.getPatternColor())) {
-                return true;
-            }
+            return !instanceOne.getPatternColor().equals(instanceTwo.getPatternColor());
         }
 
         // Cannot escape via any meta extension check

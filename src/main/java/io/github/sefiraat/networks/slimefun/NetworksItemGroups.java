@@ -27,7 +27,7 @@ public final class NetworksItemGroups {
             new CustomItemStack(
                     new ItemStack(Material.BLACK_STAINED_GLASS),
                     Theme.MAIN.getColor() + "网络 (Networks)"
-            ),1
+            ),0
     );
 
     public static final DummyItemGroup MATERIALS = new DummyItemGroup(
@@ -35,7 +35,7 @@ public final class NetworksItemGroups {
             new CustomItemStack(
                     new ItemStack(Material.WHITE_STAINED_GLASS),
                     Theme.MAIN.getColor() + "合成材料"
-            )
+            ),0
     );
 
     public static final DummyItemGroup TOOLS = new DummyItemGroup(
@@ -43,7 +43,7 @@ public final class NetworksItemGroups {
             new CustomItemStack(
                     new ItemStack(Material.PAINTING),
                     Theme.MAIN.getColor() + "网络管理工具"
-            )
+            ),0
     );
 
     public static final DummyItemGroup NETWORK_ITEMS = new DummyItemGroup(
@@ -51,7 +51,7 @@ public final class NetworksItemGroups {
             new CustomItemStack(
                     new ItemStack(Material.BLACK_STAINED_GLASS),
                     Theme.MAIN.getColor() + "网络物品"
-            )
+            ),0
     );
 
     public static final DummyItemGroup NETWORK_QUANTUMS = new DummyItemGroup(
@@ -59,7 +59,7 @@ public final class NetworksItemGroups {
             new CustomItemStack(
                     new ItemStack(Material.WHITE_TERRACOTTA),
                     Theme.MAIN.getColor() + "量子存储设备"
-            )
+            ),0
     );
 
     public static final ItemGroup DISABLED_ITEMS = new HiddenItemGroup(
@@ -74,15 +74,15 @@ public final class NetworksItemGroups {
             new CustomItemStack(
                     new ItemStack(Material.HOPPER),
                     Theme.SUCCESS.getColor() + "运输与存储"
-            )
+            ),0
     );
     public static final DummyItemGroup NETWORK_ITEMS_EXPANSION = new DummyItemGroup(
             Keys.newKey("network_items_expansion"),
 
             new CustomItemStack(
                     getPreEnchantedItemStack(Material.COMMAND_BLOCK, true, new Pair<>(Enchantment.LUCK, 1)),
-                    Theme.MAIN.getColor() + "网络物品拓展"
-            )
+                    Theme.SUCCESS.getColor() + "网络物品拓展"
+            ),0
     );
     static {
         final Networks plugin = Networks.getInstance();

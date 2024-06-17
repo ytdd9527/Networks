@@ -17,7 +17,7 @@ public class QuantumCache extends ItemStackCache {
     private int limit;
     private int amount;
     private boolean voidExcess;
-    private boolean supportsCustomMaxAmount;
+    private final boolean supportsCustomMaxAmount;
 
     public QuantumCache(@Nullable ItemStack storedItem, int amount, int limit, boolean voidExcess, boolean supportsCustomMaxAmount) {
         super(storedItem);

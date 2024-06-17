@@ -3,6 +3,7 @@ package io.github.sefiraat.networks.slimefun.yitoudaidai;
 
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
@@ -35,6 +36,7 @@ public class ExpansionSlimefunitemStacks {
     public static final SlimefunItemStack NE_CHAING_GRABBER_PLUS;
     public static final SlimefunItemStack NEA_IMPORT;
     public static final SlimefunItemStack NEA_EXPORT;
+    public static final SlimefunItemStack NEA_PURGER;
 
     //蓝图
     public static final SlimefunItemStack MAGIC_WORKBENCH_BLUEPRINT;
@@ -92,12 +94,14 @@ public class ExpansionSlimefunitemStacks {
         NE_CHAING_GRABBER_PLUS = Theme.themedSlimefunItemStack("NE_EXPANSION_GRABBER_PLUS",getPreEnchantedItemStack(Material.DISPENSER, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络链式抓取器Plus","网络链式抓取器Plus会尝试从","指定的方向抓取延伸64格以内的机器的输出槽送回网络中","单个机器切勿使用,建议堆叠大量机器进行使用");
         NEA_IMPORT = Theme.themedSlimefunItemStack("NEA_IMPORT",getPreEnchantedItemStack(Material.RED_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络高级入口","网络高级入口会将其中的物品送入网络中","每个SF tick可传输最多54组物品","可接收来自货运网络的物品");
         NEA_EXPORT = Theme.themedSlimefunItemStack("NEA_EXPORT",getPreEnchantedItemStack(Material.BLUE_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级出口","网络高级出口可以设置成","持续将1组指定的物品送出网络","可以使用货运网络从中提取物品");
-         //蓝图
+        NEA_PURGER = Theme.themedSlimefunItemStack("NEA_PURGER",new ItemStack(Material.DISPENSER), Theme.MACHINE,"网络高级清除器");
+
+        //蓝图
         MAGIC_WORKBENCH_BLUEPRINT = Theme.themedSlimefunItemStack("NE_MAGIC_WORKBENCH_BLUEPRINT",new ItemStack(Material.BLACK_DYE),Theme.TOOL,"魔法工作台蓝图","一张空白的蓝图","可以存储一个魔法工作台配方");
         ARMOR_FORGE_BLUEPRINT = Theme.themedSlimefunItemStack("NE_ARMOR_FORGE_BLUEPRINT",new ItemStack(Material.BROWN_DYE),Theme.TOOL,"盔甲锻造台蓝图","一张空白的蓝图","可以存储一个盔甲锻造台配方");
         SMELTERY_BLUEPRINT = Theme.themedSlimefunItemStack("NE_SMELTERY_BLUEPRINT",new ItemStack(Material.LIME_DYE),Theme.TOOL,"冶炼炉蓝图","一张空白的蓝图","可以存储一个冶炼炉配方");
         QUANTUM_WORKBENCH_BLUEPRINT = Theme.themedSlimefunItemStack("NE_QUANTUM_WORKBENCH_BLUEPRINT",new ItemStack(Material.MAGENTA_DYE),Theme.TOOL,"量子工作台蓝图","一张空白的蓝图","可以存储一个量子工作台配方");
-        ANCIENT_ALTAR_BLUEPRINT = Theme.themedSlimefunItemStack("NE_ANCIENT_ALTAR_BLUEPRINT",new ItemStack(Material.CYAN_DYE),Theme.TOOL,"古代祭坛蓝图","一张空白的蓝图","可以存储一个量子工作台配方");
+        ANCIENT_ALTAR_BLUEPRINT = Theme.themedSlimefunItemStack("NE_ANCIENT_ALTAR_BLUEPRINT",new ItemStack(Material.CYAN_DYE),Theme.TOOL,"古代祭坛蓝图","一张空白的蓝图","可以存储一个古代祭坛配方");
         //编码器
         NE_MAGIC_WORKBENCH_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_MAGIC_WORKBENCH_RECIPE_ENCODER",new ItemStack(Material.OAK_HANGING_SIGN),Theme.MACHINE,"网络魔法工作台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_ARMOR_FORGE_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_ARMOR_FORGE_RECIPE_ENCODER",new ItemStack(Material.SPRUCE_HANGING_SIGN),Theme.MACHINE,"网络盔甲锻造台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));

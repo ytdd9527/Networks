@@ -448,7 +448,7 @@ public class NetworkRoot extends NetworkNode {
 
         final ItemStack output = blockMenu.getItemInSlot(NetworkQuantumStorage.OUTPUT_SLOT);
         final ItemStack itemStack = cache.getItemStack();
-        int storedInt = (int) cache.getAmount();
+        int storedInt = cache.getAmount();
 
         if (output != null && output.getType() != Material.AIR && StackUtils.itemsMatch(cache, output, true)) {
             storedInt = storedInt + output.getAmount();

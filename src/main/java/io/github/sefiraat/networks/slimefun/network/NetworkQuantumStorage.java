@@ -2,8 +2,10 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.network.stackcaches.ItemStackCache;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.Utils;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -11,7 +13,6 @@ import io.github.sefiraat.networks.utils.Theme;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -43,16 +44,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.gmail.nossr50.mcMMO.p;
+import java.util.*;
 
 
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
@@ -71,7 +68,8 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             Integer.MAX_VALUE
     };
 
-
+    private boolean useSpecialModel = false;
+    private static final String KEY_UUID = "display-uuid";
     private static final String WIKI_PAGE = "network-storage/quantum-storage";
 
     public static final String BS_AMOUNT = "stored_amount";
@@ -138,6 +136,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
     private final int maxAmount;
     private boolean supportsCustomMaxAmount = false;
+
     public NetworkQuantumStorage(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int maxAmount) {
         super(itemGroup, item, recipeType, recipe);
         this.maxAmount = maxAmount;
@@ -696,4 +695,5 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
     public boolean canStack(@Nonnull ItemMeta sfItemMeta, @Nonnull ItemMeta itemMeta) {
         return sfItemMeta.getPersistentDataContainer().equals(itemMeta.getPersistentDataContainer());
     }
+
 }

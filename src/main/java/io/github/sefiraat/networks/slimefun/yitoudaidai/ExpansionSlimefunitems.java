@@ -8,23 +8,37 @@ import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.autocrafter.*;
 
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.blueprint.*;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.encoder.*;
+
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.autocrafter.NetworkAutoArmorForgeCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.autocrafter.NetworkAutoMagicCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.autocrafter.NetworkAutoQuantumWorkbenchCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.autocrafter.NetworkAutoSmelteryCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.autocrafter.NetworkAutoAncientAltarCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.blueprint.ArmorForgeBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.blueprint.MagicWorkbenchBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.blueprint.QuantumWorkbenchBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.blueprint.SmelteryBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.blueprint.AncientAltarBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.encoder.NetworkArmorForgeEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.encoder.NetworkMagicEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.encoder.NetworkQuantumWorkbenchEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.encoder.NetworkSmelteryEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.encoder.NetworkAncietAltaryEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusherPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabber;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabberPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateReceiver;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedImport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedExport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedPurger;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.tools.CoordinateConfigurator;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.*;
-
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.workbench.ExpansionWorkbench;
 import io.github.sefiraat.networks.utils.StackUtils;
-
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-
-
-
 import lombok.experimental.UtilityClass;
-
-
 
 @UtilityClass
 public class ExpansionSlimefunitems {
@@ -42,6 +56,7 @@ public class ExpansionSlimefunitems {
     public static final ChainGrabberPlus NE_CHAING_GRABBER_PLUS;
     public static final AdvancedImport NEA_IMPORT;
     public static final AdvancedExport NEA_EXPORT;
+    public static final AdvancedPurger NEA_PURGER;
 
     //蓝图
     public static final MagicWorkbenchBlueprint MAGIC_WORKBENCH_BLUEPRINT;
@@ -104,6 +119,7 @@ public class ExpansionSlimefunitems {
         NE_CHAING_GRABBER_PLUS = new ChainGrabberPlus(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER_PLUS);
         NEA_IMPORT = new AdvancedImport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_IMPORT, ExpansionWorkbench.TYPE, Recipe.NEA_IMPORT);
         NEA_EXPORT = new AdvancedExport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_EXPORT, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
+        NEA_PURGER = new AdvancedPurger(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_PURGER, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
         NETWORK_ADVANCED_QUANTUM_STORAGE = new NetworkQuantumStorage(NetworksItemGroups.NETWORK_TRANSPORTATION,ExpansionSlimefunitemStacks.NETWORK_ADVANCED_QUANTUM_STORAGE,NetworkQuantumWorkbench.TYPE,Recipe.NETWORK_ADVANCED_QUANTUM_STORAGE,NetworkQuantumStorage.getSizes()[10]);
         NETWORK_ADVANCED_QUANTUM_STORAGE.setSupportsCustomMaxAmount(true);
 
@@ -173,7 +189,8 @@ public class ExpansionSlimefunitems {
         NE_CHAING_GRABBER_PLUS.register(plugin);
         NEA_IMPORT.register(plugin);
         NEA_EXPORT.register(plugin);
-
+        NEA_PURGER.register(plugin);
+        NETWORK_ADVANCED_QUANTUM_STORAGE.register(plugin);
 
         //蓝图
         MAGIC_WORKBENCH_BLUEPRINT.register(plugin);
@@ -199,8 +216,6 @@ public class ExpansionSlimefunitems {
         NE_AUTO_ANCIENT_ALTAR.register(plugin);
         NE_AUTO_ANCIENT_ALTAR_WITHHOLDING.register(plugin);
 
-        //合成机
-        NETWORK_ADVANCED_QUANTUM_STORAGE.register(plugin);
 
         //网桥
         NE_BRIDGE_WHITE.register(plugin);

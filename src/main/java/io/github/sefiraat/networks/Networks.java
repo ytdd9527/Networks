@@ -7,8 +7,8 @@ import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model.ItemsModel;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.guizhanss.guizhanlibplugin.updater.GuizhanUpdater;
 import net.guizhanss.slimefun4.utils.WikiUtils;
 import org.bstats.bukkit.Metrics;
@@ -81,6 +81,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
         ExpansionSlimefunitems.setup();
+        ItemsModel.setup();
         WikiUtils.setupJson(this);
         if (supportedPluginManager.isNetheopoiesis()){
             try {

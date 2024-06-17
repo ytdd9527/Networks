@@ -3,7 +3,9 @@ package io.github.sefiraat.networks.commands;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
+
 import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model.ItemsModel;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
@@ -37,6 +39,9 @@ public class NetworksMain implements CommandExecutor {
         QUANTUM_REPLACEMENT_MAP.put(134217728, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_6);
         QUANTUM_REPLACEMENT_MAP.put(1073741824, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_7);
         QUANTUM_REPLACEMENT_MAP.put(Integer.MAX_VALUE, NetworkSlimefunItems.NETWORK_QUANTUM_STORAGE_8);
+        QUANTUM_REPLACEMENT_MAP.put(Integer.MAX_VALUE, ExpansionSlimefunitems.NETWORK_ADVANCED_QUANTUM_STORAGE);
+
+
     }
 
     @Override

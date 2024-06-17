@@ -51,7 +51,6 @@ public class AdvancedExport extends NetworkObject implements RecipeDisplayItem {
             36,37,38,39,40,41,42,43,44,
             };
     private static final int[] OUTPUT_ITEM_BACKDROP = {49};
-    private static final Set<Location> locked = new HashSet<>(1024);
     private final int lockModeSlot = 26;
     private static final CustomItemStack TEST_BACKDROP_STACK = new CustomItemStack(
         Material.GREEN_STAINED_GLASS_PANE,
@@ -128,76 +127,71 @@ public class AdvancedExport extends NetworkObject implements RecipeDisplayItem {
         NetworkRoot networkRoot = definition.getNode().getRoot();
 
         List<ItemRequest> itemRequests = new ArrayList<>();
-        List<ItemStack> retrievedItems = new ArrayList<>();
-        int totalFreeStackSpaces = 0; // 计算所有输出槽位总共还能容纳多少个物品堆叠
+        Map<ItemRequest, Integer> requestsCount = new HashMap<>(); // 存储每个请求类型和数量
+        int totalFreeStackSpaces = 0;
 
-
-
-
-
+        // 计算输出槽的空闲空间
         for (int outputSlot : OUTPUT_ITEM_SLOT) {
             ItemStack currentStack = blockMenu.getItemInSlot(outputSlot);
             if (currentStack == null || currentStack.getType() == Material.AIR) {
-                totalFreeStackSpaces += 64; 
+                totalFreeStackSpaces += 64;
             } else {
-                totalFreeStackSpaces += (64 - currentStack.getAmount()); 
+                totalFreeStackSpaces += currentStack.getMaxStackSize() - currentStack.getAmount();
             }
         }
 
+        // 遍历测试槽位，创建物品请求
         for (int testItemSlot : TEST_ITEM_SLOT) {
             ItemStack testItem = blockMenu.getItemInSlot(testItemSlot);
-            if (testItem == null || testItem.getType() == Material.AIR) {
+            if (testItem == null || testItem.getType() == Material.AIR || testItem.getAmount() == 0) {
                 continue;
             }
             int itemStackSpaces = testItem.getAmount();
-            if (totalFreeStackSpaces >= itemStackSpaces) {
-                itemRequests.add(new ItemRequest(testItem, itemStackSpaces));
-                totalFreeStackSpaces -= itemStackSpaces;
-            } else {
-                break;
+            ItemRequest request = new ItemRequest(testItem, itemStackSpaces);
+            if (!requestsCount.containsKey(request)) {
+                requestsCount.put(request, 0);
             }
+            requestsCount.put(request, requestsCount.get(request) + itemStackSpaces);
         }
 
-        // 如果有物品请求，尝试批量获取物品
-        if (!itemRequests.isEmpty()) {
-            retrievedItems = networkRoot.getItemStacks(itemRequests);
-        }
-
-        // 分配检索到的物品到输出槽位，同时检查槽位是否已满
-        for (ItemStack retrieved : retrievedItems) {
-            if (retrieved == null) {
-                continue;
-            }
-
-            boolean placed = false;
-            for (int outputSlot : OUTPUT_ITEM_SLOT) {
-                // 检查输出槽位是否为空或者是否有足够的空间
-                if (canPlaceItem(blockMenu, outputSlot, retrieved)) {
-                    // 将物品放入槽位
-                    blockMenu.pushItem(retrieved, outputSlot);
-                    placed = true;
-                    break; // 跳出循环，因为请求的物品已经被放置
+        // 根据请求的数量从网络中检索物品
+        for (Map.Entry<ItemRequest, Integer> entry : requestsCount.entrySet()) {
+            ItemRequest request = entry.getKey();
+            int requestCount = entry.getValue();
+            while (requestCount > 0 && totalFreeStackSpaces >= 64) {
+                int fetchCount = Math.min(requestCount, totalFreeStackSpaces / 64);
+                request.setAmount(fetchCount * 64); // 设置请求的数量为fetchCount组
+                List<ItemStack> fetchedItems = networkRoot.getItemStacks(Collections.singletonList(request));
+                if (!fetchedItems.isEmpty()) {
+                    ItemStack fetchedItem = fetchedItems.get(0);
+                    if (fetchedItem != null) {
+                        placeItems(blockMenu, fetchedItem, OUTPUT_ITEM_SLOT); // 放置物品
+                        totalFreeStackSpaces -= fetchedItem.getAmount();
+                        requestCount -= fetchedItem.getAmount();
+                    }
                 }
             }
-
-            // 如果当前检索到的物品没有被放置，则停止请求更多的物品
-            if (!placed) {
-                break;
-            }
         }
-
-
     }
 
-    private boolean canPlaceItem(@Nonnull BlockMenu blockMenu, int slot, @Nonnull ItemStack itemStack) {
-        ItemStack current = blockMenu.getItemInSlot(slot);
-        if (current == null || current.getType() == Material.AIR) {
-            return true;
-        } else if (StackUtils.itemsMatch(itemStack, current) && current.getAmount() < current.getMaxStackSize()) {
-            return true;
+    private void placeItems(@Nonnull BlockMenu blockMenu, @Nonnull ItemStack itemStack, int[] outputSlots) {
+        int itemAmount = itemStack.getAmount();
+        while (itemAmount > 0) {
+            for (int outputSlot : outputSlots) {
+                ItemStack currentStack = blockMenu.getItemInSlot(outputSlot);
+                int remainingSpace = currentStack == null || currentStack.getType() == Material.AIR ? 64 : 64 - currentStack.getAmount();
+                if (remainingSpace > 0) {
+                    int toPlace = Math.min(itemAmount, remainingSpace);
+                    ItemStack toPlaceStack = itemStack.clone();
+                    toPlaceStack.setAmount(toPlace);
+                    blockMenu.pushItem(toPlaceStack, outputSlot);
+                    itemAmount -= toPlace;
+                    if (itemAmount == 0) {
+                        break;
+                    }
+                }
+            }
         }
-
-        return false;
     }
 
     @Override

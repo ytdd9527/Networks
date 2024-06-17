@@ -42,7 +42,7 @@ public enum Theme {
 
 
     @Getter
-    protected static final Theme[] cachedValues = values();
+    private static final Theme[] cachedValues = values();
     private final ChatColor color;
     private final String loreLine;
 
@@ -106,7 +106,24 @@ public enum Theme {
             finalLore.toArray(new String[finalLore.size() - 1])
         );
     }
-
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static SlimefunItemStack model(String id, ItemStack itemStack, Theme themeType, String name, String... lore) {
+        ChatColor passiveColor = Theme.PASSIVE.getColor();
+        List<String> finalLore = new ArrayList<>();
+        finalLore.add("");
+        for (String s : lore) {
+            finalLore.add(passiveColor + s);
+        }
+        finalLore.add("");
+        finalLore.add(applyThemeToString(Theme.CLICK_INFO, themeType.getLoreLine()));
+        return new SlimefunItemStack(
+                id+"_MODEL",
+                itemStack,
+                Theme.applyThemeToString(themeType, name+("(模型)")),
+                finalLore.toArray(new String[finalLore.size() - 1])
+        );
+    }
     /**
      * Applies the theme color to a given string
      *

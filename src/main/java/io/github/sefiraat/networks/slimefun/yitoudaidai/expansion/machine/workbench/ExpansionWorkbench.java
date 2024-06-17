@@ -123,14 +123,19 @@ public class ExpansionWorkbench extends SlimefunItem {
         }
 
         if (crafted != null) {
-            // 检查输出槽位是否已经有物品，并且数量是否达到了最大堆叠限制
             ItemStack itemInOutputSlot = menu.getItemInSlot(OUTPUT_SLOT);
+            if (itemInOutputSlot != null && itemInOutputSlot.getType() != crafted.getType()) {
+                // Output slot is occupied by a different type of item
+                Block block = menu.getBlock();
+                Player player = (Player) block.getWorld().getPlayers().toArray()[0]; // Assume only one player is interacting
+                player.sendMessage(Theme.WARNING + "需要清空输出栏");
+                return;
+            }
             if (itemInOutputSlot != null && itemInOutputSlot.getType() == crafted.getType()) {
                 int maxStackSize = crafted.getMaxStackSize();
                 if (itemInOutputSlot.getAmount() >= maxStackSize) {
-                    // 输出槽位已满，通知玩家清空槽位
                     Block block = menu.getBlock();
-                    Player player = (Player) block.getWorld().getPlayers().toArray()[0]; // 假设只有一个玩家交互
+                    Player player = (Player) block.getWorld().getPlayers().toArray()[0];
                     player.sendMessage(Theme.WARNING + "输出槽位已满，请清空以继续制作");
                     return;
                 }

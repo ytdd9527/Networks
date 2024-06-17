@@ -1,25 +1,32 @@
 package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +35,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class ChainGrabber extends NetworkDirectional implements RecipeDisplayItem {
 
+
+    private boolean useSpecialModel = false;
+    private static final String KEY_UUID = "display-uuid";
     // 定义一个用于记录Tick计数的键
     private static final String TICK_COUNTER_KEY = "chain_grabber_tick_counter";
 
@@ -40,7 +51,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
 
     /**
-     * 构造函数，用于初始化ChainGrabberPlus对象。
+     * 构造函数，用于初始化ChainGrabber对象。
      * @param itemGroup 物品组
      * @param item 物品堆
      * @param recipeType 配方类型
@@ -169,6 +180,60 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
      */
     private boolean isItemTransferable(@Nonnull ItemStack itemStack) {
         return itemStack != null && itemStack.getType() != Material.AIR;
+    }
+
+    @Override
+    public void preRegister() {
+        // 只有当 useSpecialModel 为 true 时，才添加放置处理器
+        if (useSpecialModel) {
+            addItemHandler(new BlockPlaceHandler(false) {
+                @Override
+                public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
+                    // 放置方块时的逻辑
+                    e.getBlock().setType(Material.BARRIER);
+                    setupDisplay(e.getBlock().getLocation());
+                }
+            });
+        }
+
+        // 添加破坏处理器，不管 useSpecialModel 的值如何，破坏时的逻辑都应该执行
+        addItemHandler(new BlockBreakHandler(false, false) {
+            @Override
+            public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
+                Location location = e.getBlock().getLocation();
+                removeDisplay(location);
+                e.getBlock().setType(Material.AIR);
+            }
+        });
+    }
+    public void setUseSpecialModel(boolean useSpecialModel) {
+        this.useSpecialModel = useSpecialModel;
+    }
+    private void setupDisplay(@Nonnull Location location) {
+        DisplayGroup displayGroup = DisplayGroupGenerators.generateCloche(location.clone().add(0.5, 0, 0.5));
+        StorageCacheUtils.setData(location, KEY_UUID, displayGroup.getParentUUID().toString());
+    }
+    private void removeDisplay(@Nonnull Location location) {
+        DisplayGroup group = getDisplayGroup(location);
+        if (group != null) {
+            group.remove();
+        }
+    }
+    @Nullable
+    private UUID getDisplayGroupUUID(@Nonnull Location location) {
+        String uuid = StorageCacheUtils.getData(location, KEY_UUID);
+        if (uuid == null) {
+            return null;
+        }
+        return UUID.fromString(uuid);
+    }
+    @Nullable
+    private DisplayGroup getDisplayGroup(@Nonnull Location location) {
+        UUID uuid = getDisplayGroupUUID(location);
+        if (uuid == null) {
+            return null;
+        }
+        return DisplayGroup.fromUUID(uuid);
     }
 
     /**

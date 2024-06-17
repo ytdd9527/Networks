@@ -113,7 +113,6 @@ public class NetworkVanillaPusher extends NetworkDirectional {
             handleBrewingStand(stack, brewer);
         } else if (wildChests && isChest) {
             sendDebugMessage(block.getLocation(), "WildChest 测试失败！");
-            return;
         } else if (InvUtils.fits(holder.getInventory(), stack)) {
             sendDebugMessage(block.getLocation(), "WildChest 测试成功。");
             holder.getInventory().addItem(stack);

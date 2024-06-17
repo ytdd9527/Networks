@@ -87,6 +87,7 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkVacuum.class);
         viableObjects.add(NetworkMorePusher.class);
         viableObjects.add(NetworkBestPusher.class);
+
         viableObjects.add(ChaingPusher.class);
         viableObjects.add(ChaingPusherPlus.class);
         viableObjects.add(ChainGrabber.class);

@@ -258,7 +258,7 @@ public class AdvancedAutoQuantumWorkbenchCrafter extends NetworkObject {
             location.getWorld().spawnParticle(Particle.WAX_OFF, location, 0, 0, 4, 0);
         }
         // 根据实际合成数量扣除相应的能量
-        root.removeRootPower(this.chargePerCraft * craftCount);
+        root.removeRootPower((long) this.chargePerCraft * craftCount);
 
         return true;
     }
