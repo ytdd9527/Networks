@@ -203,7 +203,7 @@ public class NetworkWirelessTransmitter extends NetworkObject {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                return new int[]{0};
+                return new int[0];
             }
 
         };

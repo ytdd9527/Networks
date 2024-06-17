@@ -323,7 +323,6 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
             player.sendMessage(Theme.WARNING + "需要清空输出烂");
         }
 
-        blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         root.removeRootPower(CHARGE_COST);
     }
 }

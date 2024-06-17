@@ -96,15 +96,15 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
 
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                menu.addMenuClickHandler(CRAFT_SLOT, (p, slot, item, action) -> {
-                    craft(menu);
+                menu.addMenuClickHandler(CRAFT_SLOT, (player, slot, item, action) -> {
+                    craft(menu, player);
                     return false;
                 });
             }
         };
     }
 
-    public void craft(@Nonnull BlockMenu menu) {
+    public void craft(@Nonnull BlockMenu menu, @Nonnull Player player) {
         final ItemStack[] inputs = new ItemStack[RECIPE_SLOTS.length];
         int i = 0;
 
@@ -156,6 +156,8 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
                     }
                 }
                 menu.pushItem(crafted, OUTPUT_SLOT);
+            } else {
+                player.sendMessage(Theme.WARNING+ "需要清空输出烂");
             }
         }
     }
