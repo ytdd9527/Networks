@@ -69,6 +69,17 @@ public class Recipe {
             ADVANCED_NANOBOTS.getItem(), PRISTINE_AI_CORE.getItem(), ADVANCED_NANOBOTS.getItem(),
             NETWORK_EXPORT.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_EXPORT.getItem(),
     };
+    public static final ItemStack[] NEA_PURGER = {
+            NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem(),
+            OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
+            NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem(),
+    };
+
+    public static final ItemStack[] NETWORK_CAPACITOR_5 = {
+            NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(),
+            NETWORK_CAPACITOR_4.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_4.getItem(),
+            NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(),
+    };
     //蓝图
     public static final ItemStack[] MAGIC_WORKBENCH_BLUEPRINT = {
             OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(), OPTIC_CABLE.getItem(),
@@ -222,6 +233,22 @@ public class Recipe {
             ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
             ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ExpansionSlimefunitemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
+    };
+    //网格
+    public static final ItemStack[] NETWORK_GRID_NEW_STYLE = {
+            EMPOWERED_AI_CORE.getItem(), ADVANCED_NANOBOTS.getItem(), EMPOWERED_AI_CORE.getItem(),
+            PRISTINE_AI_CORE.getItem(), NETWORK_QUANTUM_STORAGE_8.getItem(), PRISTINE_AI_CORE.getItem(),
+            EMPOWERED_AI_CORE.getItem(), ADVANCED_NANOBOTS.getItem(), EMPOWERED_AI_CORE.getItem()
+    };
+    public static final ItemStack[] NETWORK_CRAFTING_GRID_NEW_STYLE = {
+            OPTIC_STAR.getItem(), OPTIC_STAR.getItem(), OPTIC_STAR.getItem(),
+            OPTIC_STAR.getItem(), NETWORK_CRAFTING_GRID.getItem(), OPTIC_STAR.getItem(),
+            OPTIC_STAR.getItem(), OPTIC_STAR.getItem(), OPTIC_STAR.getItem(),
+    };
+    public static final ItemStack[] NETWORK_ENCODING_GRID_NEW_STYLE = {
+            NETWORK_BRIDGE.getItem(), NETWORK_RECIPE_ENCODER.getItem(), NETWORK_BRIDGE.getItem(),
+            OPTIC_CABLE.getItem(), ExpansionSlimefunitemStacks.NETWORK_CRAFTING_GRID_NEW_STYLE, OPTIC_CABLE.getItem(),
+            NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
     };
     //高级量子存储
     public static final ItemStack[] NETWORK_ADVANCED_QUANTUM_STORAGE = {

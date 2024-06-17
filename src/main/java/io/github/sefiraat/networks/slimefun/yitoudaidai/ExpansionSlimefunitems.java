@@ -4,12 +4,17 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
 
 
+import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
 
 
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGridNewStyle;
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkEncodingGridNewStyle;
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkGridNewStyle;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoArmorForgeCrafter;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoMagicCrafter;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoQuantumWorkbenchCrafter;
@@ -38,7 +43,9 @@ import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.tools.Coordina
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.workbench.ExpansionWorkbench;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import lombok.experimental.UtilityClass;
+import org.bukkit.inventory.ItemStack;
 
 @UtilityClass
 public class ExpansionSlimefunitems {
@@ -57,7 +64,11 @@ public class ExpansionSlimefunitems {
     public static final AdvancedImport NEA_IMPORT;
     public static final AdvancedExport NEA_EXPORT;
     public static final AdvancedPurger NEA_PURGER;
-
+    public static final NetworkPowerNode NETWORK_CAPACITOR_5;
+    //网格
+    public static final NetworkGridNewStyle NETWORK_GRID_NEW_STYLE;
+    public static final NetworkCraftingGridNewStyle NETWORK_CRAFTING_GRID_NEW_STYLE;
+    public static final NetworkEncodingGridNewStyle NETWORK_ENCODING_GRID_NEW_STYLE;
     //蓝图
     public static final MagicWorkbenchBlueprint MAGIC_WORKBENCH_BLUEPRINT;
     public static final ArmorForgeBlueprint ARMOR_FORGE_BLUEPRINT;
@@ -119,7 +130,10 @@ public class ExpansionSlimefunitems {
         NE_CHAING_GRABBER_PLUS = new ChainGrabberPlus(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER_PLUS);
         NEA_IMPORT = new AdvancedImport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_IMPORT, ExpansionWorkbench.TYPE, Recipe.NEA_IMPORT);
         NEA_EXPORT = new AdvancedExport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_EXPORT, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
-        NEA_PURGER = new AdvancedPurger(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_PURGER, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
+        NEA_PURGER = new AdvancedPurger(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_PURGER, ExpansionWorkbench.TYPE, Recipe.NEA_PURGER);
+
+        NETWORK_CAPACITOR_5 = new NetworkPowerNode(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NETWORK_CAPACITOR_5, RecipeType.ENHANCED_CRAFTING_TABLE,Recipe.NETWORK_CAPACITOR_5, 100000000);
+
         NETWORK_ADVANCED_QUANTUM_STORAGE = new NetworkQuantumStorage(NetworksItemGroups.NETWORK_TRANSPORTATION,ExpansionSlimefunitemStacks.NETWORK_ADVANCED_QUANTUM_STORAGE,NetworkQuantumWorkbench.TYPE,Recipe.NETWORK_ADVANCED_QUANTUM_STORAGE,NetworkQuantumStorage.getSizes()[10]);
         NETWORK_ADVANCED_QUANTUM_STORAGE.setSupportsCustomMaxAmount(true);
 
@@ -150,7 +164,10 @@ public class ExpansionSlimefunitems {
         NE_AUTO_ANCIENT_ALTAR = new NetworkAutoAncientAltarCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunitemStacks.NE_AUTO_ANCIENT_ALTAR, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_ANCIENT_ALTAR, 640, false);
         NE_AUTO_ANCIENT_ALTAR_WITHHOLDING = new NetworkAutoAncientAltarCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunitemStacks.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING, 1280, true);
 
-
+        //网格
+        NETWORK_GRID_NEW_STYLE = new NetworkGridNewStyle(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunitemStacks.NETWORK_GRID_NEW_STYLE,RecipeType.ENHANCED_CRAFTING_TABLE,Recipe.NETWORK_GRID_NEW_STYLE);
+        NETWORK_CRAFTING_GRID_NEW_STYLE = new NetworkCraftingGridNewStyle(NetworksItemGroups.NETWORK_ITEMS_EXPANSION,ExpansionSlimefunitemStacks.NETWORK_CRAFTING_GRID_NEW_STYLE,RecipeType.ENHANCED_CRAFTING_TABLE,Recipe.NETWORK_CRAFTING_GRID_NEW_STYLE);
+        NETWORK_ENCODING_GRID_NEW_STYLE = new NetworkEncodingGridNewStyle(NetworksItemGroups.NETWORK_ITEMS_EXPANSION,ExpansionSlimefunitemStacks.NETWORK_ENCODING_GRID_NEW_STYLE,RecipeType.ENHANCED_CRAFTING_TABLE,Recipe.NETWORK_ENCODING_GRID_NEW_STYLE);
 
 
         //网桥
@@ -190,6 +207,8 @@ public class ExpansionSlimefunitems {
         NEA_IMPORT.register(plugin);
         NEA_EXPORT.register(plugin);
         NEA_PURGER.register(plugin);
+        NETWORK_CAPACITOR_5.register(plugin);
+
         NETWORK_ADVANCED_QUANTUM_STORAGE.register(plugin);
 
         //蓝图
@@ -216,7 +235,10 @@ public class ExpansionSlimefunitems {
         NE_AUTO_ANCIENT_ALTAR.register(plugin);
         NE_AUTO_ANCIENT_ALTAR_WITHHOLDING.register(plugin);
 
-
+        //网格
+        NETWORK_GRID_NEW_STYLE.register(plugin);
+        NETWORK_CRAFTING_GRID_NEW_STYLE.register(plugin);
+        NETWORK_ENCODING_GRID_NEW_STYLE.register(plugin);
         //网桥
         NE_BRIDGE_WHITE.register(plugin);
         NE_BRIDGE_LIGHT_GRAY.register(plugin);
