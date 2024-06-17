@@ -80,7 +80,7 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final int wirelessReceivers = root.getWirelessReceivers().size();
             final int powerOutlets = root.getPowerOutlets().size();
             final int greedyBlocks = root.getGreedyBlocks().size();
-            final Map<ItemStack, Integer> allNetworkItems = root.getAllNetworkItems();
+            final Map<ItemStack, Long> allNetworkItems = root.getAllNetworkItems();
             final int distinctItems = allNetworkItems.size();
 
             final int chaingpushers = root.getChaingPusher().size();
@@ -99,7 +99,7 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
                 : String.valueOf(root.getNodeCount());
 
             final ChatColor c = Theme.CLICK_INFO.getColor();
-            final ChatColor p = Theme.PASSIVE.getColor();
+            final ChatColor p = Theme.SUCCESS.getColor();
 
             player.sendMessage("------------------------------");
             player.sendMessage("         网络 - 组件统计        ");

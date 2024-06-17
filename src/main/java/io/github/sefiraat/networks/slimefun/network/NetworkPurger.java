@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class NetworkPurger extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = {0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
@@ -40,8 +41,8 @@ public class NetworkPurger extends NetworkObject {
     private static final int[] TEST_ITEM_BACKDROP = {3, 4, 5, 12, 14, 21, 22, 23};
 
     private static final CustomItemStack TEST_BACKDROP_STACK = new CustomItemStack(
-        Material.GREEN_STAINED_GLASS_PANE,
-        Theme.SUCCESS + "指定需要清除的物品"
+            Material.GREEN_STAINED_GLASS_PANE,
+            Theme.SUCCESS + "指定需要清除的物品"
     );
 
     private final ItemSetting<Integer> tickRate;
@@ -54,35 +55,35 @@ public class NetworkPurger extends NetworkObject {
         this.getSlotsToDrop().add(TEST_ITEM_SLOT);
 
         addItemHandler(
-            new BlockTicker() {
+                new BlockTicker() {
 
-                private int tick = 1;
+                    private int tick = 1;
 
-                @Override
-                public boolean isSynchronized() {
-                    return false;
-                }
+                    @Override
+                    public boolean isSynchronized() {
+                        return false;
+                    }
 
-                @Override
-                public void tick(Block block, SlimefunItem item, SlimefunBlockData data) {
-                    if (tick <= 1) {
-                        addToRegistry(block);
-                        tryKillItem(data.getBlockMenu());
+                    @Override
+                    public void tick(Block block, SlimefunItem item, SlimefunBlockData data) {
+                        if (tick <= 1) {
+                            addToRegistry(block);
+                            tryKillItem(data.getBlockMenu());
+                        }
+                    }
+
+                    @Override
+                    public void uniqueTick() {
+                        tick = tick <= 1 ? tickRate.getValue() : tick - 1;
+                    }
+                },
+                new BlockBreakHandler(true, true) {
+                    @Override
+                    public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
+                        BlockMenu blockMenu = StorageCacheUtils.getMenu(e.getBlock().getLocation());
+                        blockMenu.dropItems(blockMenu.getLocation(), TEST_ITEM_SLOT);
                     }
                 }
-
-                @Override
-                public void uniqueTick() {
-                    tick = tick <= 1 ? tickRate.getValue() : tick - 1;
-                }
-            },
-            new BlockBreakHandler(true, true) {
-                @Override
-                public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
-                    BlockMenu blockMenu = StorageCacheUtils.getMenu(e.getBlock().getLocation());
-                    blockMenu.dropItems(blockMenu.getLocation(), TEST_ITEM_SLOT);
-                }
-            }
         );
     }
 
@@ -126,7 +127,7 @@ public class NetworkPurger extends NetworkObject {
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
                 return NetworkSlimefunItems.NETWORK_GRID.canUse(player, false)
-                    && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+                        && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override

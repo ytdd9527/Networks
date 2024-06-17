@@ -31,10 +31,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class NetworkVanillaPusher extends NetworkDirectional {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 17, 18, 20, 22, 23, 24, 26, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 17, 18, 20, 22, 23, 24, 26, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
     };
     private static final int INPUT_SLOT = 25;
     private static final int NORTH_SLOT = 11;
@@ -113,6 +114,7 @@ public class NetworkVanillaPusher extends NetworkDirectional {
             handleBrewingStand(stack, brewer);
         } else if (wildChests && isChest) {
             sendDebugMessage(block.getLocation(), "WildChest 测试失败！");
+            return;
         } else if (InvUtils.fits(holder.getInventory(), stack)) {
             sendDebugMessage(block.getLocation(), "WildChest 测试成功。");
             holder.getInventory().addItem(stack);
@@ -122,12 +124,12 @@ public class NetworkVanillaPusher extends NetworkDirectional {
 
     private void handleFurnace(@Nonnull ItemStack stack, @Nonnull FurnaceInventory furnace) {
         if (stack.getType().isFuel()
-            && (furnace.getFuel() == null || furnace.getFuel().getType() == Material.AIR)
+                && (furnace.getFuel() == null || furnace.getFuel().getType() == Material.AIR)
         ) {
             furnace.setFuel(stack.clone());
             stack.setAmount(0);
         } else if (!stack.getType().isFuel()
-            && (furnace.getSmelting() == null || furnace.getSmelting().getType() == Material.AIR)
+                && (furnace.getSmelting() == null || furnace.getSmelting().getType() == Material.AIR)
         ) {
             furnace.setSmelting(stack.clone());
             stack.setAmount(0);

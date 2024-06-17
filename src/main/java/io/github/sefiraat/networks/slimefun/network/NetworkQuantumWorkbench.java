@@ -30,7 +30,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@SuppressWarnings("deprecation")
 public class NetworkQuantumWorkbench extends SlimefunItem {
 
     private static final int[] BACKGROUND_SLOTS = {
@@ -82,7 +82,7 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
                 return StorageCacheUtils.getSfItem(block.getLocation()).canUse(player, false)
-                    && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+                        && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
@@ -95,23 +95,16 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
 
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                menu.addMenuClickHandler(CRAFT_SLOT, (p, slot, item, action) -> {
-                    craft(menu);
+                menu.addMenuClickHandler(CRAFT_SLOT, (player, slot, item, action) -> {
+                    craft(menu, player);
                     return false;
                 });
             }
         };
     }
 
-    public void craft(@Nonnull BlockMenu menu) {
-        final ItemStack itemInOutput = menu.getItemInSlot(OUTPUT_SLOT);
-        ItemStack outputSlotItem = menu.getItemInSlot(OUTPUT_SLOT);
 
-        // Quick escape, we only allow crafting if the output is empty
-        if (itemInOutput != null) {
-            return;
-        }
-
+    public void craft(@Nonnull BlockMenu menu, @Nonnull Player player) {
         final ItemStack[] inputs = new ItemStack[RECIPE_SLOTS.length];
         int i = 0;
 
@@ -144,11 +137,11 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
 
                 if (oldCache != null) {
                     final QuantumCache newCache = new QuantumCache(
-                        oldCache.getItemStack().clone(),
-                        oldCache.getAmount(),
-                        newQuantum.getMaxAmount(),
-                        oldCache.isVoidExcess(),
-                        newQuantum.supportsCustomMaxAmount()
+                            oldCache.getItemStack().clone(),
+                            oldCache.getAmount(),
+                            newQuantum.getMaxAmount(),
+                            oldCache.isVoidExcess(),
+                            newQuantum.supportsCustomMaxAmount()
                     );
                     DataTypeMethods.setCustom(newMeta, Keys.QUANTUM_STORAGE_INSTANCE, PersistentQuantumStorageType.TYPE, newCache);
                     newCache.addMetaLore(newMeta);
@@ -156,16 +149,18 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
                 }
             }
 
-
-            menu.pushItem(crafted, OUTPUT_SLOT);
-            for (int recipeSlot : RECIPE_SLOTS) {
-                if (menu.getItemInSlot(recipeSlot) != null) {
-                    menu.consumeItem(recipeSlot, 1, true);
+            if (menu.fits(crafted, OUTPUT_SLOT)) {
+                for (int recipeSlot : RECIPE_SLOTS) {
+                    if (menu.getItemInSlot(recipeSlot) != null) {
+                        menu.consumeItem(recipeSlot, 1, true);
+                    }
                 }
+                menu.pushItem(crafted, OUTPUT_SLOT);
+            } else {
+                player.sendMessage(Theme.WARNING+ "需要清空输出烂");
             }
         }
     }
-
     private boolean testRecipe(ItemStack[] input, ItemStack[] recipe) {
         for (int test = 0; test < recipe.length; test++) {
             if (!SlimefunUtils.isItemSimilar(input[test], recipe[test], true, false, false)) {
@@ -185,7 +180,6 @@ public class NetworkQuantumWorkbench extends SlimefunItem {
             }
         };
     }
-
     public static void addRecipe(ItemStack[] input, ItemStack output) {
         RECIPES.put(input, output);
     }

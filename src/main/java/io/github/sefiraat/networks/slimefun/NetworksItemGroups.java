@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 
+
 @UtilityClass
 public final class NetworksItemGroups {
 

@@ -47,7 +47,7 @@ public class PersistentQuantumStorageType implements PersistentDataType<Persiste
         final PersistentDataContainer container = context.newPersistentDataContainer();
 
         container.set(ITEM, DataType.ITEM_STACK, complex.getItemStack());
-        container.set(AMOUNT, DataType.INTEGER, complex.getAmount());
+        container.set(AMOUNT, DataType.LONG, complex.getAmount());
         container.set(MAX_AMOUNT, DataType.INTEGER, complex.getLimit());
         container.set(VOID, DataType.BOOLEAN, complex.isVoidExcess());
         container.set(SUPPORTS_CUSTOM_MAX_AMOUNT, DataType.BOOLEAN, complex.supportsCustomMaxAmount());
@@ -58,7 +58,7 @@ public class PersistentQuantumStorageType implements PersistentDataType<Persiste
     @Nonnull
     public QuantumCache fromPrimitive(@Nonnull PersistentDataContainer primitive, @Nonnull PersistentDataAdapterContext context) {
         final ItemStack item = primitive.get(ITEM, DataType.ITEM_STACK);
-        final int amount = primitive.get(AMOUNT, DataType.INTEGER);
+        final long amount = primitive.get(AMOUNT, DataType.LONG);
         final int limit = primitive.get(MAX_AMOUNT, DataType.INTEGER);
         final boolean voidExcess = primitive.get(VOID, DataType.BOOLEAN);
         final boolean supportsCustomMaxAmount = primitive.get(SUPPORTS_CUSTOM_MAX_AMOUNT, DataType.BOOLEAN);

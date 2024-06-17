@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("deprecation")
 public abstract class NetworkDirectional extends NetworkObject {
 
     private static final int NORTH_SLOT = 12;
@@ -133,7 +134,7 @@ public abstract class NetworkDirectional extends NetworkObject {
                     case WEST -> blockMenu.replaceExistingItem(getWestSlot(), getDirectionalSlotPane(blockFace, slimefunItem, blockFace == direction));
                     case UP -> blockMenu.replaceExistingItem(getUpSlot(), getDirectionalSlotPane(blockFace, slimefunItem, blockFace == direction));
                     case DOWN -> blockMenu.replaceExistingItem(getDownSlot(), getDirectionalSlotPane(blockFace, slimefunItem, blockFace == direction));
-                    default -> throw new IllegalStateException("Unexpected value: " + blockFace);
+                    default -> throw new IllegalStateException("意外的值: " + blockFace);
                 }
             } else {
                 final Material material = block.getType();
@@ -144,7 +145,7 @@ public abstract class NetworkDirectional extends NetworkObject {
                     case WEST -> blockMenu.replaceExistingItem(getWestSlot(), getDirectionalSlotPane(blockFace, material, blockFace == direction));
                     case UP -> blockMenu.replaceExistingItem(getUpSlot(), getDirectionalSlotPane(blockFace, material, blockFace == direction));
                     case DOWN -> blockMenu.replaceExistingItem(getDownSlot(), getDirectionalSlotPane(blockFace, material, blockFace == direction));
-                    default -> throw new IllegalStateException("Unexpected value: " + blockFace);
+                    default -> throw new IllegalStateException("意外的值: " + blockFace);
                 }
             }
         }

@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class NetworkGrabber extends NetworkDirectional {
 
 

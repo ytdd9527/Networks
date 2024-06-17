@@ -4,7 +4,6 @@ import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.KitchenObject;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -35,6 +34,7 @@ public class NetworkCell extends NetworkObject {
     private static final int[] SLOTS;
     private boolean useSpecialModel = false;
     private static final String KEY_UUID = "display-uuid";
+
     static {
         List<Integer> integers = new ArrayList<>();
         for (int i = 0; i < 54; i++) {
@@ -52,8 +52,7 @@ public class NetworkCell extends NetworkObject {
     }
 
     @Override
-    public void postRegister()
-    {
+    public void postRegister() {
         new BlockMenuPreset(this.getId(), this.getItemName()) {
 
             @Override
@@ -64,12 +63,12 @@ public class NetworkCell extends NetworkObject {
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
                 return NetworkSlimefunItems.NETWORK_CELL.canUse(player, false)
-                    && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+                        && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                return new int[]{0};
+                return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
             }
 
         };
@@ -102,7 +101,7 @@ public class NetworkCell extends NetworkObject {
         this.useSpecialModel = useSpecialModel;
     }
     private void setupDisplay(@Nonnull Location location) {
-        DisplayGroup displayGroup = DisplayGroupGenerators.generateCell(location.clone().add(0.5, 0, 0.5));
+        DisplayGroup displayGroup = DisplayGroupGenerators.generateCloche(location.clone().add(0.5, 0, 0.5));
         StorageCacheUtils.setData(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
     private void removeDisplay(@Nonnull Location location) {
@@ -127,5 +126,4 @@ public class NetworkCell extends NetworkObject {
         }
         return DisplayGroup.fromUUID(uuid);
     }
-
 }

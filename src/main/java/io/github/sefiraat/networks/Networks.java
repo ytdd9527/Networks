@@ -51,12 +51,11 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-
         getLogger().info("########################################");
-        getLogger().info("            Networks - 网络             ");
+        getLogger().info("            Networks - 网络              ");
         getLogger().info("       作者: Sefiraat 汉化: ybw0014      ");
-        getLogger().info("       魔改网络: yitoudaidai             ");
-        getLogger().info("            拓展实用网络功能               ");
+        getLogger().info("       魔改网络: yitoudaidai、tinalness  ");
+        getLogger().info("            拓展实用网络功能              ");
         getLogger().info("########################################");
 
         saveDefaultConfig();

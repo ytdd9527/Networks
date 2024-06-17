@@ -32,14 +32,12 @@ public class ItemStacksModel {
     public static final SlimefunItemStack NEA_MODEL_EXPORT;
     public static final SlimefunItemStack NEA_MODEL_PURGER;
     public static final SlimefunItemStack NE_MODEL_CELL;
-    public static final SlimefunItemStack NE_MODEL_CONTROLLER;
 
 
     static {
         //写好的模型
         NEA_MODEL_PURGER = Theme.model("NEA_PURGER",SlimefunItems.TRASH_CAN, Theme.MACHINE,"网络高级清除器");
         NE_MODEL_CELL = Theme.model("NE_CELL", Skulls.NE_MODEL_CELL.getPlayerHead(), Theme.MACHINE,"网络单元");
-        NE_MODEL_CONTROLLER = Theme.model("NE_CONTROLLER", Skulls.NE_MODEL_CONTROLLER.getPlayerHead(), Theme.MACHINE,"网络控制器");
 
         //没写的
         NE_MODEL_COORDINATE_TRANSMITTER = Theme.model("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器","网络坐标传输器可以","将其中的物品传输到绑定的","网络坐标接收器中(只能在同一世界).","使用网络坐标配置器来进行绑定.","", MessageFormat.format("{0}网络电力消耗: {1}{2} 每次传输", Theme.CLICK_INFO, Theme.PASSIVE, 10000));

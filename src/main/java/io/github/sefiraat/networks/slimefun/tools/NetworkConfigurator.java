@@ -26,6 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
+@SuppressWarnings("deprecation")
 public class NetworkConfigurator extends SlimefunItem {
 
     public NetworkConfigurator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -38,7 +39,7 @@ public class NetworkConfigurator extends SlimefunItem {
                         final Block block = optional.get();
                         final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(block.getLocation());
                         if (Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK)
-                            && slimefunItem instanceof NetworkDirectional directional
+                                && slimefunItem instanceof NetworkDirectional directional
                         ) {
                             final var blockMenu = StorageCacheUtils.getMenu(block.getLocation());
                             if (player.isSneaking()) {

@@ -3,8 +3,8 @@ package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.tools;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import de.jeff_media.morepersistentdatatypes.DataType;
 
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateReceiver;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateReceiver;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateTransmitter;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;

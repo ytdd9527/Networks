@@ -15,11 +15,11 @@ public class QuantumCache extends ItemStackCache {
     private final ItemMeta storedItemMeta;
 
     private int limit;
-    private int amount;
+    private long amount;
     private boolean voidExcess;
     private final boolean supportsCustomMaxAmount;
 
-    public QuantumCache(@Nullable ItemStack storedItem, int amount, int limit, boolean voidExcess, boolean supportsCustomMaxAmount) {
+    public QuantumCache(@Nullable ItemStack storedItem, long amount, int limit, boolean voidExcess, boolean supportsCustomMaxAmount) {
         super(storedItem);
         this.storedItemMeta = storedItem == null ? null : storedItem.getItemMeta();
         this.amount = amount;
@@ -34,7 +34,7 @@ public class QuantumCache extends ItemStackCache {
         return this.storedItemMeta;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
     public boolean supportsCustomMaxAmount() {
@@ -77,17 +77,17 @@ public class QuantumCache extends ItemStackCache {
         this.voidExcess = voidExcess;
     }
 
+
     @Nullable
     public ItemStack withdrawItem(int amount) {
         if (this.getItemStack() == null) {
             return null;
         }
         final ItemStack clone = this.getItemStack().clone();
-        clone.setAmount(Math.min(this.amount, amount));
+        clone.setAmount((int) Math.min(this.amount, amount));
         reduceAmount(clone.getAmount());
         return clone;
     }
-
     @Nullable
     public ItemStack withdrawItem() {
         if (this.getItemStack() == null) {
@@ -95,7 +95,6 @@ public class QuantumCache extends ItemStackCache {
         }
         return withdrawItem(this.getItemStack().getMaxStackSize());
     }
-
 
     public void addMetaLore(ItemMeta itemMeta) {
         final List<String> lore = itemMeta.hasLore() ? new ArrayList<>(itemMeta.getLore()) : new ArrayList<>();

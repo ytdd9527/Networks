@@ -49,12 +49,26 @@ public class PersistentCraftingBlueprintType implements PersistentDataType<Persi
         return container;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nonnull
     public BlueprintInstance fromPrimitive(@Nonnull PersistentDataContainer primitive, @Nonnull PersistentDataAdapterContext context) {
-        final ItemStack[] recipe = primitive.get(RECIPE, DataType.ITEM_STACK_ARRAY);
-        final ItemStack output = primitive.get(OUTPUT, DataType.ITEM_STACK);
+        ItemStack[] recipe = primitive.get(RECIPE, DataType.ITEM_STACK_ARRAY);
+        if (recipe == null) {
+            recipe = primitive.get(new NamespacedKey("networks", "recipe"), DataType.ITEM_STACK_ARRAY);
+        }
+        if (recipe == null) {
+            recipe = primitive.get(new NamespacedKey("networks-changed", "recipe"), DataType.ITEM_STACK_ARRAY);
+        }
+        ItemStack output = primitive.get(OUTPUT, DataType.ITEM_STACK);
+        if (output == null) {
+            output = primitive.get(new NamespacedKey("networks", "output"), DataType.ITEM_STACK);
+        }
+        if (output == null) {
+            output = primitive.get(new NamespacedKey("networks-changed", "output"), DataType.ITEM_STACK);
+        }
 
         return new BlueprintInstance(recipe, output);
     }
+
 }

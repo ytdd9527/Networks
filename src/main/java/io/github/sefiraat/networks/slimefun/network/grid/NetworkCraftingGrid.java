@@ -94,6 +94,7 @@ public class NetworkCraftingGrid extends AbstractGrid {
                 return new int[0];
             }
 
+            @SuppressWarnings("deprecation")
             @Override
             public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
                 CACHE_MAP.put(menu.getLocation(), new GridCache(0, 0, GridCache.SortOrder.ALPHABETICAL));
@@ -191,6 +192,7 @@ public class NetworkCraftingGrid extends AbstractGrid {
         return FILTER;
     }
 
+    @SuppressWarnings("deprecation")
     private void tryCraft(@Nonnull BlockMenu menu, @Nonnull Player player) {
         // Get node and, if it doesn't exist - escape
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(menu.getLocation());
@@ -260,6 +262,7 @@ public class NetworkCraftingGrid extends AbstractGrid {
         }
 
         for (int recipeSlot : CRAFT_ITEMS) {
+            @SuppressWarnings("deprecation")
             final ItemStack stack = menu.getItemInSlot(recipeSlot);
 
             if (stack == null || stack.getType() == Material.AIR) {

@@ -28,32 +28,33 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class NetworkEncoder extends NetworkObject {
 
     private static final int[] BACKGROUND = new int[]{
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 17, 18, 20, 24, 25, 26, 27, 28, 29, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 17, 18, 20, 24, 25, 26, 27, 28, 29, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
     };
 
     private static final int[] RECIPE_SLOTS = new int[]{
-        12, 13, 14, 21, 22, 23, 30, 31, 32
+            12, 13, 14, 21, 22, 23, 30, 31, 32
     };
 
     private static final int[] BLUEPRINT_BACK = new int[]{
-        10, 28
+            10, 28
     };
 
     private static final int BLANK_BLUEPRINT_SLOT = 19;
     private static final int ENCODE_SLOT = 16;
     private static final int OUTPUT_SLOT = 34;
 
-    private static final int CHARGE_COST = 20000;
+    private static final int CHARGE_COST = 2000;
 
     public static final CustomItemStack BLUEPRINT_BACK_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "空白蓝图"
+            Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "空白蓝图"
     );
 
     public static final CustomItemStack ENCODE_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "点击此处进行编码"
+            Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "点击此处进行编码"
     );
 
     public NetworkEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -89,7 +90,7 @@ public class NetworkEncoder extends NetworkObject {
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
                 return NetworkSlimefunItems.NETWORK_RECIPE_ENCODER.canUse(player, false)
-                    && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+                        && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
@@ -111,13 +112,6 @@ public class NetworkEncoder extends NetworkObject {
 
         if (networkCharge < CHARGE_COST) {
             player.sendMessage(Theme.WARNING + "网络中的电力不足，无法完成该任务");
-            return;
-        }
-
-        final ItemStack outputStack = blockMenu.getItemInSlot(OUTPUT_SLOT);
-
-        if (outputStack != null && outputStack.getType() != Material.AIR) {
-            player.sendMessage(Theme.WARNING + "需要清空输出栏");
             return;
         }
 
@@ -163,17 +157,21 @@ public class NetworkEncoder extends NetworkObject {
 
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
 
-        blueprint.setAmount(blueprint.getAmount() - 1);
         CraftingBlueprint.setBlueprint(blueprintClone, inputs, crafted);
 
-        for (int recipeSlot : RECIPE_SLOTS) {
-            ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
-            if (slotItem != null) {
-                slotItem.setAmount(slotItem.getAmount() - 1);
+        if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
+            blueprint.setAmount(blueprint.getAmount() - 1);
+            for (int recipeSlot : RECIPE_SLOTS) {
+                ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
+                if (slotItem != null) {
+                    slotItem.setAmount(slotItem.getAmount() - 1);
+                }
             }
+            blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
+        } else {
+            player.sendMessage(Theme.WARNING + "需要清空输出烂");
         }
 
-        blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         root.removeRootPower(CHARGE_COST);
     }
 }

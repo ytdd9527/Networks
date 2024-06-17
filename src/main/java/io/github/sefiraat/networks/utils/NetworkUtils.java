@@ -4,10 +4,6 @@ import de.jeff_media.morepersistentdatatypes.DataType;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkPusher;
 import io.github.sefiraat.networks.slimefun.tools.NetworkConfigurator;
-
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.NetworkMorePusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusherPlus;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -19,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("deprecation")
 public class NetworkUtils {
 
     public static void applyConfig(@Nonnull NetworkDirectional directional, @Nonnull BlockMenu blockMenu, @Nonnull Player player) {
@@ -35,20 +32,21 @@ public class NetworkUtils {
         final String string = DataTypeMethods.getCustom(itemMeta, Keys.FACE, DataType.STRING);
 
         if (string == null) {
-            player.sendMessage(Theme.ERROR + "Direction: " + Theme.PASSIVE + "Not supplied");
+            player.sendMessage(Theme.ERROR + "方向: " + Theme.PASSIVE + "未提供");
             return;
         }
 
         directional.setDirection(blockMenu, BlockFace.valueOf(string));
-        player.sendMessage(Theme.ERROR + "Direction: " + Theme.PASSIVE + "Successfully applied");
+        player.sendMessage(Theme.ERROR + "方向: " + Theme.PASSIVE + "成功应用");
 
 
-        directional.getItemSlots();
-        for (int slot : directional.getItemSlots()) {
-            final ItemStack stackToDrop = blockMenu.getItemInSlot(slot);
-            if (stackToDrop != null && stackToDrop.getType() != Material.AIR) {
-                blockMenu.getLocation().getWorld().dropItem(blockMenu.getLocation(), stackToDrop.clone());
-                stackToDrop.setAmount(0);
+        if (directional.getItemSlots().length > 0) {
+            for (int slot : directional.getItemSlots()) {
+                final ItemStack stackToDrop = blockMenu.getItemInSlot(slot);
+                if (stackToDrop != null && stackToDrop.getType() != Material.AIR) {
+                    blockMenu.getLocation().getWorld().dropItem(blockMenu.getLocation(), stackToDrop.clone());
+                    stackToDrop.setAmount(0);
+                }
             }
         }
 
@@ -62,27 +60,21 @@ public class NetworkUtils {
                             final ItemStack stackClone = StackUtils.getAsQuantity(stack, 1);
                             stack.setAmount(stack.getAmount() - 1);
                             blockMenu.replaceExistingItem(directional.getItemSlots()[i], stackClone);
-                            player.sendMessage(Theme.SUCCESS + "Item [" + i + "]: " + Theme.PASSIVE + "Item added into filter");
+                            player.sendMessage(Theme.SUCCESS + "物品 [" + i + "]: " + Theme.PASSIVE + "已添加到过滤器");
                             worked = true;
                             break;
                         }
                     }
                     if (!worked) {
-                        player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "Not enough items to fill filter");
+                        player.sendMessage(Theme.WARNING + "物品 [" + i + "]: " + Theme.PASSIVE + "没有足够的物品填充过滤器");
                     }
                 } else if (directional instanceof NetworkPusher) {
-                    player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
-                } else if (directional instanceof NetworkMorePusher) {
-                    player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
-                } else if (directional instanceof ChaingPusher) {
-                player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
-                } else if (directional instanceof ChaingPusherPlus) {
-                    player.sendMessage(Theme.WARNING + "Item [" + i + "]: " + Theme.PASSIVE + "No item in stored config");
+                    player.sendMessage(Theme.WARNING + "物品 [" + i + "]: " + Theme.PASSIVE + "存储的配置中没有物品");
                 }
                 i++;
             }
         } else {
-            player.sendMessage(Theme.WARNING + "Items: " + Theme.PASSIVE + "No items in stored config");
+            player.sendMessage(Theme.WARNING + "物品: " + Theme.PASSIVE + "存储的配置中没有物品");
         }
     }
 }

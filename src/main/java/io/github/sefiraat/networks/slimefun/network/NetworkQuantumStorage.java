@@ -51,7 +51,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
-
+@SuppressWarnings("deprecation")
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
 
     private static final int[] SIZES = new int[]{
@@ -404,7 +404,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
 
             if (StackUtils.itemsMatch(storedItemCache, item, true)) {
-                int toAdd = Math.min(item.getAmount(), capacity - cache.getAmount());
+                int toAdd = Math.toIntExact(Math.min(item.getAmount(), capacity - cache.getAmount()));
                 if (toAdd > 0) {
 
                     item.setAmount(item.getAmount() - toAdd);
@@ -426,7 +426,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         if (cache == null) return;
 
         ItemStack storedItem = cache.getItemStack();
-        int stored = cache.getAmount();
+        int stored = Math.toIntExact(cache.getAmount());
         if (action.isShiftClicked() && action.isRightClicked()) {
             // 如果同时按下Shift和右键，提取64个物品
             ItemStack extractedItem = cache.withdrawItem(64);

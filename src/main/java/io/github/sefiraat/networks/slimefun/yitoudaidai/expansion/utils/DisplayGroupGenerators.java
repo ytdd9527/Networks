@@ -54,7 +54,7 @@ public final class DisplayGroupGenerators {
                 "controller",
                 new ItemDisplayBuilder()
                         .setGroupParentOffset(new Vector(0, 1, 0))
-                        .setItemStack(new ItemStack(ItemStacksModel.NE_MODEL_CONTROLLER))
+                        .setItemStack(new ItemStack(ItemStacksModel.NE_MODEL_CELL))
                         .setTransformation(Transformations.TWO.getTransformation())
                         .build(displayGroup)
         );

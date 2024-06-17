@@ -4,15 +4,15 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChaingPusherPlus;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabber;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.ChainGrabberPlus;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateReceiver;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.CoordinateTransmitter;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedImport;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedExport;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.machine.transportation.AdvancedPurger;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusherPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabber;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabberPlus;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateReceiver;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedImport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedExport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedPurger;
 
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
@@ -32,7 +32,7 @@ public class ItemsModel {
     public static final AdvancedExport NEA_MODEL_EXPORT;
     public static final AdvancedPurger NEA_MODEL_PURGER;
     public static final NetworkCell NE_MODEL_CELL;
-    public static final NetworkController NE_MODEL_CONTROLLER;
+
 
     static {
         NE_MODEL_COORDINATE_TRANSMITTER = new CoordinateTransmitter(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_COORDINATE_TRANSMITTER, RecipeType.NULL,null);
@@ -46,7 +46,6 @@ public class ItemsModel {
         NEA_MODEL_PURGER = new AdvancedPurger(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NEA_MODEL_PURGER, RecipeType.NULL,null);
 
         NE_MODEL_CELL = new NetworkCell(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CELL, RecipeType.NULL,null);
-        NE_MODEL_CONTROLLER = new NetworkController(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CONTROLLER, RecipeType.NULL,null);
 
     }
 
@@ -54,7 +53,7 @@ public class ItemsModel {
         NE_MODEL_CHAING_GRABBER.setUseSpecialModel(true);
         NEA_MODEL_PURGER.setUseSpecialModel(true);
         NE_MODEL_CELL.setUseSpecialModel(true);
-        NE_MODEL_CONTROLLER.setUseSpecialModel(true);
+
     }
     public static void setup() {
         Networks plugin = Networks.getInstance();
@@ -69,6 +68,6 @@ public class ItemsModel {
         NEA_MODEL_EXPORT.register(plugin);
         NEA_MODEL_PURGER.register(plugin);
         NE_MODEL_CELL.register(plugin);
-        NE_MODEL_CONTROLLER.register(plugin);
+
     }
 }
