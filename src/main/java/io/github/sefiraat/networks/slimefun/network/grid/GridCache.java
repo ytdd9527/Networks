@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class GridCache {
 
@@ -62,14 +63,13 @@ public class GridCache {
     }
 
     public void addPullItemHistory(@Nullable ItemStack itemStack) {
-        for (ItemStack i : getPullItemHistory()) {
-            if (i.getItemMeta() == itemStack.getItemMeta()) {
+        if (itemStack != null) {
+            if (getPullItemHistory().contains(itemStack)) {
                 getPullItemHistory().remove(itemStack);
-                break;
             }
-        }
 
-        getPullItemHistory().add(0, itemStack);
+            getPullItemHistory().add(0, itemStack);
+        }
     }
 
     public void setFilter(@Nullable String filter) {

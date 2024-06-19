@@ -37,6 +37,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.Collator;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -232,11 +233,9 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
                 }
             }
         } else {
-            final List<ItemStack> history = gridCache.getPullItemHistory();
-
-            if (history == null) {
-                clearDisplay(blockMenu);
-                return;
+            final List<ItemStack> history = new ArrayList<>();
+            for (ItemStack i: gridCache.getPullItemHistory()) {
+                history.add(i.clone());
             }
 
             final int pages = (int) Math.ceil(history.size() / (double) getDisplaySlots().length) - 1;
@@ -266,7 +265,12 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
                     final ItemMeta itemMeta = displayStack.getItemMeta();
                     List<String> lore = itemMeta.getLore();
 
-                    lore = getHistoryLoreAddtion();
+                    if (lore == null) {
+                        lore = getHistoryLoreAddtion();
+                    } else {
+                        lore.addAll(getHistoryLoreAddtion());
+                    }
+
                     itemMeta.setLore(lore);
                     displayStack.setItemMeta(itemMeta);
                     blockMenu.replaceExistingItem(getDisplaySlots()[i], displayStack);
