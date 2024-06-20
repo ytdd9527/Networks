@@ -1,9 +1,13 @@
 package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model;
 
 
+import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
+import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
+import io.github.sefiraat.networks.slimefun.tools.NetworkRake;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.Skulls;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import jdk.jshell.Snippet;
@@ -32,12 +36,15 @@ public class ItemStacksModel {
     public static final SlimefunItemStack NEA_MODEL_EXPORT;
     public static final SlimefunItemStack NEA_MODEL_PURGER;
     public static final SlimefunItemStack NE_MODEL_CELL;
+    public static final SlimefunItemStack NE_MODEL_CAPACITOR_5;
 
 
     static {
+
         //写好的模型
-        NEA_MODEL_PURGER = Theme.model("NEA_PURGER",SlimefunItems.TRASH_CAN, Theme.MACHINE,"网络高级清除器");
-        NE_MODEL_CELL = Theme.model("NE_CELL", Skulls.NE_MODEL_CELL.getPlayerHead(), Theme.MACHINE,"网络单元");
+        NEA_MODEL_PURGER = Theme.model("NEA_PURGER",Skulls.TRASH_CAN.getPlayerHead(), Theme.MACHINE,"网络高级清除器","需要网络扳手器 才能拆除");
+        NE_MODEL_CELL = Theme.model("NE_CELL", Skulls.NE_MODEL_CELL.getPlayerHead(), Theme.MACHINE,"网络单元","需要网络扳手器 才能拆除");
+        NE_MODEL_CAPACITOR_5 = Theme.model("NE_CAPACITOR_5", Skulls.NE_MODEL_CAPACITOR_5.getPlayerHead(), Theme.MACHINE,"网络电容(5)","需要网络扳手器 才能拆除");
 
         //没写的
         NE_MODEL_COORDINATE_TRANSMITTER = Theme.model("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器","网络坐标传输器可以","将其中的物品传输到绑定的","网络坐标接收器中(只能在同一世界).","使用网络坐标配置器来进行绑定.","", MessageFormat.format("{0}网络电力消耗: {1}{2} 每次传输", Theme.CLICK_INFO, Theme.PASSIVE, 10000));

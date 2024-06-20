@@ -1,5 +1,8 @@
 package io.github.sefiraat.networks;
 
+
+
+import dev.sefiraat.netheopoiesis.Netheopoiesis;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
@@ -7,6 +10,7 @@ import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.managers.ConfigManager;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model.ItemsModel;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import net.guizhanss.guizhanlibplugin.updater.GuizhanUpdater;
@@ -31,7 +35,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     private final String username;
     private final String repo;
     private final String branch;
-
+    private ConfigManager configManager;
     private ListenerManager listenerManager;
     private SupportedPluginManager supportedPluginManager;
 
@@ -59,6 +63,8 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         getLogger().info("########################################");
 
         saveDefaultConfig();
+
+        this.configManager = new ConfigManager();
         tryUpdate();
 
         this.supportedPluginManager = new SupportedPluginManager();
@@ -70,13 +76,20 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
         setupMetrics();
     }
+    @Override
+    public void onDisable() {
 
+        this.configManager.saveAll();
+    }
     public void tryUpdate() {
-        if (getConfig().getBoolean("auto-update") && getDescription().getVersion().startsWith("Build")) {
+        if (configManager.isAutoUpdate() && getDescription().getVersion().startsWith("Build")) {
             GuizhanUpdater.start(this, getFile(), username, repo, branch);
         }
     }
 
+    public static ConfigManager getConfigManager() {
+        return Networks.getInstance().configManager;
+    }
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
         ExpansionSlimefunitems.setup();
@@ -120,14 +133,15 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         return "https://slimefun-addons-wiki.guizhanss.cn/networks/{0}";
     }
 
+
+    public static Networks getInstance() {
+        return Networks.instance;
+    }
     @Nonnull
     public static PluginManager getPluginManager() {
         return Networks.getInstance().getServer().getPluginManager();
     }
 
-    public static Networks getInstance() {
-        return Networks.instance;
-    }
 
     public static SupportedPluginManager getSupportedPluginManager() {
         return Networks.getInstance().supportedPluginManager;

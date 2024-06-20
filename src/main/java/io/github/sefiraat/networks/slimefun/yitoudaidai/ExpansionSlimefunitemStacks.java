@@ -3,7 +3,6 @@ package io.github.sefiraat.networks.slimefun.yitoudaidai;
 
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Pair;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
@@ -34,6 +33,8 @@ public class ExpansionSlimefunitemStacks {
     public static final SlimefunItemStack NE_CHAING_PUSHER_PARTICLE;
     public static final SlimefunItemStack NE_CHAING_GRABBER;
     public static final SlimefunItemStack NE_CHAING_GRABBER_PLUS;
+    public static final SlimefunItemStack NE_CHAIN_DISPATCHER;
+    public static final SlimefunItemStack NE_CHAIN_DISPATCHER_PLUS;
     public static final SlimefunItemStack NEA_IMPORT;
     public static final SlimefunItemStack NEA_EXPORT;
     public static final SlimefunItemStack NEA_PURGER;
@@ -88,20 +89,24 @@ public class ExpansionSlimefunitemStacks {
     public static final SlimefunItemStack NE_BRIDGE_PINK;
     static {
 
-        NE_EXPANSION_WORKBENCH = Theme.themedSlimefunItemStack("NE_EXPANSION_WORKBENCH",getPreEnchantedItemStack(Material.BAMBOO_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络拓展工作台","可以合成拓展机器");
+        NE_EXPANSION_WORKBENCH = Theme.tsItem("NE_EXPANSION_WORKBENCH",Enchanted(Material.BAMBOO_BLOCK),Theme.MACHINE,"网络拓展工作台");;
         //工具
-        NE_COORDINATE_CONFIGURATOR = Theme.themedSlimefunItemStack("NE_COORDINATE_CONFIGURATOR",getPreEnchantedItemStack(Material.RECOVERY_COMPASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.TOOL,"网络坐标配置器","用于储存一个坐标接收器的位置,","并设置到坐标传输中.","",MessageFormat.format("{0}右键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "记录坐标接收器的当前位置"),MessageFormat.format("{0}Shift+右键点击: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, "将位置设置到坐标传输器中"));
+        NE_COORDINATE_CONFIGURATOR = Theme.tsItem("NE_COORDINATE_CONFIGURATOR",Enchanted(Material.RECOVERY_COMPASS),Theme.TOOL,"网络坐标配置器");;
         //运输与存储电力
-        NE_COORDINATE_TRANSMITTER = Theme.themedSlimefunItemStack("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器","网络坐标传输器可以","将其中的物品传输到绑定的","网络坐标接收器中(只能在同一世界).","使用网络坐标配置器来进行绑定.","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次传输", Theme.CLICK_INFO, Theme.PASSIVE, 10000));
-        NE_COORDINATE_RECEIVER = Theme.themedSlimefunItemStack("NE_COORDINATE_RECEIVER",getPreEnchantedItemStack(Material.JUKEBOX, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标接收器","网络坐标接收器可以","接收来自绑定的网络坐标传输器","中的物品(只能在同一世界).","每粘液刻会把接收到的物品","尝试推送到网络中.");
-        NE_CHAING_PUSHER = Theme.themedSlimefunItemStack("NE_CHAING_PUSHER",new ItemStack(Material.OBSERVER),Theme.MACHINE,"网络链式推送器","网络链式推送器会尝试将","指定的物品送入机器中","指定的方向可延伸32格以内的机器推送指定物品","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NE_CHAING_PUSHER_PARTICLE = Theme.themedSlimefunItemStack("NE_CHAING_PUSHER_PLUS",getPreEnchantedItemStack(Material.OBSERVER, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络链式推送器Plus","网络链式推送器会尝试从","指定的物品送入机器中","指定的方向可延伸64格以内的机器推送指定物品","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NE_CHAING_GRABBER = Theme.themedSlimefunItemStack("NE_EXPANSION_GRABBER_1",new ItemStack(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器","网络链式抓取器会尝试从","指定的方向抓取延伸32格以内的机器的输出槽送回网络中","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NE_CHAING_GRABBER_PLUS = Theme.themedSlimefunItemStack("NE_EXPANSION_GRABBER_PLUS",getPreEnchantedItemStack(Material.DISPENSER, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络链式抓取器Plus","网络链式抓取器Plus会尝试从","指定的方向抓取延伸64格以内的机器的输出槽送回网络中","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NEA_IMPORT = Theme.themedSlimefunItemStack("NEA_IMPORT",getPreEnchantedItemStack(Material.RED_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络高级入口","网络高级入口会将其中的物品送入网络中","每个SF tick可传输最多54组物品","可接收来自货运网络的物品");
-        NEA_EXPORT = Theme.themedSlimefunItemStack("NEA_EXPORT",getPreEnchantedItemStack(Material.BLUE_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级出口","网络高级出口可以设置成","持续将1组指定的物品送出网络","可以使用货运网络从中提取物品");
-        NEA_PURGER = Theme.themedSlimefunItemStack("NEA_PURGER",new ItemStack(Material.DISPENSER), Theme.MACHINE,"网络高级清除器");
-        NETWORK_CAPACITOR_5 = Theme.themedSlimefunItemStack("NTW_CAPACITOR_5", new ItemStack(Material.CYAN_GLAZED_TERRACOTTA), Theme.MACHINE, "网络电容 (5)", "网络电容可以接收来自", "能源网络的电力并存储起来", "以供其他网络设备使用", "", MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 100000000));
+        NE_CHAING_PUSHER = Theme.tsItem("NE_CHAING_PUSHER",new ItemStack(Material.OBSERVER),Theme.MACHINE,"网络链式推送器");
+        NE_CHAING_GRABBER = Theme.tsItem("NE_EXPANSION_GRABBER_1",new ItemStack(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器");
+        NE_CHAIN_DISPATCHER = Theme.tsItem("NE_CHAIN_DISPATCHER", new ItemStack(Material.PISTON),Theme.MACHINE, "网链调度器");
+
+        NE_CHAING_PUSHER_PARTICLE = Theme.tsItem("NE_CHAING_PUSHER_PLUS",Enchanted(Material.OBSERVER),Theme.MACHINE,"网络链式推送器Plus");
+        NE_CHAING_GRABBER_PLUS = Theme.tsItem("NE_EXPANSION_GRABBER_PLUS",Enchanted(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器Plus");
+        NE_CHAIN_DISPATCHER_PLUS = Theme.tsItem("NE_CHAIN_DISPATCHER_PLUS",Enchanted(Material.STICKY_PISTON),Theme.MACHINE,"网链调度器Plus");
+
+        NE_COORDINATE_TRANSMITTER = Theme.themedSlimefunItemStack("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器");
+        NE_COORDINATE_RECEIVER = Theme.themedSlimefunItemStack("NE_COORDINATE_RECEIVER",getPreEnchantedItemStack(Material.JUKEBOX, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标接收器");
+        NEA_IMPORT = Theme.themedSlimefunItemStack("NEA_IMPORT",getPreEnchantedItemStack(Material.RED_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络高级入口");
+        NEA_EXPORT = Theme.themedSlimefunItemStack("NEA_EXPORT",getPreEnchantedItemStack(Material.BLUE_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级出口");
+        NEA_PURGER = Theme.themedSlimefunItemStack("NEA_PURGER",getPreEnchantedItemStack(Material.YELLOW_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级清除器");
+        NETWORK_CAPACITOR_5 = Theme.themedSlimefunItemStack("NTW_CAPACITOR_5", new ItemStack(Material.CYAN_GLAZED_TERRACOTTA), Theme.MACHINE, "网络电容 (5)");;
 
         NETWORK_ADVANCED_QUANTUM_STORAGE = Theme.themedSlimefunItemStack("NE_ADVANCED_QUANTUM_STORAGE",new ItemStack(Material.AMETHYST_BLOCK),Theme.MACHINE,"高级量子存储","可自定义的最大存储容量","请注意设置数量之后不能在设置小于之前设置的数量","否则清空到当前最大容量");
 
@@ -166,5 +171,8 @@ public class ExpansionSlimefunitemStacks {
         }
         itemStack.setItemMeta(itemMeta);
         return itemStack;
+    }
+    public static ItemStack Enchanted(Material material) {
+        return getPreEnchantedItemStack(material, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1));
     }
 }

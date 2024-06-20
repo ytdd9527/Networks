@@ -136,7 +136,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
         Block targetBlock = blockMenu.getBlock().getRelative(direction);
 
         for (int i = 0; i <= MAX_DISTANCE; i++) {
-            targetBlock = targetBlock.getRelative(direction);
+
 
             // 获取目标方块的BlockMenu
             final BlockMenu targetMenu = StorageCacheUtils.getMenu(targetBlock.getLocation());
@@ -180,6 +180,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
 
                     break; // 推送成功后退出当前槽位循环
                 }
+                targetBlock = targetBlock.getRelative(direction);
             }
         }
     }

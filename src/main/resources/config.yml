@@ -1,2 +1,18 @@
-# 启用自动更新 (从构建站自动更新，重启服务器后新版本生效)
-auto-update: true
+# 开启自动更新
+auto-update: false
+
+# max-distance最大距离限制 100
+# pushitem-tick 1 Tick=0.5秒 推送物品的时间
+# grabitem-tick1 Tick=0.5秒 抓取物品的时间
+
+items:
+  NE_CHAIN_DISPATCHER:
+    max-distance: 32
+    pushitem-tick: 5
+    grabitem-tick: 10
+    required-power: 5000
+  NE_CHAIN_DISPATCHER_PLUS:
+    max-distance: 64
+    pushitem-tick: 5
+    grabitem-tick: 10
+    required-power: 5000

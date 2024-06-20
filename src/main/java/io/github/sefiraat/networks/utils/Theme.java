@@ -108,6 +108,20 @@ public enum Theme {
     }
     @Nonnull
     @ParametersAreNonnullByDefault
+    public static SlimefunItemStack tsItem(String id, ItemStack itemStack, Theme themeType, String name, String... lore) {
+        List<String> finalLore = new ArrayList<>();
+        finalLore.add("");
+        finalLore.add(applyThemeToString(Theme.SUCCESS, themeType.getLoreLine()));
+        return new SlimefunItemStack(
+                id,
+                itemStack,
+                Theme.applyThemeToString(themeType, name),
+                finalLore.toArray(new String[finalLore.size() - 1])
+        );
+    }
+
+    @Nonnull
+    @ParametersAreNonnullByDefault
     public static SlimefunItemStack model(String id, ItemStack itemStack, Theme themeType, String name, String... lore) {
         ChatColor passiveColor = Theme.PASSIVE.getColor();
         List<String> finalLore = new ArrayList<>();

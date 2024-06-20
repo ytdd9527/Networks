@@ -22,14 +22,7 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
 import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedExport;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedImport;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusherPlus;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabber;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabberPlus;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateReceiver;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.*;
 import io.github.sefiraat.networks.slimefun.network.NetworkBestPusher;
 import io.github.sefiraat.networks.slimefun.network.NetworkMorePusher;
 import io.github.sefiraat.networks.utils.Keys;
@@ -87,7 +80,7 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkVacuum.class);
         viableObjects.add(NetworkMorePusher.class);
         viableObjects.add(NetworkBestPusher.class);
-
+        viableObjects.add(AdvancedPurger.class);
         viableObjects.add(ChaingPusher.class);
         viableObjects.add(ChaingPusherPlus.class);
         viableObjects.add(ChainGrabber.class);

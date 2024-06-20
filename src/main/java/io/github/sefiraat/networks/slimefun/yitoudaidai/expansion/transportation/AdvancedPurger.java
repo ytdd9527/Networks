@@ -186,7 +186,7 @@ public class AdvancedPurger extends NetworkObject implements RecipeDisplayItem {
         this.useSpecialModel = useSpecialModel;
     }
     private void setupDisplay(@Nonnull Location location) {
-        DisplayGroup displayGroup = DisplayGroupGenerators.generateCloche(location.clone().add(0.5, 0, 0.5));
+            DisplayGroup displayGroup = DisplayGroupGenerators.generateCloche(location.clone().add(0.5, 0, 0.5));
         StorageCacheUtils.setData(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
     private void removeDisplay(@Nonnull Location location) {

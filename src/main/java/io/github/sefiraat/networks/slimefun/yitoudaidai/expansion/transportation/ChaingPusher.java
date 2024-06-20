@@ -121,7 +121,6 @@ public class ChaingPusher extends NetworkDirectional implements RecipeDisplayIte
         // 将更新后的Tick计数器值存储到BlockStorage中
         BlockStorage.addBlockInfo(block.getLocation(), TICK_COUNTER_KEY, Integer.toString(tickCounter));
     }
-
     private void tryPushItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
@@ -134,7 +133,7 @@ public class ChaingPusher extends NetworkDirectional implements RecipeDisplayIte
         Block targetBlock = blockMenu.getBlock().getRelative(direction);
 
         for (int i = 0; i <= MAX_DISTANCE; i++) {
-            targetBlock = targetBlock.getRelative(direction);
+
 
             // 获取目标方块的BlockMenu
             final BlockMenu targetMenu = StorageCacheUtils.getMenu(targetBlock.getLocation());
@@ -178,9 +177,12 @@ public class ChaingPusher extends NetworkDirectional implements RecipeDisplayIte
 
                     break; // 推送成功后退出当前槽位循环
                 }
+                targetBlock = targetBlock.getRelative(direction);
             }
         }
     }
+
+
     @Nonnull
     @Override
     protected int[] getBackgroundSlots() {
@@ -254,7 +256,7 @@ public class ChaingPusher extends NetworkDirectional implements RecipeDisplayIte
                 "&7以下是链式推送器的操作说明：",
                 "",
                 "&e最大推送距离&7: &f32格",
-                "&e推送对象: &f机器方块的输出槽位中的物品",
+                "&e推送对象: &f机器方块的输入槽位中的物品",
                 "",
                 "&e运行流程&f:",
                 "&f-&7 打开界面设置你所需的方向",

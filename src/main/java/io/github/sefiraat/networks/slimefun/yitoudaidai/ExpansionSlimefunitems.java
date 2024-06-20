@@ -30,15 +30,7 @@ import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystem
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkQuantumWorkbenchEncoder;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkSmelteryEncoder;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkAncietAltaryEncoder;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusher;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusherPlus;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabber;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabberPlus;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateReceiver;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateTransmitter;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedImport;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedExport;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedPurger;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.*;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.tools.CoordinateConfigurator;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.workbench.ExpansionWorkbench;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -61,6 +53,9 @@ public class ExpansionSlimefunitems {
     public static final ChaingPusherPlus NE_CHAING_PUSHER_PLUS;
     public static final ChainGrabber NE_CHAING_GRABBER;
     public static final ChainGrabberPlus NE_CHAING_GRABBER_PLUS;
+    public static final NetChainDispatcher NE_CHAIN_DISPATCHER;
+    public static final NetChainDispatcher NE_CHAIN_DISPATCHER_PLUS;
+
     public static final AdvancedImport NEA_IMPORT;
     public static final AdvancedExport NEA_EXPORT;
     public static final AdvancedPurger NEA_PURGER;
@@ -128,6 +123,10 @@ public class ExpansionSlimefunitems {
         NE_CHAING_PUSHER_PLUS = new ChaingPusherPlus(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_PUSHER_PARTICLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_PUSHER_PARTICLE);
         NE_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER);
         NE_CHAING_GRABBER_PLUS = new ChainGrabberPlus(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER_PLUS);
+        NE_CHAIN_DISPATCHER = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER, ExpansionWorkbench.TYPE, Recipe.NULL,"NETWORK_TRANSPORTATION");
+        NE_CHAIN_DISPATCHER_PLUS = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NULL,"NE_CHAIN_DISPATCHER_PLUS");
+
+
         NEA_IMPORT = new AdvancedImport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_IMPORT, ExpansionWorkbench.TYPE, Recipe.NEA_IMPORT);
         NEA_EXPORT = new AdvancedExport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_EXPORT, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
         NEA_PURGER = new AdvancedPurger(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_PURGER, ExpansionWorkbench.TYPE, Recipe.NEA_PURGER);
@@ -204,6 +203,10 @@ public class ExpansionSlimefunitems {
         NE_CHAING_PUSHER_PLUS.register(plugin);
         NE_CHAING_GRABBER.register(plugin);
         NE_CHAING_GRABBER_PLUS.register(plugin);
+
+        NE_CHAIN_DISPATCHER.register(plugin);
+        NE_CHAIN_DISPATCHER_PLUS.register(plugin);
+
         NEA_IMPORT.register(plugin);
         NEA_EXPORT.register(plugin);
         NEA_PURGER.register(plugin);

@@ -3,7 +3,7 @@ package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
 import io.github.sefiraat.networks.slimefun.network.NetworkCell;
-import io.github.sefiraat.networks.slimefun.network.NetworkController;
+import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusher;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusherPlus;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabber;
@@ -16,7 +16,6 @@ import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation
 
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
-
 
 
 @UtilityClass
@@ -32,9 +31,11 @@ public class ItemsModel {
     public static final AdvancedExport NEA_MODEL_EXPORT;
     public static final AdvancedPurger NEA_MODEL_PURGER;
     public static final NetworkCell NE_MODEL_CELL;
-
+    public static final NetworkPowerNode NE_MODEL_CAPACITOR_5;
 
     static {
+
+
         NE_MODEL_COORDINATE_TRANSMITTER = new CoordinateTransmitter(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_COORDINATE_TRANSMITTER, RecipeType.NULL,null);
         NE_MODEL_COORDINATE_RECEIVER = new CoordinateReceiver(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_COORDINATE_RECEIVER, RecipeType.NULL,null);
         NE_MODEL_CHAING_PUSHER = new ChaingPusher(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_PUSHER, RecipeType.NULL,null);
@@ -46,6 +47,7 @@ public class ItemsModel {
         NEA_MODEL_PURGER = new AdvancedPurger(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NEA_MODEL_PURGER, RecipeType.NULL,null);
 
         NE_MODEL_CELL = new NetworkCell(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CELL, RecipeType.NULL,null);
+        NE_MODEL_CAPACITOR_5 = new NetworkPowerNode(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CAPACITOR_5, RecipeType.NULL,null,100000000);
 
     }
 
@@ -53,7 +55,7 @@ public class ItemsModel {
         NE_MODEL_CHAING_GRABBER.setUseSpecialModel(true);
         NEA_MODEL_PURGER.setUseSpecialModel(true);
         NE_MODEL_CELL.setUseSpecialModel(true);
-
+        NE_MODEL_CAPACITOR_5.setUseSpecialModel(true);
     }
     public static void setup() {
         Networks plugin = Networks.getInstance();
@@ -68,6 +70,6 @@ public class ItemsModel {
         NEA_MODEL_EXPORT.register(plugin);
         NEA_MODEL_PURGER.register(plugin);
         NE_MODEL_CELL.register(plugin);
-
+        NE_MODEL_CAPACITOR_5.register(plugin);
     }
 }

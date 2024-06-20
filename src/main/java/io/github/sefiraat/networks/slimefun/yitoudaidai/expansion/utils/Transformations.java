@@ -1,6 +1,6 @@
 package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils;
 
-import dev.sefiraat.sefilib.misc.RotationFace;
+
 import io.papermc.lib.PaperLib;
 import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import org.bukkit.util.Transformation;
@@ -11,10 +11,25 @@ import javax.annotation.Nonnull;
 
 public enum Transformations {
     TWO(new TransformationBuilder()
-            .scale(2f, 2f, 2f)
+            .scale(1.95f, 2f, 2f)
             .build()
     ),
-
+    NE_MODEL_CAPACITOR_5(new TransformationBuilder()
+            .scale(1.5f, -4f, 1.5f)
+            .build()
+    ),
+    CLOCHE_BASE(new TransformationBuilder()
+            .scale(0.5f, 1f, 0.5f)
+            .build()
+    ),
+    CLOCHE_GLASS(new TransformationBuilder()
+            .scale(0.5f, 0.5f, 0.5f)
+            .build()
+    ),
+    CLOCHE_DIRT(new TransformationBuilder()
+            .scale(0.4f, 0.4f, 0.4f)
+            .build()
+    ),
     ;
 
 

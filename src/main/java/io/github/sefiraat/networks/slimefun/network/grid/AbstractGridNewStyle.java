@@ -109,7 +109,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         Collator.getInstance(Locale.CHINA)::compare
     );
 
-    private static final Comparator<Map.Entry<ItemStack, Long>> NUMERICAL_SORT = Map.Entry.comparingByValue();
+    private static final Comparator<Entry<ItemStack, Long>> NUMERICAL_SORT = Entry.comparingByValue();
 
     private final ItemSetting<Integer> tickRate;
 
@@ -185,7 +185,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         final NetworkRoot root = definition.getNode().getRoot();
         final GridCache gridCache = getCacheMap().get(blockMenu.getLocation().clone());
         if (gridCache.getDisplayMode() == DisplayMode.DISPLAY){
-            final List<Map.Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
+            final List<Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
             final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
 
             gridCache.setMaxPages(pages);
@@ -203,13 +203,13 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
 
             final int start = gridCache.getPage() * getDisplaySlots().length;
             final int end = Math.min(start + getDisplaySlots().length, entries.size());
-            final List<Map.Entry<ItemStack, Long>> validEntries = entries.subList(start, end);
+            final List<Entry<ItemStack, Long>> validEntries = entries.subList(start, end);
 
             getCacheMap().put(blockMenu.getLocation(), gridCache);
 
             for (int i = 0; i < getDisplaySlots().length; i++) {
                 if (validEntries.size() > i) {
-                    final Map.Entry<ItemStack, Long> entry = validEntries.get(i);
+                    final Entry<ItemStack, Long> entry = validEntries.get(i);
                     final ItemStack displayStack = entry.getKey().clone();
                     final ItemMeta itemMeta = displayStack.getItemMeta();
                     List<String> lore = itemMeta.getLore();
@@ -294,7 +294,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
     }
 
     @Nonnull
-    protected List<Map.Entry<ItemStack, Long>> getEntries(@Nonnull NetworkRoot networkRoot, @Nonnull GridCache cache) {
+    protected List<Entry<ItemStack, Long>> getEntries(@Nonnull NetworkRoot networkRoot, @Nonnull GridCache cache) {
         return networkRoot.getAllNetworkItems()
             .entrySet()
             .stream()

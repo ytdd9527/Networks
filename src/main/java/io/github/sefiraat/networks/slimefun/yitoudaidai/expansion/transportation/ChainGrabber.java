@@ -210,7 +210,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
         this.useSpecialModel = useSpecialModel;
     }
     private void setupDisplay(@Nonnull Location location) {
-        DisplayGroup displayGroup = DisplayGroupGenerators.generateCloche(location.clone().add(0.5, 0, 0.5));
+        DisplayGroup displayGroup = DisplayGroupGenerators.generatePowerNode(location.clone().add(0.5, 0, 0.5));
         StorageCacheUtils.setData(location, KEY_UUID, displayGroup.getParentUUID().toString());
     }
     private void removeDisplay(@Nonnull Location location) {
@@ -273,14 +273,14 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
                 "&f-&7 链式抓取器从当前方块开始，沿着设定方向搜索",
                 "",
                 "&e抓取条件&f:",
-                "&f-&7 遇到有物品的槽位，且物品不是空气时",
+                "&f-&7 遇到有物品的输出槽位，且物品不是空气时",
                 "&f-&7 将物品添加到网络中(确保网络有足够的空间不然不进行抓取)",
                 "&f-&7 确保物品在机器按计划和有序地抓取，避免混乱",
                 "",
                 "&e停止条件&f:",
                 "&f-&7 达到最大抓取距离(32格)",
                 "&f-&7 遇到的方块为空，或者",
-                "&f-&7 没有更多可抓取的物品",
+                "&f-&7 没有更多可抓取的物品(空间)",
                 "&f-&7 抓取器将停止操作",
                 "",
                 "&e效率与秩序&f:",
