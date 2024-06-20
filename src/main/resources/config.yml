@@ -6,11 +6,29 @@ auto-update: false
 # grabitem-tick1 Tick=0.5秒 抓取物品的时间
 
 items:
+  # 网络链式推送器
+  NE_CHAIN_PUSHER:
+    max-distance: 32
+    pushitem-tick: 5
+  # 网络链式推送器Plus
+  NE_CHAIN_PUSHER_PLUS:
+    max-distance: 64
+    pushitem-tick: 5
+  # 网络链式抓取器
+  NE_CHAIN_GRABBER:
+    max-distance: 32
+    grabitem-tick: 10
+  # 网络链式抓取器Plus
+  NE_CHAIN_GRABBER_PLUS:
+    max-distance: 64
+    grabitem-tick: 10
+  # 网链调度器
   NE_CHAIN_DISPATCHER:
     max-distance: 32
     pushitem-tick: 5
     grabitem-tick: 10
     required-power: 5000
+  # 网链调度器Plus
   NE_CHAIN_DISPATCHER_PLUS:
     max-distance: 64
     pushitem-tick: 5

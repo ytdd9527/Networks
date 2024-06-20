@@ -55,7 +55,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
     );
     private static final String CHAIN_TICK_KEY = "DispTick";
 
-    private static final int MAX_DISTANCE_LIMIT = 100;
+    private static final int MAX_DISTANCE_LIMIT = 64;
     private int maxDistance;
     private int pushItemTick;
     private int grabItemTick;
@@ -126,22 +126,22 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
 
 
         if (tryPushItemtick == 0) {
-            if (networkRoot.getRootPower() >= requiredPower) {
-                networkRoot.removeRootPower(requiredPower);
+            if (networkRoot.getRootPower() >= this.requiredPower) {
+                networkRoot.removeRootPower(this.requiredPower);
                 performPushItemOperationAsync(blockMenu);
             } else {
             }
         }
-        tryPushItemtick = (tryPushItemtick + 1) % pushItemTick;
+        tryPushItemtick = (tryPushItemtick + 1) % this.pushItemTick;
 
         if (tryGrabItemtick == 0) {
-            if (networkRoot.getRootPower() >= requiredPower) {
-                networkRoot.removeRootPower(requiredPower );
+            if (networkRoot.getRootPower() >= this.requiredPower) {
+                networkRoot.removeRootPower(this.requiredPower);
                 performGrabItemOperationAsync(blockMenu);
             } else {
             }
         }
-        tryGrabItemtick = (tryGrabItemtick + 1) % grabItemTick;
+        tryGrabItemtick = (tryGrabItemtick + 1) % this.grabItemTick;
 
         updateTickCounter(block, tryPushItemtick);
         updateTickCounter(block, tryGrabItemtick);
@@ -170,6 +170,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
     private void updateTickCounter(Block block, int tickCounter) {
         BlockStorage.addBlockInfo(block.getLocation(), CHAIN_TICK_KEY, Integer.toString(tickCounter));
     }
+
     private void tryPushItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
         if (definition == null || definition.getNode() == null) {
@@ -179,7 +180,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
         final BlockFace direction = this.getCurrentDirection(blockMenu);
         Block targetBlock = blockMenu.getBlock().getRelative(direction);
 
-        for (int i = 0; i < maxDistance; i++) {
+        for (int i = 0; i < this.maxDistance; i++) {
             final BlockMenu targetMenu = StorageCacheUtils.getMenu(targetBlock.getLocation());
             if (targetMenu == null) {
                 break; // 如果没有找到BlockMenu，结束循环
@@ -247,7 +248,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
         BlockFace direction = this.getCurrentDirection(blockMenu);
         Block currentBlock = blockMenu.getBlock().getRelative(direction);
 
-        for (int i = 0; i < maxDistance && currentBlock.getType() != Material.AIR; i++) {
+        for (int i = 0; i < this.maxDistance && currentBlock.getType() != Material.AIR; i++) {
             BlockMenu targetMenu = StorageCacheUtils.getMenu(currentBlock.getLocation());
 
             if (targetMenu == null) {
@@ -344,8 +345,8 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
                 "&a⇩运行频率⇩",
                 "",
                 "&e执行频率&f:",
-                "&f-&7[&a推送频率&7]&f:&7 每次 "+pushItemTick+" Tick 推送一次",
-                "&f-&7[&a抓取频率&7]&f:&7 每次 "+grabItemTick+" Tick 抓取一次",
+                "&f-&7[&a推送频率&7]&f:&7 每次 " + this.pushItemTick + " Tick 推送一次",
+                "&f-&7[&a抓取频率&7]&f:&7 每次 " + this.grabItemTick + " Tick 抓取一次",
                 "",
                 "&f-&7[&a1 Tick = 0.5s]"
         ));
@@ -353,15 +354,15 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
                 "&a⇩电力消耗⇩",
                 "",
                 "&e网络电力消耗&f:",
-                "&f-&7[&a推送 ⚡&7]&f:&7 "+requiredPower+" J 每次推送",
-                "&f-&7[&a抓取 ⚡&7]&f:&7 "+requiredPower+" J 每次抓取",
+                "&f-&7[&a推送 ⚡&7]&f:&7 " + this.requiredPower + " J 每次推送",
+                "&f-&7[&a抓取 ⚡&7]&f:&7 " + this.requiredPower + " J 每次抓取",
                 "",
                 "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
         ));
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩功能⇩",
                 "",
-                "&e最大距离&7: &f"+maxDistance+"格",
+                "&e最大距离&7: &f" + this.maxDistance + "格",
                 "&f-&7 可以同时推送物品且抓取物品",
                 "&f-&7 推送物品需要全部改机器的输入槽上有指定的物品推送",
                 "",
@@ -370,17 +371,18 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
                 "&f-&7 网链调度器当前方块开始，沿着设定方向搜索",
                 "",
                 "&e推送条件&f:",
-                "&f-&7[&a推送物品&7]&f:&7指定需要推送的物品到机器输入槽上,[确保槽位上是否有指定需要推送的物品",
-                "&f-&7[&a停止条件&7]&f:&7如果机器输入槽上没有指定需要推送的物品则不进行推送",
+                "&f-&7[&a推送物品&7]&f:&7指定需要推送的物品到机器输入槽上[确保槽位上是否有指定需要推送的物品]",
+                "&f-&7[&a停止条件①&7]&f:&7如果机器输入槽上没有指定需要推送的物品则不进行推送",
+                "&f-&7[&a停止条件②&7]&f:&7达到最大推送距离[&f" + this.maxDistance + "格]",
                 "",
                 "&e抓取逻辑&f:",
                 "&f-&7[&a抓取物品&7]&f:&7将输出槽上的物品全部抓取网络中",
-                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&f"+maxDistance+"格]",
+                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&f" + this.maxDistance + "格]",
                 "&f-&7 遇到的方块为空，或者",
                 "&f-&7 没有更多可抓取的物品,或没有足够网络空间",
                 "&f-&7 抓取将停止操作"
         ));
-        return displayRecipes ;
+        return displayRecipes;
     }
 }
 

@@ -26,7 +26,7 @@ public interface CanCooldown {
     default boolean canBeUsed(@Nullable Player player, ItemStack itemStack) {
         if (StackUtils.isOnCooldown(itemStack)) {
             if (player != null) {
-                player.sendMessage(Theme.WARNING + "探测器仍在冷却中");
+                player.sendMessage(Theme.WARNING + "物品仍在冷却中");
             }
             return false;
         } else {

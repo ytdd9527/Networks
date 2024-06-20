@@ -17,11 +17,10 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -31,11 +30,12 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChaingPusherPlus extends NetworkDirectional implements RecipeDisplayItem {
+public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem {
 
     // 定义推送的最大距离
-    private static final int MAX_DISTANCE = 64;
+    private static final int MAX_DISTANCE = 32;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
+
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
@@ -51,13 +51,26 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
     );
-    private static final String TICK_COUNTER_KEY = "chain_PusherPlus_tick_counter";
+    private static final String TICK_COUNTER_KEY = "chain_pusher_tick_counter";
 
-    public ChaingPusherPlus(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_PUSHER_PLUS);
+    private int maxDistance;
+    private int pushItemTick;
+
+    public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_PUSHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
+        loadConfigurations(itemId);
+    }
+
+    private void loadConfigurations(String itemId) {
+        int defaultMaxDistance = 32;
+        int defaultPushItemTick = 10;
+
+        FileConfiguration config = Networks.getInstance().getConfig();
+        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE);
+        this.pushItemTick = config.getInt("items." + itemId + ".pushitem-tick", defaultPushItemTick);
     }
 
     /**
@@ -86,9 +99,9 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
 
         // 初始化Tick计数器
         int tickCounter = getTickCounter(block);
-        tickCounter = (tickCounter + 1) % 10;
+        tickCounter = (tickCounter + 1) % this.pushItemTick;
 
-        // 每10个Tick执行一次推送操作
+        // 每pushItemTick个Tick执行一次推送操作
         if (tickCounter == 0) {
             performPushItemOperationAsync(blockMenu);
         }
@@ -123,7 +136,6 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
         // 将更新后的Tick计数器值存储到BlockStorage中
         BlockStorage.addBlockInfo(block.getLocation(), TICK_COUNTER_KEY, Integer.toString(tickCounter));
     }
-
     private void tryPushItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
@@ -135,7 +147,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
 
         Block targetBlock = blockMenu.getBlock().getRelative(direction);
 
-        for (int i = 0; i <= MAX_DISTANCE; i++) {
+        for (int i = 0; i <= this.maxDistance; i++) {
 
 
             // 获取目标方块的BlockMenu
@@ -184,6 +196,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
             }
         }
     }
+
 
     @Nonnull
     @Override
@@ -237,11 +250,6 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
     public int[] getItemSlots() {
         return TEMPLATE_SLOTS;
     }
-
-    @Override
-    protected Particle.DustOptions getDustOptions() {
-        return new Particle.DustOptions(Color.BLUE, 2);
-    }
     @NotNull
     @Override
     public List<ItemStack> getDisplayRecipes() {
@@ -252,7 +260,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
                 "&7这个链式推送器有一个简单的频率控制&f：",
                 "",
                 "&e执行频率&f:",
-                "&f-&7 每隔5-6秒自动执行一次推送",
+                "&f-&7 每隔" + this.pushItemTick / 2.0 + "秒自动执行一次推送",
                 "&f-&7 目的: 这样做可以平稳地运行，减少服务器负载",
                 "",
                 "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
@@ -262,8 +270,8 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
                 "&a⇩推送逻辑⇩",
                 "&7以下是链式推送器的操作说明：",
                 "",
-                "&e最大推送距离&7: &f64格",
-                "&e推送对象: &f机器方块的输出槽位中的物品",
+                "&e最大推送距离&7: &f" + this.maxDistance + "格",
+                "&e推送对象: &f机器方块的输入槽位中的物品",
                 "",
                 "&e运行流程&f:",
                 "&f-&7 打开界面设置你所需的方向",
@@ -275,7 +283,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
                 "&f-&7 确保物品在机器按计划和有序地推送，避免混乱",
                 "",
                 "&e停止条件&f:",
-                "&f-&7 达到最大推送距离(64格)",
+                "&f-&7 达到最大推送距离(" + this.maxDistance + "格)",
                 "&f-&7 遇到的方块为空，或者",
                 "&f-&7 没有更多可推送的物品",
                 "&f-&7 推送器将停止操作",
@@ -292,7 +300,7 @@ public class ChaingPusherPlus extends NetworkDirectional implements RecipeDispla
                 "&f-&7 如果你使用了链式推送器就没必要给机器继续使用推送器了",
                 "&f-&7 不要双管齐下多此一举",
                 "",
-                "&f-&7 充分利用链式推送器范围: 每个推送器可以覆盖长达64格的距离",
+                "&f-&7 充分利用链式推送器范围: 每个推送器可以覆盖" + this.maxDistance + "格的距离",
                 "&f-&7 确保您的布局设计能够覆盖多个机器，以实现最大效率",
                 "",
                 "&f-&7 避免单个机器配置: 不要仅在一个机器上使用链式推送器",

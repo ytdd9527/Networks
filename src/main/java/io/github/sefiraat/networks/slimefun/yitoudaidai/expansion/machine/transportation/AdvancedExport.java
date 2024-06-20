@@ -235,7 +235,7 @@ public class AdvancedExport extends NetworkObject implements RecipeDisplayItem {
                 "",
                 "&e主要特性&f:",
                 "&f-&7 精确控制：根据指定输出物品",
-                "&f-&7 高效传输：物品按1:1比例从网络中输出",
+                "&f-&7 限制传输：按设置的物品的数量从网络中输出",
                 "&f-&7 智能分配：自动填满输出槽直到达到最大堆叠或槽位已满",
                 "",
                 "&e使用方法&f:",
