@@ -1,0 +1,81 @@
+# 开启自动更新
+auto-update: false
+
+# max-distance最大距离限制 100
+# pushitem-tick 1 Tick=0.5秒 推送物品的时间
+# grabitem-tick 1 Tick=0.5秒 抓取物品的时间
+# required-power 抓取和推送分别每次网络电力消耗
+# enable 是否启用模型 false true
+# type 指定模型的类型 错误类型enable将会启用false
+items:
+  #网链调度器
+  NE_CHAIN_DISPATCHER:
+    max-distance: 32
+    pushitem-tick: 5
+    grabitem-tick: 10
+    required-power: 5000
+    use-special-model:
+      enable: false
+  #网链调度器plus
+  NE_CHAIN_DISPATCHER_PLUS:
+    max-distance: 64
+    pushitem-tick: 5
+    grabitem-tick: 10
+    required-power: 5000
+    use-special-model:
+      enable: false
+  #网络链式抓取器
+  NE_CHAING_GRABBER:
+    max-distance: 32
+    grabitem-tick: 10
+    use-special-model:
+      enable: false
+  #网络链式抓取器plus
+  NE_CHAING_GRABBER_PLUS:
+    max-distance: 64
+    grabitem-tick: 10
+    use-special-model:
+      enable: false
+  #网络链式推送器
+  NE_CHAING_PUSHER:
+    max-distance: 32
+    pushitem-tick: 6
+    use-special-model:
+      enable: false
+  #网络链式推送器plus
+  NE_CHAING_PUSHER_PLUS:
+    max-distance: 64
+    pushitem-tick: 6
+    use-special-model:
+      enable: false
+
+  #网络链式抓取器(模型)
+  NE_MODEL_CHAING_GRABBER:
+    max-distance: 32
+    grabitem-tick: 10
+    use-special-model:
+      enable: false
+  #网络链式抓取器(模型)
+  NE_MODEL_CHAING_GRABBER_PLUS:
+    max-distance: 64
+    grabitem-tick: 10
+    use-special-model:
+      enable: false
+  #网络链式推送器(模型)
+  NE_MODEL_CHAING_PUSHER:
+    max-distance: 32
+    pushitem-tick: 6
+    use-special-model:
+      enable: false
+  #网络链式推送器(模型)
+  NE_MODEL_CHAING_PUSHER_PLUS:
+    max-distance: 64
+    pushitem-tick: 6
+    use-special-model:
+      enable: false
+
+  #网络链式抓取器(模型)
+  NE_BRIDGE_WHITE:
+    use-special-model:
+      enable: true
+      type: bridge_1
