@@ -59,7 +59,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
      * NodeType.GRABBER 节点
      */
     public ChainGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_GRABBER);
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER);
     }
 
     /**

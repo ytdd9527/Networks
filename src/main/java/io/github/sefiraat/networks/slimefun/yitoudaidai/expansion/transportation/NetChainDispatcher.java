@@ -55,27 +55,26 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
     );
     private static final String CHAIN_TICK_KEY = "DispTick";
 
-    private static final int MAX_DISTANCE_LIMIT = 64;
     private int maxDistance;
     private int pushItemTick;
     private int grabItemTick;
     private int requiredPower;
-    public NetChainDispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_PUSHER);
+    public NetChainDispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId, int maxDistance) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
+        this.maxDistance = maxDistance;
         loadConfigurations(itemId);
     }
 
     private void loadConfigurations(String itemId) {
-        int defaultMaxDistance = 32;
         int defaultPushItemTick = 5;
         int defaultGrabItemTick = 10;
         int defaultRequiredPower = 5000;
 
         FileConfiguration config = Networks.getInstance().getConfig();
-        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.maxDistance = config.getInt("items." + itemId + ".max-distance", this.maxDistance);
         this.pushItemTick = config.getInt("items." + itemId + ".pushitem-tick", defaultPushItemTick);
         this.grabItemTick = config.getInt("items." + itemId + ".grabitem-tick", defaultGrabItemTick);
         this.requiredPower = config.getInt("items." + itemId + ".required-power", defaultRequiredPower);
@@ -345,24 +344,22 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
                 "&a⇩运行频率⇩",
                 "",
                 "&e执行频率&f:",
-                "&f-&7[&a推送频率&7]&f:&7 每次 " + this.pushItemTick + " Tick 推送一次",
-                "&f-&7[&a抓取频率&7]&f:&7 每次 " + this.grabItemTick + " Tick 抓取一次",
+                "&f-&7[&a推送频率&7]&f:&7 每 &6" + this.pushItemTick + " SfTick &7推送一次",
+                "&f-&7[&a抓取频率&7]&f:&7 每 &6" + this.grabItemTick + " SfTick &7抓取一次",
                 "",
-                "&f-&7[&a1 Tick = 0.5s]"
+                "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
         ));
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩电力消耗⇩",
                 "",
                 "&e网络电力消耗&f:",
-                "&f-&7[&a推送 ⚡&7]&f:&7 " + this.requiredPower + " J 每次推送",
-                "&f-&7[&a抓取 ⚡&7]&f:&7 " + this.requiredPower + " J 每次抓取",
-                "",
-                "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
+                "&f-&7[&a推送 ⚡&7]&f: &6" + this.requiredPower + " J&7 每次推送",
+                "&f-&7[&a抓取 ⚡&7]&f: &6" + this.requiredPower + " J&7 每次抓取"
         ));
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩功能⇩",
                 "",
-                "&e最大距离&7: &f" + this.maxDistance + "格",
+                "&e最大距离&7: &6" + this.maxDistance + "格",
                 "&f-&7 可以同时推送物品且抓取物品",
                 "&f-&7 推送物品需要全部改机器的输入槽上有指定的物品推送",
                 "",
@@ -373,11 +370,11 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
                 "&e推送条件&f:",
                 "&f-&7[&a推送物品&7]&f:&7指定需要推送的物品到机器输入槽上[确保槽位上是否有指定需要推送的物品]",
                 "&f-&7[&a停止条件①&7]&f:&7如果机器输入槽上没有指定需要推送的物品则不进行推送",
-                "&f-&7[&a停止条件②&7]&f:&7达到最大推送距离[&f" + this.maxDistance + "格]",
+                "&f-&7[&a停止条件②&7]&f:&7达到最大推送距离[&6" + this.maxDistance + "格&7]",
                 "",
                 "&e抓取逻辑&f:",
                 "&f-&7[&a抓取物品&7]&f:&7将输出槽上的物品全部抓取网络中",
-                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&f" + this.maxDistance + "格]",
+                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&6" + this.maxDistance + "格&7]",
                 "&f-&7 遇到的方块为空，或者",
                 "&f-&7 没有更多可抓取的物品,或没有足够网络空间",
                 "&f-&7 抓取将停止操作"

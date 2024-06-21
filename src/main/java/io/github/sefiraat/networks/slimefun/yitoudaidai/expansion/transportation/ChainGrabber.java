@@ -47,8 +47,6 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
     // 定义一个用于记录Tick计数的键
     private static final String TICK_COUNTER_KEY = "chain_grabber_tick_counter";
 
-    // 定义抓取的最大距离
-    private static final int MAX_DISTANCE = 32;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
     private int maxDistance;
     private int grabItemTick;
@@ -62,17 +60,17 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
      * @param itemId 物品ID
      * NodeType.GRABBER 节点
      */
-    public ChainGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_GRABBER);
+    public ChainGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId, int maxDistance) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER);
+        this.maxDistance = maxDistance;
         loadConfigurations(itemId);
     }
 
     private void loadConfigurations(String itemId) {
-        int defaultMaxDistance = 32;
         int defaultGrabItemTick = 10;
 
         FileConfiguration config = Networks.getInstance().getConfig();
-        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE);
+        this.maxDistance = config.getInt("items." + itemId + ".max-distance", this.maxDistance);
         this.grabItemTick = config.getInt("items." + itemId + ".grabitem-tick", defaultGrabItemTick);
     }
 
@@ -158,7 +156,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
         BlockFace direction = this.getCurrentDirection(blockMenu);
         Block currentBlock = blockMenu.getBlock().getRelative(direction);
 
-        for (int i = 0; i < this.grabItemTick && currentBlock.getType() != Material.AIR; i++) {
+        for (int i = 0; i < this.maxDistance && currentBlock.getType() != Material.AIR; i++) {
             BlockMenu targetMenu = StorageCacheUtils.getMenu(currentBlock.getLocation());
 
             if (targetMenu == null) {
@@ -269,7 +267,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
                 "&7这个链式抓取器有一个简单的频率控制&f：",
                 "",
                 "&e执行频率&f:",
-                "&f-&7 每隔" + this.grabItemTick / 2.0 + "秒自动执行一次抓取",
+                "&f-&7 每隔 &6" + this.grabItemTick + " SfTick&7 自动执行一次抓取",
                 "&f-&7 目的: 这样做可以平稳地运行，减少服务器负载",
                 "",
                 "&f-&7 简而言之，链式抓取器不会频繁操作，从而保持服务器流畅"
@@ -279,7 +277,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
                 "&a⇩抓取逻辑⇩",
                 "&7以下是链式抓取器的操作说明：",
                 "",
-                "&e最大抓取距离&7: &f" + this.maxDistance + "格",
+                "&e最大抓取距离&7: &6" + this.maxDistance + "格",
                 "&e抓取对象: &f机器方块的输出槽位中的物品",
                 "",
                 "&e运行流程&f:",
@@ -292,7 +290,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
                 "&f-&7 确保物品在机器按计划和有序地抓取，避免混乱",
                 "",
                 "&e停止条件&f:",
-                "&f-&7 达到最大抓取距离(" + this.maxDistance + "格)",
+                "&f-&7 达到最大抓取距离(&6" + this.maxDistance + "&7格)",
                 "&f-&7 遇到的方块为空，或者",
                 "&f-&7 没有更多可抓取的物品(空间)",
                 "&f-&7 抓取器将停止操作",
@@ -309,7 +307,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
                 "&f-&7 如果你使用了链式抓取器就没必要给机器继续使用抓取了",
                 "&f-&7 不要双管齐下多此一举",
                 "",
-                "&f-&7 充分利用链式抓取器范围: 每个链式抓取器可以覆盖" + this.maxDistance + "格的距离",
+                "&f-&7 充分利用链式抓取器范围: 每个链式抓取器可以覆盖&6" + this.maxDistance + "&7格的距离",
                 "&f-&7 确保您的布局设计能够覆盖多个机器，以实现最大效率",
                 "",
                 "&f-&7 避免单个机器配置: 不要仅在一个机器上使用链式抓取器",

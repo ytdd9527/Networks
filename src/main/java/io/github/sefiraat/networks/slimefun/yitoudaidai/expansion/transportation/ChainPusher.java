@@ -33,7 +33,6 @@ import java.util.List;
 public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem {
 
     // 定义推送的最大距离
-    private static final int MAX_DISTANCE = 32;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
 
 
@@ -56,20 +55,20 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
     private int maxDistance;
     private int pushItemTick;
 
-    public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_PUSHER);
+    public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId, int maxDistance) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
+        this.maxDistance = maxDistance;
         loadConfigurations(itemId);
     }
 
     private void loadConfigurations(String itemId) {
-        int defaultMaxDistance = 32;
         int defaultPushItemTick = 10;
 
         FileConfiguration config = Networks.getInstance().getConfig();
-        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE);
+        this.maxDistance = config.getInt("items." + itemId + ".max-distance", this.maxDistance);
         this.pushItemTick = config.getInt("items." + itemId + ".pushitem-tick", defaultPushItemTick);
     }
 
@@ -147,7 +146,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
 
         Block targetBlock = blockMenu.getBlock().getRelative(direction);
 
-        for (int i = 0; i <= this.maxDistance; i++) {
+        for (int i = 0; i < this.maxDistance; i++) {
 
 
             // 获取目标方块的BlockMenu
@@ -260,7 +259,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
                 "&7这个链式推送器有一个简单的频率控制&f：",
                 "",
                 "&e执行频率&f:",
-                "&f-&7 每隔" + this.pushItemTick / 2.0 + "秒自动执行一次推送",
+                "&f-&7 每 &6" + this.pushItemTick + "SfTick&7 自动执行一次推送",
                 "&f-&7 目的: 这样做可以平稳地运行，减少服务器负载",
                 "",
                 "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
@@ -270,7 +269,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
                 "&a⇩推送逻辑⇩",
                 "&7以下是链式推送器的操作说明：",
                 "",
-                "&e最大推送距离&7: &f" + this.maxDistance + "格",
+                "&e最大推送距离&7: &6" + this.maxDistance + "格",
                 "&e推送对象: &f机器方块的输入槽位中的物品",
                 "",
                 "&e运行流程&f:",
@@ -283,7 +282,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
                 "&f-&7 确保物品在机器按计划和有序地推送，避免混乱",
                 "",
                 "&e停止条件&f:",
-                "&f-&7 达到最大推送距离(" + this.maxDistance + "格)",
+                "&f-&7 达到最大推送距离(&6" + this.maxDistance + "格&7)",
                 "&f-&7 遇到的方块为空，或者",
                 "&f-&7 没有更多可推送的物品",
                 "&f-&7 推送器将停止操作",
@@ -300,7 +299,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
                 "&f-&7 如果你使用了链式推送器就没必要给机器继续使用推送器了",
                 "&f-&7 不要双管齐下多此一举",
                 "",
-                "&f-&7 充分利用链式推送器范围: 每个推送器可以覆盖" + this.maxDistance + "格的距离",
+                "&f-&7 充分利用链式推送器范围: 每个推送器可以覆盖 &6" + this.maxDistance + "&7格的距离",
                 "&f-&7 确保您的布局设计能够覆盖多个机器，以实现最大效率",
                 "",
                 "&f-&7 避免单个机器配置: 不要仅在一个机器上使用链式推送器",

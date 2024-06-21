@@ -278,11 +278,22 @@ public class AdvancedAutoQuantumWorkbenchCrafter extends NetworkObject {
                 return 0; // 直接返回0，表示无法合成
             }
             // 计算基于当前材料库存可以合成的最小数量
-            int availableAmount = root.getAllNetworkItems().getOrDefault(StackUtils.getAsQuantity(requiredItem, 1), 0);
+            final int availableAmount;
+            long rawAvailableAmount = root.getAllNetworkItems().getOrDefault(StackUtils.getAsQuantity(requiredItem, 1), 0L);
+            if (rawAvailableAmount > Integer.MAX_VALUE) {
+                availableAmount = Integer.MAX_VALUE; // 超过最大整数值，则直接设置为最大整数值
+            } else {
+                availableAmount = (int) rawAvailableAmount;
+            }
             int requiredAmountPerCraft = requiredItem.getAmount(); // 每次合成该材料所需的数量
             craftableAmount = Math.min(craftableAmount, availableAmount / requiredAmountPerCraft); // 取最小值
         }
-        return craftableAmount;
+
+        if (craftableAmount > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE; // 如果合成数量超过最大整数值，则直接返回最大整数值
+        } else {
+            return craftableAmount;
+        }
     }
     private void returnItems(@Nonnull NetworkRoot root, @Nonnull ItemStack[] inputs) {
         for (ItemStack input : inputs) {

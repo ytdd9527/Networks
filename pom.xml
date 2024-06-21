@@ -220,7 +220,6 @@
             <version>1.7.6</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>

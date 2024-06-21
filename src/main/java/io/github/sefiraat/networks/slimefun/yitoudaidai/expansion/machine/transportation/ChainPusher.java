@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChaingPusher extends NetworkDirectional implements RecipeDisplayItem {
+public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem {
 
     // 定义推送的最大距离
     private static final int MAX_DISTANCE = 32;
@@ -52,8 +52,8 @@ public class ChaingPusher extends NetworkDirectional implements RecipeDisplayIte
     );
     private static final String TICK_COUNTER_KEY = "chain_pusher_tick_counter";
 
-    public ChaingPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_PUSHER);
+    public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }

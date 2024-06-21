@@ -184,6 +184,8 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         // Update Screen
         final NetworkRoot root = definition.getNode().getRoot();
         final GridCache gridCache = getCacheMap().get(blockMenu.getLocation().clone());
+
+        // 显示物品模式
         if (gridCache.getDisplayMode() == DisplayMode.DISPLAY){
             final List<Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
             final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
@@ -232,6 +234,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
                     blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
                 }
             }
+        // 历史记录模式
         } else {
             final List<ItemStack> history = new ArrayList<>();
             for (ItemStack i: gridCache.getPullItemHistory()) {
