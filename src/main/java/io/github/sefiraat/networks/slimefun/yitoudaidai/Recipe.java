@@ -26,36 +26,47 @@ public class Recipe {
     //坐标传输器
     public static final ItemStack[] NE_COORDINATE_TRANSMITTER = {
             NETWORK_WIRELESS_TRANSMITTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem(),
-            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_CHAING_PUSHER, ADVANCED_NANOBOTS.getItem(),
+            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, ADVANCED_NANOBOTS.getItem(),
             NETWORK_WIRELESS_TRANSMITTER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem(),
     };
     //坐标接收器
     public static final ItemStack[] NE_COORDINATE_RECEIVER = {
             NETWORK_WIRELESS_RECEIVER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_RECEIVER.getItem(),
-            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, ADVANCED_NANOBOTS.getItem(),
+            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, ADVANCED_NANOBOTS.getItem(),
             NETWORK_WIRELESS_RECEIVER.getItem(), AI_CORE.getItem(), NETWORK_WIRELESS_RECEIVER.getItem(),
     };
     //链式推送
-    public static final ItemStack[] NE_CHAING_PUSHER = {
+    public static final ItemStack[] NE_CHAIN_PUSHER = {
             NETWORK_PUSHER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_PUSHER.getItem(),
             OPTIC_CABLE.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_CABLE.getItem(),
             NETWORK_PUSHER.getItem(), NETWORK_EXPORT.getItem(), NETWORK_PUSHER.getItem(),
     };
-    public static final ItemStack[] NE_CHAING_PUSHER_PARTICLE = {
-            ExpansionSlimefunitemStacks.NE_CHAING_PUSHER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunitemStacks.NE_CHAING_PUSHER,
+    public static final ItemStack[] NE_CHAIN_PUSHER_PLUS = {
+            ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER,
             INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN), INTERDIMENSIONAL_PRESENCE.getItem(),
-            ExpansionSlimefunitemStacks.NE_CHAING_PUSHER, NETWORK_IMPORT.getItem(), ExpansionSlimefunitemStacks.NE_CHAING_PUSHER,
+            ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, NETWORK_IMPORT.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER,
     };
     //链式抓取
-    public static final ItemStack[] NE_CHAING_GRABBER = {
+    public static final ItemStack[] NE_CHAIN_GRABBER = {
             NETWORK_GRABBER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_GRABBER.getItem(),
             OPTIC_CABLE.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_CABLE.getItem(),
             NETWORK_GRABBER.getItem(), NETWORK_IMPORT.getItem(), NETWORK_GRABBER.getItem(),
     };
-    public static final ItemStack[] NE_CHAING_GRABBER_PLUS = {
-            ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunitemStacks.NE_CHAING_GRABBER,
-            INTERDIMENSIONAL_PRESENCE.getItem(),new ItemStack(Material.SEA_LANTERN),INTERDIMENSIONAL_PRESENCE.getItem(),
-            ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, NETWORK_IMPORT.getItem(), ExpansionSlimefunitemStacks.NE_CHAING_GRABBER,
+    public static final ItemStack[] NE_CHAIN_GRABBER_PLUS = {
+            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER,
+            INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN),INTERDIMENSIONAL_PRESENCE.getItem(),
+            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER,
+    };
+    //链式调度器
+    public static final ItemStack[] NE_CHAIN_DISPATCHER = {
+            NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
+            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, OPTIC_CABLE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER,
+            NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
+    };
+    public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS = {
+            NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
+            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER_PLUS, OPTIC_CABLE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER_PLUS,
+            NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
     //高级入口
     public static final ItemStack[] NEA_IMPORT = {
@@ -69,12 +80,13 @@ public class Recipe {
             ADVANCED_NANOBOTS.getItem(), PRISTINE_AI_CORE.getItem(), ADVANCED_NANOBOTS.getItem(),
             NETWORK_EXPORT.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_EXPORT.getItem(),
     };
+    //高级清除器
     public static final ItemStack[] NEA_PURGER = {
             NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem(),
             OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
             NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem(),
     };
-
+    //电容5
     public static final ItemStack[] NETWORK_CAPACITOR_5 = {
             NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(),
             NETWORK_CAPACITOR_4.getItem(), SlimefunItems.ENERGIZED_CAPACITOR, NETWORK_CAPACITOR_4.getItem(),

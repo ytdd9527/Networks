@@ -46,8 +46,8 @@ public class ExpansionSlimefunitems {
     //运输
     public static final CoordinateTransmitter NE_COORDINATE_TRANSMITTER;
     public static final CoordinateReceiver NE_COORDINATE_RECEIVER;
-    public static final ChaingPusher NE_CHAING_PUSHER;
-    public static final ChaingPusher NE_CHAING_PUSHER_PLUS;
+    public static final ChainPusher NE_CHAING_PUSHER;
+    public static final ChainPusher NE_CHAING_PUSHER_PLUS;
     public static final ChainGrabber NE_CHAING_GRABBER;
     public static final ChainGrabber NE_CHAING_GRABBER_PLUS;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER;
@@ -116,12 +116,12 @@ public class ExpansionSlimefunitems {
         //运输与存储
         NE_COORDINATE_TRANSMITTER = new CoordinateTransmitter(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_COORDINATE_TRANSMITTER, ExpansionWorkbench.TYPE, Recipe.NE_COORDINATE_TRANSMITTER);
         NE_COORDINATE_RECEIVER = new CoordinateReceiver(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_COORDINATE_RECEIVER, ExpansionWorkbench.TYPE, Recipe.NE_COORDINATE_RECEIVER);
-        NE_CHAING_PUSHER = new ChaingPusher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_PUSHER, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_PUSHER,"NE_CHAING_PUSHER");
-        NE_CHAING_PUSHER_PLUS = new ChaingPusher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_PUSHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_PUSHER_PARTICLE,"NE_CHAING_PUSHER_PLUS");
-        NE_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER,"NE_CHAING_GRABBER");
-        NE_CHAING_GRABBER_PLUS = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER_PLUS,"NE_CHAING_GRABBER_PLUS");
-        NE_CHAIN_DISPATCHER = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER, ExpansionWorkbench.TYPE, Recipe.NULL,"NETWORK_TRANSPORTATION");
-        NE_CHAIN_DISPATCHER_PLUS = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NULL,"NE_CHAIN_DISPATCHER_PLUS");
+        NE_CHAING_PUSHER = new ChainPusher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER,"NE_CHAIN_PUSHER");
+        NE_CHAING_PUSHER_PLUS = new ChainPusher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_PLUS,"NE_CHAIN_PUSHER_PLUS");
+        NE_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER,"NE_CHAIN_GRABBER");
+        NE_CHAING_GRABBER_PLUS = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_PLUS,"NE_CHAIN_GRABBER_PLUS");
+        NE_CHAIN_DISPATCHER = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER,"NE_CHAIN_DISPATCHER");
+        NE_CHAIN_DISPATCHER_PLUS = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_PLUS,"NE_CHAIN_DISPATCHER_PLUS");
 
 
         NEA_IMPORT = new AdvancedImport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NEA_IMPORT, ExpansionWorkbench.TYPE, Recipe.NEA_IMPORT);

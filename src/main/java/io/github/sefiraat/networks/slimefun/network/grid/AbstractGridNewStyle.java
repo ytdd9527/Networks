@@ -23,7 +23,6 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import net.guizhanss.guizhanlib.minecraft.helper.inventory.ItemStackHelper;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,12 +36,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.Collator;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 @SuppressWarnings("deprecation")
@@ -184,6 +178,8 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
         // Update Screen
         final NetworkRoot root = definition.getNode().getRoot();
         final GridCache gridCache = getCacheMap().get(blockMenu.getLocation().clone());
+
+        // 显示物品模式
         if (gridCache.getDisplayMode() == DisplayMode.DISPLAY){
             final List<Entry<ItemStack, Long>> entries = getEntries(root, gridCache);
             final int pages = (int) Math.ceil(entries.size() / (double) getDisplaySlots().length) - 1;
@@ -232,6 +228,7 @@ public abstract class AbstractGridNewStyle extends NetworkObject {
                     blockMenu.addMenuClickHandler(getDisplaySlots()[i], (p, slot, item, action) -> false);
                 }
             }
+        // 历史记录模式
         } else {
             final List<ItemStack> history = new ArrayList<>();
             for (ItemStack i: gridCache.getPullItemHistory()) {

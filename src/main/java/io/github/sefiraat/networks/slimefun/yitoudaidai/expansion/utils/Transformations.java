@@ -13,11 +13,11 @@ import javax.annotation.Nonnull;
 public enum Transformations {
 
     BRIDGE_1(new TransformationBuilder()
-            .scale(0.5f, 0.5f, 1.8f)
+            .scale(0.5f, 0.5f, 2f)
             .build()
     ),
     BRIDGE_3(new TransformationBuilder()
-            .scale(-2f, 2f, 0.8f)
+            .scale(-1.5f, 1.5f, 0.8f)
             .build()
     ),
     BRIDGE_2(new TransformationBuilder()

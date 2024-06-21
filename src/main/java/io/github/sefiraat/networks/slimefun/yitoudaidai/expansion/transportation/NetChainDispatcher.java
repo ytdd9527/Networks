@@ -58,6 +58,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
             39,
             48};
     private static final int[] TEMPLATE_SLOTS = new int[]{
+            4,5,6,7,8,
             13,14,15,16,17,
             22,23,24,25,26,
             31,32,33,34,35,
@@ -86,7 +87,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
     private Function<Location, DisplayGroup> displayGroupGenerator;
 
     public NetChainDispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAING_PUSHER);
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
@@ -95,8 +96,8 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
 
     private void loadConfigurations(String itemId) {
         int defaultMaxDistance = 32;
-        int defaultPushItemTick = 5;
-        int defaultGrabItemTick = 10;
+        int defaultPushItemTick = 6;
+        int defaultGrabItemTick = 12;
         int defaultRequiredPower = 5000;
         boolean defaultUseSpecialModel = false;
 
@@ -145,12 +146,6 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
             }.runTaskAsynchronously(Networks.getInstance());
         }
     }
-
-    /**
-     * 每个Tick调用的方法，用于执行推送操作。
-     * @param blockMenu 可能为null的BlockMenu对象
-     * @param block 当前Block对象
-     */
     @Override
     protected void onTick(@Nullable BlockMenu blockMenu, @Nonnull Block block) {
         super.onTick(blockMenu, block);
@@ -158,18 +153,12 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
         if (definition == null || definition.getNode() == null) {
             return;
         }
-
         NetworkRoot networkRoot = definition.getNode().getRoot();
-
-
-
         int tryPushItemtick = getTickCounter(block);
         int tryGrabItemtick = getTickCounter(block);
-
-
         if (tryPushItemtick == 0) {
-            if (networkRoot.getRootPower() >= requiredPower) {
-                networkRoot.removeRootPower(requiredPower);
+            if (networkRoot.getRootPower() >= this.requiredPower) {
+                networkRoot.removeRootPower(this.requiredPower);
                 performPushItemOperationAsync(blockMenu);
             } else {
             }
@@ -177,8 +166,8 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
         tryPushItemtick = (tryPushItemtick + 1) % pushItemTick;
 
         if (tryGrabItemtick == 0) {
-            if (networkRoot.getRootPower() >= requiredPower) {
-                networkRoot.removeRootPower(requiredPower );
+            if (networkRoot.getRootPower() >= this.requiredPower) {
+                networkRoot.removeRootPower(this.requiredPower);
                 performGrabItemOperationAsync(blockMenu);
             } else {
             }
@@ -188,27 +177,14 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
         updateTickCounter(block, tryPushItemtick);
         updateTickCounter(block, tryGrabItemtick);
     }
-    /**
-     * 获取指定方块的Tick计数器的值。
-     * @param block 当前处理的方块对象
-     * @return Tick计数器的整数值
-     */
     private int getTickCounter(Block block) {
         String tickCounterValue = BlockStorage.getLocationInfo(block.getLocation(), CHAIN_TICK_KEY);
         try {
-            // 如果存在值，则尝试将其解析为整数
             return (tickCounterValue != null) ? Integer.parseInt(tickCounterValue) : 0;
         } catch (NumberFormatException e) {
-            // 如果解析失败，则返回0
             return 0;
         }
     }
-
-    /**
-     * 更新指定方块的Tick计数器。
-     * @param block 当前处理的方块对象
-     * @param tickCounter 更新后的Tick计数器的值
-     */
     private void updateTickCounter(Block block, int tickCounter) {
         BlockStorage.addBlockInfo(block.getLocation(), CHAIN_TICK_KEY, Integer.toString(tickCounter));
     }
@@ -341,37 +317,30 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
     public int getNorthSlot() {
         return NORTH_SLOT;
     }
-
     @Override
     public int getSouthSlot() {
         return SOUTH_SLOT;
     }
-
     @Override
     public int getEastSlot() {
         return EAST_SLOT;
     }
-
     @Override
     public int getWestSlot() {
         return WEST_SLOT;
     }
-
     @Override
     public int getUpSlot() {
         return UP_SLOT;
     }
-
     @Override
     public int getDownSlot() {
         return DOWN_SLOT;
     }
-
     @Override
     public int[] getItemSlots() {
         return TEMPLATE_SLOTS;
     }
-
     @Override
     public void preRegister() {
         if (useSpecialModel) {
@@ -394,16 +363,12 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
             }
         });
     }
-    public void setUseSpecialModel(boolean useSpecialModel) {
-        this.useSpecialModel = useSpecialModel;
-    }
     private void setupDisplay(@Nonnull Location location) {
         if (this.displayGroupGenerator != null) {
             DisplayGroup displayGroup = this.displayGroupGenerator.apply(location.clone().add(0.5, 0, 0.5));
             StorageCacheUtils.setData(location, KEY_UUID, displayGroup.getParentUUID().toString());
         }
     }
-
     private void removeDisplay(@Nonnull Location location) {
         DisplayGroup group = getDisplayGroup(location);
         if (group != null) {
@@ -426,8 +391,6 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
         }
         return DisplayGroup.fromUUID(uuid);
     }
-
-
     @NotNull
     @Override
     public List<ItemStack> getDisplayRecipes() {
@@ -436,64 +399,44 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
                 "&a⇩运行频率⇩",
                 "",
                 "&e执行频率&f:",
-                "&f-&7[&a推送频率&7]&f:&7 每次 "+pushItemTick+" Tick 推送一次",
-                "&f-&7[&a抓取频率&7]&f:&7 每次 "+grabItemTick+" Tick 抓取一次",
+                "&f-&7[&a推送频率&7]&f:&7 每 &6" + pushItemTick + " SfTick &7推送一次",
+                "&f-&7[&a抓取频率&7]&f:&7 每 &6" + grabItemTick + " SfTick &7抓取一次",
+                "&f-&7[&a1 SfTick=0.5s]",
                 "",
-                "&f-&7[&a1 Tick = 0.5s]"
+                "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
         ));
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩电力消耗⇩",
                 "",
                 "&e网络电力消耗&f:",
-                "&f-&7[&a推送 ⚡&7]&f:&7 "+requiredPower+" J 每次推送",
-                "&f-&7[&a抓取 ⚡&7]&f:&7 "+requiredPower+" J 每次抓取",
-                "",
-                "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
+                "&f-&7[&a推送 ⚡&7]&f: &6" + requiredPower + " J&7 每次推送",
+                "&f-&7[&a抓取 ⚡&7]&f: &6" + requiredPower + " J&7 每次抓取"
         ));
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩功能⇩",
                 "",
-                "&e最大距离&7: &f"+maxDistance+"格",
+                "&e最大距离&7: &6" + maxDistance + "格",
                 "&f-&7 可以同时推送物品且抓取物品",
-                "&f-&7 推送物品需要全部改机器的输入槽上有指定的物品推送",
+                "&f-&7 推送物品需要全部该机器的输入槽上有指定的物品推送",
                 "",
                 "&e运行流程&f:",
                 "&f-&7 打开界面设置你所需的方向",
-                "&f-&7 当前方块开始，沿着设定方向搜索",
+                "&f-&7 网链调度器当前方块开始，沿着设定方向搜索",
                 "",
                 "&e推送条件&f:",
-                "&f-&7[&a推送物品&7]&f:&7指定需要推送的物品到机器输入槽上,[确保槽位上是否有指定需要推送的物品]",
-                "&f-&7[&a停止条件&7]&f:&7如果机器输入槽上没有指定需要推送的物品则不进行推送",
+                "&f-&7[&a推送物品&7]&f:&7指定需要推送的物品到机器输入槽上[确保槽位上是否有指定需要推送的物品]",
+                "&f-&7[&a停止条件①&7]&f:&7如果机器输入槽上没有指定需要推送的物品则不进行推送",
+                "&f-&7[&a停止条件②&7]&f:&7达到最大推送距离[&6" + maxDistance + "格&7]",
                 "",
                 "&e抓取逻辑&f:",
                 "&f-&7[&a抓取物品&7]&f:&7将输出槽上的物品全部抓取网络中",
-                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&f"+maxDistance+"格]",
+                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&6" + maxDistance + "格&7]",
                 "&f-&7 遇到的方块为空，或者",
                 "&f-&7 没有更多可抓取的物品,或没有足够网络空间",
                 "&f-&7 抓取将停止操作"
         ));
-        displayRecipes.add(AIR);
-        displayRecipes.add(new CustomItemStack(Material.BOOK,
-                "&a⇩使用指南⇩",
-                "",
-                "&7网链调度器效率最大化建议：",
-                "",
-                "&f-&7 如果你使用了网链调度器就没必要给机器继续使用抓取器和推送器了",
-                "&f-&7 确保槽位上是否有指定需要推送的物品 你可以使用其他的货运来进行交互",
-                "",
-                "&f-&7 充分利用网链调度器范围: 每次抓取,推送，物品可以覆盖长达[&f"+maxDistance+"格]的距离",
-                "&f-&7 确保您的布局设计能够覆盖多个机器，以实现最大效率",
-                "",
-                "&f-&7 避免单个机器配置: 不要仅在一个机器上使用网链调度器",
-                "&f-&7 这样做会限制您的自动化系统的潜力和扩展性",
-                "",
-                "&f-&7请遵循这些建议，您将能够最大化每个网链调度器的工作效能，",
-                "&f-&7同时保持也可以服务器流畅运行"
-        ));
-        return displayRecipes ;
+        return displayRecipes;
     }
-
-
 }
 
 //private void tryPushItem(@Nonnull BlockMenu blockMenu) {

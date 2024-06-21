@@ -54,12 +54,11 @@ public class NetworkRoot extends NetworkNode {
     private final Set<Location> wirelessTransmitters = ConcurrentHashMap.newKeySet();
     private final Set<Location> wirelessReceivers = ConcurrentHashMap.newKeySet();
 
-    private final Set<Location> chaingpushers = ConcurrentHashMap.newKeySet();
-    private final Set<Location> chaingpurgersPlus = ConcurrentHashMap.newKeySet();
-    private final Set<Location> chainggrabbers = ConcurrentHashMap.newKeySet();
-    private final Set<Location> chainggrabbersPlus = ConcurrentHashMap.newKeySet();
-    private final Set<Location> advancedimporters = ConcurrentHashMap.newKeySet();
-    private final Set<Location> advancedexporters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> chainPushers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> chainGrabbers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> chainDispatchers = ConcurrentHashMap.newKeySet();
+    private final Set<Location> advancedImporters = ConcurrentHashMap.newKeySet();
+    private final Set<Location> advancedExporters = ConcurrentHashMap.newKeySet();
     private final Set<Location> coordinateTransmitters = ConcurrentHashMap.newKeySet();
     private final Set<Location> coordinateReceivers = ConcurrentHashMap.newKeySet();
 
@@ -106,15 +105,16 @@ public class NetworkRoot extends NetworkNode {
             case WIRELESS_TRANSMITTER -> wirelessTransmitters.add(location);
             case WIRELESS_RECEIVER -> wirelessReceivers.add(location);
             case POWER_OUTLET -> powerOutlets.add(location);
-
-            case CHAING_PUSHER -> chaingpushers.add(location);
-            case CHAING_PUSHER_PLUS -> chaingpurgersPlus.add(location);
-            case CHAING_GRABBER -> chainggrabbers.add(location);
-            case CHAING_GRABBER_PLUS -> chainggrabbersPlus.add(location);
-            case NEA_IMPORT -> advancedimporters.add(location);
-            case NEA_EXPORT -> advancedexporters.add(location);
+            // from networks expansion
+            case CHAIN_PUSHER -> chainPushers.add(location);
+            case CHAIN_PUSHER_PLUS -> chainPushers.add(location);
+            case CHAIN_GRABBER -> chainGrabbers.add(location);
+            case CHAIN_GRABBER_PLUS -> chainGrabbers.add(location);
+            case NEA_IMPORT -> advancedImporters.add(location);
+            case NEA_EXPORT -> advancedExporters.add(location);
             case NE_COORDINATE_TRANSMITTER ->coordinateTransmitters.add(location);
             case NE_COORDINATE_RECEIVER ->coordinateReceivers.add(location);
+            case CHAIN_DISPATCHER -> chainDispatchers.add(location);
         }
     }
 
@@ -228,38 +228,33 @@ public class NetworkRoot extends NetworkNode {
     }
 
 
-    public Set<Location> getChaingPusher() {
-        return this.chaingpushers;
+    public Set<Location> getChainPushers() {
+        return this.chainPushers;
     }
 
-    public Set<Location> getChaingPusherPlus() {
-        return this.chaingpurgersPlus;
+    public Set<Location> getChainGrabbers() {
+        return this.chainGrabbers;
     }
 
-    public Set<Location> getChainGrabber() {
-        return this.chainggrabbers;
+    public Set<Location> getAdvancedImports() {
+        return this.advancedImporters;
     }
 
-    public Set<Location> getChainGrabberPlus() {
-        return this.chainggrabbersPlus;
+    public Set<Location> getAdvancedExports() {
+        return this.advancedExporters;
     }
 
-    public Set<Location> getAdvancedImport() {
-        return this.advancedimporters;
-    }
-
-    public Set<Location> getAdvancedExport() {
-        return this.advancedexporters;
-    }
-
-    public Set<Location> getCoordinateTransmitter() {
+    public Set<Location> getCoordinateTransmitters() {
         return this.coordinateTransmitters;
     }
 
-    public Set<Location> getCoordinateReceiver() {
+    public Set<Location> getCoordinateReceivers() {
         return this.coordinateReceivers;
     }
 
+    public Set<Location> getChainDispatchers() {
+        return this.chainDispatchers;
+    }
     @SuppressWarnings("deprecation")
     @Nonnull
     public Map<ItemStack, Long> getAllNetworkItems() {

@@ -21,7 +21,8 @@ public enum Skulls {
     NE_MODEL_CONTROLLER("64aeb99a68c671a03bb7415f5801960b739a98e43b1ae4e1bacd958a8b94227d"),
 
     //https://minecraft-heads.com/custom-heads/head/46959-copper-pipe-double-rim
-    BRIDGE("e0889ce476d6a8194a2479c8b856643246812daa43f70a0ee80f45a2253d442"),
+    BRIDGE1("7b7c9b6a23f21cca2b362b85b36dece3d8389e363014defe5b92ff6ee64f1ae"),
+    BRIDGE2("7b7c9b6a23f21cca2b362b85b36dece3d8389e363014defe5b92ff6ee64f1ae"),
     //https://minecraft-heads.com/custom-heads/head/46960-copper-pipe-corner-rim
     BRIDGE_CORNER_RIM("59f37f1cbd47c3504511bf33c58c3a252b60713ec5fc5433d887d4a0d996210"),
     //https://minecraft-heads.com/custom-heads/head/45398-mithril-infused-drill-tank

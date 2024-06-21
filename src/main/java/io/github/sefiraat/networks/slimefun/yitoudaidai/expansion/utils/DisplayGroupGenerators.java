@@ -78,8 +78,8 @@ public final class DisplayGroupGenerators {
         displayGroup.addDisplay(
                 "bridge_3",
                 new ItemDisplayBuilder()
-                        .setGroupParentOffset(new Vector(0, 1, 0.3))
-                        .setItemStack(new ItemStack(BRIDGE_STACK))
+                        .setGroupParentOffset(new Vector(0, 0.9, 0.3))
+                        .setItemStack(new ItemStack(BRIDGE_CORNER_RIM_STACK))
                         .setTransformation(Transformations.BRIDGE_3.getTransformation())
                         .build(displayGroup)
         );
@@ -123,9 +123,9 @@ public final class DisplayGroupGenerators {
         return displayGroup;
     }
     public static final CustomItemStack BRIDGE_STACK = new CustomItemStack(
-            Skulls.BRIDGE.getPlayerHead(),""
+            Skulls.BRIDGE1.getPlayerHead(),""
     );
     public static final CustomItemStack BRIDGE_CORNER_RIM_STACK = new CustomItemStack(
-            Skulls.BRIDGE.getPlayerHead(),""
+            Skulls.BRIDGE2.getPlayerHead(),""
     );
 }
