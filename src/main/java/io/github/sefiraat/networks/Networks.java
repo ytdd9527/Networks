@@ -64,6 +64,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
         saveDefaultConfig();
 
+
         this.configManager = new ConfigManager();
         tryUpdate();
 

@@ -7,7 +7,6 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusher;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChaingPusherPlus;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabber;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabberPlus;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateReceiver;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateTransmitter;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedImport;
@@ -26,7 +25,7 @@ public class ItemsModel {
     public static final ChaingPusher NE_MODEL_CHAING_PUSHER;
     public static final ChaingPusherPlus NE_MODEL_CHAING_PUSHER_PLUS;
     public static final ChainGrabber NE_MODEL_CHAING_GRABBER;
-    public static final ChainGrabberPlus NE_MODEL_CHAING_GRABBER_PLUS;
+    public static final ChainGrabber NE_MODEL_CHAING_GRABBER_PLUS;
     public static final AdvancedImport NEA_MODEL_IMPORT;
     public static final AdvancedExport NEA_MODEL_EXPORT;
     public static final AdvancedPurger NEA_MODEL_PURGER;
@@ -40,8 +39,8 @@ public class ItemsModel {
         NE_MODEL_COORDINATE_RECEIVER = new CoordinateReceiver(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_COORDINATE_RECEIVER, RecipeType.NULL,null);
         NE_MODEL_CHAING_PUSHER = new ChaingPusher(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_PUSHER, RecipeType.NULL,null);
         NE_MODEL_CHAING_PUSHER_PLUS = new ChaingPusherPlus(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_PUSHER_PLUS,RecipeType.NULL,null);
-        NE_MODEL_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_GRABBER, RecipeType.NULL,null);
-        NE_MODEL_CHAING_GRABBER_PLUS = new ChainGrabberPlus(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_GRABBER_PLUS,RecipeType.NULL,null);
+        NE_MODEL_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_GRABBER, RecipeType.NULL,null,"NE_MODEL_CHAING_GRABBER");
+        NE_MODEL_CHAING_GRABBER_PLUS = new ChainGrabber(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NE_MODEL_CHAING_GRABBER_PLUS,RecipeType.NULL,null,"NE_MODEL_CHAING_GRABBER_PLUS");
         NEA_MODEL_IMPORT = new AdvancedImport(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NEA_MODEL_IMPORT,RecipeType.NULL,null);
         NEA_MODEL_EXPORT = new AdvancedExport(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NEA_MODEL_EXPORT,RecipeType.NULL,null);
         NEA_MODEL_PURGER = new AdvancedPurger(NetworksItemGroups.DISABLED_ITEMS, ItemStacksModel.NEA_MODEL_PURGER, RecipeType.NULL,null);
@@ -52,7 +51,6 @@ public class ItemsModel {
     }
 
     static {
-        NE_MODEL_CHAING_GRABBER.setUseSpecialModel(true);
         NEA_MODEL_PURGER.setUseSpecialModel(true);
         NE_MODEL_CELL.setUseSpecialModel(true);
         NE_MODEL_CAPACITOR_5.setUseSpecialModel(true);

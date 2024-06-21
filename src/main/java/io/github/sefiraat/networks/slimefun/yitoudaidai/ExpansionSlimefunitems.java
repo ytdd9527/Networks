@@ -4,7 +4,6 @@ import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
 
 
-import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
@@ -35,9 +34,7 @@ import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.tools.Coordina
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.workbench.ExpansionWorkbench;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import lombok.experimental.UtilityClass;
-import org.bukkit.inventory.ItemStack;
 
 @UtilityClass
 public class ExpansionSlimefunitems {
@@ -52,7 +49,7 @@ public class ExpansionSlimefunitems {
     public static final ChaingPusher NE_CHAING_PUSHER;
     public static final ChaingPusherPlus NE_CHAING_PUSHER_PLUS;
     public static final ChainGrabber NE_CHAING_GRABBER;
-    public static final ChainGrabberPlus NE_CHAING_GRABBER_PLUS;
+    public static final ChainGrabber NE_CHAING_GRABBER_PLUS;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER_PLUS;
 
@@ -121,8 +118,8 @@ public class ExpansionSlimefunitems {
         NE_COORDINATE_RECEIVER = new CoordinateReceiver(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_COORDINATE_RECEIVER, ExpansionWorkbench.TYPE, Recipe.NE_COORDINATE_RECEIVER);
         NE_CHAING_PUSHER = new ChaingPusher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_PUSHER, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_PUSHER);
         NE_CHAING_PUSHER_PLUS = new ChaingPusherPlus(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_PUSHER_PARTICLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_PUSHER_PARTICLE);
-        NE_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER);
-        NE_CHAING_GRABBER_PLUS = new ChainGrabberPlus(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER_PLUS);
+        NE_CHAING_GRABBER = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER,"NE_CHAING_GRABBER");
+        NE_CHAING_GRABBER_PLUS = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAING_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAING_GRABBER_PLUS,"NE_CHAING_GRABBER_PLUS");
         NE_CHAIN_DISPATCHER = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER, ExpansionWorkbench.TYPE, Recipe.NULL,"NETWORK_TRANSPORTATION");
         NE_CHAIN_DISPATCHER_PLUS = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunitemStacks.NE_CHAIN_DISPATCHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NULL,"NE_CHAIN_DISPATCHER_PLUS");
 

@@ -47,14 +47,14 @@ public class ItemStacksModel {
         NE_MODEL_CAPACITOR_5 = Theme.model("NE_CAPACITOR_5", Skulls.NE_MODEL_CAPACITOR_5.getPlayerHead(), Theme.MACHINE,"网络电容(5)","需要网络扳手器 才能拆除");
 
         //没写的
-        NE_MODEL_COORDINATE_TRANSMITTER = Theme.model("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器","网络坐标传输器可以","将其中的物品传输到绑定的","网络坐标接收器中(只能在同一世界).","使用网络坐标配置器来进行绑定.","", MessageFormat.format("{0}网络电力消耗: {1}{2} 每次传输", Theme.CLICK_INFO, Theme.PASSIVE, 10000));
-        NE_MODEL_COORDINATE_RECEIVER = Theme.model("NE_COORDINATE_RECEIVER",getPreEnchantedItemStack(Material.JUKEBOX, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标接收器","网络坐标接收器可以","接收来自绑定的网络坐标传输器","中的物品(只能在同一世界).","每粘液刻会把接收到的物品","尝试推送到网络中.");
-        NE_MODEL_CHAING_PUSHER = Theme.model("NE_CHAING_PUSHER",new ItemStack(Material.OBSERVER),Theme.MACHINE,"网络链式推送器","网络链式推送器会尝试将","指定的物品送入机器中","指定的方向可延伸32格以内的机器推送指定物品","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NE_MODEL_CHAING_PUSHER_PLUS = Theme.model("NE_CHAING_PUSHER_PLUS",getPreEnchantedItemStack(Material.OBSERVER, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络链式推送器Plus","网络链式推送器会尝试从","指定的物品送入机器中","指定的方向可延伸64格以内的机器推送指定物品","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NE_MODEL_CHAING_GRABBER = Theme.model("NE_GRABBER",new ItemStack(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器","网络链式抓取器会尝试从","指定的方向抓取延伸32格以内的机器的输出槽送回网络中","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NE_MODEL_CHAING_GRABBER_PLUS = Theme.model("NE_GRABBER_PLUS",getPreEnchantedItemStack(Material.DISPENSER, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络链式抓取器Plus","网络链式抓取器Plus会尝试从","指定的方向抓取延伸64格以内的机器的输出槽送回网络中","单个机器切勿使用,建议堆叠大量机器进行使用");
-        NEA_MODEL_IMPORT = Theme.model("NEA_IMPORT",getPreEnchantedItemStack(Material.RED_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络高级入口","网络高级入口会将其中的物品送入网络中","每个SF tick可传输最多54组物品","可接收来自货运网络的物品");
-        NEA_MODEL_EXPORT = Theme.model("NEA_EXPORT",getPreEnchantedItemStack(Material.BLUE_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级出口","网络高级出口可以设置成","持续将1组指定的物品送出网络","可以使用货运网络从中提取物品");
+        NE_MODEL_COORDINATE_TRANSMITTER = Theme.model("NE_COORDINATE_TRANSMITTER",Enchanted(Material.NOTE_BLOCK),Theme.MACHINE,"网络坐标传输器");
+        NE_MODEL_COORDINATE_RECEIVER = Theme.model("NE_COORDINATE_RECEIVER",Enchanted(Material.JUKEBOX),Theme.MACHINE,"网络坐标接收器");
+        NE_MODEL_CHAING_PUSHER = Theme.model("NE_CHAING_PUSHER",new ItemStack(Material.OBSERVER),Theme.MACHINE,"网络链式推送器");
+        NE_MODEL_CHAING_PUSHER_PLUS = Theme.model("NE_CHAING_PUSHER_PLUS",Enchanted(Material.OBSERVER),Theme.MACHINE,"网络链式推送器Plus","网络链式推送器会尝试从","指定的物品送入机器中","指定的方向可延伸64格以内的机器推送指定物品","单个机器切勿使用,建议堆叠大量机器进行使用");
+        NE_MODEL_CHAING_GRABBER = Theme.model("NE_GRABBER",new ItemStack(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器");
+        NE_MODEL_CHAING_GRABBER_PLUS = Theme.model("NE_GRABBER_PLUS",Enchanted(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器Plus");
+        NEA_MODEL_IMPORT = Theme.model("NEA_IMPORT",Enchanted(Material.RED_STAINED_GLASS),Theme.MACHINE,"网络高级入口");
+        NEA_MODEL_EXPORT = Theme.model("NEA_EXPORT",Enchanted(Material.BLUE_STAINED_GLASS), Theme.MACHINE,"网络高级出口");
 
 
  }
@@ -71,5 +71,8 @@ public class ItemStacksModel {
         }
         itemStack.setItemMeta(itemMeta);
         return itemStack;
+    }
+    public static ItemStack Enchanted(Material material) {
+        return getPreEnchantedItemStack(material, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1));
     }
 }
