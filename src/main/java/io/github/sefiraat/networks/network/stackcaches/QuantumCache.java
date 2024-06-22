@@ -102,7 +102,6 @@ public class QuantumCache extends ItemStackCache {
         if (getItemStack() != null) {
             itemName = ItemStackHelper.getDisplayName(this.getItemStack());
         }
-        lore.add("");
         lore.add(Theme.CLICK_INFO + "物品: " + itemName);
         lore.add(Theme.CLICK_INFO + "数量: " + Theme.WHITE + this.getAmount());
         if (this.supportsCustomMaxAmount) {
