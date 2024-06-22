@@ -8,7 +8,7 @@ import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunItems;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.QuantumWorkbenchBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedQuantumWorkbenchRecipes;
 import io.github.sefiraat.networks.utils.Keys;

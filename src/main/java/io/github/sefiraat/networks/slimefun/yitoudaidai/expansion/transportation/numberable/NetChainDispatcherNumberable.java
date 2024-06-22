@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation;
+package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class NetChainDispatcher extends NetworkDirectional implements RecipeDisplayItem {
+public class NetChainDispatcherNumberable extends NetworkDirectional implements RecipeDisplayItem {
 
 
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
@@ -88,7 +88,7 @@ public class NetChainDispatcher extends NetworkDirectional implements RecipeDisp
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
 
-    public NetChainDispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+    public NetChainDispatcherNumberable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);

@@ -1,10 +1,12 @@
-package io.github.sefiraat.networks.slimefun.network;
+package io.github.sefiraat.networks.slimefun.network.pusher;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
+import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
+import io.github.sefiraat.networks.slimefun.network.NetworkNumberable;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -23,13 +25,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class NetworkPusher extends NetworkDirectional {
+public abstract class AbstractNetworkPusher extends NetworkDirectional {
 
-    private static final int[] BACKGROUND_SLOTS = new int[]{
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
-    };
-    private static final int[] TEMPLATE_BACKGROUND = new int[]{16};
-    private static final int[] TEMPLATE_SLOTS = new int[]{24, 25, 26};
     private static final int NORTH_SLOT = 11;
     private static final int SOUTH_SLOT = 29;
     private static final int EAST_SLOT = 21;
@@ -40,9 +37,9 @@ public class NetworkPusher extends NetworkDirectional {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
     );
 
-    public NetworkPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public AbstractNetworkPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.PUSHER);
-        for (int slot : TEMPLATE_SLOTS) {
+        for (int slot : getItemSlots()) {
             this.getSlotsToDrop().add(slot);
         }
     }
@@ -106,24 +103,6 @@ public class NetworkPusher extends NetworkDirectional {
         }
     }
 
-    @Nonnull
-    @Override
-    protected int[] getBackgroundSlots() {
-        return BACKGROUND_SLOTS;
-    }
-
-    @Nullable
-    @Override
-    protected int[] getOtherBackgroundSlots() {
-        return TEMPLATE_BACKGROUND;
-    }
-
-    @Nullable
-    @Override
-    protected CustomItemStack getOtherBackgroundStack() {
-        return TEMPLATE_BACKGROUND_STACK;
-    }
-
     @Override
     public int getNorthSlot() {
         return NORTH_SLOT;
@@ -155,12 +134,22 @@ public class NetworkPusher extends NetworkDirectional {
     }
 
     @Override
-    public int[] getItemSlots() {
-        return TEMPLATE_SLOTS;
-    }
-
-    @Override
     protected Particle.DustOptions getDustOptions() {
         return new Particle.DustOptions(Color.MAROON, 1);
     }
+
+    @Nullable
+    @Override
+    protected CustomItemStack getOtherBackgroundStack() {
+        return TEMPLATE_BACKGROUND_STACK;
+    }
+
+    @Nonnull
+    public abstract int[] getBackgroundSlots();
+
+    @Nonnull
+    public abstract int[] getOtherBackgroundSlots();
+
+    @Nonnull
+    public abstract int[] getItemSlots();
 }

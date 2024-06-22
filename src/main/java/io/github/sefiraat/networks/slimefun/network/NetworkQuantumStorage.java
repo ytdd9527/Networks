@@ -260,7 +260,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
         player.sendMessage(
                 Theme.PASSIVE + "[" + Theme.GOLD + "网络拓展" + Theme.PASSIVE + "] " +
-                   Theme.SUCCESS + "已更改容量: " + newMaxAmount
+                Theme.SUCCESS + "已更改容量: " + newMaxAmount
         );}
 
     public void setSupportsCustomMaxAmount(boolean supportsCustomMaxAmount) {
@@ -319,7 +319,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                         p.closeInventory();
                         p.sendMessage(
                                 Theme.PASSIVE + "[" + Theme.GOLD + "网络拓展" + Theme.PASSIVE + "] " +
-                                   Theme.WARNING +"请输入网络高级量子存储的容量.最大限制为: " + Integer.MAX_VALUE + " !");
+                                Theme.WARNING +"请输入网络高级量子存储的容量.最大限制为: " + Integer.MAX_VALUE + " !");
                         ChatUtils.awaitInput(p, s -> {
                             // Catching the error is cleaner than directly validating the string
                             try {
@@ -500,6 +500,9 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             final ItemMeta itemMeta = clone.getItemMeta();
             final List<String> lore = itemMeta.getLore();
             for (int i = 0; i < 3; i++) {
+                if (lore.size() == 0) {
+                    break;
+                }
                 lore.remove(lore.size() - 1);
             }
             itemMeta.setLore(lore.isEmpty() ? null : lore);
