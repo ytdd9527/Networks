@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced;
 
+/*
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
@@ -39,6 +40,8 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+*/
 
 //public class AdvancedAutoQuantumWorkbenchCrafter extends NetworkObject {
 

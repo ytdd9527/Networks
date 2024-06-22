@@ -499,7 +499,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             final ItemStack clone = itemStack.clone();
             final ItemMeta itemMeta = clone.getItemMeta();
             final List<String> lore = itemMeta.getLore();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 if (lore.size() == 0) {
                     break;
                 }
@@ -641,7 +641,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
             ItemStack trashItem = cache.isVoidExcess() ? TRASH_ON_ITEM : TRASH_OFF_ITEM;
             menu.replaceExistingItem(TRASH_TOGGLE_SLOT, trashItem);
-
+            lore.add("");
             lore.add(Theme.CLICK_INFO + "满载清空输入: " + Theme.PASSIVE + BooleanHelper.enabledOrDisabled(cache.isVoidExcess()));
             lore.add(Theme.CLICK_INFO + "数量: " + Theme.PASSIVE + cache.getAmount());
             if (cache.supportsCustomMaxAmount()) {

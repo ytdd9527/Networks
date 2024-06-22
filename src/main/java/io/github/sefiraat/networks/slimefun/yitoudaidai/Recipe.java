@@ -2,7 +2,6 @@ package io.github.sefiraat.networks.slimefun.yitoudaidai;
 
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import net.md_5.bungee.api.chat.hover.content.Item;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -89,6 +88,16 @@ public class Recipe {
             NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
             ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS, OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS,
             NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
+    };
+    public static final ItemStack[] NE_CHAIN_DISPATCHER_NUMBERABLE = {
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
+            OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER, OPTIC_CABLE.getItem(),
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
+    };
+    public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = {
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
+            OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS, OPTIC_CABLE.getItem(),
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
     //高级入口
     public static final ItemStack[] NEA_IMPORT = {

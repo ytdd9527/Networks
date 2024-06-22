@@ -1,8 +1,5 @@
 package io.github.sefiraat.networks;
 
-
-
-import dev.sefiraat.netheopoiesis.Netheopoiesis;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
@@ -17,7 +14,6 @@ import net.guizhanss.guizhanlibplugin.updater.GuizhanUpdater;
 import net.guizhanss.slimefun4.utils.WikiUtils;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 

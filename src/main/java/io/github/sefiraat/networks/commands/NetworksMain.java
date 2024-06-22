@@ -115,7 +115,6 @@ public class NetworksMain implements TabExecutor {
         player.sendMessage(Theme.SUCCESS + "已更新物品");
     }
 
-    @SuppressWarnings("deprecation")
     public void fixBlueprint(Player player, String before) {
         ItemStack blueprint = player.getInventory().getItemInMainHand();
         if (blueprint == null || blueprint.getType() == Material.AIR) {

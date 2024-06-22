@@ -17,9 +17,12 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -28,6 +31,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +64,7 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
     private int maxDistance;
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 39, 40, 41, 42, 43, 44
     };
     private static final int[] TEMPLATE_BACKGROUND = new int[]{16};
     private static final int[] TEMPLATE_SLOTS = new int[]{24, 25, 26};
@@ -167,8 +171,12 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
                 return; // 如果没有找到BlockMenu，直接返回，结束整个方法
             }
 
+            int totalAmount = 0;
             for (int itemSlot : this.getItemSlots()) {
                 final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
+                if (totalAmount >= TRANSPORT_LIMIT) {
+                    break; // 超过大小，停止运输
+                }
 
                 if (testItem == null || testItem.getType() == Material.AIR) {
                     continue; // 如果物品为空，继续下一个槽位
@@ -176,7 +184,7 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
 
                 final ItemStack clone = testItem.clone();
                 clone.setAmount(1);
-                final ItemRequest itemRequest = new ItemRequest(clone, getCurrentNumber());
+                final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
 
                 // 获取目标机器可以插入物品的所有槽位
                 int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
@@ -187,6 +195,9 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
                     if (itemStack != null && itemStack.getType() != Material.AIR) {
                         final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
                         if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, true)) {
+                            if (totalAmount + space > TRANSPORT_LIMIT) {
+                                itemRequest.setAmount(TRANSPORT_LIMIT - totalAmount);
+                            }
                             itemRequest.setAmount(space);
                         } else {
                             continue; // 如果槽位已满或物品不匹配，继续下一个槽位
@@ -196,6 +207,7 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
                     ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
                     if (retrieved != null) {
                         targetMenu.pushItem(retrieved, slots);
+                        totalAmount += retrieved.getAmount();
                         //showParticle(blockMenu.getBlock().getLocation(), direction);
                         //显示粒子
                     }
@@ -275,6 +287,60 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
             }
         });
     }
+
+    @Override
+    public void postRegister() {
+        new BlockMenuPreset(this.getId(), this.getItemName()) {
+
+            @Override
+            public void init() {
+                addMenuClickHandler(getShowSlot(), (p, slot, item, action) -> false);
+                drawBackground(getBackgroundSlots());
+                for (int slot: getOtherBackgroundSlots()) {
+                    addItem(slot, getOtherBackgroundStack());
+                }
+                addItem(getMinusSlot(), getMinusIcon());
+                addItem(getAddSlot(), getAddIcon());
+            }
+
+            @Override
+            public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
+                menu.addMenuClickHandler(getAddSlot(), (p, slot, item, action) -> {
+                    int n = 1;
+                    if (action.isRightClicked()) {
+                        n = 8;
+                    }
+                    if (action.isShiftClicked()) {
+                        n = 64;
+                    }
+                    addNumber(n);
+                    return false;
+                });
+                menu.addMenuClickHandler(getMinusSlot(), (p, slot, item, action) -> {
+                    int n = 1;
+                    if (action.isRightClicked()) {
+                        n = 8;
+                    }
+                    if (action.isShiftClicked()) {
+                        n = 64;
+                    }
+                    minusNumber(n);
+                    return false;
+                });
+            }
+
+            @Override
+            public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
+                return Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+            }
+
+            @Override
+            public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
+                return new int[0];
+            }
+        };
+    }
+
     private void setupDisplay(@Nonnull Location location) {
         if (this.displayGroupGenerator != null) {
             DisplayGroup displayGroup = this.displayGroupGenerator.apply(location.clone().add(0.5, 0, 0.5));

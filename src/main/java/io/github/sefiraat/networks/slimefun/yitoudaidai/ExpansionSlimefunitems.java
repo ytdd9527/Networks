@@ -32,6 +32,7 @@ import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystem
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.*;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable.ChainGrabberNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable.ChainPusherNumberable;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable.NetChainDispatcherNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.tools.CoordinateConfigurator;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.workbench.ExpansionWorkbench;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -52,12 +53,15 @@ public class ExpansionSlimefunItems {
     public static final ChainPusher NE_CHAIN_PUSHER_PLUS;
     public static final ChainGrabber NE_CHAIN_GRABBER;
     public static final ChainGrabber NE_CHAIN_GRABBER_PLUS;
-    public static final ChainPusherNumberable NE_CHAIN_PUSHER_NUMBERABLE;
-    public static final ChainPusherNumberable NE_CHAIN_PUSHER_PLUS_NUMBERABLE;
-    public static final ChainGrabberNumberable NE_CHAIN_GRABBER_NUMBERABLE;
-    public static final ChainGrabberNumberable NE_CHAIN_GRABBER_PLUS_NUMBERABLE;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER_PLUS;
+    // 未完成，暂不开放
+    //public static final ChainPusherNumberable NE_CHAIN_PUSHER_NUMBERABLE;
+    //public static final ChainPusherNumberable NE_CHAIN_PUSHER_PLUS_NUMBERABLE;
+    //public static final ChainGrabberNumberable NE_CHAIN_GRABBER_NUMBERABLE;
+    //public static final ChainGrabberNumberable NE_CHAIN_GRABBER_PLUS_NUMBERABLE;
+    //public static final NetChainDispatcherNumberable NE_CHAIN_DISPATCHER_NUMBERABLE;
+    //public static final NetChainDispatcherNumberable NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE;
 
     public static final AdvancedImport NEA_IMPORT;
     public static final AdvancedExport NEA_EXPORT;
@@ -126,13 +130,16 @@ public class ExpansionSlimefunItems {
         NE_CHAIN_PUSHER_PLUS = new ChainPusher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_PLUS,"NE_CHAIN_PUSHER_PLUS");
         NE_CHAIN_GRABBER = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER,"NE_CHAIN_GRABBER");
         NE_CHAIN_GRABBER_PLUS = new ChainGrabber(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_PLUS,"NE_CHAIN_GRABBER_PLUS");
-        NE_CHAIN_PUSHER_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_NUMBERABLE,"NE_CHAIN_PUSHER");
-        NE_CHAIN_PUSHER_PLUS_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_PLUS_NUMBERABLE,"NE_CHAIN_PUSHER_PLUS");
-        NE_CHAIN_GRABBER_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_NUMBERABLE,"NE_CHAIN_GRABBER");
-        NE_CHAIN_GRABBER_PLUS_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_PLUS_NUMBERABLE,"NE_CHAIN_GRABBER_PLUS");
         NE_CHAIN_DISPATCHER = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER,"NE_CHAIN_DISPATCHER");
         NE_CHAIN_DISPATCHER_PLUS = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_PLUS,"NE_CHAIN_DISPATCHER_PLUS");
 
+        // 未完成，暂不开放
+        //NE_CHAIN_PUSHER_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_NUMBERABLE,"NE_CHAIN_PUSHER");
+        //NE_CHAIN_PUSHER_PLUS_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_PLUS_NUMBERABLE,"NE_CHAIN_PUSHER_PLUS");
+        //NE_CHAIN_GRABBER_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_NUMBERABLE,"NE_CHAIN_GRABBER");
+        //NE_CHAIN_GRABBER_PLUS_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_PLUS_NUMBERABLE,"NE_CHAIN_GRABBER_PLUS");
+        //NE_CHAIN_DISPATCHER_NUMBERABLE = new NetChainDispatcherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_NUMBERABLE,"NE_CHAIN_DISPATCHER");
+        //NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = new NetChainDispatcherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE,"NE_CHAIN_DISPATCHER_PLUS");
 
         NEA_IMPORT = new AdvancedImport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NEA_IMPORT, ExpansionWorkbench.TYPE, Recipe.NEA_IMPORT);
         NEA_EXPORT = new AdvancedExport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NEA_EXPORT, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
@@ -194,7 +201,8 @@ public class ExpansionSlimefunItems {
         NE_BRIDGE_MAGENTA = new NetworkBridge(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_BRIDGE_MAGENTA, ExpansionWorkbench.TYPE, Recipe.NE_BRIDGE_MAGENTA, StackUtils.getAsQuantity(ExpansionSlimefunItemStacks.NE_BRIDGE_MAGENTA, 8));
         NE_BRIDGE_PINK = new NetworkBridge(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_BRIDGE_PINK, ExpansionWorkbench.TYPE, Recipe.NE_BRIDGE_PINK, StackUtils.getAsQuantity(ExpansionSlimefunItemStacks.NE_BRIDGE_PINK, 8));
 
-}
+    }
+
     public static void setup() {
         Networks plugin = Networks.getInstance();
 
@@ -210,14 +218,16 @@ public class ExpansionSlimefunItems {
         NE_CHAIN_PUSHER_PLUS.register(plugin);
         NE_CHAIN_GRABBER.register(plugin);
         NE_CHAIN_GRABBER_PLUS.register(plugin);
-
-        NE_CHAIN_PUSHER_NUMBERABLE.register(plugin);
-        NE_CHAIN_PUSHER_PLUS_NUMBERABLE.register(plugin);
-        NE_CHAIN_GRABBER_NUMBERABLE.register(plugin);
-        NE_CHAIN_GRABBER_PLUS_NUMBERABLE.register(plugin);
-
         NE_CHAIN_DISPATCHER.register(plugin);
         NE_CHAIN_DISPATCHER_PLUS.register(plugin);
+
+        // 未完成，暂不开放
+        //NE_CHAIN_PUSHER_NUMBERABLE.register(plugin);
+        //NE_CHAIN_PUSHER_PLUS_NUMBERABLE.register(plugin);
+        //NE_CHAIN_GRABBER_NUMBERABLE.register(plugin);
+        //NE_CHAIN_GRABBER_PLUS_NUMBERABLE.register(plugin);
+        //NE_CHAIN_DISPATCHER_NUMBERABLE.register(plugin);
+        //NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE.register(plugin);
 
         NEA_IMPORT.register(plugin);
         NEA_EXPORT.register(plugin);

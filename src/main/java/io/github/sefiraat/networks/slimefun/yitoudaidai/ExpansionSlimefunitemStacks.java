@@ -32,12 +32,14 @@ public class ExpansionSlimefunItemStacks {
     public static final SlimefunItemStack NE_CHAIN_PUSHER_PLUS;
     public static final SlimefunItemStack NE_CHAIN_GRABBER;
     public static final SlimefunItemStack NE_CHAIN_GRABBER_PLUS;
+    public static final SlimefunItemStack NE_CHAIN_DISPATCHER;
+    public static final SlimefunItemStack NE_CHAIN_DISPATCHER_PLUS;
     public static final SlimefunItemStack NE_CHAIN_PUSHER_NUMBERABLE;
     public static final SlimefunItemStack NE_CHAIN_PUSHER_PLUS_NUMBERABLE;
     public static final SlimefunItemStack NE_CHAIN_GRABBER_NUMBERABLE;
     public static final SlimefunItemStack NE_CHAIN_GRABBER_PLUS_NUMBERABLE;
-    public static final SlimefunItemStack NE_CHAIN_DISPATCHER;
-    public static final SlimefunItemStack NE_CHAIN_DISPATCHER_PLUS;
+    public static final SlimefunItemStack NE_CHAIN_DISPATCHER_NUMBERABLE;
+    public static final SlimefunItemStack NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE;
     public static final SlimefunItemStack NEA_IMPORT;
     public static final SlimefunItemStack NEA_EXPORT;
     public static final SlimefunItemStack NEA_PURGER;
@@ -105,10 +107,12 @@ public class ExpansionSlimefunItemStacks {
         NE_CHAIN_GRABBER_PLUS = Theme.tsItem("NE_EXPANSION_GRABBER_PLUS",Enchanted(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器Plus");
         NE_CHAIN_DISPATCHER_PLUS = Theme.tsItem("NE_CHAIN_DISPATCHER_PLUS",Enchanted(Material.STICKY_PISTON),Theme.MACHINE,"网链调度器Plus");
 
-        NE_CHAIN_PUSHER_NUMBERABLE = Theme.tsItem("NE_CHAIN_PUSHER_NUMBERABLE", Enchanted(Material.OBSERVER), Theme.MACHINE, "网络链式推送器（可调数）");
-        NE_CHAIN_GRABBER_NUMBERABLE = Theme.tsItem("NE_CHAIN_GRABBER_NUMBERABLE", Enchanted(Material.DISPENSER), Theme.MACHINE, "网络链式抓取器（可调数）");
-        NE_CHAIN_PUSHER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_PUSHER_PLUS_NUMBERABLE", Enchanted(Material.OBSERVER), Theme.MACHINE, "网络链式推送器Plus（可调数）");
-        NE_CHAIN_GRABBER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_GRABBER_PLUS_NUMBERABLE", Enchanted(Material.DISPENSER), Theme.MACHINE, "网络链式抓取器Plus（可调数）");
+        NE_CHAIN_PUSHER_NUMBERABLE = Theme.tsItem("NE_CHAIN_PUSHER_NUMBERABLE", Enchanted(Material.OBSERVER), Theme.MACHINE, "高级网络链式推送器");
+        NE_CHAIN_GRABBER_NUMBERABLE = Theme.tsItem("NE_CHAIN_GRABBER_NUMBERABLE", Enchanted(Material.DISPENSER), Theme.MACHINE, "高级网络链式抓取器");
+        NE_CHAIN_DISPATCHER_NUMBERABLE = Theme.tsItem("NE_CHAIN_DISPATCHER_NUMBERABLE", Enchanted(Material.STICKY_PISTON), Theme.MACHINE, "高级网链调度器");
+        NE_CHAIN_PUSHER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_PUSHER_PLUS_NUMBERABLE", Enchanted(Material.OBSERVER), Theme.MACHINE, "高级网络链式推送器Plus");
+        NE_CHAIN_GRABBER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_GRABBER_PLUS_NUMBERABLE", Enchanted(Material.DISPENSER), Theme.MACHINE, "高级网络链式抓取器Plus");
+        NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE", Enchanted(Material.STICKY_PISTON), Theme.MACHINE, "高级网链调度器Plus");
 
         NE_COORDINATE_TRANSMITTER = Theme.themedSlimefunItemStack("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器");
         NE_COORDINATE_RECEIVER = Theme.themedSlimefunItemStack("NE_COORDINATE_RECEIVER",getPreEnchantedItemStack(Material.JUKEBOX, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标接收器");

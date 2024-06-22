@@ -116,7 +116,7 @@ public abstract class NetworkDirectional extends NetworkObject {
         );
     }
 
-    private void updateGui(@Nullable BlockMenu blockMenu) {
+    public void updateGui(@Nullable BlockMenu blockMenu) {
         if (blockMenu == null || !blockMenu.hasViewer()) {
             return;
         }

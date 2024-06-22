@@ -49,6 +49,9 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
     private static final int MAX_DISTANCE_LIMIT = 100;
     private static final int TRANSPORT_LIMIT = 576;
 
+    private static final int[] BACKGROUND_SLOTS = {
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 21, 31, 32, 34, 35, 39, 40, 41, 42, 43, 44
+    };
     private static final int MINUS_SLOT = 36;
     private static final int SHOW_SLOT = 37;
     private static final int ADD_SLOT = 38;
@@ -150,17 +153,31 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
                 break;
             }
             int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
+            int totalAmount = 0;
             for (int slot : slots) {
                 ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
                 if (itemStack != null) {
 
                     if (isItemTransferable(itemStack)) {
-                        int before = getCurrentNumber();
+                        if (totalAmount >= TRANSPORT_LIMIT) {
+                            break;
+                        }
+                        int before = itemStack.getAmount();
+                        if (totalAmount + before > TRANSPORT_LIMIT) {
+                            ItemStack clone = itemStack.clone();
+                            clone.setAmount(TRANSPORT_LIMIT - totalAmount);
+                            definition.getNode().getRoot().addItemStack(clone);
+                            if (clone.getAmount() < TRANSPORT_LIMIT - totalAmount) {
+                                itemStack.setAmount(before-(TRANSPORT_LIMIT-totalAmount-clone.getAmount()));
+                                targetMenu.replaceExistingItem(slot, itemStack);
+                            }
+                        }
 
                         definition.getNode().getRoot().addItemStack(itemStack);
 
                         if (itemStack.getAmount() < before) {
+                            totalAmount += before - itemStack.getAmount();
                             //抓取成功显示粒子
                             //showParticle(blockMenu.getBlock().getLocation(), direction);
                             targetMenu.replaceExistingItem(slot, itemStack);
@@ -228,6 +245,11 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
             return null;
         }
         return DisplayGroup.fromUUID(uuid);
+    }
+
+    @Override
+    protected int[] getBackgroundSlots() {
+        return BACKGROUND_SLOTS;
     }
 
     protected int getMinusSlot() {

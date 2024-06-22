@@ -9,6 +9,7 @@ import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
+import io.github.sefiraat.networks.slimefun.network.NetworkNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -37,7 +38,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class NetChainDispatcherNumberable extends NetworkDirectional implements RecipeDisplayItem {
+public class NetChainDispatcherNumberable extends NetworkNumberable implements RecipeDisplayItem {
 
 
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
@@ -48,8 +49,7 @@ public class NetChainDispatcherNumberable extends NetworkDirectional implements 
             10,
             18,
             27,28,29,
-            36,37,38,
-            45,46,47
+            36,37,38
     };
     private static final int[] TEMPLATE_BACKGROUND = new int[]{
             3,
@@ -73,12 +73,17 @@ public class NetChainDispatcherNumberable extends NetworkDirectional implements 
     private static final int WEST_SLOT = 9;
     private static final int UP_SLOT = 2;
     private static final int DOWN_SLOT = 20;
+    private static final int MINUS_SLOT = 45;
+    private static final int SHOW_SLOT = 46;
+    private static final int ADD_SLOT = 47;
+
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
     );
     private static final String CHAIN_TICK_KEY = "DispTick";
 
     private static final String KEY_UUID = "display-uuid";
+    private static final int TRANSPORT_LIMIT = 64;
     private static final int MAX_DISTANCE_LIMIT = 100;
     private int maxDistance;
     private int pushItemTick;
@@ -89,7 +94,7 @@ public class NetChainDispatcherNumberable extends NetworkDirectional implements 
     private Function<Location, DisplayGroup> displayGroupGenerator;
 
     public NetChainDispatcherNumberable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER);
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER, TRANSPORT_LIMIT);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
@@ -267,17 +272,31 @@ public class NetChainDispatcherNumberable extends NetworkDirectional implements 
                 break;
             }
             int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
+            int totalAmount = 0;
             for (int slot : slots) {
                 ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
                 if (itemStack != null) {
 
                     if (isItemTransferable(itemStack)) {
+                        if (totalAmount >= TRANSPORT_LIMIT) {
+                            break;
+                        }
                         int before = itemStack.getAmount();
+                        if (totalAmount + before > TRANSPORT_LIMIT) {
+                            ItemStack clone = itemStack.clone();
+                            clone.setAmount(TRANSPORT_LIMIT - totalAmount);
+                            definition.getNode().getRoot().addItemStack(clone);
+                            if (clone.getAmount() < TRANSPORT_LIMIT - totalAmount) {
+                                itemStack.setAmount(before-(TRANSPORT_LIMIT-totalAmount-clone.getAmount()));
+                                targetMenu.replaceExistingItem(slot, itemStack);
+                            }
+                        }
 
                         definition.getNode().getRoot().addItemStack(itemStack);
 
                         if (itemStack.getAmount() < before) {
+                            totalAmount += before - itemStack.getAmount();
                             //抓取成功显示粒子
                             //showParticle(blockMenu.getBlock().getLocation(), direction);
                             targetMenu.replaceExistingItem(slot, itemStack);
@@ -438,6 +457,21 @@ public class NetChainDispatcherNumberable extends NetworkDirectional implements 
                 "&f-&7 抓取将停止操作"
         ));
         return displayRecipes;
+    }
+
+    @Override
+    protected int getMinusSlot() {
+        return MINUS_SLOT;
+    }
+
+    @Override
+    protected int getShowSlot() {
+        return SHOW_SLOT;
+    }
+
+    @Override
+    protected int getAddSlot() {
+        return ADD_SLOT;
     }
 }
 
