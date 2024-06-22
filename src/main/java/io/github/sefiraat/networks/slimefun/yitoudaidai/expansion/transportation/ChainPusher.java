@@ -65,7 +65,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
     private static final String TICK_COUNTER_KEY = "chain_PusherPlus_tick_counter";
 
     public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER_PLUS);
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }

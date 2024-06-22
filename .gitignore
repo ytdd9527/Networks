@@ -2,6 +2,7 @@
 /.settings/
 /target/
 /.idea/
+/.vscode/
 *.iml
 .project
 .classpath
