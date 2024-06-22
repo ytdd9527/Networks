@@ -9,7 +9,7 @@ import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunItems;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.managers.ConfigManager;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model.ItemsModel;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -93,7 +93,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     }
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
-        ExpansionSlimefunitems.setup();
+        ExpansionSlimefunItems.setup();
         ItemsModel.setup();
         WikiUtils.setupJson(this);
         if (supportedPluginManager.isNetheopoiesis()){

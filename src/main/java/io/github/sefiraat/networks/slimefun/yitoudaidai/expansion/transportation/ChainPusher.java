@@ -64,24 +64,28 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
     );
     private static final String TICK_COUNTER_KEY = "chain_PusherPlus_tick_counter";
 
+<<<<<<< HEAD
     public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
+=======
+    public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+>>>>>>> f084d778b1fde8b9ed71683c29d0fd8f20803307
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
-        loadConfigurations(itemId);
+        loadConfigurations(configKey);
     }
 
-    private void loadConfigurations(String itemId) {
+    private void loadConfigurations(String configKey) {
         int defaultMaxDistance = 32;
         int defaultPushItemTick = 6;
         boolean defaultUseSpecialModel = false;
 
         FileConfiguration config = Networks.getInstance().getConfig();
 
-        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
-        this.pushItemTick = config.getInt("items." + itemId + ".pushitem-tick", defaultPushItemTick);
-        this.useSpecialModel = config.getBoolean("items." + itemId + ".use-special-model.enable", defaultUseSpecialModel);
+        this.maxDistance = Math.min(config.getInt("items." + configKey + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.pushItemTick = config.getInt("items." + configKey + ".pushitem-tick", defaultPushItemTick);
+        this.useSpecialModel = config.getBoolean("items." + configKey + ".use-special-model.enable", defaultUseSpecialModel);
 
 
         Map<String, Function<Location, DisplayGroup>> generatorMap = new HashMap<>();
@@ -91,7 +95,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
         this.displayGroupGenerator = null;
 
         if (this.useSpecialModel) {
-            String generatorKey = config.getString("items." + itemId + ".use-special-model.type");
+            String generatorKey = config.getString("items." + configKey + ".use-special-model.type");
             this.displayGroupGenerator = generatorMap.get(generatorKey);
             if (this.displayGroupGenerator == null) {
                 Networks.getInstance().getLogger().warning("未知的展示组类型 '" + generatorKey + "', 特殊模型已禁用。");
