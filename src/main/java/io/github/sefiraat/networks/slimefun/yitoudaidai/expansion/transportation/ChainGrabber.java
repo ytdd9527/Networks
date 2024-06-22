@@ -49,7 +49,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
     private int maxDistance;
 
     public ChainGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER_PLUS);
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER);
         loadConfigurations(itemId);
     }
 

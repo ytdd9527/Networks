@@ -21,7 +21,6 @@ import java.text.MessageFormat;
 @UtilityClass
 public class ExpansionSlimefunitemStacks {
 
-
     //工作台
     public static final SlimefunItemStack NE_EXPANSION_WORKBENCH;
     //工具
@@ -87,6 +86,7 @@ public class ExpansionSlimefunitemStacks {
     public static final SlimefunItemStack NE_BRIDGE_PURPLE;
     public static final SlimefunItemStack NE_BRIDGE_MAGENTA;
     public static final SlimefunItemStack NE_BRIDGE_PINK;
+
     static {
 
         NE_EXPANSION_WORKBENCH = Theme.tsItem("NE_EXPANSION_WORKBENCH",Enchanted(Material.BAMBOO_BLOCK),Theme.MACHINE,"网络拓展工作台");;
@@ -106,7 +106,7 @@ public class ExpansionSlimefunitemStacks {
         NEA_IMPORT = Theme.themedSlimefunItemStack("NEA_IMPORT",getPreEnchantedItemStack(Material.RED_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络高级入口");
         NEA_EXPORT = Theme.themedSlimefunItemStack("NEA_EXPORT",getPreEnchantedItemStack(Material.BLUE_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级出口");
         NEA_PURGER = Theme.themedSlimefunItemStack("NEA_PURGER",getPreEnchantedItemStack(Material.YELLOW_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级清除器");
-        NETWORK_CAPACITOR_5 = Theme.themedSlimefunItemStack("NTW_CAPACITOR_5", new ItemStack(Material.CYAN_GLAZED_TERRACOTTA), Theme.MACHINE, "网络电容 (5)");;
+        NETWORK_CAPACITOR_5 = Theme.themedSlimefunItemStack("NTW_CAPACITOR_5", new ItemStack(Material.CYAN_GLAZED_TERRACOTTA), Theme.MACHINE, "网络电容 (5)", "网络电容可以接收来自", "能源网络的电力并存储起来", "以供其他网络设备使用", "", MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000));
 
         NETWORK_ADVANCED_QUANTUM_STORAGE = Theme.themedSlimefunItemStack("NE_ADVANCED_QUANTUM_STORAGE",new ItemStack(Material.AMETHYST_BLOCK),Theme.MACHINE,"高级量子存储","可自定义的最大存储容量","请注意设置数量之后不能在设置小于之前设置的数量","否则清空到当前最大容量");
 

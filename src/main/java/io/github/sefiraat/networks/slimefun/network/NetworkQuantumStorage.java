@@ -2,10 +2,8 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.network.stackcaches.ItemStackCache;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.Utils;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
@@ -26,7 +24,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -44,12 +41,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
@@ -260,7 +259,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
 
         player.sendMessage(
                 Theme.PASSIVE + "[" + Theme.GOLD + "网络拓展" + Theme.PASSIVE + "] " +
-                   Theme.SUCCESS + "已更改容量: " + newMaxAmount
+                Theme.SUCCESS + "已更改容量: " + newMaxAmount
         );}
 
     public void setSupportsCustomMaxAmount(boolean supportsCustomMaxAmount) {
@@ -319,7 +318,7 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                         p.closeInventory();
                         p.sendMessage(
                                 Theme.PASSIVE + "[" + Theme.GOLD + "网络拓展" + Theme.PASSIVE + "] " +
-                                   Theme.WARNING +"请输入网络高级量子存储的容量.最大限制为: " + Integer.MAX_VALUE + " !");
+                                Theme.WARNING +"请输入网络高级量子存储的容量.最大限制为: " + Integer.MAX_VALUE + " !");
                         ChatUtils.awaitInput(p, s -> {
                             // Catching the error is cleaner than directly validating the string
                             try {
@@ -500,6 +499,9 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             final ItemMeta itemMeta = clone.getItemMeta();
             final List<String> lore = itemMeta.getLore();
             for (int i = 0; i < 3; i++) {
+                if (lore.size() == 0) {
+                    break;
+                }
                 lore.remove(lore.size() - 1);
             }
             itemMeta.setLore(lore.isEmpty() ? null : lore);
