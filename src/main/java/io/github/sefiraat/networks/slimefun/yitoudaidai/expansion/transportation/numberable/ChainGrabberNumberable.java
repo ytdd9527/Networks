@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation;
+package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
@@ -6,7 +6,7 @@ import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
-import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
+import io.github.sefiraat.networks.slimefun.network.NetworkNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -32,12 +32,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
 import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.UUID;
 
-
-public class ChainGrabber extends NetworkDirectional implements RecipeDisplayItem {
-
+public class ChainGrabberNumberable extends NetworkNumberable implements RecipeDisplayItem {
 
     private static final String TICK_COUNTER_KEY = "chain_grabber_plus_tick_counter";
     private static final String KEY_UUID = "display-uuid";
@@ -45,11 +47,17 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
     private static final int MAX_DISTANCE_LIMIT = 100;
+    private static final int TRANSPORT_LIMIT = 576;
+
+    private static final int MINUS_SLOT = 36;
+    private static final int SHOW_SLOT = 37;
+    private static final int ADD_SLOT = 38;
+
     private int grabItemTick;
     private int maxDistance;
 
-    public ChainGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER);
+    public ChainGrabberNumberable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER, TRANSPORT_LIMIT);
         loadConfigurations(configKey);
     }
 
@@ -148,7 +156,7 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
                 if (itemStack != null) {
 
                     if (isItemTransferable(itemStack)) {
-                        int before = itemStack.getAmount();
+                        int before = getCurrentNumber();
 
                         definition.getNode().getRoot().addItemStack(itemStack);
 
@@ -221,6 +229,20 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
         }
         return DisplayGroup.fromUUID(uuid);
     }
+
+    protected int getMinusSlot() {
+        return MINUS_SLOT;
+    }
+
+    protected int getShowSlot() {
+        return SHOW_SLOT;
+    }
+
+    protected int getAddSlot() {
+        return ADD_SLOT;
+    }
+
+
     @NotNull
     @Override
     public List<ItemStack> getDisplayRecipes() {

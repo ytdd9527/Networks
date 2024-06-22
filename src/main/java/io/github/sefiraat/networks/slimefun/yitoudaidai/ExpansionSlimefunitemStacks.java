@@ -19,7 +19,7 @@ import java.text.MessageFormat;
  * act as a one-stop-shop for the stacks themselves.
  */
 @UtilityClass
-public class ExpansionSlimefunitemStacks {
+public class ExpansionSlimefunItemStacks {
 
     //工作台
     public static final SlimefunItemStack NE_EXPANSION_WORKBENCH;
@@ -32,6 +32,10 @@ public class ExpansionSlimefunitemStacks {
     public static final SlimefunItemStack NE_CHAIN_PUSHER_PLUS;
     public static final SlimefunItemStack NE_CHAIN_GRABBER;
     public static final SlimefunItemStack NE_CHAIN_GRABBER_PLUS;
+    public static final SlimefunItemStack NE_CHAIN_PUSHER_NUMBERABLE;
+    public static final SlimefunItemStack NE_CHAIN_PUSHER_PLUS_NUMBERABLE;
+    public static final SlimefunItemStack NE_CHAIN_GRABBER_NUMBERABLE;
+    public static final SlimefunItemStack NE_CHAIN_GRABBER_PLUS_NUMBERABLE;
     public static final SlimefunItemStack NE_CHAIN_DISPATCHER;
     public static final SlimefunItemStack NE_CHAIN_DISPATCHER_PLUS;
     public static final SlimefunItemStack NEA_IMPORT;
@@ -95,11 +99,16 @@ public class ExpansionSlimefunitemStacks {
         //运输与存储电力
         NE_CHAIN_PUSHER = Theme.tsItem("NE_CHAING_PUSHER",new ItemStack(Material.OBSERVER),Theme.MACHINE,"网络链式推送器");
         NE_CHAIN_GRABBER = Theme.tsItem("NE_EXPANSION_GRABBER_1",new ItemStack(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器");
-        NE_CHAIN_DISPATCHER = Theme.tsItem("NE_CHAIN_DISPATCHER", new ItemStack(Material.PISTON),Theme.MACHINE, "网链调度器");
+        NE_CHAIN_DISPATCHER = Theme.tsItem("NE_CHAIN_DISPATCHER", new ItemStack(Material.STICKY_PISTON),Theme.MACHINE, "网链调度器");
 
         NE_CHAIN_PUSHER_PLUS = Theme.tsItem("NE_CHAING_PUSHER_PLUS",Enchanted(Material.OBSERVER),Theme.MACHINE,"网络链式推送器Plus");
         NE_CHAIN_GRABBER_PLUS = Theme.tsItem("NE_EXPANSION_GRABBER_PLUS",Enchanted(Material.DISPENSER),Theme.MACHINE,"网络链式抓取器Plus");
         NE_CHAIN_DISPATCHER_PLUS = Theme.tsItem("NE_CHAIN_DISPATCHER_PLUS",Enchanted(Material.STICKY_PISTON),Theme.MACHINE,"网链调度器Plus");
+
+        NE_CHAIN_PUSHER_NUMBERABLE = Theme.tsItem("NE_CHAIN_PUSHER_NUMBERABLE", Enchanted(Material.OBSERVER), Theme.MACHINE, "网络链式推送器（可调数）");
+        NE_CHAIN_GRABBER_NUMBERABLE = Theme.tsItem("NE_CHAIN_GRABBER_NUMBERABLE", Enchanted(Material.DISPENSER), Theme.MACHINE, "网络链式抓取器（可调数）");
+        NE_CHAIN_PUSHER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_PUSHER_PLUS_NUMBERABLE", Enchanted(Material.OBSERVER), Theme.MACHINE, "网络链式推送器Plus（可调数）");
+        NE_CHAIN_GRABBER_PLUS_NUMBERABLE = Theme.tsItem("NE_CHAIN_GRABBER_PLUS_NUMBERABLE", Enchanted(Material.DISPENSER), Theme.MACHINE, "网络链式抓取器Plus（可调数）");
 
         NE_COORDINATE_TRANSMITTER = Theme.themedSlimefunItemStack("NE_COORDINATE_TRANSMITTER",getPreEnchantedItemStack(Material.NOTE_BLOCK, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标传输器");
         NE_COORDINATE_RECEIVER = Theme.themedSlimefunItemStack("NE_COORDINATE_RECEIVER",getPreEnchantedItemStack(Material.JUKEBOX, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络坐标接收器");
@@ -116,12 +125,14 @@ public class ExpansionSlimefunitemStacks {
         SMELTERY_BLUEPRINT = Theme.themedSlimefunItemStack("NE_SMELTERY_BLUEPRINT",new ItemStack(Material.LIME_DYE),Theme.TOOL,"冶炼炉蓝图","一张空白的蓝图","可以存储一个冶炼炉配方");
         QUANTUM_WORKBENCH_BLUEPRINT = Theme.themedSlimefunItemStack("NE_QUANTUM_WORKBENCH_BLUEPRINT",new ItemStack(Material.MAGENTA_DYE),Theme.TOOL,"量子工作台蓝图","一张空白的蓝图","可以存储一个量子工作台配方");
         ANCIENT_ALTAR_BLUEPRINT = Theme.themedSlimefunItemStack("NE_ANCIENT_ALTAR_BLUEPRINT",new ItemStack(Material.CYAN_DYE),Theme.TOOL,"古代祭坛蓝图","一张空白的蓝图","可以存储一个古代祭坛配方");
+
         //编码器
         NE_MAGIC_WORKBENCH_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_MAGIC_WORKBENCH_RECIPE_ENCODER",new ItemStack(Material.OAK_HANGING_SIGN),Theme.MACHINE,"网络魔法工作台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_ARMOR_FORGE_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_ARMOR_FORGE_RECIPE_ENCODER",new ItemStack(Material.SPRUCE_HANGING_SIGN),Theme.MACHINE,"网络盔甲锻造台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_SMELTERY_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_SMELTERY_RECIPE_ENCODER",new ItemStack(Material.BIRCH_HANGING_SIGN),Theme.MACHINE,"网络冶炼炉配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_QUANTUM_WORKBENCH_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_QUANTUM_WORKBENCH_RECIPE_ENCODER",new ItemStack(Material.JUNGLE_HANGING_SIGN),Theme.MACHINE,"网络量子工作台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_ANCIENT_ALTAR_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_ANCIENT_ALTAR_RECIPE_ENCODER",new ItemStack(Material.LODESTONE),Theme.MACHINE,"网络古代祭坛配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
+
         //自动合成
         NE_AUTO_MAGIC_WORKBENCH = Theme.themedSlimefunItemStack("NE_AUTO_MAGIC_WORKBENCH",new ItemStack(Material.BOOKSHELF),Theme.MACHINE,"网络自动魔法工作台","需要魔法工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
         NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING = Theme.themedSlimefunItemStack("NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING",new ItemStack(Material.CHISELED_BOOKSHELF),Theme.MACHINE,"网络自动魔法工作台 (预留版)","需要魔法工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
