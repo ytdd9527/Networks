@@ -19,7 +19,7 @@ import java.text.MessageFormat;
  * act as a one-stop-shop for the stacks themselves.
  */
 @UtilityClass
-public class ExpansionSlimefunitemStacks {
+public class ExpansionSlimefunItemStacks {
 
     //工作台
     public static final SlimefunItemStack NE_EXPANSION_WORKBENCH;

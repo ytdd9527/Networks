@@ -8,7 +8,7 @@ import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunItems;
 
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.MagicWorkbenchBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedMagicWorkbenchRecipes;
@@ -269,7 +269,7 @@ public class NetworkAutoMagicCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return ExpansionSlimefunitems.NE_AUTO_MAGIC_WORKBENCH.canUse(player, false)
+                return ExpansionSlimefunItems.NE_AUTO_MAGIC_WORKBENCH.canUse(player, false)
                         && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 

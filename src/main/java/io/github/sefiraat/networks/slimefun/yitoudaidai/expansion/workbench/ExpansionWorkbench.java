@@ -59,7 +59,8 @@ public class ExpansionWorkbench extends SlimefunItem {
     );
 
     @ParametersAreNonnullByDefault
-    public ExpansionWorkbench(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public ExpansionWorkbench(
+            ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

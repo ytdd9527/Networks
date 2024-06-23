@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation;
+package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
@@ -6,11 +6,9 @@ import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
-import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
-import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
+
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.NetworkNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
-import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -33,78 +31,73 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
 import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.UUID;
 
-public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem {
+public class ChainGrabberNumberable extends NetworkNumberable implements RecipeDisplayItem {
 
+    private static final String TICK_COUNTER_KEY = "chain_grabber_plus_tick_counter";
     private static final String KEY_UUID = "display-uuid";
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
     private static final int MAX_DISTANCE_LIMIT = 100;
-    private int pushItemTick;
-    private int maxDistance;
-    private static final int[] BACKGROUND_SLOTS = new int[]{
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
-    };
-    private static final int[] TEMPLATE_BACKGROUND = new int[]{16};
-    private static final int[] TEMPLATE_SLOTS = new int[]{24, 25, 26};
-    private static final int NORTH_SLOT = 11;
-    private static final int SOUTH_SLOT = 29;
-    private static final int EAST_SLOT = 21;
-    private static final int WEST_SLOT = 19;
-    private static final int UP_SLOT = 14;
-    private static final int DOWN_SLOT = 32;
-    public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
-        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
-    );
-    private static final String TICK_COUNTER_KEY = "chain_PusherPlus_tick_counter";
+    private static final int TRANSPORT_LIMIT = 576;
 
-    public ChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER);
-        for (int slot : TEMPLATE_SLOTS) {
-            this.getSlotsToDrop().add(slot);
-        }
-        loadConfigurations(itemId);
+    private static final int[] BACKGROUND_SLOTS = {
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 21, 31, 32, 34, 35, 39, 40, 41, 42, 43, 44
+    };
+    private static final int MINUS_SLOT = 36;
+    private static final int SHOW_SLOT = 37;
+    private static final int ADD_SLOT = 38;
+
+    private int grabItemTick;
+    private int maxDistance;
+
+    public ChainGrabberNumberable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER, TRANSPORT_LIMIT);
+        loadConfigurations(configKey);
     }
 
-    private void loadConfigurations(String itemId) {
-        int defaultMaxDistance = 32;
-        int defaultPushItemTick = 6;
-        boolean defaultUseSpecialModel = false;
-
+    private void loadConfigurations(String configKey) {
         FileConfiguration config = Networks.getInstance().getConfig();
 
-        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
-        this.pushItemTick = config.getInt("items." + itemId + ".pushitem-tick", defaultPushItemTick);
-        this.useSpecialModel = config.getBoolean("items." + itemId + ".use-special-model.enable", defaultUseSpecialModel);
+        int defaultMaxDistance = 32;
+        int defaultGrabItemTick = 10;
+        boolean defaultUseSpecialModel = false;
+
+        this.maxDistance = Math.min(config.getInt("items." + configKey + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.grabItemTick = config.getInt("items." + configKey + ".grabitem-tick", defaultGrabItemTick);
+        this.useSpecialModel = config.getBoolean("items." + configKey + ".use-special-model.enable", defaultUseSpecialModel);
 
 
         Map<String, Function<Location, DisplayGroup>> generatorMap = new HashMap<>();
         generatorMap.put("cloche", DisplayGroupGenerators::generateCloche);
-        generatorMap.put("cell", DisplayGroupGenerators::generateCell);
 
         this.displayGroupGenerator = null;
 
         if (this.useSpecialModel) {
-            String generatorKey = config.getString("items." + itemId + ".use-special-model.type");
+            String generatorKey = config.getString("items." + configKey + ".use-special-model.type");
             this.displayGroupGenerator = generatorMap.get(generatorKey);
             if (this.displayGroupGenerator == null) {
                 Networks.getInstance().getLogger().warning("未知的展示组类型 '" + generatorKey + "', 特殊模型已禁用。");
                 this.useSpecialModel = false;
             }
         }
+
     }
-    private void performPushItemOperationAsync(@Nullable BlockMenu blockMenu) {
+    private void performGrabbingOperationAsync(@Nullable BlockMenu blockMenu) {
         if (blockMenu != null) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    tryPushItem(blockMenu);
+                    tryGrabItem(blockMenu);
                 }
             }.runTaskAsynchronously(Networks.getInstance());
         }
@@ -112,127 +105,97 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
     @Override
     protected void onTick(@Nullable BlockMenu blockMenu, @Nonnull Block block) {
         super.onTick(blockMenu, block);
+
+        // 初始化Tick计数器
         int tickCounter = getTickCounter(block);
-        tickCounter = (tickCounter + 1) % pushItemTick;
+        tickCounter = (tickCounter + 1) % grabItemTick;
+
+        // 每10个Tick执行一次抓取操作
         if (tickCounter == 0) {
-            performPushItemOperationAsync(blockMenu);
+            performGrabbingOperationAsync(blockMenu);
         }
+
+        // 更新Tick计数器
         updateTickCounter(block, tickCounter);
     }
     private int getTickCounter(Block block) {
+        // 从BlockStorage中获取与TICK_COUNTER_KEY关联的值
         String tickCounterValue = BlockStorage.getLocationInfo(block.getLocation(), TICK_COUNTER_KEY);
         try {
+            // 如果存在值，则尝试将其解析为整数
             return (tickCounterValue != null) ? Integer.parseInt(tickCounterValue) : 0;
         } catch (NumberFormatException e) {
+            // 如果解析失败，则返回0
             return 0;
         }
     }
     private void updateTickCounter(Block block, int tickCounter) {
+        // 将更新后的Tick计数器值存储到BlockStorage中
         BlockStorage.addBlockInfo(block.getLocation(), TICK_COUNTER_KEY, Integer.toString(tickCounter));
     }
-    private void tryPushItem(@Nonnull BlockMenu blockMenu) {
-        final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
+    private void tryGrabItem(@Nonnull BlockMenu blockMenu) {
+        if (blockMenu == null) {
+            return;
+        }
+
+        NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
         if (definition == null || definition.getNode() == null) {
             return;
         }
 
-        final BlockFace direction = this.getCurrentDirection(blockMenu);
+        BlockFace direction = this.getCurrentDirection(blockMenu);
+        Block currentBlock = blockMenu.getBlock().getRelative(direction);
 
-        Block targetBlock = blockMenu.getBlock().getRelative(direction);
-
-        for (int i = 0; i <= maxDistance; i++) {
-            final BlockMenu targetMenu = StorageCacheUtils.getMenu(targetBlock.getLocation());
+        for (int i = 0; i < maxDistance && currentBlock.getType() != Material.AIR; i++) {
+            BlockMenu targetMenu = StorageCacheUtils.getMenu(currentBlock.getLocation());
 
             if (targetMenu == null) {
                 break;
             }
+            int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
+            int totalAmount = 0;
+            for (int slot : slots) {
+                ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
-            for (int itemSlot : this.getItemSlots()) {
+                if (itemStack != null) {
 
-                final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
+                    if (isItemTransferable(itemStack)) {
+                        if (totalAmount >= TRANSPORT_LIMIT) {
+                            break;
+                        }
+                        int before = itemStack.getAmount();
+                        if (totalAmount + before > TRANSPORT_LIMIT) {
+                            ItemStack clone = itemStack.clone();
+                            clone.setAmount(TRANSPORT_LIMIT - totalAmount);
+                            definition.getNode().getRoot().addItemStack(clone);
+                            if (clone.getAmount() < TRANSPORT_LIMIT - totalAmount) {
+                                itemStack.setAmount(before-(TRANSPORT_LIMIT-totalAmount-clone.getAmount()));
+                                targetMenu.replaceExistingItem(slot, itemStack);
+                            }
+                        }
 
-                if (testItem == null || testItem.getType() == Material.AIR) {
-                    continue;
-                }
+                        definition.getNode().getRoot().addItemStack(itemStack);
 
-                final ItemStack clone = testItem.clone();
-                clone.setAmount(1);
-                final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
-
-                int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
-
-                for (int slot : slots) {
-                    final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-
-                    if (itemStack != null && itemStack.getType() != Material.AIR) {
-                        final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-                        if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, true)) {
-                            itemRequest.setAmount(space);
-                        } else {
-                            continue;
+                        if (itemStack.getAmount() < before) {
+                            totalAmount += before - itemStack.getAmount();
+                            //抓取成功显示粒子
+                            //showParticle(blockMenu.getBlock().getLocation(), direction);
+                            targetMenu.replaceExistingItem(slot, itemStack);
                         }
                     }
-
-                    ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
-                    if (retrieved != null) {
-                        targetMenu.pushItem(retrieved, slots);
-                        //showParticle(blockMenu.getBlock().getLocation(), direction);
-                        //显示粒子
-                    }
-
-                    break;
                 }
             }
-            targetBlock = targetBlock.getRelative(direction);
+            currentBlock = currentBlock.getRelative(direction);
         }
     }
-    @Nonnull
-    @Override
-    protected int[] getBackgroundSlots() {
-        return BACKGROUND_SLOTS;
-    }
-    @Nullable
-    @Override
-    protected int[] getOtherBackgroundSlots() {
-        return TEMPLATE_BACKGROUND;
-    }
-    @Nullable
-    @Override
-    protected CustomItemStack getOtherBackgroundStack() {
-        return TEMPLATE_BACKGROUND_STACK;
-    }
-    @Override
-    public int getNorthSlot() {
-        return NORTH_SLOT;
-    }
-    @Override
-    public int getSouthSlot() {
-        return SOUTH_SLOT;
-    }
-    @Override
-    public int getEastSlot() {
-        return EAST_SLOT;
-    }
-    @Override
-    public int getWestSlot() {
-        return WEST_SLOT;
-    }
-    @Override
-    public int getUpSlot() {
-        return UP_SLOT;
-    }
-    @Override
-    public int getDownSlot() {
-        return DOWN_SLOT;
-    }
-    @Override
-    public int[] getItemSlots() {
-        return TEMPLATE_SLOTS;
+    private boolean isItemTransferable(@Nonnull ItemStack itemStack) {
+        return itemStack != null && itemStack.getType() != Material.AIR;
     }
     @Override
     protected Particle.DustOptions getDustOptions() {
-        return new Particle.DustOptions(Color.BLUE, 2);
+        // 返回一个Particle.DustOptions对象，设置为黄绿色粒子
+        return new Particle.DustOptions(Color.LIME, 5);
     }
     @Override
     public void preRegister() {
@@ -284,6 +247,25 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
         }
         return DisplayGroup.fromUUID(uuid);
     }
+
+    @Override
+    protected int[] getBackgroundSlots() {
+        return BACKGROUND_SLOTS;
+    }
+
+    protected int getMinusSlot() {
+        return MINUS_SLOT;
+    }
+
+    protected int getShowSlot() {
+        return SHOW_SLOT;
+    }
+
+    protected int getAddSlot() {
+        return ADD_SLOT;
+    }
+
+
     @NotNull
     @Override
     public List<ItemStack> getDisplayRecipes() {
@@ -292,7 +274,7 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
                 "&a⇩运行频率⇩",
                 "",
                 "&e执行频率&f:",
-                "&f-&7[&a推送频率&7]&f:&7 每 &6" + pushItemTick + " SfTick &7推送一次",
+                "&f-&7[&a抓取频率&7]&f:&7 每 &6" + grabItemTick + " SfTick &7抓取一次",
                 "&f-&7[&a1 SfTick=0.5s]",
                 "",
                 "&f-&7 简而言之，链式推送器不会频繁操作，从而保持服务器流畅"
@@ -301,32 +283,35 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩功能⇩",
                 "",
-                "&e最大距离&7: &6" + maxDistance + "格",
+                "&e最大距离&7: &6"+maxDistance+"格",
                 "",
                 "&e运行流程&f:",
                 "&f-&7 打开界面设置你所需的方向",
-                "&f-&7 网络链式推送器当前方块开始，沿着设定方向搜索",
+                "&f-&7 网络链式抓取器当前方块开始，沿着设定方向搜索",
                 "",
-                "&e推送条件&f:",
-                "&f-&7[&a推送物品&7]&f:&7遇到可输入槽位，且物品不是空气时",
-                "&f-&7[&a停止条件①&7]&f:&7达到最大推送距离[&6" + maxDistance + "格&7]"
+                "&e抓取逻辑&f:",
+                "&f-&7[&a抓取物品&7]&f:&7将输出槽上的物品全部抓取网络中",
+                "&f-&7[&a停止条件&7]&f:&7达到最大抓取距离[&6"+maxDistance+"格]",
+                "&f-&7 遇到的方块为空，或者",
+                "&f-&7 没有更多可抓取的物品,或没有足够网络空间",
+                "&f-&7 抓取将停止操作"
         ));
         displayRecipes.add(AIR);
         displayRecipes.add(new CustomItemStack(Material.BOOK,
                 "&a⇩使用指南⇩",
                 "",
-                "&7网络链式推送器效率最大化建议：",
+                "&7网络链式抓取器效率最大化建议：",
                 "",
-                "&f-&7 如果你使用网络链式推送器就没必要给机器继续使用推送器了",
+                "&f-&7 如果你使用网络链式抓取器就没必要给机器继续使用抓取器了",
                 "&f-&7 不要双管齐下多此一举",
                 "",
-                "&f-&7 充分利用网络链式推送器范围: 每次推送物品可以覆盖长达&7[&6"+maxDistance+"格&7]的距离",
+                "&f-&7 充分利用网络链式抓取器范围: 每次抓取物品可以覆盖长达&7[&6"+maxDistance+"格&7]的距离",
                 "&f-&7 确保您的布局设计能够覆盖多个机器，以实现最大效率",
                 "",
-                "&f-&7 避免单个机器配置: 不要仅在一个机器上使用网络链式推送器",
+                "&f-&7 避免单个机器配置: 不要仅在一个机器上使用链式抓取器",
                 "&f-&7 这样做会限制您的自动化系统的潜力和扩展性",
                 "",
-                "&f-&7请遵循这些建议，您将能够最大化每个链式推送器的工作效能，",
+                "&f-&7请遵循这些建议，您将能够最大化每个链式抓取器的工作效能，",
                 "&f-&7同时保持也可以服务器流畅运行"
         ));
         return displayRecipes ;

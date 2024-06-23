@@ -2,14 +2,15 @@ package io.github.sefiraat.networks;
 
 
 
-import dev.sefiraat.netheopoiesis.Netheopoiesis;
+
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
 import io.github.sefiraat.networks.slimefun.NetheoPlants;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkController;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunitems;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunItems;
+
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.managers.ConfigManager;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.model.ItemsModel;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -17,12 +18,12 @@ import net.guizhanss.guizhanlibplugin.updater.GuizhanUpdater;
 import net.guizhanss.slimefun4.utils.WikiUtils;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +40,8 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     private ConfigManager configManager;
     private ListenerManager listenerManager;
     private SupportedPluginManager supportedPluginManager;
+
+
 
     public Networks() {
         this.username = "ybw0014";
@@ -62,6 +65,15 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         getLogger().info("       魔改网络: yitoudaidai、tinalness  ");
         getLogger().info("            拓展实用网络功能              ");
         getLogger().info("########################################");
+        getLogger().info("------------------");
+        getLogger().info("欢迎使用网络拓展!");
+        getLogger().info("插件正在启动...");
+        getLogger().info("插件已开启！");
+        getLogger().info("------------------");
+
+
+
+
 
         saveDefaultConfig();
 
@@ -82,6 +94,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
         this.configManager.saveAll();
     }
+
     public void tryUpdate() {
         if (configManager.isAutoUpdate() && getDescription().getVersion().startsWith("Build")) {
             GuizhanUpdater.start(this, getFile(), username, repo, branch);
@@ -93,7 +106,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     }
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
-        ExpansionSlimefunitems.setup();
+        ExpansionSlimefunItems.setup();
         ItemsModel.setup();
         WikiUtils.setupJson(this);
         if (supportedPluginManager.isNetheopoiesis()){
@@ -117,23 +130,6 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
         metrics.addCustomChart(networksChart);
     }
 
-    @Nonnull
-    @Override
-    public JavaPlugin getJavaPlugin() {
-        return this;
-    }
-
-    @Nullable
-    @Override
-    public String getBugTrackerURL() {
-        return MessageFormat.format("https://github.com/{0}/{1}/issues/", this.username, this.repo);
-    }
-
-    @Nonnull
-    public String getWikiURL() {
-        return "https://slimefun-addons-wiki.guizhanss.cn/networks/{0}";
-    }
-
 
     public static Networks getInstance() {
         return Networks.instance;
@@ -151,5 +147,24 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     public static ListenerManager getListenerManager() {
         return Networks.getInstance().listenerManager;
     }
+
+
+    @Nonnull
+    @Override
+    public JavaPlugin getJavaPlugin() {
+        return this;
+    }
+
+    @Nullable
+    @Override
+    public String getBugTrackerURL() {
+        return MessageFormat.format("https://github.com/{0}/{1}/issues/", this.username, this.repo);
+    }
+
+    @Nonnull
+    public String getWikiURL() {
+        return "https://slimefun-addons-wiki.guizhanss.cn/networks/{0}";
+    }
+
 
 }

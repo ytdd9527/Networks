@@ -26,13 +26,13 @@ public class Recipe {
     //坐标传输器
     public static final ItemStack[] NE_COORDINATE_TRANSMITTER = {
             NETWORK_WIRELESS_TRANSMITTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem(),
-            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, ADVANCED_NANOBOTS.getItem(),
+            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER, ADVANCED_NANOBOTS.getItem(),
             NETWORK_WIRELESS_TRANSMITTER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem(),
     };
     //坐标接收器
     public static final ItemStack[] NE_COORDINATE_RECEIVER = {
             NETWORK_WIRELESS_RECEIVER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_RECEIVER.getItem(),
-            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, ADVANCED_NANOBOTS.getItem(),
+            ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER, ADVANCED_NANOBOTS.getItem(),
             NETWORK_WIRELESS_RECEIVER.getItem(), AI_CORE.getItem(), NETWORK_WIRELESS_RECEIVER.getItem(),
     };
     //链式推送
@@ -42,9 +42,9 @@ public class Recipe {
             NETWORK_PUSHER.getItem(), NETWORK_EXPORT.getItem(), NETWORK_PUSHER.getItem(),
     };
     public static final ItemStack[] NE_CHAIN_PUSHER_PLUS = {
-            ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER,
+            ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER,
             INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN), INTERDIMENSIONAL_PRESENCE.getItem(),
-            ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER, NETWORK_IMPORT.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER,
+            ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER, NETWORK_IMPORT.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER,
     };
     //链式抓取
     public static final ItemStack[] NE_CHAIN_GRABBER = {
@@ -53,20 +53,30 @@ public class Recipe {
             NETWORK_GRABBER.getItem(), NETWORK_IMPORT.getItem(), NETWORK_GRABBER.getItem(),
     };
     public static final ItemStack[] NE_CHAIN_GRABBER_PLUS = {
-            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER,
+            ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER,
             INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN),INTERDIMENSIONAL_PRESENCE.getItem(),
-            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER,
+            ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER,
     };
     //链式调度器
     public static final ItemStack[] NE_CHAIN_DISPATCHER = {
             NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
-            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER, OPTIC_CABLE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER,
+            ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER, OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER,
             NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
     public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS = {
             NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
-            ExpansionSlimefunitemStacks.NE_CHAIN_GRABBER_PLUS, OPTIC_CABLE.getItem(), ExpansionSlimefunitemStacks.NE_CHAIN_PUSHER_PLUS,
+            ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS, OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS,
             NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
+    };
+    public static final ItemStack[] NE_CHAIN_DISPATCHER_NUMBERABLE = {
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
+            OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER, OPTIC_CABLE.getItem(),
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
+    };
+    public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = {
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
+            OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS, OPTIC_CABLE.getItem(),
+            OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
     //高级入口
     public static final ItemStack[] NEA_IMPORT = {
@@ -121,78 +131,78 @@ public class Recipe {
     //编码
     public static final ItemStack[] NE_MAGIC_WORKBENCH_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
-            ExpansionSlimefunitemStacks.MAGIC_WORKBENCH_BLUEPRINT, ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH, ExpansionSlimefunitemStacks.MAGIC_WORKBENCH_BLUEPRINT,
+            ExpansionSlimefunItemStacks.MAGIC_WORKBENCH_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH, ExpansionSlimefunItemStacks.MAGIC_WORKBENCH_BLUEPRINT,
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
     };
     public static final ItemStack[] NE_ARMOR_FORGE_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
-            ExpansionSlimefunitemStacks.ARMOR_FORGE_BLUEPRINT, ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE, ExpansionSlimefunitemStacks.ARMOR_FORGE_BLUEPRINT,
+            ExpansionSlimefunItemStacks.ARMOR_FORGE_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE, ExpansionSlimefunItemStacks.ARMOR_FORGE_BLUEPRINT,
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
     };
     public static final ItemStack[] NE_SMELTERY_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
-            ExpansionSlimefunitemStacks.SMELTERY_BLUEPRINT, ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY, ExpansionSlimefunitemStacks.SMELTERY_BLUEPRINT,
+            ExpansionSlimefunItemStacks.SMELTERY_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY, ExpansionSlimefunItemStacks.SMELTERY_BLUEPRINT,
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
     };
     public static final ItemStack[] NE_QUANTUM_WORKBENCH_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
-            ExpansionSlimefunitemStacks.QUANTUM_WORKBENCH_BLUEPRINT, ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH, ExpansionSlimefunitemStacks.QUANTUM_WORKBENCH_BLUEPRINT,
+            ExpansionSlimefunItemStacks.QUANTUM_WORKBENCH_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH, ExpansionSlimefunItemStacks.QUANTUM_WORKBENCH_BLUEPRINT,
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
     };
     public static final ItemStack[] NE_ANCIENT_ALTAR_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
-            ExpansionSlimefunitemStacks.ANCIENT_ALTAR_BLUEPRINT, ExpansionSlimefunitemStacks.NE_AUTO_ANCIENT_ALTAR, ExpansionSlimefunitemStacks.ANCIENT_ALTAR_BLUEPRINT,
+            ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT,
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
     };
     //合成机
     public static final ItemStack[] NE_AUTO_MAGIC_WORKBENCH = {
             OPTIC_GLASS.getItem(), OPTIC_CABLE.getItem(), OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.MAGIC_WORKBENCH_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.MAGIC_WORKBENCH_BLUEPRINT,
+            ExpansionSlimefunItemStacks.MAGIC_WORKBENCH_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.MAGIC_WORKBENCH_BLUEPRINT,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING = {
             OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH,
+            ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_ARMOR_FORGE = {
             OPTIC_GLASS.getItem(), SlimefunItems.ARMOR_AUTO_CRAFTER, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.ARMOR_FORGE_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.ARMOR_FORGE_BLUEPRINT,
+            ExpansionSlimefunItemStacks.ARMOR_FORGE_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.ARMOR_FORGE_BLUEPRINT,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_ARMOR_FORGE_WITHHOLDING = {
             OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE,
+            ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_SMELTERY = {
-            OPTIC_GLASS.getItem(), ExpansionSlimefunitemStacks.SMELTERY_BLUEPRINT, OPTIC_GLASS.getItem(),
+            OPTIC_GLASS.getItem(), ExpansionSlimefunItemStacks.SMELTERY_BLUEPRINT, OPTIC_GLASS.getItem(),
             SlimefunItems.ELECTRIC_SMELTERY_2, SIMPLE_NANOBOTS.getItem(), SlimefunItems.ELECTRIC_SMELTERY_2,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_SMELTERY_WITHHOLDING = {
             OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY,
+            ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_QUANTUM_WORKBENCH = {
             OPTIC_GLASS.getItem(), NETWORK_QUANTUM_WORKBENCH.getItem(), OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.QUANTUM_WORKBENCH_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.QUANTUM_WORKBENCH_BLUEPRINT,
+            ExpansionSlimefunItemStacks.QUANTUM_WORKBENCH_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.QUANTUM_WORKBENCH_BLUEPRINT,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING = {
             OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH,
+            ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_ANCIENT_ALTAR = {
             OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.ANCIENT_ALTAR_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.ANCIENT_ALTAR_BLUEPRINT,
+            ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
     };
     public static final ItemStack[] NE_AUTO_ANCIENT_ALTAR_WITHHOLDING = {
             OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_ANCIENT_ALTAR, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_ANCIENT_ALTAR,
+            ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
     };
     //高级合成机
@@ -207,44 +217,44 @@ public class Recipe {
             NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(),NETWORK_RECIPE_ENCODER.getItem(),NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(),
     };
     public static final ItemStack[] NEA_AUTO_MAGIC_WORKBENCH = {
-            ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH,
+            ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH, ExpansionSlimefunitemStacks.NE_MAGIC_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH,
+            ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH, ExpansionSlimefunItemStacks.NE_MAGIC_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH,
     };
     public static final ItemStack[] NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING = {
-            ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING, ExpansionSlimefunitemStacks.NE_MAGIC_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING, ExpansionSlimefunItemStacks.NE_MAGIC_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING,
     };
     public static final ItemStack[] NEA_AUTO_ARMOR_FORGE = {
-            ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE,
+            ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE, ExpansionSlimefunitemStacks.NE_ARMOR_FORGE_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE,
+            ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE, ExpansionSlimefunItemStacks.NE_ARMOR_FORGE_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE,
     };
     public static final ItemStack[] NEA_AUTO_ARMOR_FORGE_WITHHOLDING = {
-            ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING, ExpansionSlimefunitemStacks.NE_ARMOR_FORGE_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING, ExpansionSlimefunItemStacks.NE_ARMOR_FORGE_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_ARMOR_FORGE_WITHHOLDING,
     };
     public static final ItemStack[] NEA_AUTO_SMELTERY = {
-            ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY,
+            ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY, ExpansionSlimefunitemStacks.NE_SMELTERY_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY,
+            ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY, ExpansionSlimefunItemStacks.NE_SMELTERY_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY,
     };
     public static final ItemStack[] NEA_AUTO_SMELTERY_WITHHOLDING = {
-            ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY_WITHHOLDING,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY_WITHHOLDING, ExpansionSlimefunitemStacks.NE_SMELTERY_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_SMELTERY_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY_WITHHOLDING, ExpansionSlimefunItemStacks.NE_SMELTERY_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_SMELTERY_WITHHOLDING,
     };
     public static final ItemStack[] NEA_AUTO_QUANTUM_WORKBENCH = {
-            ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH,
+            ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH, ExpansionSlimefunitemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH,
+            ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH, ExpansionSlimefunItemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH,
     };
     public static final ItemStack[] NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING = {
-            ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
-            ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ExpansionSlimefunitemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunitemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
+            ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ExpansionSlimefunItemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
     };
     //网格
     public static final ItemStack[] NETWORK_GRID_NEW_STYLE = {
@@ -259,7 +269,7 @@ public class Recipe {
     };
     public static final ItemStack[] NETWORK_ENCODING_GRID_NEW_STYLE = {
             NETWORK_BRIDGE.getItem(), NETWORK_RECIPE_ENCODER.getItem(), NETWORK_BRIDGE.getItem(),
-            OPTIC_CABLE.getItem(), ExpansionSlimefunitemStacks.NETWORK_CRAFTING_GRID_NEW_STYLE, OPTIC_CABLE.getItem(),
+            OPTIC_CABLE.getItem(), ExpansionSlimefunItemStacks.NETWORK_CRAFTING_GRID_NEW_STYLE, OPTIC_CABLE.getItem(),
             NETWORK_BRIDGE.getItem(), OPTIC_CABLE.getItem(), NETWORK_BRIDGE.getItem(),
     };
     //高级量子存储
