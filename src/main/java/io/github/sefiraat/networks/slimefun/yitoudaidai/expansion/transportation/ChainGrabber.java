@@ -135,12 +135,22 @@ public class ChainGrabber extends NetworkDirectional implements RecipeDisplayIte
         BlockFace direction = this.getCurrentDirection(blockMenu);
         Block currentBlock = blockMenu.getBlock().getRelative(direction);
 
-        for (int i = 0; i < maxDistance && currentBlock.getType() != Material.AIR; i++) {
-            BlockMenu targetMenu = StorageCacheUtils.getMenu(currentBlock.getLocation());
+        for (int i = 0; i < maxDistance; i++) {
+            // 如果方块无效，退出
+            if (currentBlock == null) {
+                break;
+            }
+            // 如果方块是空气，退出
+            if (currentBlock.getType() == Material.AIR) {
+                break;
+            }
 
+            BlockMenu targetMenu = StorageCacheUtils.getMenu(currentBlock.getLocation());
+            // 如果无menu，退出
             if (targetMenu == null) {
                 break;
             }
+            // 获取输出槽
             int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
             for (int slot : slots) {
                 ItemStack itemStack = targetMenu.getItemInSlot(slot);

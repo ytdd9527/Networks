@@ -11,6 +11,7 @@ import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -212,40 +213,41 @@ public class NetChainDispatcherNumberable extends NetworkNumberable implements R
 
             for (int itemSlot : this.getItemSlots()) {
                 final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
-                if (testItem == null || testItem.getType() == Material.AIR || testItem.getAmount() == 0) {
-                    continue;
+
+                if (testItem == null || testItem.getType() == Material.AIR) {
+                    continue; // 如果物品为空，继续下一个槽位
                 }
+
                 final ItemStack clone = testItem.clone();
                 clone.setAmount(1);
-                final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
+
+                // 获取目标机器可以插入物品的所有槽位
                 int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
-                boolean isItemAvailable = false;
+
+                int freeAmount = 0;
                 for (int slot : slots) {
-                    final ItemStack targetItemStack = targetMenu.getItemInSlot(slot);
-                    if (targetItemStack != null && targetItemStack.getType() == clone.getType()) {
-                        isItemAvailable = true;
+                    final ItemStack itemStack = targetMenu.getItemInSlot(slot);
+
+                    if (itemStack == null || itemStack.getType() == Material.AIR) {
+                        freeAmount += clone.getMaxStackSize();
+                    } else {
+                        if (StackUtils.itemsMatch(itemStack, clone)) {
+                            freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
+                        }
+                    }
+
+                    if (freeAmount > TRANSPORT_LIMIT) {
+                        freeAmount = TRANSPORT_LIMIT;
                         break;
                     }
                 }
 
-                if (!isItemAvailable) {
-                    continue;
-                }
-                for (int slot : slots) {
-                    final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-                    if (itemStack != null && itemStack.getType() == clone.getType() && itemStack.getAmount() < itemStack.getMaxStackSize()) {
-                        int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-                        if (space > 0) {
-                            itemRequest.setAmount(space);
-                            ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
-                            if (retrieved != null && retrieved.getAmount() > 0) {
-                                targetMenu.pushItem(retrieved, slot);
-                                // 显示粒子效果（如果需要）
-                                // showParticle(blockMenu.getBlock().getLocation(), direction);
-                            }
-                        }
-                        break;
-                    }
+                final ItemRequest itemRequest = new ItemRequest(clone, freeAmount);
+                ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
+                if (retrieved != null) {
+                    targetMenu.pushItem(retrieved, slots);
+                    //showParticle(blockMenu.getBlock().getLocation(), direction);
+                    //显示粒子
                 }
             }
             targetBlock = targetBlock.getRelative(direction);

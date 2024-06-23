@@ -190,8 +190,8 @@ public class ChainPusher extends NetworkDirectional implements RecipeDisplayItem
 
                     break; // 推送成功后退出当前槽位循环
                 }
-                targetBlock = targetBlock.getRelative(direction);
             }
+            targetBlock = targetBlock.getRelative(direction);
         }
     }
     @Nonnull

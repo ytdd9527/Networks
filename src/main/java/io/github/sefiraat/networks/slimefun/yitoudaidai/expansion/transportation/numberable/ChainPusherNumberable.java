@@ -55,7 +55,7 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
     private static final int MAX_DISTANCE_LIMIT = 100;
-    private static final int TRANSPORT_LIMIT = 576;
+    private static final int TRANSPORT_LIMIT = 64;
     private static final int MINUS_SLOT = 36;
     private static final int SHOW_SLOT = 37;
     private static final int ADD_SLOT = 38;
@@ -171,12 +171,8 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
                 return; // 如果没有找到BlockMenu，直接返回，结束整个方法
             }
 
-            int totalAmount = 0;
             for (int itemSlot : this.getItemSlots()) {
                 final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
-                if (totalAmount >= TRANSPORT_LIMIT) {
-                    break; // 超过大小，停止运输
-                }
 
                 if (testItem == null || testItem.getType() == Material.AIR) {
                     continue; // 如果物品为空，继续下一个槽位
@@ -184,38 +180,37 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
 
                 final ItemStack clone = testItem.clone();
                 clone.setAmount(1);
-                final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
 
                 // 获取目标机器可以插入物品的所有槽位
                 int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
 
+                int freeAmount = 0;
                 for (int slot : slots) {
                     final ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
-                    if (itemStack != null && itemStack.getType() != Material.AIR) {
-                        final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-                        if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, true)) {
-                            if (totalAmount + space > TRANSPORT_LIMIT) {
-                                itemRequest.setAmount(TRANSPORT_LIMIT - totalAmount);
-                            }
-                            itemRequest.setAmount(space);
-                        } else {
-                            continue; // 如果槽位已满或物品不匹配，继续下一个槽位
+                    if (itemStack == null || itemStack.getType() == Material.AIR) {
+                        freeAmount += clone.getMaxStackSize();
+                    } else {
+                        if (StackUtils.itemsMatch(itemStack, clone)) {
+                            freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
                         }
                     }
 
-                    ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
-                    if (retrieved != null) {
-                        targetMenu.pushItem(retrieved, slots);
-                        totalAmount += retrieved.getAmount();
-                        //showParticle(blockMenu.getBlock().getLocation(), direction);
-                        //显示粒子
+                    if (freeAmount > TRANSPORT_LIMIT) {
+                        freeAmount = TRANSPORT_LIMIT;
+                        break;
                     }
-
-                    break; // 推送成功后退出当前槽位循环
                 }
-                targetBlock = targetBlock.getRelative(direction);
+
+                final ItemRequest itemRequest = new ItemRequest(clone, freeAmount);
+                ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
+                if (retrieved != null) {
+                    targetMenu.pushItem(retrieved, slots);
+                    //showParticle(blockMenu.getBlock().getLocation(), direction);
+                    //显示粒子
+                }
             }
+            targetBlock = targetBlock.getRelative(direction);
         }
     }
     @Nonnull
