@@ -16,6 +16,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -57,6 +58,7 @@ public abstract class NetworkNumberable extends NetworkDirectional {
 
     protected static final String DIRECTION = "direction";
     protected static final String OWNER_KEY = "uuid";
+    protected static final String LIMIT_KEY = "limit";
 
     private int currentNumber = 64;
     private int limit = 64;
@@ -83,14 +85,18 @@ public abstract class NetworkNumberable extends NetworkDirectional {
         Material.GREEN_CONCRETE, Theme.NOTICE + "增加数量"
     );
 
+    private final ItemStack showIconClone;
+
     NetworkDirectional instance = this;
 
     private static final Map<Location, BlockFace> SELECTED_DIRECTION_MAP = new HashMap<>();
+    private static final Map<Location, Integer> NETWORK_NUMBERABLE_MAP = new HashMap<>();
 
     protected NetworkNumberable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, NodeType type, int limit) {
         super(itemGroup, item, recipeType, recipe, type);
         this.currentNumber = 64;
         this.limit = limit;
+        this.showIconClone = SHOW_ICON.clone();
 
         addItemHandler(
                 new BlockPlaceHandler(false) {
@@ -178,6 +184,7 @@ public abstract class NetworkNumberable extends NetworkDirectional {
     protected void onTick(@Nullable BlockMenu blockMenu, @Nonnull Block block) {
         addToRegistry(block);
         updateGui(blockMenu);
+        updateShowIcon(block);
     }
 
     protected void onUniqueTick() {}
@@ -200,36 +207,16 @@ public abstract class NetworkNumberable extends NetworkDirectional {
                 addItem(getWestSlot(), getDirectionalSlotPane(BlockFace.WEST, Material.AIR, false), (player, i, itemStack, clickAction) -> false);
                 addItem(getUpSlot(), getDirectionalSlotPane(BlockFace.UP, Material.AIR, false), (player, i, itemStack, clickAction) -> false);
                 addItem(getDownSlot(), getDirectionalSlotPane(BlockFace.DOWN, Material.AIR, false), (player, i, itemStack, clickAction) -> false);
-                addItem(getAddSlot(), getAddIcon());
-                addMenuClickHandler(getAddSlot(), (p, slot, item, action) -> {
-                    int n = 1;
-                    if (action.isRightClicked()) {
-                        n = 8;
-                    }
-                    if (action.isShiftClicked()) {
-                        n = 64;
-                    }
-                    addNumber(n);
-                    return false;
-                });
-                addItem(getMinusSlot(), getMinusIcon());
-                addMenuClickHandler(getMinusSlot(), (p, slot, item, action) -> {
-                    int n = 1;
-                    if (action.isRightClicked()) {
-                        n = 8;
-                    }
-                    if (action.isShiftClicked()) {
-                        n = 64;
-                    }
-                    minusNumber(n);
-                    return false;
-                });
+                addItem(getAddSlot(), getAddIcon(), (p, i, itemStack, clickAction) -> false);
+                addItem(getMinusSlot(), getMinusIcon(), (p, i, itemStack, clickAction) -> false);
+                addItem(getShowSlot(), getShowIcon(), (p, i, itemStack, clickAction) -> false);
             }
 
             @Override
             public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block b) {
                 final BlockFace direction;
                 final String string = StorageCacheUtils.getData(blockMenu.getLocation(), DIRECTION);
+                final String rawLimit = StorageCacheUtils.getData(blockMenu.getLocation(), LIMIT_KEY);
 
                 if (string == null) {
                     // This likely means a block was placed before I made it directional
@@ -239,6 +226,14 @@ public abstract class NetworkNumberable extends NetworkDirectional {
                     direction = BlockFace.valueOf(string);
                 }
                 SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
+                
+                if (rawLimit == null) {
+                    limit = 64;
+                    StorageCacheUtils.setData(blockMenu.getLocation(), LIMIT_KEY, String.valueOf(limit));
+                } else {
+                    limit = Integer.valueOf(rawLimit);
+                }
+                NETWORK_NUMBERABLE_MAP.put(blockMenu.getLocation().clone(), limit);
 
                 blockMenu.addMenuClickHandler(getNorthSlot(), (player, i, itemStack, clickAction) ->
                         directionClick(player, clickAction, blockMenu, BlockFace.NORTH));
@@ -253,6 +248,29 @@ public abstract class NetworkNumberable extends NetworkDirectional {
                 blockMenu.addMenuClickHandler(getDownSlot(), (player, i, itemStack, clickAction) ->
                         directionClick(player, clickAction, blockMenu, BlockFace.DOWN));
                 blockMenu.addMenuClickHandler(getShowSlot(), (player, i, itemStack, clickAction) -> false);
+
+                blockMenu.addMenuClickHandler(getAddSlot(), (p, slot, item, action) -> {
+                    int n = 1;
+                    if (action.isRightClicked()) {
+                        n = 8;
+                    }
+                    if (action.isShiftClicked()) {
+                        n = 64;
+                    }
+                    addNumber(blockMenu.getBlock(), n);
+                    return false;
+                });
+                blockMenu.addMenuClickHandler(getMinusSlot(), (p, slot, item, action) -> {
+                    int n = 1;
+                    if (action.isRightClicked()) {
+                        n = 8;
+                    }
+                    if (action.isShiftClicked()) {
+                        n = 64;
+                    }
+                    minusNumber(blockMenu.getBlock(), n);
+                    return false;
+                });
             }
 
             @Override
@@ -424,35 +442,36 @@ public abstract class NetworkNumberable extends NetworkDirectional {
         return ADD_ICON;
     }
 
-    public int getCurrentNumber() {
-        return this.currentNumber;
+    public int getCurrentNumber(Block block) {
+        return Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), LIMIT_KEY));
     }
 
-    public void setCurrentNumber(int number) {
-        this.currentNumber = number;
+    public void setCurrentNumber(Block block, int number) {
+        BlockStorage.addBlockInfo(block.getLocation(), LIMIT_KEY, Integer.toString(number));
     }
 
-    public void minusNumber(int number) {
-        if (this.currentNumber - number >= 1) {
-            setCurrentNumber(this.currentNumber - number);
+    public void minusNumber(Block block, int number) {
+        if (getCurrentNumber(block) - number >= 1) {
+            setCurrentNumber(block, getCurrentNumber(block) - number);
         } else {
-            setCurrentNumber(1);
-        }        updateShowIcon();
+            setCurrentNumber(block, 1);
+        }        
+        updateShowIcon(block);
     }
 
-    public void addNumber(int number) {
-        if (this.currentNumber + number <= this.limit) {
-            setCurrentNumber(this.currentNumber + number);
+    public void addNumber(Block block, int number) {
+        if (getCurrentNumber(block) + number <= this.limit) {
+            setCurrentNumber(block, getCurrentNumber(block) + number);
         } else {
-            setCurrentNumber(this.limit);
+            setCurrentNumber(block, this.limit);
         }
-        updateShowIcon();
+        updateShowIcon(block);
     }
 
-    public void updateShowIcon() {
-        ItemMeta itemMeta = SHOW_ICON.getItemMeta();
+    public void updateShowIcon(Block  block) {
+        ItemMeta itemMeta = this.showIconClone.getItemMeta();
         List<String> lore = itemMeta.getLore();
-        lore.set(0, Theme.NOTICE + "当前数量: " + this.currentNumber);
+        lore.set(0, Theme.NOTICE + "当前数量: " + getCurrentNumber(block));
         itemMeta.setLore(lore);
         SHOW_ICON.setItemMeta(itemMeta);
     }

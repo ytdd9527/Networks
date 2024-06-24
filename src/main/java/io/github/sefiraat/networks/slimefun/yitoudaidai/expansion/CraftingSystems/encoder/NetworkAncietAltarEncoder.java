@@ -6,8 +6,9 @@ import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.SmelteryBlueprint;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedSmelteryRecipes;
+
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.AncientAltarBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedAncientAltarRecipes;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -28,7 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class NetworkSmelteryEncoder extends NetworkObject {
+public class NetworkAncietAltarEncoder extends NetworkObject {
 
     private static final int[] BACKGROUND = new int[]{
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 17, 18, 20, 24, 25, 26, 27, 28, 29, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
@@ -56,7 +57,7 @@ public class NetworkSmelteryEncoder extends NetworkObject {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "点击此处进行编码"
     );
 
-    public NetworkSmelteryEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NetworkAncietAltarEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.ENCODER);
         for (int recipeSlot : RECIPE_SLOTS) {
             this.getSlotsToDrop().add(recipeSlot);
@@ -116,10 +117,15 @@ public class NetworkSmelteryEncoder extends NetworkObject {
 
         final ItemStack outputStack = blockMenu.getItemInSlot(OUTPUT_SLOT);
 
+        if (outputStack != null && outputStack.getType() != Material.AIR) {
+            player.sendMessage(Theme.WARNING + "需要清空输出栏");
+            return;
+        }
+
         ItemStack blueprint = blockMenu.getItemInSlot(BLANK_BLUEPRINT_SLOT);
 
-        if (!(SlimefunItem.getByItem(blueprint) instanceof SmelteryBlueprint)) {
-            player.sendMessage(Theme.WARNING + "你需要提供一个空白的冶炼炉蓝图");
+        if (!(SlimefunItem.getByItem(blueprint) instanceof AncientAltarBlueprint)) {
+            player.sendMessage(Theme.WARNING + "你需要提供一个空白的古代祭坛蓝图");
             return;
         }
 
@@ -138,8 +144,8 @@ public class NetworkSmelteryEncoder extends NetworkObject {
         ItemStack crafted = null;
 
 
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedSmelteryRecipes.getRecipes().entrySet()) {
-            if (SupportedSmelteryRecipes.testRecipe(inputs, entry.getKey())) {
+        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedAncientAltarRecipes.getRecipes().entrySet()) {
+            if (SupportedAncientAltarRecipes.testRecipe(inputs, entry.getKey())) {
                 crafted = new ItemStack(entry.getValue().clone());
                 break;
             }
@@ -151,6 +157,7 @@ public class NetworkSmelteryEncoder extends NetworkObject {
 
 
 
+        // 确保crafted不是AIR，避免NullPointerException
         if (crafted.getType() == Material.AIR) {
             player.sendMessage(Theme.WARNING + "编码的结果是空气，这不是一个有效的配方。");
             return;
@@ -158,7 +165,7 @@ public class NetworkSmelteryEncoder extends NetworkObject {
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
 
         blueprint.setAmount(blueprint.getAmount() - 1);
-        SmelteryBlueprint.setBlueprint(blueprintClone, inputs, crafted);
+        AncientAltarBlueprint.setBlueprint(blueprintClone, inputs, crafted);
         if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
             blueprint.setAmount(blueprint.getAmount() - 1);
             /** 实现编码不消耗物品

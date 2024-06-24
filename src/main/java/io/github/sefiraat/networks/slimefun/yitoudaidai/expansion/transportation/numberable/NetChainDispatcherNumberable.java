@@ -85,11 +85,13 @@ public class NetChainDispatcherNumberable extends NetworkNumberable implements R
 
     private static final String KEY_UUID = "display-uuid";
     private static final int TRANSPORT_LIMIT = 64;
-    private static final int MAX_DISTANCE_LIMIT = 100;
     private int maxDistance;
     private int pushItemTick;
     private int grabItemTick;
     private int requiredPower;
+
+    private int freeAmount;
+    private int totalAmount;
 
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
@@ -112,7 +114,7 @@ public class NetChainDispatcherNumberable extends NetworkNumberable implements R
         FileConfiguration config = Networks.getInstance().getConfig();
 
         // 读取配置值
-        this.maxDistance = Math.min(config.getInt("items." + configKey + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.maxDistance = config.getInt("items." + configKey + ".max-distance", defaultMaxDistance);
         this.pushItemTick = config.getInt("items." + configKey + ".pushitem-tick", defaultPushItemTick);
         this.grabItemTick = config.getInt("items." + configKey + ".grabitem-tick", defaultGrabItemTick);
         this.requiredPower = config.getInt("items." + configKey + ".required-power", defaultRequiredPower);
@@ -224,25 +226,25 @@ public class NetChainDispatcherNumberable extends NetworkNumberable implements R
                 // 获取目标机器可以插入物品的所有槽位
                 int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
 
-                int freeAmount = 0;
+                this.freeAmount = 0;
                 for (int slot : slots) {
                     final ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
                     if (itemStack == null || itemStack.getType() == Material.AIR) {
-                        freeAmount += clone.getMaxStackSize();
+                        this.freeAmount += clone.getMaxStackSize();
                     } else {
                         if (StackUtils.itemsMatch(itemStack, clone)) {
-                            freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
+                            this.freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
                         }
                     }
 
-                    if (freeAmount > TRANSPORT_LIMIT) {
-                        freeAmount = TRANSPORT_LIMIT;
+                    if (this.freeAmount > getCurrentNumber(blockMenu.getBlock())) {
+                        this.freeAmount = getCurrentNumber(blockMenu.getBlock());
                         break;
                     }
                 }
 
-                final ItemRequest itemRequest = new ItemRequest(clone, freeAmount);
+                final ItemRequest itemRequest = new ItemRequest(clone, this.freeAmount);
                 ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
                 if (retrieved != null) {
                     targetMenu.pushItem(retrieved, slots);
@@ -274,23 +276,23 @@ public class NetChainDispatcherNumberable extends NetworkNumberable implements R
                 break;
             }
             int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
-            int totalAmount = 0;
+            this.totalAmount = 0;
             for (int slot : slots) {
                 ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
                 if (itemStack != null) {
 
                     if (isItemTransferable(itemStack)) {
-                        if (totalAmount >= TRANSPORT_LIMIT) {
+                        if (this.totalAmount >= getCurrentNumber(blockMenu.getBlock())) {
                             break;
                         }
                         int before = itemStack.getAmount();
-                        if (totalAmount + before > TRANSPORT_LIMIT) {
+                        if (this.totalAmount + before > getCurrentNumber(blockMenu.getBlock())) {
                             ItemStack clone = itemStack.clone();
-                            clone.setAmount(TRANSPORT_LIMIT - totalAmount);
+                            clone.setAmount(getCurrentNumber(blockMenu.getBlock()) - this.totalAmount);
                             definition.getNode().getRoot().addItemStack(clone);
-                            if (clone.getAmount() < TRANSPORT_LIMIT - totalAmount) {
-                                itemStack.setAmount(before-(TRANSPORT_LIMIT-totalAmount-clone.getAmount()));
+                            if (clone.getAmount() < getCurrentNumber(blockMenu.getBlock()) - this.totalAmount) {
+                                itemStack.setAmount(before-(getCurrentNumber(blockMenu.getBlock())-this.totalAmount-clone.getAmount()));
                                 targetMenu.replaceExistingItem(slot, itemStack);
                             }
                         }
@@ -298,7 +300,7 @@ public class NetChainDispatcherNumberable extends NetworkNumberable implements R
                         definition.getNode().getRoot().addItemStack(itemStack);
 
                         if (itemStack.getAmount() < before) {
-                            totalAmount += before - itemStack.getAmount();
+                            this.totalAmount += before - itemStack.getAmount();
                             //抓取成功显示粒子
                             //showParticle(blockMenu.getBlock().getLocation(), direction);
                             targetMenu.replaceExistingItem(slot, itemStack);

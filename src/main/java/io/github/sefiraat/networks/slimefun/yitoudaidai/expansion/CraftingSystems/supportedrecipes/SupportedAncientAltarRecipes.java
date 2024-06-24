@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @UtilityClass
-public final class SupportedAncietAltarRecipes {
+public final class SupportedAncientAltarRecipes {
 
     private static final Map<ItemStack[], ItemStack> RECIPES = new HashMap<>();
 
@@ -33,7 +33,7 @@ public final class SupportedAncietAltarRecipes {
                         break;
                     }
                 }
-                SupportedAncietAltarRecipes.addRecipe(itemStacks, item.getRecipeOutput());
+                SupportedAncientAltarRecipes.addRecipe(itemStacks, item.getRecipeOutput());
             }
         }
     }

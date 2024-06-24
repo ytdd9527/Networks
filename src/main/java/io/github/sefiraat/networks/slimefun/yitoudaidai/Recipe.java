@@ -1,13 +1,13 @@
 package io.github.sefiraat.networks.slimefun.yitoudaidai;
 
 
+import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import static io.github.sefiraat.networks.slimefun.NetworkSlimefunItems.*;
-import static io.github.sefiraat.networks.slimefun.NetworkSlimefunItems.NETWORK_EXPORT;
 
 
 public class Recipe {
@@ -117,6 +117,12 @@ public class Recipe {
             OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
             NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem(),
     };
+    //高级阻断器
+    public static final ItemStack[] NEA_GREEDY_BLOCK = {
+            NETWORK_GREEDY_BLOCK.getItem(), OPTIC_CABLE.getItem(), NETWORK_GREEDY_BLOCK.getItem(),
+            OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
+            NETWORK_GREEDY_BLOCK.getItem(), OPTIC_CABLE.getItem(), NETWORK_GREEDY_BLOCK.getItem(),
+    };
     //电容5
     public static final ItemStack[] NETWORK_CAPACITOR_5 = {
             NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(), NETWORK_CAPACITOR_4.getItem(),
@@ -149,6 +155,11 @@ public class Recipe {
             CRAFTING_BLUEPRINT.getItem(), SlimefunItems.ANCIENT_ALTAR, CRAFTING_BLUEPRINT.getItem(),
             SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.ANCIENT_PEDESTAL, SlimefunItems.ANCIENT_PEDESTAL,
     };
+    public static final ItemStack[] EXPANSION_WORKBENCH_BLUEPRINT = {
+            NetworksSlimefunItemStacks.NETWORK_BRIDGE, SlimefunItems.ANCIENT_PEDESTAL, NetworksSlimefunItemStacks.NETWORK_BRIDGE,
+            CRAFTING_BLUEPRINT.getItem(), ExpansionSlimefunItemStacks.NE_EXPANSION_WORKBENCH, CRAFTING_BLUEPRINT.getItem(),
+            NetworksSlimefunItemStacks.NETWORK_BRIDGE, SlimefunItems.ANCIENT_PEDESTAL, NetworksSlimefunItemStacks.NETWORK_BRIDGE,
+    };
     //编码
     public static final ItemStack[] NE_MAGIC_WORKBENCH_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
@@ -173,6 +184,11 @@ public class Recipe {
     public static final ItemStack[] NE_ANCIENT_ALTAR_RECIPE_ENCODER = {
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
             ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT,
+            SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
+    };
+    public static final ItemStack[] NE_EXPANSION_WORKBENCH_RECIPE_ENCODER = {
+            SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.BASIC_CIRCUIT_BOARD,
+            ExpansionSlimefunItemStacks.EXPANSION_WORKBENCH_BLUEPRINT, ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH, ExpansionSlimefunItemStacks.EXPANSION_WORKBENCH_BLUEPRINT,
             SlimefunItems.BASIC_CIRCUIT_BOARD, SlimefunItems.CARGO_MOTOR, SlimefunItems.BASIC_CIRCUIT_BOARD,
     };
     //合成机
@@ -226,6 +242,16 @@ public class Recipe {
             ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR,
             OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
     };
+    public static final ItemStack[] NE_AUTO_EXPANSION_WORKBENCH = {
+            OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
+            ExpansionSlimefunItemStacks.EXPANSION_WORKBENCH_BLUEPRINT, SIMPLE_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.EXPANSION_WORKBENCH_BLUEPRINT,
+            OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER.getItem(), OPTIC_GLASS.getItem(),
+    };
+    public static final ItemStack[] NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING = {
+            OPTIC_GLASS.getItem(), SlimefunItems.CRAFTER_SMART_PORT, OPTIC_GLASS.getItem(),
+            ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH,
+            OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem(),
+    };
     //高级合成机
     public static final ItemStack[] NEA_AUTO_CRAFTER = {
             NETWORK_AUTO_CRAFTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_AUTO_CRAFTER.getItem(),
@@ -276,6 +302,26 @@ public class Recipe {
             ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
             ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
             ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ExpansionSlimefunItemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING,
+    };
+    public static final ItemStack[] NEA_AUTO_ANCIENT_ALTAR = {
+            ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR,
+            ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
+            ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ExpansionSlimefunItemStacks.NE_ANCIENT_ALTAR_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR,
+    };
+    public static final ItemStack[] NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING = {
+            ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING,
+            ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
+            ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING, ExpansionSlimefunItemStacks.NE_ANCIENT_ALTAR_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING,
+    };
+    public static final ItemStack[] NEA_AUTO_EXPANSION_WORKBENCH = {
+            ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH,
+            ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
+            ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH, ExpansionSlimefunItemStacks.NE_EXPANSION_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH,
+    };
+    public static final ItemStack[] NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING = {
+            ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING, ADVANCED_NANOBOTS.getItem(), ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING,
+            ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
+            ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING, ExpansionSlimefunItemStacks.NE_EXPANSION_WORKBENCH_RECIPE_ENCODER, ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING,
     };
     //网格
     public static final ItemStack[] NETWORK_GRID_NEW_STYLE = {

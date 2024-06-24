@@ -43,6 +43,7 @@ public class ExpansionSlimefunItemStacks {
     public static final SlimefunItemStack NEA_IMPORT;
     public static final SlimefunItemStack NEA_EXPORT;
     public static final SlimefunItemStack NEA_PURGER;
+    public static final SlimefunItemStack NEA_GREEDY_BLOCK;
 
     public static final SlimefunItemStack NETWORK_CAPACITOR_5;
 
@@ -53,12 +54,14 @@ public class ExpansionSlimefunItemStacks {
     public static final SlimefunItemStack SMELTERY_BLUEPRINT;
     public static final SlimefunItemStack QUANTUM_WORKBENCH_BLUEPRINT;
     public static final SlimefunItemStack ANCIENT_ALTAR_BLUEPRINT;
+    public static final SlimefunItemStack EXPANSION_WORKBENCH_BLUEPRINT;
     //编码器
     public static final SlimefunItemStack NE_MAGIC_WORKBENCH_RECIPE_ENCODER;
     public static final SlimefunItemStack NE_ARMOR_FORGE_RECIPE_ENCODER;
     public static final SlimefunItemStack NE_SMELTERY_RECIPE_ENCODER;
     public static final SlimefunItemStack NE_QUANTUM_WORKBENCH_RECIPE_ENCODER;
     public static final SlimefunItemStack NE_ANCIENT_ALTAR_RECIPE_ENCODER;
+    public static final SlimefunItemStack NE_EXPANSION_WORKBENCH_RECIPE_ENCODER;
     //合成机器
     public static final SlimefunItemStack NE_AUTO_MAGIC_WORKBENCH;
     public static final SlimefunItemStack NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING;
@@ -70,6 +73,21 @@ public class ExpansionSlimefunItemStacks {
     public static final SlimefunItemStack NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING;
     public static final SlimefunItemStack NE_AUTO_ANCIENT_ALTAR;
     public static final SlimefunItemStack NE_AUTO_ANCIENT_ALTAR_WITHHOLDING;
+    public static final SlimefunItemStack NE_AUTO_EXPANSION_WORKBENCH;
+    public static final SlimefunItemStack NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING;
+
+    public static final SlimefunItemStack NEA_AUTO_MAGIC_WORKBENCH;
+    public static final SlimefunItemStack NEA_AUTO_ARMOR_FORGE;
+    public static final SlimefunItemStack NEA_AUTO_SMELTERY;
+    public static final SlimefunItemStack NEA_AUTO_QUANTUM_WORKBENCH;
+    public static final SlimefunItemStack NEA_AUTO_ANCIENT_ALTAR;
+    public static final SlimefunItemStack NEA_AUTO_EXPANSION_WORKBENCH;
+    public static final SlimefunItemStack NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING;
+    public static final SlimefunItemStack NEA_AUTO_ARMOR_FORGE_WITHHOLDING;
+    public static final SlimefunItemStack NEA_AUTO_SMELTERY_WITHHOLDING;
+    public static final SlimefunItemStack NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING;
+    public static final SlimefunItemStack NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING;
+    public static final SlimefunItemStack NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING;
 
     //网格
     public static final SlimefunItemStack NETWORK_GRID_NEW_STYLE;
@@ -119,6 +137,7 @@ public class ExpansionSlimefunItemStacks {
         NEA_IMPORT = Theme.themedSlimefunItemStack("NEA_IMPORT",getPreEnchantedItemStack(Material.RED_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)),Theme.MACHINE,"网络高级入口");
         NEA_EXPORT = Theme.themedSlimefunItemStack("NEA_EXPORT",getPreEnchantedItemStack(Material.BLUE_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级出口");
         NEA_PURGER = Theme.themedSlimefunItemStack("NEA_PURGER",getPreEnchantedItemStack(Material.YELLOW_STAINED_GLASS, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级清除器");
+        NEA_GREEDY_BLOCK = Theme.themedSlimefunItemStack("NEA_GREEDY_BLOCK",getPreEnchantedItemStack(Material.SHROOMLIGHT, true, new Pair<>(Enchantment.ARROW_DAMAGE, 1)), Theme.MACHINE,"网络高级阻断器");
         NETWORK_CAPACITOR_5 = Theme.themedSlimefunItemStack("NTW_CAPACITOR_5", new ItemStack(Material.CYAN_GLAZED_TERRACOTTA), Theme.MACHINE, "网络电容 (5)", "网络电容可以接收来自", "能源网络的电力并存储起来", "以供其他网络设备使用", "", MessageFormat.format("{0}容量: {1}{2}", Theme.CLICK_INFO, Theme.PASSIVE, 1000000));
 
         NETWORK_ADVANCED_QUANTUM_STORAGE = Theme.themedSlimefunItemStack("NE_ADVANCED_QUANTUM_STORAGE",new ItemStack(Material.AMETHYST_BLOCK),Theme.MACHINE,"高级量子存储","可自定义的最大存储容量","请注意设置数量之后不能在设置小于之前设置的数量","否则清空到当前最大容量");
@@ -129,6 +148,7 @@ public class ExpansionSlimefunItemStacks {
         SMELTERY_BLUEPRINT = Theme.themedSlimefunItemStack("NE_SMELTERY_BLUEPRINT",new ItemStack(Material.LIME_DYE),Theme.TOOL,"冶炼炉蓝图","一张空白的蓝图","可以存储一个冶炼炉配方");
         QUANTUM_WORKBENCH_BLUEPRINT = Theme.themedSlimefunItemStack("NE_QUANTUM_WORKBENCH_BLUEPRINT",new ItemStack(Material.MAGENTA_DYE),Theme.TOOL,"量子工作台蓝图","一张空白的蓝图","可以存储一个量子工作台配方");
         ANCIENT_ALTAR_BLUEPRINT = Theme.themedSlimefunItemStack("NE_ANCIENT_ALTAR_BLUEPRINT",new ItemStack(Material.CYAN_DYE),Theme.TOOL,"古代祭坛蓝图","一张空白的蓝图","可以存储一个古代祭坛配方");
+        EXPANSION_WORKBENCH_BLUEPRINT = Theme.themedSlimefunItemStack("NE_EXPANSION_WORKBENCH_BLUEPRINT",new ItemStack(Material.GRAY_DYE),Theme.TOOL,"网络拓展工作台蓝图","一张空白的蓝图","可以存储一个网络拓展工作台配方");
 
         //编码器
         NE_MAGIC_WORKBENCH_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_MAGIC_WORKBENCH_RECIPE_ENCODER",new ItemStack(Material.OAK_HANGING_SIGN),Theme.MACHINE,"网络魔法工作台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
@@ -136,6 +156,7 @@ public class ExpansionSlimefunItemStacks {
         NE_SMELTERY_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_SMELTERY_RECIPE_ENCODER",new ItemStack(Material.BIRCH_HANGING_SIGN),Theme.MACHINE,"网络冶炼炉配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_QUANTUM_WORKBENCH_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_QUANTUM_WORKBENCH_RECIPE_ENCODER",new ItemStack(Material.JUNGLE_HANGING_SIGN),Theme.MACHINE,"网络量子工作台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
         NE_ANCIENT_ALTAR_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_ANCIENT_ALTAR_RECIPE_ENCODER",new ItemStack(Material.LODESTONE),Theme.MACHINE,"网络古代祭坛配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
+        NE_EXPANSION_WORKBENCH_RECIPE_ENCODER = Theme.themedSlimefunItemStack("NE_EXPANSION_WORKBENCH_RECIPE_ENCODER",new ItemStack(Material.ACACIA_HANGING_SIGN),Theme.MACHINE,"网络拓展工作台配方编码器","可以根据输入的物品来制作蓝图","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次编码", Theme.CLICK_INFO, Theme.PASSIVE, 20000));
 
         //自动合成
         NE_AUTO_MAGIC_WORKBENCH = Theme.themedSlimefunItemStack("NE_AUTO_MAGIC_WORKBENCH",new ItemStack(Material.BOOKSHELF),Theme.MACHINE,"网络自动魔法工作台","需要魔法工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
@@ -148,7 +169,23 @@ public class ExpansionSlimefunItemStacks {
         NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING = Theme.themedSlimefunItemStack("NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING",new ItemStack(Material.DRIED_KELP_BLOCK),Theme.MACHINE,"网络自动量子工作台 (预留版)","需要量子工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
         NE_AUTO_ANCIENT_ALTAR = Theme.themedSlimefunItemStack("NE_AUTO_ANCIENT_ALTAR",new ItemStack(Material.CRAFTING_TABLE),Theme.MACHINE,"网络自动古代祭坛","需要古代祭坛蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
         NE_AUTO_ANCIENT_ALTAR_WITHHOLDING = Theme.themedSlimefunItemStack("NE_AUTO_ANCIENT_ALTAR_WITHHOLDING",new ItemStack(Material.ENCHANTING_TABLE),Theme.MACHINE,"网络自动古代祭坛 (预留版)","需要古代祭坛蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+        NE_AUTO_EXPANSION_WORKBENCH = Theme.themedSlimefunItemStack("NE_AUTO_EXPANSION_WORKBENCH", new ItemStack(Material.FIRE_CORAL_BLOCK), Theme.MACHINE, "网络自动网络拓展工作台", "需要网络拓展工作台蓝图才能工作。", "当网络中没有蓝图的目标物品时，", "机器会自动从网络中选取材料进行合成", "(需要网络中有足够的原材料)", "", MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING = Theme.themedSlimefunItemStack("NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING",new ItemStack(Material.HORN_CORAL_BLOCK),Theme.MACHINE,"网络自动网络拓展工作台 (预留版)","需要网络拓展工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
 
+        NEA_AUTO_MAGIC_WORKBENCH = Theme.themedSlimefunItemStack("NEA_AUTO_MAGIC_WORKBENCH",new ItemStack(Material.BOOKSHELF),Theme.MACHINE,"高级网络自动魔法工作台","需要魔法工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING = Theme.themedSlimefunItemStack("NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING",new ItemStack(Material.CHISELED_BOOKSHELF),Theme.MACHINE,"高级网络自动魔法工作台 (预留版)","需要魔法工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+        NEA_AUTO_ARMOR_FORGE = Theme.themedSlimefunItemStack("NEA_AUTO_ARMOR_FORGE",new ItemStack(Material.SMITHING_TABLE),Theme.MACHINE,"高级网络自动盔甲锻造台","需要盔甲锻造台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NEA_AUTO_ARMOR_FORGE_WITHHOLDING = Theme.themedSlimefunItemStack("NEA_AUTO_ARMOR_FORGE_WITHHOLDING",new ItemStack(Material.CARTOGRAPHY_TABLE),Theme.MACHINE,"高级网络自动盔甲锻造台 (预留版)","需要盔甲锻造台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+        NEA_AUTO_SMELTERY = Theme.themedSlimefunItemStack("NEA_AUTO_SMELTERY",new ItemStack(Material.FURNACE),Theme.MACHINE,"高级网络自动冶炼炉","需要冶炼炉蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NEA_AUTO_SMELTERY_WITHHOLDING = Theme.themedSlimefunItemStack("NEA_AUTO_SMELTERY_WITHHOLDING",new ItemStack(Material.BLAST_FURNACE),Theme.MACHINE,"高级网络自动冶炼炉 (预留版)","需要冶炼炉蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+        NEA_AUTO_QUANTUM_WORKBENCH = Theme.themedSlimefunItemStack("NEA_AUTO_QUANTUM_WORKBENCH",new ItemStack(Material.HAY_BLOCK),Theme.MACHINE,"高级网络自动量子工作台","需要量子工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING = Theme.themedSlimefunItemStack("NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING",new ItemStack(Material.DRIED_KELP_BLOCK),Theme.MACHINE,"高级网络自动量子工作台 (预留版)","需要量子工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+        NEA_AUTO_ANCIENT_ALTAR = Theme.themedSlimefunItemStack("NEA_AUTO_ANCIENT_ALTAR",new ItemStack(Material.CRAFTING_TABLE),Theme.MACHINE,"高级网络自动古代祭坛","需要古代祭坛蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING = Theme.themedSlimefunItemStack("NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING",new ItemStack(Material.ENCHANTING_TABLE),Theme.MACHINE,"高级网络自动古代祭坛 (预留版)","需要古代祭坛蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+        NEA_AUTO_EXPANSION_WORKBENCH = Theme.themedSlimefunItemStack("NEA_AUTO_EXPANSION_WORKBENCH", new ItemStack(Material.FIRE_CORAL_BLOCK), Theme.MACHINE, "高级网络自动网络拓展工作台", "需要网络拓展工作台蓝图才能工作。", "当网络中没有蓝图的目标物品时，", "机器会自动从网络中选取材料进行合成", "(需要网络中有足够的原材料)", "", MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 640));
+        NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING = Theme.themedSlimefunItemStack("NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING",new ItemStack(Material.HORN_CORAL_BLOCK),Theme.MACHINE,"高级网络自动网络拓展工作台 (预留版)","需要网络拓展工作台蓝图才能工作。","当网络中没有蓝图的目标物品时，","机器会自动从网络中选取材料进行合成","(需要网络中有足够的原材料)","","预留版的自动合成机会不断进行合成","直到输出栏拥有1组物品","这一组物品可以在网络中访问","也可以通过货运系统取出","",MessageFormat.format("{0}网络电力消耗: {1}{2} 每次合成", Theme.CLICK_INFO, Theme.PASSIVE, 1280));
+
+        //网格
         NETWORK_GRID_NEW_STYLE = Theme.themedSlimefunItemStack("NTW_GRID_NEW_STYLE",new ItemStack(Material.NOTE_BLOCK),Theme.MACHINE,"高级网格","高级网格允许你查看网络中所有的物品","你也可以直接放入或取出物品");
         NETWORK_CRAFTING_GRID_NEW_STYLE = Theme.themedSlimefunItemStack("NTW_CRAFTING_GRID_NEW_STYLE",new ItemStack(Material.JUKEBOX),Theme.MACHINE,"高级网格(带合成)","这种网格与普通网格类似","但会显示更少的物品","不过你可以直接使用网络中的物品","进行合成");
         NETWORK_ENCODING_GRID_NEW_STYLE = Theme.themedSlimefunItemStack("NTW_ENCODING_GRID_NEW_STYLE",new ItemStack(Material.TARGET),Theme.MACHINE,"高级网格(带编码)","这种网格与高级网格类似", "但会显示更少的物品","不过你可以直接使用网络中的物品","进行编码");

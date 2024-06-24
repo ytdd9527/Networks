@@ -89,6 +89,7 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             final int coordinateTransmitters = root.getCoordinateTransmitters().size();
             final int coordinateReceivers = root.getCoordinateReceivers().size();
             final int chainDispatchers = root.getChainDispatchers().size();
+            final int advancedNetworkGreedyBlock = root.getAdvancedGreedyBlocks().size();
 
             long totalItems = allNetworkItems.values().stream().mapToLong(integer -> integer).sum();
 
@@ -132,6 +133,7 @@ public class NetworkProbe extends SlimefunItem implements CanCooldown {
             player.sendMessage(formatter("网链调度器", chainDispatchers));
             player.sendMessage(formatter("网络高级入口", advancedImporters));
             player.sendMessage(formatter("网络高级出口", advancedExporters));
+            player.sendMessage(formatter("网络高级阻断器", advancedNetworkGreedyBlock));
             player.sendMessage(formatter("网络坐标传输器", coordinateTransmitters));
             player.sendMessage(formatter("网络坐标接收器", coordinateReceivers));
             player.sendMessage("------------------------------");

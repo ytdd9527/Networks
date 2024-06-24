@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter;
+package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import io.github.sefiraat.networks.NetworkStorage;
@@ -9,8 +9,8 @@ import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunItems;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.AncientAltarBlueprint;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedAncietAltarRecipes;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.ExpansionWorkbenchBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedExpansionWorkbenchRecipes;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -41,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class NetworkAutoAncientAltarCrafter extends NetworkObject {
+public class AdvancedNetworkAutoExpansionWorkbenchCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
         3, 4, 5, 12, 13, 14, 21, 22, 23
@@ -65,7 +65,7 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
 
     private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
-    public NetworkAutoAncientAltarCrafter(
+    public AdvancedNetworkAutoExpansionWorkbenchCrafter(
             ItemGroup itemGroup,
             SlimefunItemStack item,
             RecipeType recipeType,
@@ -130,7 +130,7 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
         if (networkCharge > this.chargePerCraft) {
             final SlimefunItem item = SlimefunItem.getByItem(blueprint);
 
-            if (!(item instanceof AncientAltarBlueprint)) {
+            if (!(item instanceof ExpansionWorkbenchBlueprint)) {
                 return;
             }
 
@@ -158,22 +158,24 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
             }
 
             final ItemStack output = blockMenu.getItemInSlot(OUTPUT_SLOT);
+            int blueprintAmount = blueprint.getAmount();
 
             if (output != null
                     && output.getType() != Material.AIR
-                    && (output.getAmount() + instance.getItemStack().getAmount() > output.getMaxStackSize() || !StackUtils.itemsMatch(instance, output, true))) {
+                    && (output.getAmount() + instance.getItemStack().getAmount()*blueprintAmount > output.getMaxStackSize() || !StackUtils.itemsMatch(instance, output, true))) {
                 return;
             }
 
-            if (tryCraft(blockMenu, instance, root)) {
+            if (tryCraft(blockMenu, instance, root, blueprintAmount)) {
                 root.removeRootPower(this.chargePerCraft);
             }
         }
     }
 
-    private boolean tryCraft(@Nonnull BlockMenu blockMenu, @Nonnull BlueprintInstance instance, @Nonnull NetworkRoot root) {
+    private boolean tryCraft(@Nonnull BlockMenu blockMenu, @Nonnull BlueprintInstance instance, @Nonnull NetworkRoot root, @Nonnull int blueprintAmount) {
         // Get the recipe input
         final ItemStack[] inputs = new ItemStack[9];
+        final ItemStack[] actualFetches = new ItemStack[9];
 
         /* Make sure the network has the required items
          * Needs to be revisited as matching is happening stacks 2x when I should
@@ -181,9 +183,9 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
          */
         HashMap<ItemStack, Integer> requiredItems = new HashMap<>();
         for (int i = 0; i < 9; i++) {
-            final ItemStack requested = instance.getRecipeItems()[i];
+            final ItemStack requested = instance.getRecipeItems()[i].clone();
             if (requested != null) {
-                requiredItems.merge(requested, 1, Integer::sum);
+                requiredItems.merge(requested, blueprintAmount, Integer::sum);
             }
         }
 
@@ -195,10 +197,13 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
 
         // Then fetch the actual items
         for (int i = 0; i < 9; i++) {
-            final ItemStack requested = instance.getRecipeItems()[i];
+            final ItemStack requested = instance.getRecipeItems()[i].clone();
             if (requested != null) {
-                final ItemStack fetched = root.getItemStack(new ItemRequest(instance.getRecipeItems()[i], 1));
-                inputs[i] = fetched;
+                final ItemStack fetched = root.getItemStack(new ItemRequest(requested, requested.getAmount()*blueprintAmount));
+                final ItemStack fetchedClone = fetched.clone();
+                fetchedClone.setAmount(requested.getAmount());
+                actualFetches[i] = fetched;
+                inputs[i] = fetchedClone;
             } else {
                 inputs[i] = null;
             }
@@ -207,28 +212,16 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
         ItemStack crafted = null;
 
         // Go through each slimefun recipe, test and set the ItemStack if found
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedAncietAltarRecipes.getRecipes().entrySet()) {
-            if (SupportedAncietAltarRecipes.testRecipe(inputs, entry.getKey())) {
+        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedExpansionWorkbenchRecipes.getRecipes().entrySet()) {
+            if (SupportedExpansionWorkbenchRecipes.testRecipe(inputs, entry.getKey())) {
                 crafted = entry.getValue().clone();
                 break;
             }
         }
 
-        // If no slimefun recipe found, try a vanilla one
-        if (crafted == null) {
-            instance.generateVanillaRecipe(blockMenu.getLocation().getWorld());
-            if (instance.getRecipe() == null) {
-                returnItems(root, inputs);
-                return false;
-            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
-                setCache(blockMenu, instance);
-                crafted = instance.getRecipe().getResult();
-            }
-        }
-
         // If no item crafted OR result doesn't fit, escape
         if (crafted == null || crafted.getType() == Material.AIR) {
-            returnItems(root, inputs);
+            returnItems(root, actualFetches);
             return false;
         }
 
@@ -237,6 +230,8 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
         if (root.isDisplayParticles()) {
             location.getWorld().spawnParticle(Particle.WAX_OFF, location, 0, 0, 4, 0);
         }
+
+        crafted.setAmount(crafted.getAmount()*blueprintAmount);
         blockMenu.pushItem(crafted, OUTPUT_SLOT);
         return true;
     }
@@ -275,13 +270,13 @@ public class NetworkAutoAncientAltarCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return ExpansionSlimefunItems.NE_AUTO_ANCIENT_ALTAR.canUse(player, false)
+                return ExpansionSlimefunItems.NEA_AUTO_EXPANSION_WORKBENCH.canUse(player, false)
                     && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                if (NetworkAutoAncientAltarCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
+                if (AdvancedNetworkAutoExpansionWorkbenchCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
                     return new int[]{OUTPUT_SLOT};
                 }
                 return new int[0];

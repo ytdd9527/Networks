@@ -46,7 +46,6 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
-    private static final int MAX_DISTANCE_LIMIT = 100;
     private static final int TRANSPORT_LIMIT = 576;
 
     private static final int[] BACKGROUND_SLOTS = {
@@ -58,6 +57,8 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
 
     private int grabItemTick;
     private int maxDistance;
+
+    private int totalAmount;
 
     public ChainGrabberNumberable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER, TRANSPORT_LIMIT);
@@ -71,7 +72,7 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
         int defaultGrabItemTick = 10;
         boolean defaultUseSpecialModel = false;
 
-        this.maxDistance = Math.min(config.getInt("items." + configKey + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.maxDistance = config.getInt("items." + configKey + ".max-distance", defaultMaxDistance);
         this.grabItemTick = config.getInt("items." + configKey + ".grabitem-tick", defaultGrabItemTick);
         this.useSpecialModel = config.getBoolean("items." + configKey + ".use-special-model.enable", defaultUseSpecialModel);
 
@@ -153,23 +154,23 @@ public class ChainGrabberNumberable extends NetworkNumberable implements RecipeD
                 break;
             }
             int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.WITHDRAW, null);
-            int totalAmount = 0;
+            this.totalAmount = 0;
             for (int slot : slots) {
                 ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
                 if (itemStack != null) {
 
                     if (isItemTransferable(itemStack)) {
-                        if (totalAmount >= TRANSPORT_LIMIT) {
+                        if (this.totalAmount >= getCurrentNumber(blockMenu.getBlock())) {
                             break;
                         }
                         int before = itemStack.getAmount();
-                        if (totalAmount + before > TRANSPORT_LIMIT) {
+                        if (this.totalAmount + before > getCurrentNumber(blockMenu.getBlock())) {
                             ItemStack clone = itemStack.clone();
-                            clone.setAmount(TRANSPORT_LIMIT - totalAmount);
+                            clone.setAmount(getCurrentNumber(blockMenu.getBlock()) - this.totalAmount);
                             definition.getNode().getRoot().addItemStack(clone);
-                            if (clone.getAmount() < TRANSPORT_LIMIT - totalAmount) {
-                                itemStack.setAmount(before-(TRANSPORT_LIMIT-totalAmount-clone.getAmount()));
+                            if (clone.getAmount() < getCurrentNumber(blockMenu.getBlock()) - this.totalAmount) {
+                                itemStack.setAmount(before-(getCurrentNumber(blockMenu.getBlock())-this.totalAmount-clone.getAmount()));
                                 targetMenu.replaceExistingItem(slot, itemStack);
                             }
                         }

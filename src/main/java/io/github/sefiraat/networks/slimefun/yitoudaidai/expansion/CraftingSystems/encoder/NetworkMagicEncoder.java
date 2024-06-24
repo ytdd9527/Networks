@@ -166,15 +166,20 @@ public class NetworkMagicEncoder extends NetworkObject {
 
         blueprint.setAmount(blueprint.getAmount() - 1);
         MagicWorkbenchBlueprint.setBlueprint(blueprintClone, inputs, crafted);
-
-        for (int recipeSlot : RECIPE_SLOTS) {
-            ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
-            if (slotItem != null) {
-                slotItem.setAmount(slotItem.getAmount() - 1);
+        if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
+            blueprint.setAmount(blueprint.getAmount() - 1);
+            /** 实现编码不消耗物品
+            for (int recipeSlot : RECIPE_SLOTS) {
+                ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
+                if (slotItem != null) {
+                    slotItem.setAmount(slotItem.getAmount() - 1);
+                }
             }
+            */
+            blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
+        } else {
+            player.sendMessage(Theme.WARNING + "需要清空输出烂");
         }
-
-        blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         root.removeRootPower(CHARGE_COST);
     }
 }

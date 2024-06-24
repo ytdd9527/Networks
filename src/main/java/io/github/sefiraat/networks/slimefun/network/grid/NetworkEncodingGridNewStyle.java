@@ -312,12 +312,14 @@ public class NetworkEncodingGridNewStyle extends AbstractGridNewStyle {
 
         if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
             blueprint.setAmount(blueprint.getAmount() - 1);
+            /** 实现编码不消耗物品
             for (int recipeSlot : RECIPE_SLOTS) {
                 ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
                 if (slotItem != null) {
                     slotItem.setAmount(slotItem.getAmount() - 1);
                 }
             }
+            */
             blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         } else {
             player.sendMessage(Theme.WARNING + "需要清空输出烂");

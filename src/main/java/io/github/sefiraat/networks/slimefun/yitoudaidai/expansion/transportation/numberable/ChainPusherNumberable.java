@@ -54,7 +54,6 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
-    private static final int MAX_DISTANCE_LIMIT = 100;
     private static final int TRANSPORT_LIMIT = 64;
     private static final int MINUS_SLOT = 36;
     private static final int SHOW_SLOT = 37;
@@ -62,6 +61,8 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
 
     private int pushItemTick;
     private int maxDistance;
+
+    private int freeAmount;
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 39, 40, 41, 42, 43, 44
@@ -95,7 +96,7 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
 
         FileConfiguration config = Networks.getInstance().getConfig();
 
-        this.maxDistance = Math.min(config.getInt("items." + configKey + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.maxDistance = config.getInt("items." + configKey + ".max-distance", defaultMaxDistance);
         this.pushItemTick = config.getInt("items." + configKey + ".pushitem-tick", defaultPushItemTick);
         this.useSpecialModel = config.getBoolean("items." + configKey + ".use-special-model.enable", defaultUseSpecialModel);
 
@@ -150,6 +151,7 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
         // 将更新后的Tick计数器值存储到BlockStorage中
         BlockStorage.addBlockInfo(block.getLocation(), TICK_COUNTER_KEY, Integer.toString(tickCounter));
     }
+
     private void tryPushItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
@@ -184,25 +186,25 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
                 // 获取目标机器可以插入物品的所有槽位
                 int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
 
-                int freeAmount = 0;
+                this.freeAmount = 0;
                 for (int slot : slots) {
                     final ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
                     if (itemStack == null || itemStack.getType() == Material.AIR) {
-                        freeAmount += clone.getMaxStackSize();
+                        this.freeAmount += clone.getMaxStackSize();
                     } else {
                         if (StackUtils.itemsMatch(itemStack, clone)) {
-                            freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
+                            this.freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
                         }
                     }
 
-                    if (freeAmount > TRANSPORT_LIMIT) {
-                        freeAmount = TRANSPORT_LIMIT;
+                    if (this.freeAmount > getCurrentNumber(blockMenu.getBlock())) {
+                        this.freeAmount = getCurrentNumber(blockMenu.getBlock());
                         break;
                     }
                 }
 
-                final ItemRequest itemRequest = new ItemRequest(clone, freeAmount);
+                final ItemRequest itemRequest = new ItemRequest(clone, this.freeAmount);
                 ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
                 if (retrieved != null) {
                     targetMenu.pushItem(retrieved, slots);
@@ -281,59 +283,6 @@ public class ChainPusherNumberable extends NetworkNumberable implements RecipeDi
                 e.getBlock().setType(Material.AIR);
             }
         });
-    }
-
-    @Override
-    public void postRegister() {
-        new BlockMenuPreset(this.getId(), this.getItemName()) {
-
-            @Override
-            public void init() {
-                addMenuClickHandler(getShowSlot(), (p, slot, item, action) -> false);
-                drawBackground(getBackgroundSlots());
-                for (int slot: getOtherBackgroundSlots()) {
-                    addItem(slot, getOtherBackgroundStack());
-                }
-                addItem(getMinusSlot(), getMinusIcon());
-                addItem(getAddSlot(), getAddIcon());
-            }
-
-            @Override
-            public void newInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-                menu.addMenuClickHandler(getAddSlot(), (p, slot, item, action) -> {
-                    int n = 1;
-                    if (action.isRightClicked()) {
-                        n = 8;
-                    }
-                    if (action.isShiftClicked()) {
-                        n = 64;
-                    }
-                    addNumber(n);
-                    return false;
-                });
-                menu.addMenuClickHandler(getMinusSlot(), (p, slot, item, action) -> {
-                    int n = 1;
-                    if (action.isRightClicked()) {
-                        n = 8;
-                    }
-                    if (action.isShiftClicked()) {
-                        n = 64;
-                    }
-                    minusNumber(n);
-                    return false;
-                });
-            }
-
-            @Override
-            public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
-            }
-
-            @Override
-            public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                return new int[0];
-            }
-        };
     }
 
     private void setupDisplay(@Nonnull Location location) {

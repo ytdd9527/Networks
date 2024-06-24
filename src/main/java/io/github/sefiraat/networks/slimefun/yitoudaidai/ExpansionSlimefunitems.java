@@ -14,22 +14,41 @@ import io.github.sefiraat.networks.slimefun.network.NetworkQuantumWorkbench;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGridNewStyle;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkEncodingGridNewStyle;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGridNewStyle;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoArmorForgeCrafter;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoMagicCrafter;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoQuantumWorkbenchCrafter;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoSmelteryCrafter;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.NetworkAutoAncientAltarCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced.AdvancedNetworkAutoAncientAltarCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced.AdvancedNetworkAutoArmorForgeCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced.AdvancedNetworkAutoExpansionWorkbenchCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced.AdvancedNetworkAutoMagicCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced.AdvancedNetworkAutoQuantumWorkbenchCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.advanced.AdvancedNetworkAutoSmelteryCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic.NetworkAutoArmorForgeCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic.NetworkAutoMagicCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic.NetworkAutoQuantumWorkbenchCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic.NetworkAutoSmelteryCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic.NetworkAutoAncientAltarCrafter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic.NetworkAutoExpansionWorkbenchCrafter;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.ArmorForgeBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.ExpansionWorkbenchBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.MagicWorkbenchBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.QuantumWorkbenchBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.SmelteryBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.AncientAltarBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.ExpansionWorkbenchBlueprint;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkArmorForgeEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkExpansionWorkbenchEncoder;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkMagicEncoder;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkQuantumWorkbenchEncoder;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkSmelteryEncoder;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkAncietAltaryEncoder;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.*;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkAncietAltarEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.encoder.NetworkExpansionWorkbenchEncoder;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedExport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedImport;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedNetworkGreedyBlock;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedPurger;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateReceiver;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.CoordinateTransmitter;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainGrabber;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.ChainPusher;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.NetChainDispatcher;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable.ChainGrabberNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable.ChainPusherNumberable;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.numberable.NetChainDispatcherNumberable;
@@ -55,17 +74,18 @@ public class ExpansionSlimefunItems {
     public static final ChainGrabber NE_CHAIN_GRABBER_PLUS;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER;
     public static final NetChainDispatcher NE_CHAIN_DISPATCHER_PLUS;
-    // 未完成，暂不开放
-    //public static final ChainPusherNumberable NE_CHAIN_PUSHER_NUMBERABLE;
-    //public static final ChainPusherNumberable NE_CHAIN_PUSHER_PLUS_NUMBERABLE;
-    //public static final ChainGrabberNumberable NE_CHAIN_GRABBER_NUMBERABLE;
-    //public static final ChainGrabberNumberable NE_CHAIN_GRABBER_PLUS_NUMBERABLE;
-    //public static final NetChainDispatcherNumberable NE_CHAIN_DISPATCHER_NUMBERABLE;
-    //public static final NetChainDispatcherNumberable NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE;
+
+    public static final ChainPusherNumberable NE_CHAIN_PUSHER_NUMBERABLE;
+    public static final ChainPusherNumberable NE_CHAIN_PUSHER_PLUS_NUMBERABLE;
+    public static final ChainGrabberNumberable NE_CHAIN_GRABBER_NUMBERABLE;
+    public static final ChainGrabberNumberable NE_CHAIN_GRABBER_PLUS_NUMBERABLE;
+    public static final NetChainDispatcherNumberable NE_CHAIN_DISPATCHER_NUMBERABLE;
+    public static final NetChainDispatcherNumberable NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE;
 
     public static final AdvancedImport NEA_IMPORT;
     public static final AdvancedExport NEA_EXPORT;
     public static final AdvancedPurger NEA_PURGER;
+    public static final AdvancedNetworkGreedyBlock NEA_GREEDY_BLOCK;
     public static final NetworkPowerNode NETWORK_CAPACITOR_5;
     //网格
     public static final NetworkGridNewStyle NETWORK_GRID_NEW_STYLE;
@@ -77,12 +97,14 @@ public class ExpansionSlimefunItems {
     public static final SmelteryBlueprint SMELTERY_BLUEPRINT;
     public static final QuantumWorkbenchBlueprint QUANTUM_WORKBENCH_BLUEPRINT;
     public static final AncientAltarBlueprint ANCIENT_ALTAR_BLUEPRINT;
+    public static final ExpansionWorkbenchBlueprint EXPANSION_WORKBENCH_BLUEPRINT;
     //编码器
     public static final NetworkMagicEncoder NE_MAGIC_WORKBENCH_RECIPE_ENCODER;
     public static final NetworkArmorForgeEncoder NE_ARMOR_FORGE_RECIPE_ENCODER;
     public static final NetworkSmelteryEncoder NE_SMELTERY_RECIPE_ENCODER;
     public static final NetworkQuantumWorkbenchEncoder NE_QUANTUM_WORKBENCH_RECIPE_ENCODER;
-    public static final NetworkAncietAltaryEncoder NE_ANCIENT_ALTAR_RECIPE_ENCODER;
+    public static final NetworkAncietAltarEncoder NE_ANCIENT_ALTAR_RECIPE_ENCODER;
+    public static final NetworkExpansionWorkbenchEncoder NE_EXPANSION_WORKBENCH_RECIPE_ENCODER;
     //合成机器
     public static final NetworkAutoMagicCrafter NE_AUTO_MAGIC_WORKBENCH;
     public static final NetworkAutoMagicCrafter NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING;
@@ -94,6 +116,24 @@ public class ExpansionSlimefunItems {
     public static final NetworkAutoQuantumWorkbenchCrafter NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING;
     public static final NetworkAutoAncientAltarCrafter NE_AUTO_ANCIENT_ALTAR;
     public static final NetworkAutoAncientAltarCrafter NE_AUTO_ANCIENT_ALTAR_WITHHOLDING;
+    public static final NetworkAutoExpansionWorkbenchCrafter NE_AUTO_EXPANSION_WORKBENCH;
+    public static final NetworkAutoExpansionWorkbenchCrafter NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING;
+
+    public static final AdvancedNetworkAutoMagicCrafter NEA_AUTO_MAGIC_WORKBENCH;
+    public static final AdvancedNetworkAutoMagicCrafter NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING;
+    public static final AdvancedNetworkAutoArmorForgeCrafter NEA_AUTO_ARMOR_FORGE;
+    public static final AdvancedNetworkAutoArmorForgeCrafter NEA_AUTO_ARMOR_FORGE_WITHHOLDING;
+    public static final AdvancedNetworkAutoSmelteryCrafter NEA_AUTO_SMELTERY;
+    public static final AdvancedNetworkAutoSmelteryCrafter NEA_AUTO_SMELTERY_WITHHOLDING;
+    public static final AdvancedNetworkAutoQuantumWorkbenchCrafter NEA_AUTO_QUANTUM_WORKBENCH;
+    public static final AdvancedNetworkAutoQuantumWorkbenchCrafter NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING;
+    public static final AdvancedNetworkAutoAncientAltarCrafter NEA_AUTO_ANCIENT_ALTAR;
+    public static final AdvancedNetworkAutoAncientAltarCrafter NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING;
+    public static final AdvancedNetworkAutoExpansionWorkbenchCrafter NEA_AUTO_EXPANSION_WORKBENCH;
+    public static final AdvancedNetworkAutoExpansionWorkbenchCrafter NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING;
+
+
+
     //网络拓展量子存储
     public static final NetworkQuantumStorage NETWORK_ADVANCED_QUANTUM_STORAGE;
 
@@ -133,18 +173,17 @@ public class ExpansionSlimefunItems {
         NE_CHAIN_DISPATCHER = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER,"NE_CHAIN_DISPATCHER");
         NE_CHAIN_DISPATCHER_PLUS = new NetChainDispatcher(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_PLUS,"NE_CHAIN_DISPATCHER_PLUS");
 
-        // 未完成，暂不开放
-        //NE_CHAIN_PUSHER_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_NUMBERABLE,"NE_CHAIN_PUSHER");
-        //NE_CHAIN_PUSHER_PLUS_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_PLUS_NUMBERABLE,"NE_CHAIN_PUSHER_PLUS");
-        //NE_CHAIN_GRABBER_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_NUMBERABLE,"NE_CHAIN_GRABBER");
-        //NE_CHAIN_GRABBER_PLUS_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_PLUS_NUMBERABLE,"NE_CHAIN_GRABBER_PLUS");
-        //NE_CHAIN_DISPATCHER_NUMBERABLE = new NetChainDispatcherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_NUMBERABLE,"NE_CHAIN_DISPATCHER");
-        //NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = new NetChainDispatcherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE,"NE_CHAIN_DISPATCHER_PLUS");
+        NE_CHAIN_PUSHER_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_NUMBERABLE,"NE_CHAIN_PUSHER");
+        NE_CHAIN_PUSHER_PLUS_NUMBERABLE = new ChainPusherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_PUSHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_PUSHER_PLUS_NUMBERABLE,"NE_CHAIN_PUSHER_PLUS");
+        NE_CHAIN_GRABBER_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_NUMBERABLE,"NE_CHAIN_GRABBER");
+        NE_CHAIN_GRABBER_PLUS_NUMBERABLE = new ChainGrabberNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_GRABBER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_GRABBER_PLUS_NUMBERABLE,"NE_CHAIN_GRABBER_PLUS");
+        NE_CHAIN_DISPATCHER_NUMBERABLE = new NetChainDispatcherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_NUMBERABLE,"NE_CHAIN_DISPATCHER");
+        NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = new NetChainDispatcherNumberable(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE, ExpansionWorkbench.TYPE, Recipe.NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE,"NE_CHAIN_DISPATCHER_PLUS");
 
         NEA_IMPORT = new AdvancedImport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NEA_IMPORT, ExpansionWorkbench.TYPE, Recipe.NEA_IMPORT);
         NEA_EXPORT = new AdvancedExport(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NEA_EXPORT, ExpansionWorkbench.TYPE, Recipe.NEA_EXPORT);
         NEA_PURGER = new AdvancedPurger(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NEA_PURGER, ExpansionWorkbench.TYPE, Recipe.NEA_PURGER);
-
+        NEA_GREEDY_BLOCK = new AdvancedNetworkGreedyBlock(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NEA_GREEDY_BLOCK, ExpansionWorkbench.TYPE, Recipe.NEA_GREEDY_BLOCK);
         NETWORK_CAPACITOR_5 = new NetworkPowerNode(NetworksItemGroups.NETWORK_TRANSPORTATION, ExpansionSlimefunItemStacks.NETWORK_CAPACITOR_5, RecipeType.ENHANCED_CRAFTING_TABLE,Recipe.NETWORK_CAPACITOR_5, 100000000);
 
         NETWORK_ADVANCED_QUANTUM_STORAGE = new NetworkQuantumStorage(NetworksItemGroups.NETWORK_TRANSPORTATION,ExpansionSlimefunItemStacks.NETWORK_ADVANCED_QUANTUM_STORAGE,NetworkQuantumWorkbench.TYPE,Recipe.NETWORK_ADVANCED_QUANTUM_STORAGE,NetworkQuantumStorage.getSizes()[10]);
@@ -157,13 +196,15 @@ public class ExpansionSlimefunItems {
         SMELTERY_BLUEPRINT = new SmelteryBlueprint(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.SMELTERY_BLUEPRINT, ExpansionWorkbench.TYPE, Recipe.SMELTERY_BLUEPRINT);
         QUANTUM_WORKBENCH_BLUEPRINT = new QuantumWorkbenchBlueprint(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.QUANTUM_WORKBENCH_BLUEPRINT, ExpansionWorkbench.TYPE, Recipe.QUANTUM_WORKBENCH_BLUEPRINT);
         ANCIENT_ALTAR_BLUEPRINT = new AncientAltarBlueprint(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.ANCIENT_ALTAR_BLUEPRINT, ExpansionWorkbench.TYPE, Recipe.ANCIENT_ALTAR_BLUEPRINT);
+        EXPANSION_WORKBENCH_BLUEPRINT = new ExpansionWorkbenchBlueprint(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.EXPANSION_WORKBENCH_BLUEPRINT, ExpansionWorkbench.TYPE, Recipe.EXPANSION_WORKBENCH_BLUEPRINT);
 
         //编码
         NE_MAGIC_WORKBENCH_RECIPE_ENCODER = new NetworkMagicEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_MAGIC_WORKBENCH_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_MAGIC_WORKBENCH_RECIPE_ENCODER);
         NE_ARMOR_FORGE_RECIPE_ENCODER = new NetworkArmorForgeEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_ARMOR_FORGE_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_ARMOR_FORGE_RECIPE_ENCODER);
         NE_SMELTERY_RECIPE_ENCODER = new NetworkSmelteryEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_SMELTERY_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_SMELTERY_RECIPE_ENCODER);
         NE_QUANTUM_WORKBENCH_RECIPE_ENCODER = new NetworkQuantumWorkbenchEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_QUANTUM_WORKBENCH_RECIPE_ENCODER);
-        NE_ANCIENT_ALTAR_RECIPE_ENCODER = new NetworkAncietAltaryEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_ANCIENT_ALTAR_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_ANCIENT_ALTAR_RECIPE_ENCODER);
+        NE_ANCIENT_ALTAR_RECIPE_ENCODER = new NetworkAncietAltarEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_ANCIENT_ALTAR_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_ANCIENT_ALTAR_RECIPE_ENCODER);
+        NE_EXPANSION_WORKBENCH_RECIPE_ENCODER = new NetworkExpansionWorkbenchEncoder(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_EXPANSION_WORKBENCH_RECIPE_ENCODER, ExpansionWorkbench.TYPE, Recipe.NE_EXPANSION_WORKBENCH_RECIPE_ENCODER);
 
         //合成机
         NE_AUTO_MAGIC_WORKBENCH = new NetworkAutoMagicCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_AUTO_MAGIC_WORKBENCH, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_MAGIC_WORKBENCH, 640, false);
@@ -176,6 +217,21 @@ public class ExpansionSlimefunItems {
         NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING = new NetworkAutoQuantumWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, 1280, true);
         NE_AUTO_ANCIENT_ALTAR = new NetworkAutoAncientAltarCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_ANCIENT_ALTAR, 640, false);
         NE_AUTO_ANCIENT_ALTAR_WITHHOLDING = new NetworkAutoAncientAltarCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_ANCIENT_ALTAR_WITHHOLDING, 1280, true);
+        NE_AUTO_EXPANSION_WORKBENCH = new NetworkAutoExpansionWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_EXPANSION_WORKBENCH, 640, false);
+        NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING = new NetworkAutoExpansionWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING, 1280, true);
+
+        NEA_AUTO_MAGIC_WORKBENCH = new AdvancedNetworkAutoMagicCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_MAGIC_WORKBENCH, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_MAGIC_WORKBENCH, 640, false);
+        NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AdvancedNetworkAutoMagicCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING, 1280, true);
+        NEA_AUTO_ARMOR_FORGE = new AdvancedNetworkAutoArmorForgeCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_ARMOR_FORGE, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_ARMOR_FORGE, 640, false);
+        NEA_AUTO_ARMOR_FORGE_WITHHOLDING = new AdvancedNetworkAutoArmorForgeCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_ARMOR_FORGE_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_ARMOR_FORGE_WITHHOLDING, 1280, true);
+        NEA_AUTO_SMELTERY = new AdvancedNetworkAutoSmelteryCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_SMELTERY, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_SMELTERY, 640, false);
+        NEA_AUTO_SMELTERY_WITHHOLDING = new AdvancedNetworkAutoSmelteryCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_SMELTERY_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_SMELTERY_WITHHOLDING, 1280, true);
+        NEA_AUTO_QUANTUM_WORKBENCH = new AdvancedNetworkAutoQuantumWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_QUANTUM_WORKBENCH, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_QUANTUM_WORKBENCH, 640, false);
+        NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING = new AdvancedNetworkAutoQuantumWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING, 1280, true);
+        NEA_AUTO_ANCIENT_ALTAR = new AdvancedNetworkAutoAncientAltarCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_ANCIENT_ALTAR, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_ANCIENT_ALTAR, 640, false);
+        NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING = new AdvancedNetworkAutoAncientAltarCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING, 1280, true);
+        NEA_AUTO_EXPANSION_WORKBENCH = new AdvancedNetworkAutoExpansionWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_EXPANSION_WORKBENCH, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_EXPANSION_WORKBENCH, 640, false);
+        NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING = new AdvancedNetworkAutoExpansionWorkbenchCrafter(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING, ExpansionWorkbench.TYPE, Recipe.NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING, 1280, true);
 
         //网格
         NETWORK_GRID_NEW_STYLE = new NetworkGridNewStyle(NetworksItemGroups.NETWORK_ITEMS_EXPANSION, ExpansionSlimefunItemStacks.NETWORK_GRID_NEW_STYLE,RecipeType.ENHANCED_CRAFTING_TABLE,Recipe.NETWORK_GRID_NEW_STYLE);
@@ -221,17 +277,17 @@ public class ExpansionSlimefunItems {
         NE_CHAIN_DISPATCHER.register(plugin);
         NE_CHAIN_DISPATCHER_PLUS.register(plugin);
 
-        // 未完成，暂不开放
-        //NE_CHAIN_PUSHER_NUMBERABLE.register(plugin);
-        //NE_CHAIN_PUSHER_PLUS_NUMBERABLE.register(plugin);
-        //NE_CHAIN_GRABBER_NUMBERABLE.register(plugin);
-        //NE_CHAIN_GRABBER_PLUS_NUMBERABLE.register(plugin);
-        //NE_CHAIN_DISPATCHER_NUMBERABLE.register(plugin);
-        //NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE.register(plugin);
+        NE_CHAIN_PUSHER_NUMBERABLE.register(plugin);
+        NE_CHAIN_PUSHER_PLUS_NUMBERABLE.register(plugin);
+        NE_CHAIN_GRABBER_NUMBERABLE.register(plugin);
+        NE_CHAIN_GRABBER_PLUS_NUMBERABLE.register(plugin);
+        NE_CHAIN_DISPATCHER_NUMBERABLE.register(plugin);
+        NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE.register(plugin);
 
         NEA_IMPORT.register(plugin);
         NEA_EXPORT.register(plugin);
         NEA_PURGER.register(plugin);
+        NEA_GREEDY_BLOCK.register(plugin);
         NETWORK_CAPACITOR_5.register(plugin);
 
         NETWORK_ADVANCED_QUANTUM_STORAGE.register(plugin);
@@ -242,12 +298,14 @@ public class ExpansionSlimefunItems {
         SMELTERY_BLUEPRINT.register(plugin);
         QUANTUM_WORKBENCH_BLUEPRINT.register(plugin);
         ANCIENT_ALTAR_BLUEPRINT.register(plugin);
+        EXPANSION_WORKBENCH_BLUEPRINT.register(plugin);
         //编码
         NE_MAGIC_WORKBENCH_RECIPE_ENCODER.register(plugin);
         NE_ARMOR_FORGE_RECIPE_ENCODER.register(plugin);
         NE_SMELTERY_RECIPE_ENCODER.register(plugin);
         NE_QUANTUM_WORKBENCH_RECIPE_ENCODER.register(plugin);
         NE_ANCIENT_ALTAR_RECIPE_ENCODER.register(plugin);
+        NE_EXPANSION_WORKBENCH_RECIPE_ENCODER.register(plugin);
         //合成机
         NE_AUTO_MAGIC_WORKBENCH.register(plugin);
         NE_AUTO_MAGIC_WORKBENCH_WITHHOLDING.register(plugin);
@@ -259,6 +317,21 @@ public class ExpansionSlimefunItems {
         NE_AUTO_QUANTUM_WORKBENCH_WITHHOLDING.register(plugin);
         NE_AUTO_ANCIENT_ALTAR.register(plugin);
         NE_AUTO_ANCIENT_ALTAR_WITHHOLDING.register(plugin);
+        NE_AUTO_EXPANSION_WORKBENCH.register(plugin);
+        NE_AUTO_EXPANSION_WORKBENCH_WITHHOLDING.register(plugin);
+
+        NEA_AUTO_MAGIC_WORKBENCH.register(plugin);
+        NEA_AUTO_MAGIC_WORKBENCH_WITHHOLDING.register(plugin);
+        NEA_AUTO_ARMOR_FORGE.register(plugin);
+        NEA_AUTO_ARMOR_FORGE_WITHHOLDING.register(plugin);
+        NEA_AUTO_SMELTERY.register(plugin);
+        NEA_AUTO_SMELTERY_WITHHOLDING.register(plugin);
+        NEA_AUTO_QUANTUM_WORKBENCH.register(plugin);
+        NEA_AUTO_QUANTUM_WORKBENCH_WITHHOLDING.register(plugin);
+        NEA_AUTO_ANCIENT_ALTAR.register(plugin);
+        NEA_AUTO_ANCIENT_ALTAR_WITHHOLDING.register(plugin);
+        NEA_AUTO_EXPANSION_WORKBENCH.register(plugin);
+        NEA_AUTO_EXPANSION_WORKBENCH_WITHHOLDING.register(plugin);
 
         //网格
         NETWORK_GRID_NEW_STYLE.register(plugin);

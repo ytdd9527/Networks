@@ -1,4 +1,4 @@
-package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter;
+package io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.autocrafter.basic;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import io.github.sefiraat.networks.NetworkStorage;
@@ -9,8 +9,9 @@ import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
 import io.github.sefiraat.networks.slimefun.yitoudaidai.ExpansionSlimefunItems;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.SmelteryBlueprint;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedSmelteryRecipes;
+
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.blueprint.MagicWorkbenchBlueprint;
+import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.CraftingSystems.supportedrecipes.SupportedMagicWorkbenchRecipes;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -41,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class NetworkAutoSmelteryCrafter extends NetworkObject {
+public class NetworkAutoMagicCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
             3, 4, 5, 12, 13, 14, 21, 22, 23
@@ -65,7 +66,7 @@ public class NetworkAutoSmelteryCrafter extends NetworkObject {
 
     private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
-    public NetworkAutoSmelteryCrafter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int chargePerCraft, boolean withholding) {
+    public NetworkAutoMagicCrafter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int chargePerCraft, boolean withholding) {
         super(itemGroup, item, recipeType, recipe, NodeType.CRAFTER);
 
         this.chargePerCraft = chargePerCraft;
@@ -123,7 +124,7 @@ public class NetworkAutoSmelteryCrafter extends NetworkObject {
         if (networkCharge > this.chargePerCraft) {
             final SlimefunItem item = SlimefunItem.getByItem(blueprint);
 
-            if (!(item instanceof SmelteryBlueprint)) {
+            if (!(item instanceof MagicWorkbenchBlueprint)) {
                 return;
             }
 
@@ -200,22 +201,10 @@ public class NetworkAutoSmelteryCrafter extends NetworkObject {
         ItemStack crafted = null;
 
         // Go through each slimefun recipe, test and set the ItemStack if found
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedSmelteryRecipes.getRecipes().entrySet()) {
-            if (SupportedSmelteryRecipes.testRecipe(inputs, entry.getKey())) {
+        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedMagicWorkbenchRecipes.getRecipes().entrySet()) {
+            if (SupportedMagicWorkbenchRecipes.testRecipe(inputs, entry.getKey())) {
                 crafted = entry.getValue().clone();
                 break;
-            }
-        }
-
-        // If no slimefun recipe found, try a vanilla one
-        if (crafted == null) {
-            instance.generateVanillaRecipe(blockMenu.getLocation().getWorld());
-            if (instance.getRecipe() == null) {
-                returnItems(root, inputs);
-                return false;
-            } else if (Arrays.equals(instance.getRecipeItems(), inputs)) {
-                setCache(blockMenu, instance);
-                crafted = instance.getRecipe().getResult();
             }
         }
 
@@ -268,13 +257,13 @@ public class NetworkAutoSmelteryCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return ExpansionSlimefunItems.NE_AUTO_SMELTERY.canUse(player, false)
+                return ExpansionSlimefunItems.NE_AUTO_MAGIC_WORKBENCH.canUse(player, false)
                         && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                if (NetworkAutoSmelteryCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
+                if (NetworkAutoMagicCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
                     return new int[]{OUTPUT_SLOT};
                 }
                 return new int[0];
