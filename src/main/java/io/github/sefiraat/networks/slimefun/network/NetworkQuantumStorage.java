@@ -2,11 +2,10 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import com.ytdd9527.networks.expansion.core.utils.Utils;
+
 import io.github.sefiraat.networks.network.stackcaches.ItemStackCache;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.DisplayGroupGenerators;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.Utils;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -26,7 +25,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -44,12 +42,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
@@ -68,8 +68,6 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
             Integer.MAX_VALUE
     };
 
-    private boolean useSpecialModel = false;
-    private static final String KEY_UUID = "display-uuid";
     private static final String WIKI_PAGE = "network-storage/quantum-storage";
 
     public static final String BS_AMOUNT = "stored_amount";
@@ -484,14 +482,14 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         }
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
 
-        QuantumCache cache = createCache(itemStack, blockMenu, amount, maxAmount, voidExcess);
+        QuantumCache cache = createCache(itemStack, blockMenu, amount, maxAmount, voidExcess, supportsCustomMaxAmount);
 
 
         CACHES.put(location, cache);
         return cache;
     }
 
-    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, int maxAmount, boolean voidExcess) {
+    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, int maxAmount, boolean voidExcess, boolean supportsCustomMaxAmount) {
         if (itemStack == null || itemStack.getType() == Material.AIR || isDisplayItem(itemStack)) {
             menu.addItem(ITEM_SLOT, NO_ITEM);
             return new QuantumCache(null, 0, maxAmount, true, this.supportsCustomMaxAmount);
@@ -506,10 +504,11 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                 lore.remove(lore.size() - 1);
             }
 
-            if (lore.size() > 0 && lore.get(lore.size() - 1) == "") {
-                lore.remove(lore.size() - 1);
+            if (supportsCustomMaxAmount) {
+                if (lore.size() != 0) {
+                    lore.remove(lore.size() - 1);
+                }
             }
-
             itemMeta.setLore(lore.isEmpty() ? null : lore);
             clone.setItemMeta(itemMeta);
 

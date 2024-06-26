@@ -144,9 +144,9 @@ public class MainFlexGroup extends FlexItemGroup {
         menu.addMenuClickHandler(NETWORK_ITEMS, (player1, i1, itemStack1, clickAction) ->
                 openPage(profile, NetworksItemGroups.NETWORK_ITEMS, mode, 1)
         );
-        menu.replaceExistingItem(NETWORK_TRANSPORTATION, NetworksItemGroups.NETWORK_TRANSPORTATION.getItem(player));
+        menu.replaceExistingItem(NETWORK_TRANSPORTATION, NetworksItemGroups.NETWORK_TRANSPOR_TATION.getItem(player));
         menu.addMenuClickHandler(NETWORK_TRANSPORTATION, (player1, i1, itemStack1, clickAction) ->
-                openPage(profile, NetworksItemGroups.NETWORK_TRANSPORTATION, mode, 1)
+                openPage(profile, NetworksItemGroups.NETWORK_TRANSPOR_TATION, mode, 1)
         );
         menu.replaceExistingItem(NETWORK_ITEMS_EXPANSION, NetworksItemGroups.NETWORK_ITEMS_EXPANSION.getItem(player));
         menu.addMenuClickHandler(NETWORK_ITEMS_EXPANSION, (player1, i1, itemStack1, clickAction) ->

@@ -118,11 +118,11 @@ public class QuantumCache extends ItemStackCache {
         if (getItemStack() != null) {
             itemName = ItemStackHelper.getDisplayName(this.getItemStack());
         }
-        lore.add("");
-        lore.add(Theme.CLICK_INFO + "物品: " + itemName);
-        lore.add(Theme.CLICK_INFO + "数量: " + Theme.WHITE + this.getAmount());
+        final int loreIndexModifier = this.supportsCustomMaxAmount ? 1 : 0;
+        lore.set(lore.size() - 2 - loreIndexModifier, Theme.CLICK_INFO + "物品: " + itemName);
+        lore.set(lore.size() - 1 - loreIndexModifier, Theme.CLICK_INFO + "数量: " + Theme.WHITE + this.getAmount());
         if (this.supportsCustomMaxAmount) {
-            lore.add(Theme.CLICK_INFO + "当前容量限制: " + Theme.ERROR + this.getLimit());
+            lore.set(lore.size() - loreIndexModifier, Theme.CLICK_INFO + "当前容量限制: " + Theme.ERROR + this.getLimit());
         }
 
         itemMeta.setLore(lore);

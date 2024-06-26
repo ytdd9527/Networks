@@ -12,7 +12,6 @@ import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.slimefun.network.NetworkGreedyBlock;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.AdvancedNetworkGreedyBlock;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -62,7 +61,6 @@ public class NetworkRoot extends NetworkNode {
     private final Set<Location> advancedExporters = ConcurrentHashMap.newKeySet();
     private final Set<Location> coordinateTransmitters = ConcurrentHashMap.newKeySet();
     private final Set<Location> coordinateReceivers = ConcurrentHashMap.newKeySet();
-    private final Set<Location> advancedGreedyBlocks = ConcurrentHashMap.newKeySet();
 
 
     private final Set<Location> powerOutlets = ConcurrentHashMap.newKeySet();
@@ -77,6 +75,7 @@ public class NetworkRoot extends NetworkNode {
         this.maxNodes = maxNodes;
         this.root = this;
         NetworkNode node = new NetworkNode(location, NodeType.CONTROLLER);
+
         io.github.sefiraat.networks.NetworkStorage.getAllNetworkObjects().get(location).setNode(node);
     }
 
@@ -114,10 +113,9 @@ public class NetworkRoot extends NetworkNode {
             case CHAIN_GRABBER_PLUS -> chainGrabbers.add(location);
             case NEA_IMPORT -> advancedImporters.add(location);
             case NEA_EXPORT -> advancedExporters.add(location);
-            case NE_COORDINATE_TRANSMITTER ->coordinateTransmitters.add(location);
+            case COORDINATE_TRANSMITTER ->coordinateTransmitters.add(location);
             case NE_COORDINATE_RECEIVER ->coordinateReceivers.add(location);
             case CHAIN_DISPATCHER -> chainDispatchers.add(location);
-            case NEA_GREEDY_BLOCK -> advancedGreedyBlocks.add(location);
         }
     }
 
@@ -278,29 +276,6 @@ public class NetworkRoot extends NetworkNode {
                 }
             }
             itemStacks.put(barrelIdentity.getItemStack(), newAmount);
-        }
-
-        for (BlockMenu blockMenu : getAdvancedGreedyBlocks()) {
-            for (int slot : AdvancedNetworkGreedyBlock.INPUT_SLOTS) {
-                final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null || itemStack.getType() == Material.AIR) {
-                    continue;
-                }
-                final ItemStack clone = StackUtils.getAsQuantity(itemStack, 1);
-                final Long currentAmount = itemStacks.get(clone);
-                final long newAmount;
-                if (currentAmount == null) {
-                    newAmount = itemStack.getAmount();
-                } else {
-                    long newLong = (long) currentAmount + (long) itemStack.getAmount();
-                    if (newLong < 0) {
-                        newAmount = 0;
-                    } else {
-                        newAmount = currentAmount + itemStack.getAmount();
-                    }
-                }
-                itemStacks.put(clone, newAmount);
-            }
         }
 
         for (BlockMenu blockMenu : getGreedyBlocks()) {
@@ -506,18 +481,6 @@ public class NetworkRoot extends NetworkNode {
     public Set<BlockMenu> getCrafterOutputs() {
         final Set<BlockMenu> menus = new HashSet<>();
         for (Location location : this.crafters) {
-            BlockMenu menu = StorageCacheUtils.getMenu(location);
-            if (menu != null) {
-                menus.add(menu);
-            }
-        }
-        return menus;
-    }
-
-    @Nonnull
-    public Set<BlockMenu> getAdvancedGreedyBlocks() {
-        final Set<BlockMenu> menus = new HashSet<>();
-        for (Location location : this.advancedGreedyBlocks) {
             BlockMenu menu = StorageCacheUtils.getMenu(location);
             if (menu != null) {
                 menus.add(menu);
@@ -782,25 +745,6 @@ public class NetworkRoot extends NetworkNode {
         }
 
         // Greedy Blocks
-        for (BlockMenu blockMenu : getAdvancedGreedyBlocks()) {
-            for (int slot : AdvancedNetworkGreedyBlock.INPUT_SLOTS) {
-                final ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                if (itemStack == null
-                        || itemStack.getType() == Material.AIR
-                        || !StackUtils.itemsMatch(request, itemStack, true)
-                ) {
-                    continue;
-                }
-    
-                found += itemStack.getAmount();
-    
-                // Escape if found all we need
-                if (found >= request.getAmount()) {
-                    return true;
-                }
-            }
-        }
-
         for (BlockMenu blockMenu : getGreedyBlocks()) {
             final ItemStack itemStack = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
             if (itemStack == null
@@ -823,14 +767,6 @@ public class NetworkRoot extends NetworkNode {
     public int getAmount(@Nonnull ItemStack itemStack) {
         int totalAmount = 0;
         // 遍历所有贪婪方块
-        for (BlockMenu blockMenu : getAdvancedGreedyBlocks()) {
-            for (int slot : AdvancedNetworkGreedyBlock.INPUT_SLOTS) {
-                ItemStack inputSlotItem = blockMenu.getItemInSlot(slot);
-                if (inputSlotItem != null && StackUtils.itemsMatch(inputSlotItem, itemStack)) {
-                    totalAmount += inputSlotItem.getAmount();
-                }
-            }
-        }
         for (BlockMenu blockMenu : getGreedyBlocks()) {
             ItemStack inputSlotItem = blockMenu.getItemInSlot(NetworkGreedyBlock.INPUT_SLOT);
             if (inputSlotItem != null && StackUtils.itemsMatch(inputSlotItem, itemStack)) {
@@ -855,48 +791,6 @@ public class NetworkRoot extends NetworkNode {
     }
     public void addItemStack(@Nonnull ItemStack incoming) {
         // Run for matching greedy blocks
-        BlockMenu fallbackBlockMenu = null;
-        int fallBackSlot = 0;
-        for (BlockMenu blockMenu : getAdvancedGreedyBlocks()) {
-            int i = 0;
-            for (int slot : AdvancedNetworkGreedyBlock.INPUT_SLOTS) {
-                ItemStack itemStack = blockMenu.getItemInSlot(slot);
-                // If this is an empty slot - move on, if it's our first, store it for later.
-                if (itemStack == null || itemStack.getType().isAir()) {
-                    if (fallbackBlockMenu == null) {
-                        fallbackBlockMenu = blockMenu;
-                        fallBackSlot = AdvancedNetworkGreedyBlock.INPUT_SLOTS[i];
-                    }
-                    continue;
-                }
-
-                final int itemStackAmount = itemStack.getAmount();
-                final int incomingStackAmount = incoming.getAmount();
-
-                if (itemStackAmount < itemStack.getMaxStackSize() && StackUtils.itemsMatch(incoming, itemStack)) {
-                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
-                    final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
-
-                    itemStack.setAmount(itemStackAmount + amountToAdd);
-                    incoming.setAmount(incomingStackAmount - amountToAdd);
-
-                    // Mark dirty otherwise changes will not save
-                    blockMenu.markDirty();
-
-                    // All distributed, can escape
-                    if (incomingStackAmount == 0) {
-                        return;
-                    }
-                }
-                i++;
-            }
-        }
-        // Add to fallback slot
-        if (fallbackBlockMenu != null) {
-            fallbackBlockMenu.replaceExistingItem(fallBackSlot, incoming.clone());
-            incoming.setAmount(0);
-        }
-
         for (BlockMenu blockMenu : getGreedyBlocks()) {
             final ItemStack template = blockMenu.getItemInSlot(NetworkGreedyBlock.TEMPLATE_SLOT);
 
@@ -940,8 +834,8 @@ public class NetworkRoot extends NetworkNode {
 
         // Then run for matching items in cells
         // Prepare a fallback menu and slot. This way we don't have to scan more than once
-        fallbackBlockMenu = null;
-        fallBackSlot = 0;
+        BlockMenu fallbackBlockMenu = null;
+        int fallBackSlot = 0;
 
         for (BlockMenu blockMenu : getCellMenus()) {
             int i = 0;

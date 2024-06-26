@@ -88,12 +88,12 @@ public class GridCache {
         }
     }
 
-    enum SortOrder {
+    public enum SortOrder {
         ALPHABETICAL,
         NUMBER
     }
 
-    enum DisplayMode {
+    public enum DisplayMode {
         DISPLAY,
         HISTORY
     }

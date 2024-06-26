@@ -3,6 +3,7 @@ package io.github.sefiraat.networks.network.stackcaches;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 
 public class ItemRequest extends ItemStackCache {
 

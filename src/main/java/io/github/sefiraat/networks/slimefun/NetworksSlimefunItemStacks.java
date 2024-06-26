@@ -270,25 +270,24 @@ public class NetworksSlimefunItemStacks {
         );
 
         NETWORK_MORE_PUSHER = Theme.themedSlimefunItemStack(
-            "NTW_MOREPUSHER",
-            new ItemStack(Material.BROWN_STAINED_GLASS),
-            Theme.MACHINE,
-            "网络推送器V2",
-            "网络推送器会尝试将",
-            "指定的物品送入机器中",
-            "本推送器有9个槽位供推送"
+                "NTW_MOREPUSHER",
+                new ItemStack(Material.BROWN_STAINED_GLASS),
+                Theme.MACHINE,
+                "网络推送器V2",
+                "网络推送器会尝试将",
+                "指定的物品送入机器中",
+                "本推送器有9个槽位供推送"
         );
 
         NETWORK_BEST_PUSHER = Theme.themedSlimefunItemStack(
-            "NTW_BESTPUSHER",
-            new ItemStack(Material.BROWN_STAINED_GLASS),
-            Theme.MACHINE,
-            "网络推送器V3",
-            "网络推送器会尝试将",
-            "指定的物品送入机器中",
-            "本推送器有12个槽位供推送"
+                "NTW_BESTPUSHER",
+                new ItemStack(Material.BROWN_STAINED_GLASS),
+                Theme.MACHINE,
+                "网络推送器V3",
+                "网络推送器会尝试将",
+                "指定的物品送入机器中",
+                "本推送器有12个槽位供推送"
         );
-
         NETWORK_CONTROL_X = Theme.themedSlimefunItemStack(
             "NTW_CONTROL_X",
             new ItemStack(Material.WHITE_GLAZED_TERRACOTTA),
