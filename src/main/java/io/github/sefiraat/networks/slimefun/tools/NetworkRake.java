@@ -1,6 +1,10 @@
 package io.github.sefiraat.networks.slimefun.tools;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.*;
+import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.AdvancedExport;
+import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.AdvancedImport;
+import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.AdvancedPurger;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkExport;
@@ -22,7 +26,6 @@ import io.github.sefiraat.networks.slimefun.network.NetworkPowerDisplay;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerOutlet;
 import io.github.sefiraat.networks.slimefun.network.NetworkVacuum;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.transportation.*;
 import io.github.sefiraat.networks.slimefun.network.pusher.NetworkBestPusher;
 import io.github.sefiraat.networks.slimefun.network.pusher.NetworkMorePusher;
 import io.github.sefiraat.networks.utils.Keys;
@@ -87,7 +90,7 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(AdvancedImport.class);
         viableObjects.add(CoordinateReceiver.class);
         viableObjects.add(CoordinateTransmitter.class);
-        viableObjects.add(NetChainDispatcher.class);
+        viableObjects.add(ChainDispatcher.class);
 
     }
 

@@ -2,9 +2,10 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import com.ytdd9527.networks.expansion.core.utils.Utils;
+
 import io.github.sefiraat.networks.network.stackcaches.ItemStackCache;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
-import io.github.sefiraat.networks.slimefun.yitoudaidai.expansion.utils.Utils;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
@@ -481,14 +482,14 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         }
         final ItemStack itemStack = blockMenu.getItemInSlot(ITEM_SLOT);
 
-        QuantumCache cache = createCache(itemStack, blockMenu, amount, maxAmount, voidExcess);
+        QuantumCache cache = createCache(itemStack, blockMenu, amount, maxAmount, voidExcess, supportsCustomMaxAmount);
 
 
         CACHES.put(location, cache);
         return cache;
     }
 
-    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, int maxAmount, boolean voidExcess) {
+    private QuantumCache createCache(@Nullable ItemStack itemStack, @Nonnull BlockMenu menu, int amount, int maxAmount, boolean voidExcess, boolean supportsCustomMaxAmount) {
         if (itemStack == null || itemStack.getType() == Material.AIR || isDisplayItem(itemStack)) {
             menu.addItem(ITEM_SLOT, NO_ITEM);
             return new QuantumCache(null, 0, maxAmount, true, this.supportsCustomMaxAmount);
@@ -501,6 +502,12 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
                     break;
                 }
                 lore.remove(lore.size() - 1);
+            }
+
+            if (supportsCustomMaxAmount) {
+                if (lore.size() != 0) {
+                    lore.remove(lore.size() - 1);
+                }
             }
             itemMeta.setLore(lore.isEmpty() ? null : lore);
             clone.setItemMeta(itemMeta);

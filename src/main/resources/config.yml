@@ -8,74 +8,92 @@ auto-update: false
 # enable 是否启用模型 false true
 # type 指定模型的类型 错误类型enable将会启用false
 items:
-  #网链调度器
-  NE_CHAIN_DISPATCHER:
+  #网络链式推送器
+  NE_CHAIN_PUSHER:
     max-distance: 32
     pushitem-tick: 6
     grabitem-tick: 12
-    required-power: 5000
     use-special-model:
       enable: false
-  #网链调度器plus
-  NE_CHAIN_DISPATCHER_PLUS:
+  #网络链式推送器Plus
+  NE_CHAIN_PUSHER_PLUS:
     max-distance: 64
     pushitem-tick: 6
     grabitem-tick: 12
-    required-power: 5000
     use-special-model:
       enable: false
   #网络链式抓取器
   NE_CHAIN_GRABBER:
     max-distance: 32
+    pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
-  #网络链式抓取器plus
+  #网络链式抓取器Plus
   NE_CHAIN_GRABBER_PLUS:
     max-distance: 64
+    pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
-  #网络链式推送器
-  NE_CHAIN_PUSHER:
+  #网链调度器
+  CHAIN_DISPATCHER:
     max-distance: 32
-    pushitem-tick: 6
+    pushitem-tick: 4
+    grabitem-tick: 6
+    required-power: 5000
     use-special-model:
       enable: false
-  #网络链式推送器plus
-  NE_CHAIN_PUSHER_PLUS:
+  #网链调度器Plus
+  CHAIN_DISPATCHER_PLUS:
     max-distance: 64
-    pushitem-tick: 6
+    pushitem-tick: 12
+    grabitem-tick: 12
+    required-power: 5000
     use-special-model:
       enable: false
 
-  #网络链式抓取器(模型)
-  NE_MODEL_CHAING_GRABBER:
+  #高级网络链式推送器
+  NE_ADVANCED_CHAING_PUSHER:
     max-distance: 32
+    pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
-  #网络链式抓取器(模型)
-  NE_MODEL_CHAING_GRABBER_PLUS:
+  #高级网络链式推送器Plus
+  NE_ADVANCED_CHAING_PUSHER_PLUS:
     max-distance: 64
+    pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
-  #网络链式推送器(模型)
-  NE_MODEL_CHAING_PUSHER:
+  #高级网络链式抓取器
+  NE_ADVANCED_CHAING_GRABBER:
     max-distance: 32
     pushitem-tick: 6
+    grabitem-tick: 12
     use-special-model:
       enable: false
-  #网络链式推送器(模型)
-  NE_MODEL_CHAING_PUSHER_PLUS:
+  #高级网络链式抓取器Plus
+  NE_ADVANCED_CHAING_GRABBER_PLUS:
     max-distance: 64
     pushitem-tick: 6
+    grabitem-tick: 12
     use-special-model:
       enable: false
-
-  #网络链式抓取器(模型)
-  NE_BRIDGE_WHITE:
+  #高级网链调度器
+  NE_ADVANCED_CHAIN_DISPATCHER:
+    max-distance: 32
+    pushitem-tick: 6
+    grabitem-tick: 12
+    required-power: 5000
     use-special-model:
-      enable: true
-      type: bridge_1
+      enable: false
+  #高级网链调度器Plus
+  NE_ADVANCED_CHAING_DISPATCHER_PLUS:
+    max-distance: 64
+    pushitem-tick: 4
+    grabitem-tick: 12
+    required-power: 5000
+    use-special-model:
+      enable: false

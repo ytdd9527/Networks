@@ -69,7 +69,7 @@ public abstract class AbstractGrid extends NetworkObject {
         Theme.CLICK_INFO.getColor() + "设置过滤器 (右键点击以清除)"
     );
 
-    private static final Comparator<Map.Entry<ItemStack, Long>> ALPHABETICAL_SORT = Comparator.comparing(
+    public static final Comparator<Map.Entry<ItemStack, Long>> ALPHABETICAL_SORT = Comparator.comparing(
         itemStackIntegerEntry -> {
             ItemStack itemStack = itemStackIntegerEntry.getKey();
             SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);

@@ -70,7 +70,7 @@ public final class NetworksItemGroups {
                     Theme.MAIN.getColor() + "已禁用/移除的物品"
             )
     );
-    public static final DummyItemGroup NETWORK_TRANSPORTATION = new DummyItemGroup(
+    public static final DummyItemGroup NETWORK_TRANSPOR_TATION = new DummyItemGroup(
             Keys.newKey("network_transportation"),
             new CustomItemStack(
                     new ItemStack(Material.HOPPER),
@@ -96,7 +96,7 @@ public final class NetworksItemGroups {
         NetworksItemGroups.NETWORK_QUANTUMS.register(plugin);
         NetworksItemGroups.DISABLED_ITEMS.register(plugin);
 
-        NetworksItemGroups.NETWORK_TRANSPORTATION.register(plugin);
+        NetworksItemGroups.NETWORK_TRANSPOR_TATION.register(plugin);
         NetworksItemGroups.NETWORK_ITEMS_EXPANSION.register(plugin);
     }
 

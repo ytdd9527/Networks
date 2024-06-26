@@ -75,6 +75,7 @@ public class NetworkRoot extends NetworkNode {
         this.maxNodes = maxNodes;
         this.root = this;
         NetworkNode node = new NetworkNode(location, NodeType.CONTROLLER);
+
         io.github.sefiraat.networks.NetworkStorage.getAllNetworkObjects().get(location).setNode(node);
     }
 
@@ -112,7 +113,7 @@ public class NetworkRoot extends NetworkNode {
             case CHAIN_GRABBER_PLUS -> chainGrabbers.add(location);
             case NEA_IMPORT -> advancedImporters.add(location);
             case NEA_EXPORT -> advancedExporters.add(location);
-            case NE_COORDINATE_TRANSMITTER ->coordinateTransmitters.add(location);
+            case COORDINATE_TRANSMITTER ->coordinateTransmitters.add(location);
             case NE_COORDINATE_RECEIVER ->coordinateReceivers.add(location);
             case CHAIN_DISPATCHER -> chainDispatchers.add(location);
         }
