@@ -3,7 +3,7 @@ package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.advanced;
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.ExpansionWorkbenchBlueprint;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.supportedrecipes.SupportedExpansionWorkbenchRecipes;
-import com.ytdd9527.networks.expansion.setup.ExpansionItems;
+import com.ytdd9527.networks.expansion.setup.depreacte.DepreacteExpansionItems;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
@@ -269,7 +269,7 @@ public class AdvancedAutoExpansionWorkbenchCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return ExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH.canUse(player, false)
+                return DepreacteExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH.canUse(player, false)
                     && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 

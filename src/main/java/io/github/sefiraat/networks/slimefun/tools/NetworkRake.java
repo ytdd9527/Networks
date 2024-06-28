@@ -84,13 +84,13 @@ public class NetworkRake extends LimitedUseItem {
         viableObjects.add(NetworkMorePusher.class);
         viableObjects.add(NetworkBestPusher.class);
         viableObjects.add(AdvancedPurger.class);
-        viableObjects.add(ChainPusher.class);
-        viableObjects.add(ChainGrabber.class);
+        viableObjects.add(PointTransferPusher.class);
+        viableObjects.add(PointTransferGrabber.class);
         viableObjects.add(AdvancedExport.class);
         viableObjects.add(AdvancedImport.class);
         viableObjects.add(CoordinateReceiver.class);
         viableObjects.add(CoordinateTransmitter.class);
-        viableObjects.add(ChainDispatcher.class);
+        viableObjects.add(PointTransfer.class);
 
     }
 

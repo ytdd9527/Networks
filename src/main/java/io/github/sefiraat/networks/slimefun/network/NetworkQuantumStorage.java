@@ -2,7 +2,8 @@ package io.github.sefiraat.networks.slimefun.network;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-import com.ytdd9527.networks.expansion.core.utils.Utils;
+import com.ytdd9527.networks.expansion.core.item.AbstractMySlimefunItem;
+import com.ytdd9527.networks.expansion.util.Utils;
 
 import io.github.sefiraat.networks.network.stackcaches.ItemStackCache;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
@@ -52,7 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("deprecation")
-public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveItem {
+public class NetworkQuantumStorage extends AbstractMySlimefunItem implements DistinctiveItem {
 
     private static final int[] SIZES = new int[]{
             64,

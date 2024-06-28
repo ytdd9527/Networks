@@ -3,7 +3,7 @@ package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.basic;
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.ArmorForgeBlueprint;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.supportedrecipes.SupportedAncientAltarRecipes;
-import com.ytdd9527.networks.expansion.setup.ExpansionItems;
+import com.ytdd9527.networks.expansion.setup.depreacte.DepreacteExpansionItems;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
@@ -255,7 +255,7 @@ public class AutoArmorForgeCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return ExpansionItems.AUTO_ARMOR_FORGE.canUse(player, false)
+                return DepreacteExpansionItems.AUTO_ARMOR_FORGE.canUse(player, false)
                         && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 

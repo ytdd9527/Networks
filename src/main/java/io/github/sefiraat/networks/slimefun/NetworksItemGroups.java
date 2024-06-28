@@ -23,6 +23,22 @@ import javax.annotation.Nonnull;
 @UtilityClass
 public final class NetworksItemGroups {
 
+
+    public static final DummyItemGroup NETWORK_TRANSPOR_TATION = new DummyItemGroup(
+            Keys.newKey("network_transportation"),
+            new CustomItemStack(
+                    new ItemStack(Material.HOPPER),
+                    Theme.SUCCESS.getColor() + "运输与存储"
+            ),0
+    );
+    public static final DummyItemGroup NETWORK_ITEMS_EXPANSION = new DummyItemGroup(
+            Keys.newKey("network_items_expansion"),
+
+            new CustomItemStack(
+                    getPreEnchantedItemStack(Material.COMMAND_BLOCK, true, new Pair<>(Enchantment.LUCK, 1)),
+                    Theme.SUCCESS.getColor() + "网络物品拓展"
+            ),0
+    );
     public static final MainFlexGroup MAIN = new MainFlexGroup(
             Keys.newKey("main"),
             new CustomItemStack(
@@ -69,21 +85,6 @@ public final class NetworksItemGroups {
                     new ItemStack(Material.BARRIER),
                     Theme.MAIN.getColor() + "已禁用/移除的物品"
             )
-    );
-    public static final DummyItemGroup NETWORK_TRANSPOR_TATION = new DummyItemGroup(
-            Keys.newKey("network_transportation"),
-            new CustomItemStack(
-                    new ItemStack(Material.HOPPER),
-                    Theme.SUCCESS.getColor() + "运输与存储"
-            ),0
-    );
-    public static final DummyItemGroup NETWORK_ITEMS_EXPANSION = new DummyItemGroup(
-            Keys.newKey("network_items_expansion"),
-
-            new CustomItemStack(
-                    getPreEnchantedItemStack(Material.COMMAND_BLOCK, true, new Pair<>(Enchantment.LUCK, 1)),
-                    Theme.SUCCESS.getColor() + "网络物品拓展"
-            ),0
     );
     static {
         final Networks plugin = Networks.getInstance();

@@ -1,10 +1,12 @@
 package com.ytdd9527.networks.expansion.core.item.tool;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import com.ytdd9527.networks.expansion.core.item.AbstractMySlimefunItem;
 import de.jeff_media.morepersistentdatatypes.DataType;
 
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.CoordinateReceiver;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.CoordinateTransmitter;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
@@ -23,11 +25,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
-public class CoordinateConfigurator extends SlimefunItem {
+public class CoordinateConfigurator extends AbstractMySlimefunItem {
 
     private static final NamespacedKey TARGET_LOCATION = Keys.newKey("target-location");
 
@@ -93,4 +96,6 @@ public class CoordinateConfigurator extends SlimefunItem {
         itemStack.setItemMeta(itemMeta);
         player.sendMessage(Theme.SUCCESS + "坐标接收器已设置");
     }
+
+
 }

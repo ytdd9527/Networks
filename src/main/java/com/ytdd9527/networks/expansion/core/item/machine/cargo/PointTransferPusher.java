@@ -1,15 +1,15 @@
-package com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced;
+package com.ytdd9527.networks.expansion.core.item.machine.cargo;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-import com.ytdd9527.networks.expansion.core.utils.DisplayGroupGenerators;
+import com.ytdd9527.networks.expansion.util.DisplayGroupGenerators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
-import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
+import io.github.sefiraat.networks.slimefun.network.NetworkDirectional;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -40,23 +40,17 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDisplayItem {
+public class PointTransferPusher extends NetworkDirectional implements RecipeDisplayItem {
 
     private static final String KEY_UUID = "display-uuid";
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
-    private static final int TRANSPORT_LIMIT = 64;
-    private static final int TRANSPORT_MODE_SLOT = 27;
-    private static final int MINUS_SLOT = 36;
-    private static final int SHOW_SLOT = 37;
-    private static final int ADD_SLOT = 38;
-
+    private static final int MAX_DISTANCE_LIMIT = 100;
     private int pushItemTick;
     private int maxDistance;
-
     private static final int[] BACKGROUND_SLOTS = new int[]{
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 39, 40, 41, 42, 43, 44
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
     };
     private static final int[] TEMPLATE_BACKGROUND = new int[]{16};
     private static final int[] TEMPLATE_SLOTS = new int[]{24, 25, 26};
@@ -66,30 +60,29 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
     private static final int WEST_SLOT = 19;
     private static final int UP_SLOT = 14;
     private static final int DOWN_SLOT = 32;
-
     public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
     );
-    private static final String TICK_COUNTER_KEY = "chain_PusherPlus_tick_counter";
+    private static final String TICK_COUNTER_KEY = "chain_pusherplus_tick_counter";
 
-    public AdvancedChainPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
-        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER, TRANSPORT_LIMIT);
+    public PointTransferPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
+        super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
         }
-        loadConfigurations(configKey);
+        loadConfigurations(itemId);
     }
 
-    private void loadConfigurations(String configKey) {
+    private void loadConfigurations(String itemId) {
         int defaultMaxDistance = 32;
-        int defaultPushItemTick = 6;
+        int defaultPushItemTick = 5;
         boolean defaultUseSpecialModel = false;
 
         FileConfiguration config = Networks.getInstance().getConfig();
 
-        this.maxDistance = config.getInt("items." + configKey + ".max-distance", defaultMaxDistance);
-        this.pushItemTick = config.getInt("items." + configKey + ".pushitem-tick", defaultPushItemTick);
-        this.useSpecialModel = config.getBoolean("items." + configKey + ".use-special-model.enable", defaultUseSpecialModel);
+        this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);
+        this.pushItemTick = config.getInt("items." + itemId + ".pushitem-tick", defaultPushItemTick);
+        this.useSpecialModel = config.getBoolean("items." + itemId + ".use-special-model.enable", defaultUseSpecialModel);
 
 
         Map<String, Function<Location, DisplayGroup>> generatorMap = new HashMap<>();
@@ -99,7 +92,7 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
         this.displayGroupGenerator = null;
 
         if (this.useSpecialModel) {
-            String generatorKey = config.getString("items." + configKey + ".use-special-model.type");
+            String generatorKey = config.getString("items." + itemId + ".use-special-model.type");
             this.displayGroupGenerator = generatorMap.get(generatorKey);
             if (this.displayGroupGenerator == null) {
                 Networks.getInstance().getLogger().warning("未知的展示组类型 '" + generatorKey + "', 特殊模型已禁用。");
@@ -107,12 +100,12 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
             }
         }
     }
-    private void performPushItemOperationAsync(@Nonnull Block block, @Nullable BlockMenu blockMenu) {
+    private void performPushItemOperationAsync(@Nullable BlockMenu blockMenu) {
         if (blockMenu != null) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    tryPushItem(block, blockMenu);
+                    tryPushItem(blockMenu);
                 }
             }.runTaskAsynchronously(Networks.getInstance());
         }
@@ -123,27 +116,22 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
         int tickCounter = getTickCounter(block);
         tickCounter = (tickCounter + 1) % pushItemTick;
         if (tickCounter == 0) {
-            performPushItemOperationAsync(block, blockMenu);
+            performPushItemOperationAsync(blockMenu);
         }
         updateTickCounter(block, tickCounter);
     }
     private int getTickCounter(Block block) {
-
         String tickCounterValue = BlockStorage.getLocationInfo(block.getLocation(), TICK_COUNTER_KEY);
         try {
-
             return (tickCounterValue != null) ? Integer.parseInt(tickCounterValue) : 0;
         } catch (NumberFormatException e) {
-
             return 0;
         }
     }
     private void updateTickCounter(Block block, int tickCounter) {
-
         BlockStorage.addBlockInfo(block.getLocation(), TICK_COUNTER_KEY, Integer.toString(tickCounter));
     }
-
-    private void tryPushItem(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
+    private void tryPushItem(@Nonnull BlockMenu blockMenu) {
         final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
 
         if (definition == null || definition.getNode() == null) {
@@ -155,18 +143,14 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
         Block targetBlock = blockMenu.getBlock().getRelative(direction);
 
         for (int i = 0; i <= maxDistance; i++) {
-
             final BlockMenu targetMenu = StorageCacheUtils.getMenu(targetBlock.getLocation());
 
             if (targetMenu == null) {
-                return;
+                break;
             }
 
-            NetworkRoot root = definition.getNode().getRoot();
-            int currentLimit = getCurrentNumber(blockMenu.getBlock());
-            String currentTransportMode = getCurrentTransportMode(block);
-
             for (int itemSlot : this.getItemSlots()) {
+
                 final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
 
                 if (testItem == null || testItem.getType() == Material.AIR) {
@@ -175,103 +159,31 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
 
                 final ItemStack clone = testItem.clone();
                 clone.setAmount(1);
+                final ItemRequest itemRequest = new ItemRequest(clone, clone.getMaxStackSize());
 
                 int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
 
-                int freeAmount = 0;
-                int retrievedAmount = 0;
-                // 读取模式
-                switch (currentTransportMode) {
-                    // 无限制模式
-                    case TRANSPORT_MODE_NONE -> {
-                        // 计算总共需要推送的数量
-                        for (int slot : slots) {
-                            final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-                            if (itemStack == null || itemStack.getType() == Material.AIR) {
-                                freeAmount += clone.getMaxStackSize();
-                            } else {
-                                if (StackUtils.itemsMatch(itemStack, clone)) {
-                                    freeAmount += itemStack.getMaxStackSize() - itemStack.getAmount();
-                                }
-                            }
+                for (int slot : slots) {
+                    final ItemStack itemStack = targetMenu.getItemInSlot(slot);
 
-                            if (freeAmount > currentLimit) {
-                                freeAmount = currentLimit;
-                                break;
-                            }
-                        }
-
-                        // 直接推送物品
-                        final ItemRequest itemRequest = new ItemRequest(clone, freeAmount);
-                        ItemStack retrieved = root.getItemStack(itemRequest);
-                        if (retrieved != null) {
-                            targetMenu.pushItem(retrieved, slots);
-                        }
-                    }
-                    // 仅空模式
-                    case TRANSPORT_MODE_NULL_ONLY -> {
-                        for (int slot : slots) {
-                            // 读取每个槽的物品
-                            final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-
-                            // 仅空槽会被运输
-                            if (itemStack == null || itemStack.getType() == Material.AIR) {
-                                // 计算需要推送的数量
-                                int amount = clone.getMaxStackSize();
-                                if (retrievedAmount + amount > currentLimit) {
-                                    amount = currentLimit - retrievedAmount;
-                                }
-
-                                // 推送物品
-                                final ItemRequest itemRequest = new ItemRequest(clone, amount);
-                                ItemStack retrieved = root.getItemStack(itemRequest);
-
-                                // 只推送到指定的格
-                                if (retrieved != null) {
-                                    targetMenu.pushItem(retrieved, slot);
-                                    // 增加数量
-                                    retrievedAmount += retrieved.getAmount();
-                                }
-                            }
-                            if (retrievedAmount >= currentLimit) {
-                                break;
-                            }
+                    if (itemStack != null && itemStack.getType() != Material.AIR) {
+                        final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
+                        if (space > 0 && StackUtils.itemsMatch(itemRequest, itemStack, true)) {
+                            itemRequest.setAmount(space);
+                        } else {
+                            continue;
                         }
                     }
 
-                    // 仅非空模式
-                    case TRANSPORT_MODE_NONNULL_ONLY -> {
-                        for (int slot : slots) {
-                            // 读取每个槽的物品
-                            final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-
-                            // 仅非空模式本质上就是只运输到有相同物品的格子
-                            if (StackUtils.itemsMatch(clone, itemStack)) {
-
-                                // 计算需要推送的数量
-                                int amount = itemStack.getMaxStackSize() - itemStack.getAmount();
-                                if (retrievedAmount + amount > getCurrentNumber(blockMenu.getBlock())) {
-                                    amount = currentLimit - retrievedAmount;
-                                }
-
-                                // 推送物品
-                                final ItemRequest itemRequest = new ItemRequest(clone, amount);
-                                ItemStack retrieved = root.getItemStack(itemRequest);
-
-                                // 只推送到指定的格
-                                if (retrieved != null) {
-                                    targetMenu.pushItem(retrieved, slot);
-                                    // 增加数量
-                                    retrievedAmount += retrieved.getAmount();
-                                }
-                            }
-                            if (retrievedAmount >= currentLimit) {
-                                break;
-                            }
-                        }
+                    ItemStack retrieved = definition.getNode().getRoot().getItemStack(itemRequest);
+                    if (retrieved != null) {
+                        targetMenu.pushItem(retrieved, slots);
+                        //showParticle(blockMenu.getBlock().getLocation(), direction);
+                        //显示粒子
                     }
+
+                    break;
                 }
-                
             }
             targetBlock = targetBlock.getRelative(direction);
         }
@@ -335,6 +247,7 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
             });
         }
 
+        // 添加破坏处理器，不管 useSpecialModel 的值如何，破坏时的逻辑都应该执行
         addItemHandler(new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
@@ -344,7 +257,6 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
             }
         });
     }
-
     private void setupDisplay(@Nonnull Location location) {
         if (this.displayGroupGenerator != null) {
             DisplayGroup displayGroup = this.displayGroupGenerator.apply(location.clone().add(0.5, 0, 0.5));
@@ -373,20 +285,7 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
         }
         return DisplayGroup.fromUUID(uuid);
     }
-
-    protected int getMinusSlot() {
-        return MINUS_SLOT;
-    }
-
-    protected int getShowSlot() {
-        return SHOW_SLOT;
-    }
-
-    protected int getAddSlot() {
-        return ADD_SLOT;
-    }
-
-    @Nonnull
+    @NotNull
     @Override
     public List<ItemStack> getDisplayRecipes() {
         List<ItemStack> displayRecipes  = new ArrayList<>(6);
@@ -432,10 +331,5 @@ public class AdvancedChainPusher extends AdvancedDirectional implements RecipeDi
                 "&f-&7同时保持也可以服务器流畅运行"
         ));
         return displayRecipes ;
-    }
-
-    @Override
-    protected int getTransportModeSlot() {
-        return TRANSPORT_MODE_SLOT;
     }
 }

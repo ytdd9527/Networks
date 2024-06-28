@@ -1,7 +1,7 @@
 package com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-import com.ytdd9527.networks.expansion.core.utils.DisplayGroupGenerators;
+import com.ytdd9527.networks.expansion.util.DisplayGroupGenerators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.NetworkStorage;
@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class AdvancedChainGrabber extends AdvancedDirectional implements RecipeDisplayItem {
+public class AdvancedPointTransferGrabber extends AdvancedDirectional implements RecipeDisplayItem {
 
     private static final String TICK_COUNTER_KEY = "chain_grabber_plus_tick_counter";
     private static final String KEY_UUID = "display-uuid";
@@ -59,7 +59,7 @@ public class AdvancedChainGrabber extends AdvancedDirectional implements RecipeD
 
     private int totalAmount;
 
-    public AdvancedChainGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+    public AdvancedPointTransferGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER, TRANSPORT_LIMIT);
         loadConfigurations(configKey);
     }

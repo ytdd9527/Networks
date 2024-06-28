@@ -1,6 +1,6 @@
 package com.ytdd9527.networks.expansion.setup;
 
-import com.ytdd9527.networks.expansion.setup.ExpansionItemStacks;
+
 import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import org.bukkit.Material;
@@ -34,64 +34,64 @@ public class ExpansionRecipes {
     //坐标传输器
     public static final ItemStack[] COORDINATE_TRANSMITTER = new ItemStack[] {
         NETWORK_WIRELESS_TRANSMITTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem(),
-        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.CHAIN_GRABBER, ADVANCED_NANOBOTS.getItem(),
+        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER, ADVANCED_NANOBOTS.getItem(),
         NETWORK_WIRELESS_TRANSMITTER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem()
     };
 
     //坐标接收器
     public static final ItemStack[] COORDINATE_RECEIVER = new ItemStack[] {
         NETWORK_WIRELESS_RECEIVER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_RECEIVER.getItem(),
-        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.CHAIN_GRABBER, ADVANCED_NANOBOTS.getItem(),
+        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER, ADVANCED_NANOBOTS.getItem(),
         NETWORK_WIRELESS_RECEIVER.getItem(), AI_CORE.getItem(), NETWORK_WIRELESS_RECEIVER.getItem()
     };
 
     //链式推送
-    public static final ItemStack[] CHAIN_PUSHER = new ItemStack[] {
+    public static final ItemStack[] POINT_TRANSFER_PUSHER = new ItemStack[] {
         NETWORK_PUSHER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_PUSHER.getItem(),
         OPTIC_CABLE.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_CABLE.getItem(),
         NETWORK_PUSHER.getItem(), NETWORK_EXPORT.getItem(), NETWORK_PUSHER.getItem()
     };
 
-    public static final ItemStack[] CHAIN_PUSHER_PLUS = new ItemStack[] {
-        ExpansionItemStacks.CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.CHAIN_GRABBER,
+    public static final ItemStack[] POINT_TRANSFER_PLUS_PUSHER = new ItemStack[] {
+        ExpansionItemStacks.POINT_TRANSFER_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER,
         INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN), INTERDIMENSIONAL_PRESENCE.getItem(),
-        ExpansionItemStacks.CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.CHAIN_GRABBER
+        ExpansionItemStacks.POINT_TRANSFER_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER
     };
 
     //链式抓取
-    public static final ItemStack[] CHAIN_GRABBER = new ItemStack[] {
+    public static final ItemStack[] POINT_TRANSFER_GRABBER = new ItemStack[] {
         NETWORK_GRABBER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_GRABBER.getItem(),
         OPTIC_CABLE.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_CABLE.getItem(),
         NETWORK_GRABBER.getItem(), NETWORK_IMPORT.getItem(), NETWORK_GRABBER.getItem()
     };
 
-    public static final ItemStack[]CHAIN_GRABBER_PLUS = new ItemStack[] {
-        ExpansionItemStacks.CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.CHAIN_GRABBER,
+    public static final ItemStack[] POINT_TRANSFER_PLUS_GRABBER = new ItemStack[] {
+        ExpansionItemStacks.POINT_TRANSFER_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER,
         INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN),INTERDIMENSIONAL_PRESENCE.getItem(),
-        ExpansionItemStacks.CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.CHAIN_GRABBER
+        ExpansionItemStacks.POINT_TRANSFER_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER
     };
     //链式调度器
-    public static final ItemStack[] CHAIN_DISPATCHER = new ItemStack[] {
+    public static final ItemStack[] POINT_TRANSFER = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
-        ExpansionItemStacks.CHAIN_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_GRABBER,
+        ExpansionItemStacks.POINT_TRANSFER_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER,
         NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] CHAIN_DISPATCHER_PLUS = new ItemStack[] {
+    public static final ItemStack[] POINT_TRANSFER_PLUS = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
-        ExpansionItemStacks.CHAIN_GRABBER_PLUS, OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_GRABBER_PLUS,
+        ExpansionItemStacks.POINT_TRANSFER_PLUS_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER_PLUS_GRABBER,
         NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
 
     public static final ItemStack[] NE_CHAIN_DISPATCHER_NUMBERABLE = new ItemStack[] {
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
-        OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_DISPATCHER, OPTIC_CABLE.getItem(),
+        OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER, OPTIC_CABLE.getItem(),
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
 
     public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = new ItemStack[] {
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
-        OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_DISPATCHER_PLUS, OPTIC_CABLE.getItem(),
+        OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER_PLUS, OPTIC_CABLE.getItem(),
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
 
@@ -157,7 +157,7 @@ public class ExpansionRecipes {
 
     public static final ItemStack[] EXPANSION_WORKBENCH_BLUEPRINT =  new ItemStack[] {
         NetworksSlimefunItemStacks.NETWORK_BRIDGE, SlimefunItems.ANCIENT_PEDESTAL, NetworksSlimefunItemStacks.NETWORK_BRIDGE,
-        CRAFTING_BLUEPRINT.getItem(), ExpansionItemStacks.NE_EXPANSION_WORKBENCH, CRAFTING_BLUEPRINT.getItem(),
+        CRAFTING_BLUEPRINT.getItem(), ExpansionItemStacks.NETWORK_EXPANSION_WORKBENCH, CRAFTING_BLUEPRINT.getItem(),
         NetworksSlimefunItemStacks.NETWORK_BRIDGE, SlimefunItems.ANCIENT_PEDESTAL, NetworksSlimefunItemStacks.NETWORK_BRIDGE
     };
 
@@ -377,97 +377,97 @@ public class ExpansionRecipes {
         EMPOWERED_AI_CORE.getItem(), ADVANCED_NANOBOTS.getItem(), EMPOWERED_AI_CORE.getItem()
     };
     //网桥
-    public static final ItemStack[] NE_BRIDGE_WHITE = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_WHITE = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.WHITE_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_LIGHT_GRAY = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_LIGHT_GRAY = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.LIGHT_GRAY_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_GRAY = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_GRAY = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.GRAY_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_BLACK = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_BLACK = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.BLACK_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_BROWN = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_BROWN = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.BROWN_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_RED = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_RED = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.RED_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_ORANGE = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_ORANGE = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.ORANGE_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_YELLOW = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_YELLOW = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.YELLOW_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_LIME = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_LIME = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.LIME_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_GREEN = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_GREEN = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.GREEN_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_CYAN = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_CYAN = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.CYAN_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_LIGHT_BLUE = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_LIGHT_BLUE = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.LIGHT_BLUE_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_BLUE = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_BLUE = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.BLUE_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_PURPLE = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_PURPLE = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.PURPLE_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_MAGENTA = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_MAGENTA = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.MAGENTA_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_BRIDGE_PINK = new ItemStack[] {
+    public static final ItemStack[] NETWORK_BRIDGE_PINK = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), new ItemStack(Material.PINK_DYE), NETWORK_BRIDGE.getItem(),
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem()

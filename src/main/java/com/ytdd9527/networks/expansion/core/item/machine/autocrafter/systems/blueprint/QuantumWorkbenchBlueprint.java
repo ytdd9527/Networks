@@ -1,5 +1,6 @@
 package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint;
 
+import com.ytdd9527.networks.expansion.core.item.unusable.UnusableSlimefunItem;
 import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
@@ -19,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuantumWorkbenchBlueprint extends UnplaceableBlock implements DistinctiveItem {
+public class QuantumWorkbenchBlueprint extends UnusableSlimefunItem implements DistinctiveItem {
 
     public QuantumWorkbenchBlueprint(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

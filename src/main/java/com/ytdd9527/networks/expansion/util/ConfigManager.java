@@ -1,16 +1,12 @@
-package com.ytdd9527.networks.expansion.core.utils;
+package com.ytdd9527.networks.expansion.util;
 
-import com.ytdd9527.networks.expansion.core.utils.DisplayGroupGenerators;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.Networks;
-import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.*;
-import java.util.function.Function;
 
 public class ConfigManager {
 

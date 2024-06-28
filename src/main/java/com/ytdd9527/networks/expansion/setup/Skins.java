@@ -1,16 +1,13 @@
-package com.ytdd9527.networks.expansion.core.utils;
+package com.ytdd9527.networks.expansion.setup;
 
-import io.github.sefiraat.networks.utils.Theme;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerHead;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerSkin;
 import lombok.Getter;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public enum Skulls {
+public enum Skins {
 
     TRASH_CAN("32d41042ce99147cc38cac9e46741576e7ee791283e6fac8d3292cae2935f1f"),
 
@@ -29,13 +26,13 @@ public enum Skulls {
     NE_MODEL_CAPACITOR_5("ecb316f7a227a8c59d58ae0dd6768fe4fa546d55b9cfdd56cfe40b6586d81c24");
 
     @Getter
-    protected static final Skulls[] cachedValues = values();
+    protected static final Skins[] cachedValues = values();
 
     @Getter
     private final String hash;
 
     @ParametersAreNonnullByDefault
-    Skulls(String hash) {
+    Skins(String hash) {
         this.hash = hash;
     }
 

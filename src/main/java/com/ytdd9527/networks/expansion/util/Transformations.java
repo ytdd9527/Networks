@@ -1,4 +1,4 @@
-package com.ytdd9527.networks.expansion.core.utils;
+package com.ytdd9527.networks.expansion.util;
 
 
 import dev.sefiraat.sefilib.misc.RotationFace;

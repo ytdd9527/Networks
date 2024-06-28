@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.utils;
 
+import com.ytdd9527.networks.libs.plugin.util.TextUtil;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import lombok.Getter;
@@ -117,6 +118,30 @@ public enum Theme {
                 itemStack,
                 Theme.applyThemeToString(themeType, name),
                 finalLore.toArray(new String[finalLore.size() - 1])
+        );
+    }
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static SlimefunItemStack Random(
+            String id,
+            ItemStack itemStack,
+            Theme themeType,
+            String baseName,
+            String... lore
+    ) {
+        String coloredName = TextUtil.colorPseudorandomString(baseName);
+        ChatColor passiveColor = Theme.PASSIVE.getColor();
+        List<String> finalLore = new ArrayList<>();
+        finalLore.add("");
+        for (String s : lore) {
+            finalLore.add(passiveColor + s);
+        }
+        finalLore.add(applyThemeToString(Theme.SUCCESS, themeType.getLoreLine()));
+        return new SlimefunItemStack(
+                id,
+                itemStack,
+                coloredName,
+                finalLore.toArray(new String[0])
         );
     }
 

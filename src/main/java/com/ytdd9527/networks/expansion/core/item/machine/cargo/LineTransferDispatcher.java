@@ -23,7 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class Dispatcher extends NetworkDirectional {
+public class LineTransferDispatcher extends NetworkDirectional {
 
 
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
@@ -63,7 +63,7 @@ public class Dispatcher extends NetworkDirectional {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
     );
 
-    public Dispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public LineTransferDispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);

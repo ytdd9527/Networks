@@ -1,16 +1,14 @@
-package com.ytdd9527.networks.expansion.core.utils;
+package com.ytdd9527.networks.expansion.util;
 
+import com.ytdd9527.networks.expansion.setup.Skins;
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 
 import dev.sefiraat.sefilib.entity.display.builders.ItemDisplayBuilder;
-import com.ytdd9527.networks.expansion.setup.ItemsModel;
 
-import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Location;
 
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import org.bukkit.util.Vector;
@@ -31,7 +29,7 @@ public final class DisplayGroupGenerators {
                 "purge",
                 new ItemDisplayBuilder()
                         .setGroupParentOffset(new Vector(0, 1, 0))
-                        .setItemStack(new ItemStack(ItemStacksModel.NEA_MODEL_PURGER))
+                        .setItemStack(new ItemStack(BRIDGE_STACK))
                         .setTransformation(Transformations.TWO.getTransformation())
                         .build(displayGroup)
         );
@@ -44,7 +42,7 @@ public final class DisplayGroupGenerators {
                 "cell",
                 new ItemDisplayBuilder()
                         .setGroupParentOffset(new Vector(0, 1, 0))
-                        .setItemStack(new ItemStack(ItemStacksModel.NE_MODEL_CELL))
+                        .setItemStack(new ItemStack(BRIDGE_STACK))
                         .setTransformation(Transformations.TWO.getTransformation())
                         .build(displayGroup)
         );
@@ -57,7 +55,7 @@ public final class DisplayGroupGenerators {
                 "powernode",
                 new ItemDisplayBuilder()
                         .setGroupParentOffset(new Vector(0, 0, 0))
-                        .setItemStack(new ItemStack(ItemStacksModel.NE_MODEL_CAPACITOR_5))
+                        .setItemStack(new ItemStack(BRIDGE_STACK))
                         .setTransformation(Transformations.NE_MODEL_CAPACITOR_5.getTransformation())
                         .build(displayGroup)
         );
@@ -123,9 +121,9 @@ public final class DisplayGroupGenerators {
         return displayGroup;
     }
     public static final CustomItemStack BRIDGE_STACK = new CustomItemStack(
-            Skulls.BRIDGE1.getPlayerHead(),""
+            Skins.BRIDGE1.getPlayerHead(),""
     );
     public static final CustomItemStack BRIDGE_CORNER_RIM_STACK = new CustomItemStack(
-            Skulls.BRIDGE2.getPlayerHead(),""
+            Skins.BRIDGE2.getPlayerHead(),""
     );
 }

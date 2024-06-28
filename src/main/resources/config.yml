@@ -97,3 +97,84 @@ items:
     required-power: 5000
     use-special-model:
       enable: false
+
+
+
+  # 链式传输器[推送]
+  NTW_EXPANSION_POINT_TRANSFER_PUSHER:
+    max-distance: 32
+    pushitem-tick: 5
+    use-special-model:
+      enable: false
+  # 链式传输器[抓取]
+  NTW_EXPANSION_POINT_TRANSFER_GRABBER:
+    max-distance: 32
+    grabitem-tick: 12
+    use-special-model:
+      enable: false
+  # 链式传输器
+  NTW_EXPANSION_POINT_TRANSFER:
+    max-distance: 32
+    pushitem-tick: 5
+    grabitem-tick: 12
+    use-special-model:
+      enable: false
+  # 链式传输器Plus[推送]
+  NTW_EXPANSION_POINT_TRANSFER_PLUS_PUSHER:
+    max-distance: 32
+    pushitem-tick: 5
+    use-special-model:
+      enable: false
+  # 链式传输器Plus[抓取]
+  NTW_EXPANSION_POINT_TRANSFER_PLUS_GRABBER:
+    max-distance: 32
+    grabitem-tick: 12
+    use-special-model:
+      enable: false
+  # 链式传输器Plus
+  NTW_EXPANSION_POINT_TRANSFER_PLUS:
+    max-distance: 32
+    pushitem-tick: 5
+    grabitem-tick: 12
+    required-power: 5000
+    use-special-model:
+      enable: false
+  # 高级链式传输器[推送]
+  NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PUSHER:
+    max-distance: 32
+    pushitem-tick: 5
+    use-special-model:
+      enable: false
+  # 高级链式传输器[抓取]
+  NTW_EXPANSION_ADVANCED_POINT_TRANSFER_GRABBER:
+    max-distance: 32
+    grabitem-tick: 12
+    use-special-model:
+      enable: false
+  # 高级链式传输器
+  NTW_EXPANSION_ADVANCED_POINT_TRANSFER:
+    max-distance: 32
+    pushitem-tick: 5
+    grabitem-tick: 12
+    use-special-model:
+      enable: false
+  # 高级链式传输器Plus[推送]
+  NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PLUS_PUSHER:
+    max-distance: 64
+    pushitem-tick: 5
+    use-special-model:
+      enable: false
+  # 高级链式传输器Plus[抓取]
+  NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PLUS_GRABBER:
+    max-distance: 64
+    grabitem-tick: 12
+    use-special-model:
+      enable: false
+  # 高级链式传输器Plus
+  NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PLUS:
+    max-distance: 64
+    pushitem-tick: 5
+    grabitem-tick: 12
+    required-power: 5000
+    use-special-model:
+      enable: false

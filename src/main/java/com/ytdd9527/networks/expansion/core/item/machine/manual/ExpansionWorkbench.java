@@ -1,10 +1,10 @@
 package com.ytdd9527.networks.expansion.core.item.machine.manual;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import com.ytdd9527.networks.expansion.core.item.AbstractMySlimefunItem;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ExpansionWorkbench extends SlimefunItem {
+public class ExpansionWorkbench extends AbstractMySlimefunItem {
 
     private static final int[] BACKGROUND_SLOTS = {
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 22, 24, 26, 27, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
@@ -176,4 +176,5 @@ public class ExpansionWorkbench extends SlimefunItem {
     public static void  addRecipe(ItemStack[] input, ItemStack output) {
         RECIPES.put(input, output);
     }
+
 }
