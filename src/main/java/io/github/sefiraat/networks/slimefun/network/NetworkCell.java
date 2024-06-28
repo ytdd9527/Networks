@@ -69,26 +69,22 @@ public class NetworkCell extends NetworkObject {
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                return new int[] {};
+                return new int[]{0};
             }
-
         };
     }
     @Override
     public void preRegister() {
-        // 只有当 useSpecialModel 为 true 时，才添加放置处理器
         if (useSpecialModel) {
             addItemHandler(new BlockPlaceHandler(false) {
                 @Override
                 public void onPlayerPlace(@NotNull BlockPlaceEvent e) {
-                    // 放置方块时的逻辑
                     e.getBlock().setType(Material.BARRIER);
                     setupDisplay(e.getBlock().getLocation());
                 }
             });
         }
 
-        // 添加破坏处理器，不管 useSpecialModel 的值如何，破坏时的逻辑都应该执行
         addItemHandler(new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
