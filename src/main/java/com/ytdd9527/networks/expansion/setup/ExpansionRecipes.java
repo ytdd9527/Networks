@@ -34,64 +34,64 @@ public class ExpansionRecipes {
     //坐标传输器
     public static final ItemStack[] COORDINATE_TRANSMITTER = new ItemStack[] {
         NETWORK_WIRELESS_TRANSMITTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem(),
-        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER, ADVANCED_NANOBOTS.getItem(),
+        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER, ADVANCED_NANOBOTS.getItem(),
         NETWORK_WIRELESS_TRANSMITTER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_WIRELESS_TRANSMITTER.getItem()
     };
 
     //坐标接收器
     public static final ItemStack[] COORDINATE_RECEIVER = new ItemStack[] {
         NETWORK_WIRELESS_RECEIVER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_WIRELESS_RECEIVER.getItem(),
-        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER, ADVANCED_NANOBOTS.getItem(),
+        ADVANCED_NANOBOTS.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER, ADVANCED_NANOBOTS.getItem(),
         NETWORK_WIRELESS_RECEIVER.getItem(), AI_CORE.getItem(), NETWORK_WIRELESS_RECEIVER.getItem()
     };
 
     //链式推送
-    public static final ItemStack[] POINT_TRANSFER_PUSHER = new ItemStack[] {
+    public static final ItemStack[] LINE_TRANSFER_PUSHER = new ItemStack[] {
         NETWORK_PUSHER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_PUSHER.getItem(),
         OPTIC_CABLE.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_CABLE.getItem(),
         NETWORK_PUSHER.getItem(), NETWORK_EXPORT.getItem(), NETWORK_PUSHER.getItem()
     };
 
-    public static final ItemStack[] POINT_TRANSFER_PLUS_PUSHER = new ItemStack[] {
-        ExpansionItemStacks.POINT_TRANSFER_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER,
+    public static final ItemStack[] LINE_TRANSFER_PLUS_PUSHER = new ItemStack[] {
+        ExpansionItemStacks.LINE_TRANSFER_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER,
         INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN), INTERDIMENSIONAL_PRESENCE.getItem(),
-        ExpansionItemStacks.POINT_TRANSFER_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER
+        ExpansionItemStacks.LINE_TRANSFER_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER
     };
 
     //链式抓取
-    public static final ItemStack[] POINT_TRANSFER_GRABBER = new ItemStack[] {
+    public static final ItemStack[] LINE_TRANSFER_GRABBER = new ItemStack[] {
         NETWORK_GRABBER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_GRABBER.getItem(),
         OPTIC_CABLE.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), OPTIC_CABLE.getItem(),
         NETWORK_GRABBER.getItem(), NETWORK_IMPORT.getItem(), NETWORK_GRABBER.getItem()
     };
 
-    public static final ItemStack[] POINT_TRANSFER_PLUS_GRABBER = new ItemStack[] {
-        ExpansionItemStacks.POINT_TRANSFER_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER,
+    public static final ItemStack[] LINE_TRANSFER_PLUS_GRABBER = new ItemStack[] {
+        ExpansionItemStacks.LINE_TRANSFER_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER,
         INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN),INTERDIMENSIONAL_PRESENCE.getItem(),
-        ExpansionItemStacks.POINT_TRANSFER_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER
+        ExpansionItemStacks.LINE_TRANSFER_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER
     };
     //链式调度器
-    public static final ItemStack[] POINT_TRANSFER = new ItemStack[] {
+    public static final ItemStack[] LINE_TRANSFER = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
-        ExpansionItemStacks.POINT_TRANSFER_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER_GRABBER,
+        ExpansionItemStacks.LINE_TRANSFER_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.LINE_TRANSFER_GRABBER,
         NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] POINT_TRANSFER_PLUS = new ItemStack[] {
+    public static final ItemStack[] LINE_TRANSFER_PLUS = new ItemStack[] {
         NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(), NETWORK_BRIDGE.getItem(),
-        ExpansionItemStacks.POINT_TRANSFER_PLUS_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER_PLUS_GRABBER,
+        ExpansionItemStacks.LINE_TRANSFER_PLUS_GRABBER, OPTIC_CABLE.getItem(), ExpansionItemStacks.LINE_TRANSFER_PLUS_GRABBER,
         NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
 
     public static final ItemStack[] NE_CHAIN_DISPATCHER_NUMBERABLE = new ItemStack[] {
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
-        OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER, OPTIC_CABLE.getItem(),
+        OPTIC_CABLE.getItem(), ExpansionItemStacks.LINE_TRANSFER, OPTIC_CABLE.getItem(),
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
 
     public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = new ItemStack[] {
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
-        OPTIC_CABLE.getItem(), ExpansionItemStacks.POINT_TRANSFER_PLUS, OPTIC_CABLE.getItem(),
+        OPTIC_CABLE.getItem(), ExpansionItemStacks.LINE_TRANSFER_PLUS, OPTIC_CABLE.getItem(),
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
 

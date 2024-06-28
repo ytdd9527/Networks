@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class AdvancedPointTransferGrabber extends AdvancedDirectional implements RecipeDisplayItem {
+public class AdvancedLineTransferGrabber extends AdvancedDirectional implements RecipeDisplayItem {
 
     private static final String TICK_COUNTER_KEY = "chain_grabber_plus_tick_counter";
     private static final String KEY_UUID = "display-uuid";
@@ -59,7 +59,7 @@ public class AdvancedPointTransferGrabber extends AdvancedDirectional implements
 
     private int totalAmount;
 
-    public AdvancedPointTransferGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+    public AdvancedLineTransferGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER, TRANSPORT_LIMIT);
         loadConfigurations(configKey);
     }
@@ -68,7 +68,7 @@ public class AdvancedPointTransferGrabber extends AdvancedDirectional implements
         FileConfiguration config = Networks.getInstance().getConfig();
 
         int defaultMaxDistance = 32;
-        int defaultGrabItemTick = 10;
+        int defaultGrabItemTick = 1;
         boolean defaultUseSpecialModel = false;
 
         this.maxDistance = config.getInt("items." + configKey + ".max-distance", defaultMaxDistance);

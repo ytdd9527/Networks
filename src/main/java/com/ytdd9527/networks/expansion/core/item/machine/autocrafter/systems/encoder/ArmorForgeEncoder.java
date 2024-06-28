@@ -8,6 +8,7 @@ import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
+import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -153,26 +154,16 @@ public class ArmorForgeEncoder extends NetworkObject {
             player.sendMessage(Theme.WARNING + "这似乎不是一个有效的配方");
             return;
         }
-
-
-        if (crafted.getType() == Material.AIR) {
-            player.sendMessage(Theme.WARNING + "编码的结果是空气，这不是一个有效的配方。");
-            return;
-        }
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
-
-        blueprint.setAmount(blueprint.getAmount() - 1);
         ArmorForgeBlueprint.setBlueprint(blueprintClone, inputs, crafted);
         if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
             blueprint.setAmount(blueprint.getAmount() - 1);
-            /** 实现编码不消耗物品
             for (int recipeSlot : RECIPE_SLOTS) {
                 ItemStack slotItem = blockMenu.getItemInSlot(recipeSlot);
                 if (slotItem != null) {
                     slotItem.setAmount(slotItem.getAmount() - 1);
                 }
             }
-            */
             blockMenu.pushItem(blueprintClone, OUTPUT_SLOT);
         } else {
             player.sendMessage(Theme.WARNING + "需要清空输出烂");

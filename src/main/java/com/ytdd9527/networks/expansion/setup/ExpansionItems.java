@@ -4,12 +4,12 @@ import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.advanced.*;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.basic.*;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.*;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.encoder.*;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.PointTransfer;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.PointTransferGrabber;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.PointTransferPusher;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedPointTransfer;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedPointTransferGrabber;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedPointTransferPusher;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransfer;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransferGrabber;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransferPusher;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransfer;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransferGrabber;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransferPusher;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkCraftingGridNewStyle;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkEncodingGridNewStyle;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkGridNewStyle;
@@ -412,94 +412,94 @@ public class ExpansionItems {
             true
     );
     
-    public static final PointTransferPusher POINT_TRANSFER_PUSHER = new PointTransferPusher(
+    public static final LineTransferPusher LINE_TRANSFER_PUSHER = new LineTransferPusher(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.POINT_TRANSFER_PUSHER,
+            ExpansionItemStacks.LINE_TRANSFER_PUSHER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.POINT_TRANSFER_PUSHER,
-            "NTW_EXPANSION_POINT_TRANSFER_PUSHER"
+            ExpansionRecipes.LINE_TRANSFER_PUSHER,
+            "NTW_EXPANSION_LINE_TRANSFER_PUSHER"
     );
     
-    public static final PointTransferGrabber POINT_TRANSFER_GRABBER = new PointTransferGrabber(
+    public static final LineTransferGrabber LINE_TRANSFER_GRABBER = new LineTransferGrabber(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.POINT_TRANSFER_GRABBER,
+            ExpansionItemStacks.LINE_TRANSFER_GRABBER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.POINT_TRANSFER_GRABBER,
-            "NTW_EXPANSION_POINT_TRANSFER_GRABBER"
+            ExpansionRecipes.LINE_TRANSFER_GRABBER,
+            "NTW_EXPANSION_LINE_TRANSFER_GRABBER"
     );
-    public static final PointTransfer POINT_TRANSFER = new PointTransfer(
+    public static final LineTransfer LINE_TRANSFER = new LineTransfer(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.POINT_TRANSFER,
+            ExpansionItemStacks.LINE_TRANSFER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.POINT_TRANSFER_PUSHER,
-            "NTW_EXPANSION_POINT_TRANSFER"
+            ExpansionRecipes.LINE_TRANSFER,
+            "NTW_EXPANSION_LINE_TRANSFER"
     );
     
-    public static final PointTransferPusher POINT_TRANSFER_PLUS_PUSHER = new PointTransferPusher(
+    public static final LineTransferPusher LINE_TRANSFER_PLUS_PUSHER = new LineTransferPusher(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.POINT_TRANSFER_PLUS_PUSHER,
+            ExpansionItemStacks.LINE_TRANSFER_PLUS_PUSHER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.POINT_TRANSFER_PLUS_PUSHER,
-            "NTW_EXPANSION_POINT_TRANSFER_PLUS_PUSHER"
+            ExpansionRecipes.LINE_TRANSFER_PLUS_PUSHER,
+            "NTW_EXPANSION_LINE_TRANSFER_PLUS_PUSHER"
     );
-    public static final PointTransferGrabber POINT_TRANSFER_PLUS_GRABBER = new PointTransferGrabber(
+    public static final LineTransferGrabber LINE_TRANSFER_PLUS_GRABBER = new LineTransferGrabber(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.POINT_TRANSFER_PLUS_GRABBER,
+            ExpansionItemStacks.LINE_TRANSFER_PLUS_GRABBER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.POINT_TRANSFER_PLUS_GRABBER,
-            "NTW_EXPANSION_POINT_TRANSFER_PLUS_GRABBER"
+            ExpansionRecipes.LINE_TRANSFER_PLUS_GRABBER,
+            "NTW_EXPANSION_LINE_TRANSFER_PLUS_GRABBER"
     );
-    public static final PointTransfer POINT_TRANSFER_PLUS = new PointTransfer(
+    public static final LineTransfer LINE_TRANSFER_PLUS = new LineTransfer(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.POINT_TRANSFER_PLUS,
+            ExpansionItemStacks.LINE_TRANSFER_PLUS,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.POINT_TRANSFER_PLUS,
-            "NTW_EXPANSION_POINT_TRANSFER_PLUS"
+            ExpansionRecipes.LINE_TRANSFER_PLUS,
+            "NTW_EXPANSION_LINE_TRANSFER_PLUS"
     );
 
-    public static final AdvancedPointTransferPusher ADVANCED_POINT_TRANSFER_PUSHER = new AdvancedPointTransferPusher(
+    public static final AdvancedLineTransferPusher ADVANCED_LINE_TRANSFER_PUSHER = new AdvancedLineTransferPusher(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.ADVANCED_POINT_TRANSFER_PUSHER,
+            ExpansionItemStacks.ADVANCED_LINE_TRANSFER_PUSHER,
             RecipeType.NULL,
             ExpansionRecipes.NULL,
-            "NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PUSHER"
+            "NTW_EXPANSION_ADVANCED_LINE_TRANSFER_PUSHER"
     );
 
-    public static final AdvancedPointTransferGrabber ADVANCED_POINT_TRANSFER_GRABBER = new AdvancedPointTransferGrabber(
+    public static final AdvancedLineTransferGrabber ADVANCED_LINE_TRANSFER_GRABBER = new AdvancedLineTransferGrabber(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.ADVANCED_POINT_TRANSFER_GRABBER,
+            ExpansionItemStacks.ADVANCED_LINE_TRANSFER_GRABBER,
             RecipeType.NULL,
             ExpansionRecipes.NULL,
-            "NTW_EXPANSION_ADVANCED_POINT_TRANSFER_GRABBER"
+            "NTW_EXPANSION_ADVANCED_LINE_TRANSFER_GRABBER"
     );
-    public static final AdvancedPointTransfer ADVANCED_POINT_TRANSFER = new AdvancedPointTransfer(
+    public static final AdvancedLineTransfer ADVANCED_LINE_TRANSFER = new AdvancedLineTransfer(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.ADVANCED_POINT_TRANSFER,
+            ExpansionItemStacks.ADVANCED_LINE_TRANSFER,
             RecipeType.NULL,
             ExpansionRecipes.NULL,
-            "NTW_EXPANSION_ADVANCED_POINT_TRANSFER"
+            "NTW_EXPANSION_ADVANCED_LINE_TRANSFER"
     );
 
-    public static final AdvancedPointTransferPusher ADVANCED_POINT_TRANSFER_PLUS_PUSHER = new AdvancedPointTransferPusher(
+    public static final AdvancedLineTransferPusher ADVANCED_LINE_TRANSFER_PLUS_PUSHER = new AdvancedLineTransferPusher(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.ADVANCED_POINT_TRANSFER_PLUS_PUSHER,
+            ExpansionItemStacks.ADVANCED_LINE_TRANSFER_PLUS_PUSHER,
             RecipeType.NULL,
             ExpansionRecipes.NULL,
-            "NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PLUS_PUSHER"
+            "NTW_EXPANSION_ADVANCED_LINE_TRANSFER_PLUS_PUSHER"
     );
-    public static final AdvancedPointTransferGrabber ADVANCED_POINT_TRANSFER_PLUS_GRABBER = new AdvancedPointTransferGrabber(
+    public static final AdvancedLineTransferGrabber ADVANCED_LINE_TRANSFER_PLUS_GRABBER = new AdvancedLineTransferGrabber(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.ADVANCED_POINT_TRANSFER_PLUS_GRABBER,
+            ExpansionItemStacks.ADVANCED_LINE_TRANSFER_PLUS_GRABBER,
             RecipeType.NULL,
             ExpansionRecipes.NULL,
-            "NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PLUS_GRABBER"
+            "NTW_EXPANSION_ADVANCED_LINE_TRANSFER_PLUS_GRABBER"
     );
-    public static final AdvancedPointTransfer ADVANCED_POINT_TRANSFER_PLUS = new AdvancedPointTransfer(
+    public static final AdvancedLineTransfer ADVANCED_LINE_TRANSFER_PLUS = new AdvancedLineTransfer(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.ADVANCED_POINT_TRANSFER_PLUS,
+            ExpansionItemStacks.ADVANCED_LINE_TRANSFER_PLUS,
             RecipeType.NULL,
             ExpansionRecipes.NULL,
-            "NTW_EXPANSION_ADVANCED_POINT_TRANSFER_PLUS"
+            "NTW_EXPANSION_ADVANCED_LINE_TRANSFER_PLUS"
     );
 
     public static final NetworkBridge NETWORK_BRIDGE_WHITE = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_WHITE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_WHITE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_WHITE, 8),"NETWORK_BRIDGE_WHITE");

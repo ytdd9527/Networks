@@ -4,12 +4,12 @@ import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.advanced.*;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.basic.*;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.*;
 import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.encoder.*;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.PointTransferPusher;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.PointTransferGrabber;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.PointTransfer;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedPointTransferGrabber;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedPointTransferPusher;
-import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedPointTransfer;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransferPusher;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransferGrabber;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransfer;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransferGrabber;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransferPusher;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransfer;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.CoordinateTransmitter;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.CoordinateReceiver;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkCraftingGridNewStyle;
@@ -112,55 +112,55 @@ public class DepreacteExpansionItems {
         ExpansionRecipes.NETWORK_ENCODING_GRID_NEW_STYLE
     );
 
-    public static final PointTransferPusher CHAIN_PUSHER = new PointTransferPusher(
+    public static final LineTransferPusher CHAIN_PUSHER = new LineTransferPusher(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.CHAING_PUSHER,
         RecipeType.NULL,
-        ExpansionRecipes.POINT_TRANSFER_PUSHER,
+        ExpansionRecipes.LINE_TRANSFER_PUSHER,
         "NE_CHAIN_PUSHER"
     );
 
-    public static final PointTransferPusher CHAIN_PUSHER_PLUS = new PointTransferPusher(
+    public static final LineTransferPusher CHAIN_PUSHER_PLUS = new LineTransferPusher(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.CHAIN_PUSHER_PLUS,
         RecipeType.NULL,
-        ExpansionRecipes.POINT_TRANSFER_PLUS_PUSHER,
+        ExpansionRecipes.LINE_TRANSFER_PLUS_PUSHER,
         "NE_CHAIN_PUSHER_PLUS"
     );
 
-    public static final PointTransferGrabber CHAIN_GRABBER = new PointTransferGrabber(
+    public static final LineTransferGrabber CHAIN_GRABBER = new LineTransferGrabber(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.CHAIN_GRABBER,
         RecipeType.NULL,
-        ExpansionRecipes.POINT_TRANSFER_GRABBER,
+        ExpansionRecipes.LINE_TRANSFER_GRABBER,
         "NE_CHAIN_GRABBER"
     );
 
-    public static final PointTransferGrabber CHAIN_GRABBER_PLUS = new PointTransferGrabber(
+    public static final LineTransferGrabber CHAIN_GRABBER_PLUS = new LineTransferGrabber(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.CHAIN_GRABBER_PLUS,
         RecipeType.NULL,
-        ExpansionRecipes.POINT_TRANSFER_PLUS_GRABBER,
+        ExpansionRecipes.LINE_TRANSFER_PLUS_GRABBER,
         "NE_CHAIN_GRABBER_PLUS"
     );
 
-    public static final PointTransfer CHAIN_DISPATCHER = new PointTransfer(
+    public static final LineTransfer CHAIN_DISPATCHER = new LineTransfer(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.CHAIN_DISPATCHER,
         RecipeType.NULL,
-        ExpansionRecipes.POINT_TRANSFER,
+        ExpansionRecipes.LINE_TRANSFER,
         "CHAIN_DISPATCHER"
     );
 
-    public static final PointTransfer CHAIN_DISPATCHER_PLUS = new PointTransfer(
+    public static final LineTransfer CHAIN_DISPATCHER_PLUS = new LineTransfer(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.CHAIN_DISPATCHER_PLUS,
         RecipeType.NULL,
-        ExpansionRecipes.POINT_TRANSFER_PLUS,
+        ExpansionRecipes.LINE_TRANSFER_PLUS,
         "CHAIN_DISPATCHER_PLUS"
     );
 
-    public static final AdvancedPointTransferPusher ADVANCED_CHAIN_PUSHER = new AdvancedPointTransferPusher(
+    public static final AdvancedLineTransferPusher ADVANCED_CHAIN_PUSHER = new AdvancedLineTransferPusher(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.ADVANCED_CHAIN_PUSHER,
         RecipeType.NULL,
@@ -168,7 +168,7 @@ public class DepreacteExpansionItems {
         "NE_ADVANCED_CHAING_PUSHER"
     );
 
-    public static final AdvancedPointTransferPusher ADVANCED_CHAIN_PUSHER_PLUS = new AdvancedPointTransferPusher(
+    public static final AdvancedLineTransferPusher ADVANCED_CHAIN_PUSHER_PLUS = new AdvancedLineTransferPusher(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.ADVANCED_CHAIN_PUSHER_PLUS,
         RecipeType.NULL,
@@ -176,7 +176,7 @@ public class DepreacteExpansionItems {
         "NE_ADVANCED_CHAING_PUSHER_PLUS"
     );
 
-    public static final AdvancedPointTransferGrabber ADVANCED_CHAIN_GRABBER = new AdvancedPointTransferGrabber(
+    public static final AdvancedLineTransferGrabber ADVANCED_CHAIN_GRABBER = new AdvancedLineTransferGrabber(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.ADVANCED_CHAIN_GRABBER,
         RecipeType.NULL,
@@ -184,7 +184,7 @@ public class DepreacteExpansionItems {
         "NE_ADVANCED_CHAING_GRABBER"
     );
 
-    public static final AdvancedPointTransferGrabber ADVANCED_CHAIN_GRABBER_PLUS = new AdvancedPointTransferGrabber(
+    public static final AdvancedLineTransferGrabber ADVANCED_CHAIN_GRABBER_PLUS = new AdvancedLineTransferGrabber(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.ADVANCED_CHAIN_GRABBER_PLUS,
         RecipeType.NULL,
@@ -192,7 +192,7 @@ public class DepreacteExpansionItems {
         "NE_ADVANCED_CHAING_GRABBER_PLUS"
     );
 
-    public static final AdvancedPointTransfer ADVANCED_CHAIN_DISPATCHER = new AdvancedPointTransfer(
+    public static final AdvancedLineTransfer ADVANCED_CHAIN_DISPATCHER = new AdvancedLineTransfer(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.ADVANCED_CHAIN_DISPATCHER,
         RecipeType.NULL,
@@ -200,7 +200,7 @@ public class DepreacteExpansionItems {
         "NE_ADVANCED_CHAIN_DISPATCHER"
     );
 
-    public static final AdvancedPointTransfer ADVANCED_CHAIN_DISPATCHER_PLUS = new AdvancedPointTransfer(
+    public static final AdvancedLineTransfer ADVANCED_CHAIN_DISPATCHER_PLUS = new AdvancedLineTransfer(
         NetworksItemGroups.DISABLED_ITEMS,
         DeprecateExpansionItemStacks.ADVANCED_CHAIN_DISPATCHER_PLUS,
         RecipeType.NULL,

@@ -40,13 +40,14 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class AdvancedPointTransferPusher extends AdvancedDirectional implements RecipeDisplayItem {
+public class AdvancedLineTransferPusher extends AdvancedDirectional implements RecipeDisplayItem {
 
     private static final String KEY_UUID = "display-uuid";
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
     private static final int TRANSPORT_LIMIT = 64;
+
     private static final int TRANSPORT_MODE_SLOT = 27;
     private static final int MINUS_SLOT = 36;
     private static final int SHOW_SLOT = 37;
@@ -54,7 +55,7 @@ public class AdvancedPointTransferPusher extends AdvancedDirectional implements 
 
     private int pushItemTick;
     private int maxDistance;
-
+    private int limit;
     private static final int[] BACKGROUND_SLOTS = new int[]{
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17, 18, 20, 22, 23, 27, 28, 30, 31, 33, 34, 35, 39, 40, 41, 42, 43, 44
     };
@@ -72,7 +73,7 @@ public class AdvancedPointTransferPusher extends AdvancedDirectional implements 
     );
     private static final String TICK_COUNTER_KEY = "chain_PusherPlus_tick_counter";
 
-    public AdvancedPointTransferPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+    public AdvancedLineTransferPusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_PUSHER, TRANSPORT_LIMIT);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
@@ -82,7 +83,7 @@ public class AdvancedPointTransferPusher extends AdvancedDirectional implements 
 
     private void loadConfigurations(String configKey) {
         int defaultMaxDistance = 32;
-        int defaultPushItemTick = 6;
+        int defaultPushItemTick = 1;
         boolean defaultUseSpecialModel = false;
 
         FileConfiguration config = Networks.getInstance().getConfig();
@@ -385,7 +386,11 @@ public class AdvancedPointTransferPusher extends AdvancedDirectional implements 
     protected int getAddSlot() {
         return ADD_SLOT;
     }
-
+    @Override
+    public void postRegister() {
+        super.postRegister();
+        setLimit(128);
+    }
     @Nonnull
     @Override
     public List<ItemStack> getDisplayRecipes() {

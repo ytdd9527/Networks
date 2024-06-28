@@ -23,20 +23,20 @@ public class SetupUtil {
                 ExpansionItems.ADVANCED_QUANTUM_STORAGE.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_CARGO.addTo(
-                ExpansionItems.POINT_TRANSFER.registerThis(),
-                ExpansionItems.POINT_TRANSFER_GRABBER.registerThis(),
-                ExpansionItems.POINT_TRANSFER_PUSHER.registerThis(),
-                ExpansionItems.POINT_TRANSFER_PLUS.registerThis(),
-                ExpansionItems.POINT_TRANSFER_PLUS_PUSHER.registerThis(),
-                ExpansionItems.POINT_TRANSFER_PLUS_GRABBER.registerThis()
+                ExpansionItems.LINE_TRANSFER.registerThis(),
+                ExpansionItems.LINE_TRANSFER_GRABBER.registerThis(),
+                ExpansionItems.LINE_TRANSFER_PUSHER.registerThis(),
+                ExpansionItems.LINE_TRANSFER_PLUS.registerThis(),
+                ExpansionItems.LINE_TRANSFER_PLUS_PUSHER.registerThis(),
+                ExpansionItems.LINE_TRANSFER_PLUS_GRABBER.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_CARGO.addTo(
-                ExpansionItems.ADVANCED_POINT_TRANSFER.registerThis(),
-                ExpansionItems.ADVANCED_POINT_TRANSFER_GRABBER.registerThis(),
-                ExpansionItems.ADVANCED_POINT_TRANSFER_PUSHER.registerThis(),
-                ExpansionItems.ADVANCED_POINT_TRANSFER_PLUS.registerThis(),
-                ExpansionItems.ADVANCED_POINT_TRANSFER_PLUS_PUSHER.registerThis(),
-                ExpansionItems.ADVANCED_POINT_TRANSFER_PLUS_GRABBER.registerThis()
+                ExpansionItems.ADVANCED_LINE_TRANSFER.registerThis(),
+                ExpansionItems.ADVANCED_LINE_TRANSFER_GRABBER.registerThis(),
+                ExpansionItems.ADVANCED_LINE_TRANSFER_PUSHER.registerThis(),
+                ExpansionItems.ADVANCED_LINE_TRANSFER_PLUS.registerThis(),
+                ExpansionItems.ADVANCED_LINE_TRANSFER_PLUS_PUSHER.registerThis(),
+                ExpansionItems.ADVANCED_LINE_TRANSFER_PLUS_GRABBER.registerThis()
         );
         /* 功能机器 */
         ExpansionItemsMenus.SUB_MENU_CORE_MACHINE.addTo(

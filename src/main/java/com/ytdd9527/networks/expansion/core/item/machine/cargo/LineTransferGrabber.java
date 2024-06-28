@@ -37,7 +37,7 @@ import java.util.*;
 import java.util.function.Function;
 
 
-public class PointTransferGrabber extends NetworkDirectional implements RecipeDisplayItem {
+public class LineTransferGrabber extends NetworkDirectional implements RecipeDisplayItem {
 
 
     private static final String TICK_COUNTER_KEY = "chain_grabber_plus_tick_counter";
@@ -49,7 +49,7 @@ public class PointTransferGrabber extends NetworkDirectional implements RecipeDi
     private int grabItemTick;
     private int maxDistance;
 
-    public PointTransferGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
+    public LineTransferGrabber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String itemId) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_GRABBER);
         loadConfigurations(itemId);
     }
@@ -58,7 +58,7 @@ public class PointTransferGrabber extends NetworkDirectional implements RecipeDi
         FileConfiguration config = Networks.getInstance().getConfig();
 
         int defaultMaxDistance = 32;
-        int defaultGrabItemTick = 12;
+        int defaultGrabItemTick = 1;
         boolean defaultUseSpecialModel = false;
 
         this.maxDistance = Math.min(config.getInt("items." + itemId + ".max-distance", defaultMaxDistance), MAX_DISTANCE_LIMIT);

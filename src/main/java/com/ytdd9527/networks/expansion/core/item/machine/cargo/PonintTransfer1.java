@@ -23,7 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class LineTransferDispatcher extends NetworkDirectional {
+public class PonintTransfer1 extends NetworkDirectional {
 
 
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
@@ -63,7 +63,7 @@ public class LineTransferDispatcher extends NetworkDirectional {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "指定需要推送的物品"
     );
 
-    public LineTransferDispatcher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public PonintTransfer1(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
@@ -251,64 +251,3 @@ public class LineTransferDispatcher extends NetworkDirectional {
         return TEMPLATE_SLOTS;
     }
 }
-
-//private void tryPushItem(@Nonnull BlockMenu blockMenu) {
-//    final NodeDefinition definition = NetworkStorage.getAllNetworkObjects().get(blockMenu.getLocation());
-//    if (definition == null || definition.getNode() == null) {
-//        return;
-//    }
-//
-//    final BlockFace direction = this.getCurrentDirection(blockMenu);
-//    Block targetBlock = blockMenu.getBlock().getRelative(direction);
-//
-//    for (int i = 0; i < MAX_DISTANCE; i++) {
-//        targetBlock = targetBlock.getRelative(direction);
-//        final BlockMenu targetMenu = StorageCacheUtils.getMenu(targetBlock.getLocation());
-//        if (targetMenu == null) {
-//            break; // 如果没有找到BlockMenu，结束循环
-//        }
-//
-//        for (int itemSlot : this.getItemSlots()) {
-//            final ItemStack testItem = blockMenu.getItemInSlot(itemSlot);
-//            if (testItem == null || testItem.getType() == Material.AIR) {
-//                continue; // 空槽位，跳过
-//            }
-//
-//            final ItemStack clone = testItem.clone();
-//            clone.setAmount(1);
-//
-//            // 获取目标机器可以插入物品的所有槽位
-//            int[] slots = targetMenu.getPreset().getSlotsAccessedByItemTransport(targetMenu, ItemTransportFlow.INSERT, clone);
-//
-//            boolean isItemMatched = false;
-//            for (int slot : slots) {
-//                final ItemStack targetItemStack = targetMenu.getItemInSlot(slot);
-//                // 检查目标槽位是否有相同类型的物品，并且没有达到最大堆叠数量
-//                if (targetItemStack != null && targetItemStack.getType() == clone.getType() && targetItemStack.getAmount() < targetItemStack.getMaxStackSize()) {
-//                    isItemMatched = true;
-//                    break;
-//                }
-//            }
-//
-//            if (!isItemMatched) {
-//                continue; // 如果没有匹配的物品，跳过当前的testItem
-//            }
-//
-//            // 如果找到匹配的物品，执行推送逻辑
-//            for (int slot : slots) {
-//                final ItemStack itemStack = targetMenu.getItemInSlot(slot);
-//                if (itemStack != null && itemStack.getType() == clone.getType()) {
-//                    final int space = itemStack.getMaxStackSize() - itemStack.getAmount();
-//                    if (space > 0) {
-//                        ItemStack toPush = clone.clone();
-//                        toPush.setAmount(space); // 推送剩余空间数量的物品
-//                        targetMenu.pushItem(toPush, slot);
-//                        // 显示粒子效果（如果需要）
-//                        // showParticle(blockMenu.getBlock().getLocation(), direction);
-//                    }
-//                    break; // 推送成功后退出当前槽位循环
-//                }
-//            }
-//        }
-//    }
-//}

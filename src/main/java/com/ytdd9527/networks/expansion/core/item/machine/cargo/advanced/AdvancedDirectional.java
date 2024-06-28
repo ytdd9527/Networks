@@ -60,6 +60,7 @@ public abstract class AdvancedDirectional extends NetworkDirectional {
     protected static final String TRANSPORT_MODE_KEY = "transport_mode";
 
     private int limit = 64;
+
     private static final Set<BlockFace> VALID_FACES = EnumSet.of(
             BlockFace.UP,
             BlockFace.DOWN,
@@ -547,32 +548,47 @@ public abstract class AdvancedDirectional extends NetworkDirectional {
         }        
         updateShowIcon(block);
     }
-
     public void addNumber(Block block, int number) {
-        if (getCurrentNumber(block) + number <= this.limit) {
-            setCurrentNumber(block, getCurrentNumber(block) + number);
-        } else {
-            setCurrentNumber(block, this.limit);
+        int currentNumber = getCurrentNumber(block);
+        int newNumber = currentNumber + number;
+        if (newNumber > limit) {
+            newNumber = limit; // 限制增加后的数字不超过 limit
         }
+        setCurrentNumber(block, newNumber);
         updateShowIcon(block);
     }
+    public void setLimit(int newLimit) {
+        if (newLimit > 0 && newLimit <= 3456) {
+            this.limit = newLimit;
+        } else {
+        }
+    }
+    public void updateShowIcon(Block block) {
 
-    public void updateShowIcon(Block  block) {
         ItemMeta itemMeta = this.showIconClone.getItemMeta();
-        List<String> lore = itemMeta.getLore();
+        List<String> lore = new ArrayList<>(itemMeta.getLore());
         lore.set(0, Theme.NOTICE + "当前数量: " + getCurrentNumber(block));
         itemMeta.setLore(lore);
         this.showIconClone.setItemMeta(itemMeta);
+
+        BlockMenu blockMenu = StorageCacheUtils.getMenu(block.getLocation());
+        if (blockMenu != null) {
+            blockMenu.replaceExistingItem(getShowSlot(), this.showIconClone);
+        }
     }
 
     public void updateTransportModeIcon(Block block) {
         ItemMeta itemMeta = this.transportModeIconClone.getItemMeta();
-        List<String> lore = itemMeta.getLore();
+        List<String> lore = new ArrayList<>(itemMeta.getLore());
         lore.set(0, Theme.NOTICE + "当前模式: " + Theme.MECHANISM + toText(getCurrentTransportMode(block)));
         itemMeta.setLore(lore);
         this.transportModeIconClone.setItemMeta(itemMeta);
-    }
 
+        BlockMenu blockMenu = StorageCacheUtils.getMenu(block.getLocation());
+        if (blockMenu != null) {
+            blockMenu.replaceExistingItem(getTransportModeSlot(), this.transportModeIconClone);
+        }
+    }
     public String toText(String mode) {
         switch (mode) {
             case TRANSPORT_MODE_NONE -> {

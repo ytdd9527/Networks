@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
-public class AdvancedPointTransfer extends AdvancedDirectional implements RecipeDisplayItem {
+public class AdvancedLineTransfer extends AdvancedDirectional implements RecipeDisplayItem {
 
 
     private static final ItemStack AIR = new CustomItemStack(Material.AIR);
@@ -96,7 +96,7 @@ public class AdvancedPointTransfer extends AdvancedDirectional implements Recipe
     private boolean useSpecialModel;
     private Function<Location, DisplayGroup> displayGroupGenerator;
 
-    public AdvancedPointTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
+    public AdvancedLineTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, String configKey) {
         super(itemGroup, item, recipeType, recipe, NodeType.CHAIN_DISPATCHER, TRANSPORT_LIMIT);
         for (int slot : TEMPLATE_SLOTS) {
             this.getSlotsToDrop().add(slot);
@@ -106,8 +106,8 @@ public class AdvancedPointTransfer extends AdvancedDirectional implements Recipe
 
     private void loadConfigurations(String configKey) {
         int defaultMaxDistance = 32;
-        int defaultPushItemTick = 6;
-        int defaultGrabItemTick = 12;
+        int defaultPushItemTick = 1;
+        int defaultGrabItemTick = 1;
         int defaultRequiredPower = 5000;
         boolean defaultUseSpecialModel = false;
 

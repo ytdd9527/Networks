@@ -90,4 +90,8 @@ public abstract class NetworkObject extends AbstractMySlimefunItem implements Ad
     public boolean runSync() {
         return false;
     }
+
+    public List<Integer> getSlotsToDrop() {
+        return slotsToDrop;
+    }
 }
