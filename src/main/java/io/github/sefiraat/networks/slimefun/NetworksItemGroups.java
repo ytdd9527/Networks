@@ -85,6 +85,7 @@ public final class NetworksItemGroups {
                     Theme.SUCCESS.getColor() + "网络物品拓展"
             ),0
     );
+
     static {
         final Networks plugin = Networks.getInstance();
 

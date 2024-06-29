@@ -1,5 +1,8 @@
 package io.github.sefiraat.networks;
 
+import com.ytdd9527.networks.expansion.core.cargoexpansion.data.DataSource;
+import com.ytdd9527.networks.expansion.core.cargoexpansion.data.DataStorage;
+import com.ytdd9527.networks.expansion.core.cargoexpansion.data.QueryQueue;
 import com.ytdd9527.networks.expansion.core.utils.ConfigManager;
 import com.ytdd9527.networks.expansion.setup.ExpansionItems;
 import com.ytdd9527.networks.expansion.setup.ItemsModel;
@@ -18,10 +21,12 @@ import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +43,9 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     private ConfigManager configManager;
     private ListenerManager listenerManager;
     private SupportedPluginManager supportedPluginManager;
+    private static DataSource dataSource;
+    private static QueryQueue queryQueue;
+    private static BukkitRunnable autoSaveThread;
     private int slimefunTickCount;
 
 
@@ -89,6 +97,31 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
         this.supportedPluginManager = new SupportedPluginManager();
 
+        // Try connect database
+        getLogger().info("正在连接数据库文件...");
+        try {
+            dataSource = new DataSource();
+        } catch (ClassNotFoundException | SQLException e) {
+            getLogger().warning("数据库文件连接失败！");
+            e.printStackTrace();
+            onDisable();
+        }
+
+        getLogger().info("正在创建队列...");
+        queryQueue = new QueryQueue();
+        queryQueue.startThread();
+
+        getLogger().info("正在创建自动保存线程...");
+        autoSaveThread = new BukkitRunnable() {
+            @Override
+            public void run() {
+                DataStorage.saveAmountChange();
+            }
+        };
+        // 5m * 60s * 20 ticks
+        long period = 5 * 60 * 20;
+        autoSaveThread.runTaskTimerAsynchronously(this, 2*period, period);
+
         getLogger().info("正在注册物品...");
         setupSlimefun();
 
@@ -104,6 +137,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
                         () -> slimefunTickCount++,
                         1,
                         Slimefun.getTickerTask().getTickRate());
+
         getLogger().info("已启用附属！");
     }
     @Override
@@ -121,6 +155,14 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
 
     public static ConfigManager getConfigManager() {
         return Networks.getInstance().configManager;
+    }
+
+    public static QueryQueue getQueryQueue() {
+        return queryQueue;
+    }
+
+    public static DataSource getDataSource() {
+        return dataSource;
     }
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();

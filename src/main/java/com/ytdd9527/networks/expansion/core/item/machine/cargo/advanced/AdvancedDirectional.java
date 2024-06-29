@@ -44,7 +44,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 public abstract class AdvancedDirectional extends NetworkDirectional {
 
     private static final int NORTH_SLOT = 12;
