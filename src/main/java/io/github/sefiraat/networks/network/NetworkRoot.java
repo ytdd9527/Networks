@@ -31,7 +31,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
 
 public class NetworkRoot extends NetworkNode {
 
@@ -1149,7 +1148,6 @@ public class NetworkRoot extends NetworkNode {
             incoming.setAmount(0);
         }
 
-        Logger logger = Networks.getInstance().getLogger();
         StorageUnitData fallbackCache = null;
         for (StorageUnitData cache: getCargoStorageUnits()) {
             if (fallbackCache == null) {
@@ -1171,11 +1169,8 @@ public class NetworkRoot extends NetworkNode {
         }
 
         if (incoming.getAmount() > 0) {
-            logger.info("no exist cache, deposit to fallback cache");
             if (fallbackCache != null) {
                 fallbackCache.depositItemStack(incoming, false);
-            } else {
-                logger.warning("no fallback cache, discard " + incoming.toString());
             }
         }
     }

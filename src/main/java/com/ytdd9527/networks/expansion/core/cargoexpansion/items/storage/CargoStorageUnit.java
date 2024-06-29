@@ -239,7 +239,7 @@ public class CargoStorageUnit extends SlimefunItem {
                 }
                 for (ItemContainer each : data.getStoredItems()) {
                     if (each.getAmount() == 0) {
-                        data.removeItem(DataStorage.getItemId(each.getSample()));
+                        data.removeItem(each.getId());
                     }
                 }
                 BlockMenu menu = StorageCacheUtils.getMenu(l);
@@ -262,9 +262,10 @@ public class CargoStorageUnit extends SlimefunItem {
                     CargoReceipt receipt = cargoRecords.get(l);
                     if(receipt != null) {
                         CargoStorageUnit.update(l, receipt, true);
+                    } else {
+                        CargoStorageUnit.update(l, new CargoReceipt(data.getId(), 0, 0, data.getTotalAmount(), data.getStoredTypeCount(), data.getSizeType()), true);
                     }
                 }
-
             }
         });
     }

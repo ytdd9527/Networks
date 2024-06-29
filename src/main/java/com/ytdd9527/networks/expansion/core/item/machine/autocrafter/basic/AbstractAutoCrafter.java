@@ -181,7 +181,7 @@ public abstract class AbstractAutoCrafter extends NetworkObject {
         for (int i = 0; i < 9; i++) {
             final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
-                requiredItems.merge(requested, 1, Integer::sum);
+                requiredItems.merge(requested, requested.getAmount(), Integer::sum);
             }
         }
 

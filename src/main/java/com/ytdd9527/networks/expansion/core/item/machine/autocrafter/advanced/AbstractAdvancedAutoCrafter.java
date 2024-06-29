@@ -185,7 +185,7 @@ public abstract class AbstractAdvancedAutoCrafter extends NetworkObject {
         for (int i = 0; i < 9; i++) {
             final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
-                requiredItems.merge(requested, 1, Integer::sum);
+                requiredItems.merge(requested, requested.getAmount()*blueprintAmount, Integer::sum);
             }
         }
 
@@ -200,9 +200,10 @@ public abstract class AbstractAdvancedAutoCrafter extends NetworkObject {
             final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
                 final ItemStack fetched = root.getItemStack(new ItemRequest(requested, requested.getAmount()*blueprintAmount));
+                actualFetches[i] = fetched;
+
                 final ItemStack fetchedClone = fetched.clone();
                 fetchedClone.setAmount(requested.getAmount());
-                actualFetches[i] = fetched;
                 inputs[i] = fetchedClone;
             } else {
                 inputs[i] = null;

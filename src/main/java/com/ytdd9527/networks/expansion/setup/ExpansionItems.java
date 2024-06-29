@@ -577,7 +577,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_1 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_1,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_1,
             StorageUnitType.TINY
     );
@@ -585,7 +585,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_2 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_2,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_2,
             StorageUnitType.MINI
     );
@@ -593,7 +593,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_3 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_3,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_3,
             StorageUnitType.SMALL
     );
@@ -601,7 +601,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_4 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_4,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_4,
             StorageUnitType.MEDIUM
     );
@@ -609,7 +609,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_5 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_5,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_5,
             StorageUnitType.LARGE
     );
@@ -617,7 +617,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_6 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_6,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_6,
             StorageUnitType.ENHANCED
     );
@@ -625,7 +625,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_7 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_7,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_7,
             StorageUnitType.ADVANCED
     );
@@ -633,7 +633,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_8 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_8,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_8,
             StorageUnitType.EXTRA
     );
@@ -641,7 +641,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_9 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_9,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_9,
             StorageUnitType.ULTRA
     );
@@ -649,7 +649,7 @@ public class ExpansionItems {
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_10 = new CargoStorageUnit(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_10,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
+            STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_10,
             StorageUnitType.END_GAME
     );
