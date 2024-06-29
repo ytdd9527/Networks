@@ -1,5 +1,6 @@
 package io.github.sefiraat.networks.slimefun;
 
+import com.ytdd9527.networks.libs.plugin.util.TextUtil;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.slimefun.tools.NetworkRemote;
 import io.github.sefiraat.networks.utils.Theme;
@@ -228,7 +229,8 @@ public class NetworksSlimefunItemStacks {
             "",
             "目前支持:",
             "无尽科技 - 存储单元",
-            "网络 - 量子存储"
+            "网络 - 量子存储",
+            TextUtil.colorPseudorandomString("网络拓展 - 货运存储单元")
         );
 
         NETWORK_IMPORT = Theme.themedSlimefunItemStack(

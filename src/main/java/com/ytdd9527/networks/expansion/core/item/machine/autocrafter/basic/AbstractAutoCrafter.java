@@ -1,9 +1,7 @@
 package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.basic;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
-import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.MagicWorkbenchBlueprint;
-import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.supportedrecipes.SupportedMagicWorkbenchRecipes;
-import com.ytdd9527.networks.expansion.setup.depreacte.DepreacteExpansionItems;
+import com.ytdd9527.networks.expansion.setup.ExpansionItems;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
@@ -39,11 +37,12 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
-public class AutoMagicCrafter extends NetworkObject {
+public abstract class AbstractAutoCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
-            3, 4, 5, 12, 13, 14, 21, 22, 23
+        3, 4, 5, 12, 13, 14, 21, 22, 23
     };
     private static final int[] BLUEPRINT_BACKGROUND = new int[]{0, 1, 2, 9, 11, 18, 19, 20};
     private static final int[] OUTPUT_BACKGROUND = new int[]{6, 7, 8, 15, 17, 24, 25, 26};
@@ -52,11 +51,11 @@ public class AutoMagicCrafter extends NetworkObject {
     private static final int OUTPUT_SLOT = 16;
 
     public static final CustomItemStack BLUEPRINT_BACKGROUND_STACK = new CustomItemStack(
-            Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "合成蓝图"
+        Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "合成蓝图"
     );
 
     public static final CustomItemStack OUTPUT_BACKGROUND_STACK = new CustomItemStack(
-            Material.GREEN_STAINED_GLASS_PANE, Theme.PASSIVE + "输出"
+        Material.GREEN_STAINED_GLASS_PANE, Theme.PASSIVE + "输出"
     );
 
     private final int chargePerCraft;
@@ -64,7 +63,14 @@ public class AutoMagicCrafter extends NetworkObject {
 
     private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
-    public AutoMagicCrafter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, int chargePerCraft, boolean withholding) {
+    public AbstractAutoCrafter(
+            ItemGroup itemGroup,
+            SlimefunItemStack item,
+            RecipeType recipeType,
+            ItemStack[] recipe,
+            int chargePerCraft,
+            boolean withholding
+    ) {
         super(itemGroup, item, recipeType, recipe, NodeType.CRAFTER);
 
         this.chargePerCraft = chargePerCraft;
@@ -74,21 +80,21 @@ public class AutoMagicCrafter extends NetworkObject {
         this.getSlotsToDrop().add(OUTPUT_SLOT);
 
         addItemHandler(
-                new BlockTicker() {
-                    @Override
-                    public boolean isSynchronized() {
-                        return false;
-                    }
+            new BlockTicker() {
+                @Override
+                public boolean isSynchronized() {
+                    return false;
+                }
 
-                    @Override
-                    public void tick(Block block, SlimefunItem slimefunItem, SlimefunBlockData data) {
-                        BlockMenu blockMenu = data.getBlockMenu();
-                        if (blockMenu != null) {
-                            addToRegistry(block);
-                            craftPreFlight(blockMenu);
-                        }
+                @Override
+                public void tick(Block block, SlimefunItem slimefunItem, SlimefunBlockData data) {
+                    BlockMenu blockMenu = data.getBlockMenu();
+                    if (blockMenu != null) {
+                        addToRegistry(block);
+                        craftPreFlight(blockMenu);
                     }
                 }
+            }
         );
     }
 
@@ -122,7 +128,7 @@ public class AutoMagicCrafter extends NetworkObject {
         if (networkCharge > this.chargePerCraft) {
             final SlimefunItem item = SlimefunItem.getByItem(blueprint);
 
-            if (!(item instanceof MagicWorkbenchBlueprint)) {
+            if (!isVaildBlueprint(item)) {
                 return;
             }
 
@@ -175,7 +181,7 @@ public class AutoMagicCrafter extends NetworkObject {
         for (int i = 0; i < 9; i++) {
             final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
-                requiredItems.merge(requested, 1, Integer::sum);
+                requiredItems.merge(requested, requested.getAmount(), Integer::sum);
             }
         }
 
@@ -199,8 +205,8 @@ public class AutoMagicCrafter extends NetworkObject {
         ItemStack crafted = null;
 
         // Go through each slimefun recipe, test and set the ItemStack if found
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedMagicWorkbenchRecipes.getRecipes().entrySet()) {
-            if (SupportedMagicWorkbenchRecipes.testRecipe(inputs, entry.getKey())) {
+        for (Map.Entry<ItemStack[], ItemStack> entry : getRecipeEntries()) {
+            if (getRecipeTester(inputs, entry.getKey())) {
                 crafted = entry.getValue().clone();
                 break;
             }
@@ -255,17 +261,21 @@ public class AutoMagicCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return DepreacteExpansionItems.AUTO_MAGIC_WORKBENCH.canUse(player, false)
-                        && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+                return ExpansionItems.AUTO_ANCIENT_ALTAR.canUse(player, false)
+                    && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                if (AutoMagicCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
+                if (AbstractAutoCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
                     return new int[]{OUTPUT_SLOT};
                 }
                 return new int[0];
             }
         };
     }
+
+    public abstract boolean isVaildBlueprint(SlimefunItem item);
+    public abstract Set<Map.Entry<ItemStack[], ItemStack>> getRecipeEntries();
+    public abstract boolean getRecipeTester(ItemStack[] inputs, ItemStack[] recipe);
 }

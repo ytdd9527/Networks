@@ -1,3 +1,4 @@
+
 package io.github.sefiraat.networks.listeners;
 
 import io.github.sefiraat.networks.NetworkStorage;

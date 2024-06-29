@@ -1,5 +1,11 @@
 package io.github.sefiraat.networks.commands;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.data.DataStorage;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.CargoStorageUnit;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.StorageUnitData;
+import com.ytdd9527.networks.expansion.setup.ExpansionItemStacks;
 import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
@@ -12,9 +18,12 @@ import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentCraftingBlueprintType;
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -26,11 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class NetworksMain implements TabExecutor {
 
@@ -49,8 +54,16 @@ public class NetworksMain implements TabExecutor {
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
+        switch (args[0]) {
+            case "fillquantum":
+            case "fixblueprint":
+            case "restore":
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(Theme.ERROR + "只有玩家才能执行该命令");
+                    return false;
+                }
+        }
         if (sender instanceof Player player) {
-
             if (args.length == 0) {
                 return false;
             }
@@ -75,9 +88,15 @@ public class NetworksMain implements TabExecutor {
                     }
                 }
             }
+
+            if (args[0].equalsIgnoreCase("restore")) {
+                if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.fixblueprint"))) {
+                    restore(player);
+                    return true;
+                }
+            }
         } else {
-            sender.sendMessage(Theme.ERROR + "只有玩家才能执行该命令");
-            return false;
+            // 非玩家执行命令时的检测
         }
         return true;
     }
@@ -152,6 +171,33 @@ public class NetworksMain implements TabExecutor {
         player.sendMessage(Theme.SUCCESS + "已修复蓝图");
 
         return;
+    }
+
+    public static void restore(Player p) {
+        Block target = p.getTargetBlockExact(5);
+        if (target == null || target.getType().isAir()) {
+            p.sendMessage(ChatColor.RED+"请指向一个失效的货运存储单元");
+        }
+        Location l = target.getLocation();
+        SlimefunBlockData blockData = StorageCacheUtils.getBlock(l);
+        if (blockData != null) {
+            String id = blockData.getData("containerId");
+            if(id != null) {
+                p.sendMessage(ChatColor.RED+"该单元的数据正常，无需恢复。");
+            }
+        }
+        p.sendMessage(ChatColor.GREEN+"正在查询，请稍候...");
+        DataStorage.restoreFromLocation(l, opData -> {
+            if (opData.isPresent()) {
+                StorageUnitData data = opData.get();
+                String sfId = ExpansionItemStacks.getStorageItemFromType(data.getSizeType()).getItemId();
+                CargoStorageUnit.addBlockInfo(l, data.getId());
+                Slimefun.getDatabaseManager().getBlockDataController().createBlock(l, sfId);
+                p.sendMessage(ChatColor.GREEN+"已成功恢复！");
+            } else {
+                p.sendMessage(ChatColor.RED+"未找到数据。");
+            }
+        });
     }
 
     @Override

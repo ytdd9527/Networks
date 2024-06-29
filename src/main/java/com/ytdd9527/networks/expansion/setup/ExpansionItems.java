@@ -10,6 +10,10 @@ import com.ytdd9527.networks.expansion.core.item.machine.cargo.LineTransferPushe
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransfer;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransferGrabber;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.advanced.AdvancedLineTransferPusher;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.CargoNodeQuickTool;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.CargoStorageUnit;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.StorageUnitType;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.StorageUnitUpgradeTable;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkCraftingGridNewStyle;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkEncodingGridNewStyle;
 import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkGridNewStyle;
@@ -21,16 +25,26 @@ import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.Advanc
 import com.ytdd9527.networks.expansion.core.item.tool.CoordinateConfigurator;
 
 
+import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.slimefun.NetworksItemGroups;
 import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-
+import org.bukkit.NamespacedKey;
 
 
 public class ExpansionItems {
 
+    public static final RecipeType STORAGE_UPGRADE_TABLE;
+    static {
+        STORAGE_UPGRADE_TABLE = new RecipeType(
+                new NamespacedKey(Networks.getInstance(), "STORAGE_UPGRADE_TABLE"),
+                ExpansionItemStacks.STORAGE_UNIT_UPGRADE_TABLE,
+                StorageUnitUpgradeTable::addRecipe
+        );
+    }
     public static final ExpansionWorkbench NETWORK_EXPANSION_WORKBENCH = new ExpansionWorkbench(
             ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
             ExpansionItemStacks.NETWORK_EXPANSION_WORKBENCH,
@@ -153,7 +167,7 @@ public class ExpansionItems {
     );
 
     //编码器
-    public static final MagicEncoder MAGIC_WORKBENCH_RECIPE_ENCODER = new MagicEncoder(
+    public static final MagicWorkbenchEncoder MAGIC_WORKBENCH_RECIPE_ENCODER = new MagicWorkbenchEncoder(
             ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
             ExpansionItemStacks.MAGIC_WORKBENCH_RECIPE_ENCODER,
             ExpansionWorkbench.TYPE,
@@ -195,7 +209,7 @@ public class ExpansionItems {
             ExpansionRecipes.EXPANSION_WORKBENCH_RECIPE_ENCODER
     );
     //合成机
-    public static final AutoMagicCrafter AUTO_MAGIC_WORKBENCH = new AutoMagicCrafter(
+    public static final AutoMagicWorkbenchCrafter AUTO_MAGIC_WORKBENCH = new AutoMagicWorkbenchCrafter(
             ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
             ExpansionItemStacks.AUTO_MAGIC_WORKBENCH,
             ExpansionWorkbench.TYPE,
@@ -204,7 +218,7 @@ public class ExpansionItems {
             false
     );
 
-    public static final AutoMagicCrafter AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AutoMagicCrafter(
+    public static final AutoMagicWorkbenchCrafter AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AutoMagicWorkbenchCrafter(
             ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
             ExpansionItemStacks.AUTO_MAGIC_WORKBENCH_WITHHOLDING,
             ExpansionWorkbench.TYPE,
@@ -304,7 +318,7 @@ public class ExpansionItems {
     );
 
     //高级合成机
-    public static final AdvancedAutoMagicCrafter ADVANCED_AUTO_MAGIC_WORKBENCH = new AdvancedAutoMagicCrafter(
+    public static final AdvancedAutoMagicWorkbenchCrafter ADVANCED_AUTO_MAGIC_WORKBENCH = new AdvancedAutoMagicWorkbenchCrafter(
             ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
             ExpansionItemStacks.ADVANCED_AUTO_MAGIC_WORKBENCH,
             ExpansionWorkbench.TYPE,
@@ -313,7 +327,7 @@ public class ExpansionItems {
             false
     );
 
-    public static final AdvancedAutoMagicCrafter ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AdvancedAutoMagicCrafter(
+    public static final AdvancedAutoMagicWorkbenchCrafter ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AdvancedAutoMagicWorkbenchCrafter(
             ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
             ExpansionItemStacks.ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING,
             ExpansionWorkbench.TYPE,
@@ -502,21 +516,114 @@ public class ExpansionItems {
             "NTW_EXPANSION_ADVANCED_LINE_TRANSFER_PLUS"
     );
 
-    public static final NetworkBridge NETWORK_BRIDGE_WHITE = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_WHITE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_WHITE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_WHITE, 8),"NETWORK_BRIDGE_WHITE");
-    public static final NetworkBridge NETWORK_BRIDGE_LIGHT_GRAY = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_GRAY, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_LIGHT_GRAY, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_GRAY, 8),"NETWORK_BRIDGE_LIGHT_GRAY");
-    public static final NetworkBridge NETWORK_BRIDGE_GRAY = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_GRAY, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_GRAY, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_GRAY, 8),"NETWORK_BRIDGE_GRAY");
-    public static final NetworkBridge NETWORK_BRIDGE_BLACK = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_BLACK, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_BLACK, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_BLACK, 8),"NETWORK_BRIDGE_BLACK");
-    public static final NetworkBridge NETWORK_BRIDGE_BROWN = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_BROWN, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_BROWN, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_BROWN, 8),"NETWORK_BRIDGE_BROWN");
-    public static final NetworkBridge NETWORK_BRIDGE_RED = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_RED, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_RED, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_RED, 8),"NETWORK_BRIDGE_RED");
-    public static final NetworkBridge NETWORK_BRIDGE_ORANGE = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_ORANGE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_ORANGE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_ORANGE, 8),"NETWORK_BRIDGE_ORANGE");
-    public static final NetworkBridge NETWORK_BRIDGE_YELLOW = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_YELLOW, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_YELLOW, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_YELLOW, 8),"NETWORK_BRIDGE_YELLOW");
-    public static final NetworkBridge NETWORK_BRIDGE_LIME = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_LIME, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_LIME, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_LIME, 8),"NETWORK_BRIDGE_LIME");
-    public static final NetworkBridge NETWORK_BRIDGE_GREEN = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_GREEN, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_GREEN, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_GREEN, 8),"NETWORK_BRIDGE_GREEN");
-    public static final NetworkBridge NETWORK_BRIDGE_CYAN = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_CYAN, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_CYAN, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_CYAN, 8),"NETWORK_BRIDGE_CYAN");
-    public static final NetworkBridge NETWORK_BRIDGE_LIGHT_BLUE = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_BLUE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_LIGHT_BLUE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_BLUE, 8),"NETWORK_BRIDGE_LIGHT_BLUE");
-    public static final NetworkBridge NETWORK_BRIDGE_BLUE = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_BLUE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_BLUE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_BLUE, 8),"NETWORK_BRIDGE_BLUE");
-    public static final NetworkBridge NETWORK_BRIDGE_PURPLE = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_PURPLE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_PURPLE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_PURPLE, 8),"NETWORK_BRIDGE_PURPLE");
-    public static final NetworkBridge NETWORK_BRIDGE_MAGENTA = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_MAGENTA, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_MAGENTA, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_MAGENTA, 8),"NETWORK_BRIDGE_MAGENTA");
-    public static final NetworkBridge NETWORK_BRIDGE_PINK = new NetworkBridge(ExpansionItemsMenus.MENU_CARGO_SYSTEM, ExpansionItemStacks.NETWORK_BRIDGE_PINK, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_PINK, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_PINK, 8),"NETWORK_BRIDGE_PINK");
+    public static final CargoNodeQuickTool CARGO_NODE_QUICK_TOOL = new CargoNodeQuickTool(
+            ExpansionItemsMenus.MENU_ITEMS,
+            ExpansionItemStacks.CARGO_NODE_QUICK_TOOL,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            ExpansionRecipes.CARGO_NODE_QUICK_TOOL
+    );
+
+    public static final StorageUnitUpgradeTable STORAGE_UNIT_UPGRADE_TABLE = new StorageUnitUpgradeTable(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.STORAGE_UNIT_UPGRADE_TABLE,
+            ExpansionWorkbench.TYPE,
+            ExpansionRecipes.STORAGE_UNIT_UPGRADE_TABLE
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_1 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_1,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_1,
+            StorageUnitType.TINY
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_2 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_2,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_2,
+            StorageUnitType.MINI
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_3 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_3,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_3,
+            StorageUnitType.SMALL
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_4 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_4,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_4,
+            StorageUnitType.MEDIUM
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_5 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_5,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_5,
+            StorageUnitType.LARGE
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_6 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_6,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_6,
+            StorageUnitType.ENHANCED
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_7 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_7,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_7,
+            StorageUnitType.ADVANCED
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_8 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_8,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_8,
+            StorageUnitType.EXTRA
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_9 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_9,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_9,
+            StorageUnitType.ULTRA
+    );
+
+    public static final CargoStorageUnit CARGO_STORAGE_UNIT_10 = new CargoStorageUnit(
+            ExpansionItemsMenus.MENU_CARGO_SYSTEM,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_10,
+            STORAGE_UPGRADE_TABLE,
+            ExpansionRecipes.CARGO_STORAGE_UNIT_10,
+            StorageUnitType.END_GAME
+    );
+    public static final NetworkBridge NETWORK_BRIDGE_WHITE = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_WHITE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_WHITE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_WHITE, 8),"NETWORK_BRIDGE_WHITE");
+    public static final NetworkBridge NETWORK_BRIDGE_LIGHT_GRAY = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_GRAY, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_LIGHT_GRAY, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_GRAY, 8),"NETWORK_BRIDGE_LIGHT_GRAY");
+    public static final NetworkBridge NETWORK_BRIDGE_GRAY = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_GRAY, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_GRAY, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_GRAY, 8),"NETWORK_BRIDGE_GRAY");
+    public static final NetworkBridge NETWORK_BRIDGE_BLACK = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_BLACK, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_BLACK, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_BLACK, 8),"NETWORK_BRIDGE_BLACK");
+    public static final NetworkBridge NETWORK_BRIDGE_BROWN = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_BROWN, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_BROWN, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_BROWN, 8),"NETWORK_BRIDGE_BROWN");
+    public static final NetworkBridge NETWORK_BRIDGE_RED = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_RED, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_RED, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_RED, 8),"NETWORK_BRIDGE_RED");
+    public static final NetworkBridge NETWORK_BRIDGE_ORANGE = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_ORANGE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_ORANGE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_ORANGE, 8),"NETWORK_BRIDGE_ORANGE");
+    public static final NetworkBridge NETWORK_BRIDGE_YELLOW = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_YELLOW, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_YELLOW, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_YELLOW, 8),"NETWORK_BRIDGE_YELLOW");
+    public static final NetworkBridge NETWORK_BRIDGE_LIME = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_LIME, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_LIME, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_LIME, 8),"NETWORK_BRIDGE_LIME");
+    public static final NetworkBridge NETWORK_BRIDGE_GREEN = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_GREEN, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_GREEN, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_GREEN, 8),"NETWORK_BRIDGE_GREEN");
+    public static final NetworkBridge NETWORK_BRIDGE_CYAN = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_CYAN, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_CYAN, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_CYAN, 8),"NETWORK_BRIDGE_CYAN");
+    public static final NetworkBridge NETWORK_BRIDGE_LIGHT_BLUE = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_BLUE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_LIGHT_BLUE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_LIGHT_BLUE, 8),"NETWORK_BRIDGE_LIGHT_BLUE");
+    public static final NetworkBridge NETWORK_BRIDGE_BLUE = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_BLUE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_BLUE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_BLUE, 8),"NETWORK_BRIDGE_BLUE");
+    public static final NetworkBridge NETWORK_BRIDGE_PURPLE = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_PURPLE, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_PURPLE, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_PURPLE, 8),"NETWORK_BRIDGE_PURPLE");
+    public static final NetworkBridge NETWORK_BRIDGE_MAGENTA = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_MAGENTA, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_MAGENTA, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_MAGENTA, 8),"NETWORK_BRIDGE_MAGENTA");
+    public static final NetworkBridge NETWORK_BRIDGE_PINK = new NetworkBridge(ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE, ExpansionItemStacks.NETWORK_BRIDGE_PINK, ExpansionWorkbench.TYPE, ExpansionRecipes.NETWORK_BRIDGE_PINK, StackUtils.getAsQuantity(ExpansionItemStacks.NETWORK_BRIDGE_PINK, 8),"NETWORK_BRIDGE_PINK");
 
 }

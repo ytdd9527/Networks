@@ -8,7 +8,8 @@ public class SetupUtil {
 
         /* 物品 */
         ExpansionItemsMenus.SUB_MENU_TOOL.addTo(
-                ExpansionItems.NETWORK_COORDINATE_CONFIGURATOR.registerThis()
+                ExpansionItems.NETWORK_COORDINATE_CONFIGURATOR.registerThis(),
+                ExpansionItems.CARGO_NODE_QUICK_TOOL.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_BLUEPRINT.addTo(
                 ExpansionItems.MAGIC_WORKBENCH_BLUEPRINT.registerThis(),
@@ -21,6 +22,18 @@ public class SetupUtil {
         /* 货运与存储 */
         ExpansionItemsMenus.SUB_MENU_ADVANCED_STORAGE.addTo(
                 ExpansionItems.ADVANCED_QUANTUM_STORAGE.registerThis()
+        );
+        ExpansionItemsMenus.SUB_MENU_ADVANCED_STORAGE.addTo(
+                ExpansionItems.CARGO_STORAGE_UNIT_1.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_2.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_3.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_4.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_5.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_6.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_7.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_8.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_9.registerThis(),
+                ExpansionItems.CARGO_STORAGE_UNIT_10.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_CARGO.addTo(
                 ExpansionItems.LINE_TRANSFER.registerThis(),
@@ -40,7 +53,8 @@ public class SetupUtil {
         );
         /* 功能机器 */
         ExpansionItemsMenus.SUB_MENU_CORE_MACHINE.addTo(
-                ExpansionItems.NETWORK_EXPANSION_WORKBENCH.registerThis()
+                ExpansionItems.NETWORK_EXPANSION_WORKBENCH.registerThis(),
+                ExpansionItems.STORAGE_UNIT_UPGRADE_TABLE.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_ADVANCED_NET.addTo(
                 ExpansionItems.ADVANCED_IMPORT.registerThis(),

@@ -46,8 +46,6 @@ public class MainFlexGroup extends FlexItemGroup {
     private static final int TOOLS = 11;
     private static final int NETWORK_ITEMS = 12;
     private static final int EXPANSION_DOCS = 18;
-    private static final int NETWORK_TRANSPORTATION = 19;
-    private static final int NETWORK_ITEMS_EXPANSION = 20;
     private static final int NETWORK_QUANTUMS = 13;
 
     private static final int[] HEADER = new int[]{
@@ -144,14 +142,7 @@ public class MainFlexGroup extends FlexItemGroup {
         menu.addMenuClickHandler(NETWORK_ITEMS, (player1, i1, itemStack1, clickAction) ->
                 openPage(profile, NetworksItemGroups.NETWORK_ITEMS, mode, 1)
         );
-        menu.replaceExistingItem(NETWORK_TRANSPORTATION, NetworksItemGroups.NETWORK_TRANSPOR_TATION.getItem(player));
-        menu.addMenuClickHandler(NETWORK_TRANSPORTATION, (player1, i1, itemStack1, clickAction) ->
-                openPage(profile, NetworksItemGroups.NETWORK_TRANSPOR_TATION, mode, 1)
-        );
-        menu.replaceExistingItem(NETWORK_ITEMS_EXPANSION, NetworksItemGroups.NETWORK_ITEMS_EXPANSION.getItem(player));
-        menu.addMenuClickHandler(NETWORK_ITEMS_EXPANSION, (player1, i1, itemStack1, clickAction) ->
-                openPage(profile, NetworksItemGroups.NETWORK_ITEMS_EXPANSION, mode, 1)
-        );
+
 
         // Network Quantums
         menu.replaceExistingItem(NETWORK_QUANTUMS, NetworksItemGroups.NETWORK_QUANTUMS.getItem(player));

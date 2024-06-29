@@ -389,7 +389,7 @@ public class AdvancedLineTransferPusher extends AdvancedDirectional implements R
     @Override
     public void postRegister() {
         super.postRegister();
-        setLimit(128);
+        setLimit(3456);
     }
     @Nonnull
     @Override

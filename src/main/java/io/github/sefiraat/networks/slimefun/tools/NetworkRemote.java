@@ -3,7 +3,11 @@ package io.github.sefiraat.networks.slimefun.tools;
 import com.xzavier0722.mc.plugin.slimefun4.storage.callback.IAsyncReadCallback;
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkCraftingGridNewStyle;
+import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkEncodingGridNewStyle;
+import com.ytdd9527.networks.expansion.core.item.machine.grid.NetworkGridNewStyle;
 import de.jeff_media.morepersistentdatatypes.DataType;
+import io.github.sefiraat.networks.slimefun.network.grid.NetworkCraftingGrid;
 import io.github.sefiraat.networks.slimefun.network.grid.NetworkGrid;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.Theme;
@@ -51,7 +55,13 @@ public class NetworkRemote extends SlimefunItem {
                             final Block block = optional.get();
                             final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(block.getLocation());
                             if (Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK)
-                                && slimefunItem instanceof NetworkGrid
+                                    && (
+                                    slimefunItem instanceof NetworkGrid ||
+                                            slimefunItem instanceof NetworkCraftingGrid ||
+                                            slimefunItem instanceof NetworkEncodingGridNewStyle ||
+                                            slimefunItem instanceof NetworkGridNewStyle ||
+                                            slimefunItem instanceof NetworkCraftingGridNewStyle
+                            )
                             ) {
                                 setGrid(e.getItem(), block, player);
                             } else {

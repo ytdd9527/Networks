@@ -1,18 +1,14 @@
 package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.encoder;
 
-import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.MagicWorkbenchBlueprint;
-import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.supportedrecipes.SupportedMagicWorkbenchRecipes;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.network.NetworkObject;
-import io.github.sefiraat.networks.slimefun.tools.CraftingBlueprint;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.sefiraat.networks.utils.Theme;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -28,8 +24,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Set;
 
-public class MagicEncoder extends NetworkObject {
+public abstract class AbstractEncoder extends NetworkObject {
 
     private static final int[] BACKGROUND = new int[]{
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 17, 18, 20, 24, 25, 26, 27, 28, 29, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
@@ -57,7 +54,7 @@ public class MagicEncoder extends NetworkObject {
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "点击此处进行编码"
     );
 
-    public MagicEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public AbstractEncoder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe, NodeType.ENCODER);
         for (int recipeSlot : RECIPE_SLOTS) {
             this.getSlotsToDrop().add(recipeSlot);
@@ -124,8 +121,8 @@ public class MagicEncoder extends NetworkObject {
 
         ItemStack blueprint = blockMenu.getItemInSlot(BLANK_BLUEPRINT_SLOT);
 
-        if (!(SlimefunItem.getByItem(blueprint) instanceof MagicWorkbenchBlueprint)) {
-            player.sendMessage(Theme.WARNING + "你需要提供一个空白的魔法合成蓝图");
+        if (!isVaildBlueprint(blueprint)) {
+            player.sendMessage(Theme.WARNING + "你需要提供一个正确的空白的蓝图");
             return;
         }
 
@@ -144,8 +141,8 @@ public class MagicEncoder extends NetworkObject {
         ItemStack crafted = null;
 
 
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedMagicWorkbenchRecipes.getRecipes().entrySet()) {
-            if (SupportedMagicWorkbenchRecipes.testRecipe(inputs, entry.getKey())) {
+        for (Map.Entry<ItemStack[], ItemStack> entry : getRecipeEntries()) {
+            if (getRecipeTester(inputs, entry.getKey())) {
                 crafted = new ItemStack(entry.getValue().clone());
                 break;
             }
@@ -154,8 +151,18 @@ public class MagicEncoder extends NetworkObject {
             player.sendMessage(Theme.WARNING + "这似乎不是一个有效的配方");
             return;
         }
+
+
+
+        // 确保crafted不是AIR，避免NullPointerException
+        if (crafted.getType() == Material.AIR) {
+            player.sendMessage(Theme.WARNING + "编码的结果是空气，这不是一个有效的配方。");
+            return;
+        }
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
-        MagicWorkbenchBlueprint.setBlueprint(blueprintClone, inputs, crafted);
+
+        blueprint.setAmount(blueprint.getAmount() - 1);
+        blueprintSetter(blueprintClone, inputs, crafted);
         if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
             blueprint.setAmount(blueprint.getAmount() - 1);
             for (int recipeSlot : RECIPE_SLOTS) {
@@ -170,4 +177,9 @@ public class MagicEncoder extends NetworkObject {
         }
         root.removeRootPower(CHARGE_COST);
     }
+
+    public abstract void blueprintSetter(ItemStack itemStack, ItemStack[] inputs, ItemStack crafted);
+    public abstract boolean isVaildBlueprint(ItemStack itemStack);
+    public abstract Set<Map.Entry<ItemStack[], ItemStack>> getRecipeEntries();
+    public abstract boolean getRecipeTester(ItemStack[] inputs, ItemStack[] recipe);
 }

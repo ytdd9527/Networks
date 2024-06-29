@@ -2,6 +2,7 @@ package com.ytdd9527.networks.expansion.setup;
 
 
 
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.StorageUnitType;
 import com.ytdd9527.networks.expansion.core.util.ConfigUtil;
 import com.ytdd9527.networks.libs.plugin.util.TextUtil;
 import io.github.sefiraat.networks.Networks;
@@ -16,7 +17,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.text.MessageFormat;
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -606,6 +608,179 @@ public final class ExpansionItemStacks {
             "来形成一个完整的网络",
             "更加清晰的布局网络"
     );
+    private static final String thanks = "&x&c&c&8&c&f&4&l魔&x&c&b&9&7&f&5&l芋&x&c&a&a&3&f&6&l粘&x&c&9&a&e&f&7&l液&x&c&8&b&9&f&8&l科&x&c&7&c&5&f&9&l技&x&c&5&d&0&f&9&l服&x&c&4&d&b&f&a&l务&x&c&3&e&6&f&b&l器&x&c&2&f&2&f&c&l提&x&c&1&f&d&f&d&l供";
+    private static final Map<StorageUnitType, SlimefunItemStack> typeMap = new HashMap<>();
+
+    public static SlimefunItemStack CARGO_NODE_QUICK_TOOL = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_NODE_QUICK_TOOL",
+            new ItemStack(Material.BONE),
+            Theme.MACHINE,
+            "&b货运节点快配工具",
+            "",
+            "&a右键: 设置指向货运节点的配置",
+            "&e下蹲+右键: 从指向的货运节点加载配置",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack STORAGE_UNIT_UPGRADE_TABLE = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_STORAGE_UPGRADE_TABLE",
+            new ItemStack(Material.CARTOGRAPHY_TABLE),
+            Theme.MACHINE,
+            "&6货运存储单元升级台",
+            "",
+            "&e用于升级货运存储单元",
+            "&a内部物品不会丢失",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_1 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_1",
+            new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 I",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 2 种物品",
+            "&7⇨ &e每种物品可容纳 65536 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_2 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_2",
+            new ItemStack(Material.GRAY_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 II",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 4 种物品",
+            "&7⇨ &e每种物品可容纳 131072 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_3 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_3",
+            new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 III",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 8 种物品",
+            "&7⇨ &e每种物品可容纳 262144 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_4 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_4",
+            new ItemStack(Material.CYAN_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 IV",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 16 种物品",
+            "&7⇨ &e每种物品可容纳 524288 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_5 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_5",
+            new ItemStack(Material.BLUE_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 V",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 32 种物品",
+            "&7⇨ &e每种物品可容纳 1048576 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_6 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_6",
+            new ItemStack(Material.WHITE_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 VI",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 32 种物品",
+            "&7⇨ &e每种物品可容纳 2097152 个",
+            "",
+            thanks
+    );
+
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_7 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_7",
+            new ItemStack(Material.YELLOW_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 VII",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 32 种物品",
+            "&7⇨ &e每种物品可容纳 4194304 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_8 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_8",
+            new ItemStack(Material.ORANGE_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 VIII",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 32 种物品",
+            "&7⇨ &e每种物品可容纳 8388608 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_9 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_9",
+            new ItemStack(Material.MAGENTA_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 IX",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 32 种物品",
+            "&7⇨ &e每种物品可容纳 16777216 个",
+            "",
+            thanks
+    );
+    public static SlimefunItemStack CARGO_STORAGE_UNIT_10 = Theme.themedSlimefunItemStack(
+            "NTW_EXPANSION_CARGO_STORAGE_UNIT_10",
+            new ItemStack(Material.RED_STAINED_GLASS),
+            Theme.MACHINE,
+            "&b货运存储单元 X",
+            "",
+            "&6支持快速输入/输出",
+            "",
+            "&7⇨ &e可储存 32 种物品",
+            "&7⇨ &e每种物品可容纳 33554432 个",
+            "",
+            thanks
+    );
+
+    static {
+        typeMap.put(StorageUnitType.TINY, CARGO_STORAGE_UNIT_1);
+        typeMap.put(StorageUnitType.MINI, CARGO_STORAGE_UNIT_2);
+        typeMap.put(StorageUnitType.SMALL, CARGO_STORAGE_UNIT_3);
+        typeMap.put(StorageUnitType.MEDIUM, CARGO_STORAGE_UNIT_4);
+        typeMap.put(StorageUnitType.LARGE, CARGO_STORAGE_UNIT_5);
+        typeMap.put(StorageUnitType.ENHANCED, CARGO_STORAGE_UNIT_6);
+        typeMap.put(StorageUnitType.ADVANCED, CARGO_STORAGE_UNIT_7);
+        typeMap.put(StorageUnitType.EXTRA, CARGO_STORAGE_UNIT_8);
+        typeMap.put(StorageUnitType.ULTRA, CARGO_STORAGE_UNIT_9);
+        typeMap.put(StorageUnitType.END_GAME, CARGO_STORAGE_UNIT_10);
+    }
+
+    public static SlimefunItemStack getStorageItemFromType(StorageUnitType type) {
+        return typeMap.get(type);
+    }
 
     @Nonnull
     @SafeVarargs

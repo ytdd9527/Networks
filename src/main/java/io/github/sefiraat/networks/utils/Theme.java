@@ -112,6 +112,7 @@ public enum Theme {
     public static SlimefunItemStack tsItem(String id, ItemStack itemStack, Theme themeType, String name, String... lore) {
         List<String> finalLore = new ArrayList<>();
         finalLore.add("");
+        finalLore.add(TextUtil.colorPseudorandomString("此物品即将被删除,请更换最新的物品，将在一个月后彻底删除旧物品"));
         finalLore.add(applyThemeToString(Theme.SUCCESS, themeType.getLoreLine()));
         return new SlimefunItemStack(
                 id,
