@@ -1,8 +1,8 @@
 package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.advanced;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
-import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.MagicWorkbenchBlueprint;
-import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.supportedrecipes.SupportedMagicWorkbenchRecipes;
+import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.blueprint.AncientAltarBlueprint;
+import com.ytdd9527.networks.expansion.core.item.machine.autocrafter.systems.supportedrecipes.SupportedAncientAltarRecipes;
 import com.ytdd9527.networks.expansion.setup.ExpansionItems;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
@@ -39,8 +39,9 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
-public class AdvancedAutoMagicCrafter extends NetworkObject {
+public abstract class AbstractAdvancedAutoCrafter extends NetworkObject {
 
     private static final int[] BACKGROUND_SLOTS = new int[]{
         3, 4, 5, 12, 13, 14, 21, 22, 23
@@ -64,7 +65,7 @@ public class AdvancedAutoMagicCrafter extends NetworkObject {
 
     private static final Map<Location, BlueprintInstance> INSTANCE_MAP = new HashMap<>();
 
-    public AdvancedAutoMagicCrafter(
+    public AbstractAdvancedAutoCrafter(
             ItemGroup itemGroup,
             SlimefunItemStack item,
             RecipeType recipeType,
@@ -129,7 +130,7 @@ public class AdvancedAutoMagicCrafter extends NetworkObject {
         if (networkCharge > this.chargePerCraft) {
             final SlimefunItem item = SlimefunItem.getByItem(blueprint);
 
-            if (!(item instanceof MagicWorkbenchBlueprint)) {
+            if (!isVaildBlueprint(item)) {
                 return;
             }
 
@@ -182,9 +183,9 @@ public class AdvancedAutoMagicCrafter extends NetworkObject {
          */
         HashMap<ItemStack, Integer> requiredItems = new HashMap<>();
         for (int i = 0; i < 9; i++) {
-            final ItemStack requested = instance.getRecipeItems()[i].clone();
+            final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
-                requiredItems.merge(requested, blueprintAmount, Integer::sum);
+                requiredItems.merge(requested, 1, Integer::sum);
             }
         }
 
@@ -196,7 +197,7 @@ public class AdvancedAutoMagicCrafter extends NetworkObject {
 
         // Then fetch the actual items
         for (int i = 0; i < 9; i++) {
-            final ItemStack requested = instance.getRecipeItems()[i].clone();
+            final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
                 final ItemStack fetched = root.getItemStack(new ItemRequest(requested, requested.getAmount()*blueprintAmount));
                 final ItemStack fetchedClone = fetched.clone();
@@ -211,8 +212,8 @@ public class AdvancedAutoMagicCrafter extends NetworkObject {
         ItemStack crafted = null;
 
         // Go through each slimefun recipe, test and set the ItemStack if found
-        for (Map.Entry<ItemStack[], ItemStack> entry : SupportedMagicWorkbenchRecipes.getRecipes().entrySet()) {
-            if (SupportedMagicWorkbenchRecipes.testRecipe(inputs, entry.getKey())) {
+        for (Map.Entry<ItemStack[], ItemStack> entry : getRecipeEntries()) {
+            if (getRecipeTester(inputs, entry.getKey())) {
                 crafted = entry.getValue().clone();
                 break;
             }
@@ -269,17 +270,21 @@ public class AdvancedAutoMagicCrafter extends NetworkObject {
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return ExpansionItems.ADVANCED_AUTO_MAGIC_WORKBENCH.canUse(player, false)
+                return ExpansionItems.ADVANCED_AUTO_ANCIENT_ALTAR.canUse(player, false)
                     && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
             public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-                if (AdvancedAutoMagicCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
+                if (AbstractAdvancedAutoCrafter.this.withholding && flow == ItemTransportFlow.WITHDRAW) {
                     return new int[]{OUTPUT_SLOT};
                 }
                 return new int[0];
             }
         };
     }
+
+    public abstract boolean isVaildBlueprint(SlimefunItem item);
+    public abstract Set<Map.Entry<ItemStack[], ItemStack>> getRecipeEntries();
+    public abstract boolean getRecipeTester(ItemStack[] inputs, ItemStack[] recipe);
 }

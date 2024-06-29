@@ -120,7 +120,7 @@ public final class ExpansionItemStacks {
     );
 
     //运输
-    public static final SlimefunItemStack CHAING_PUSHER = Theme.tsItem(
+    public static final SlimefunItemStack CHAIN_PUSHER = Theme.tsItem(
         "NE_CHAING_PUSHER",
         new ItemStack(Material.OBSERVER),
         Theme.MACHINE,
@@ -431,6 +431,20 @@ public final class ExpansionItemStacks {
         Enchanted(Material.HORN_CORAL_BLOCK),
         Theme.MACHINE,
         "高级网络自动网络拓展工作台 (预留版)"
+    );
+
+    public static final SlimefunItemStack ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE = Theme.tsItem(
+            "NEA_AUTO_ENHANCED_CRAFTING_TABLE",
+            Enchanted(Material.BLUE_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "高级网络自动合成机"
+    );
+
+    public static final SlimefunItemStack ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE_WITHHOLDING = Theme.tsItem(
+            "NEA_AUTO_ENHANCED_CRAFTING_TABLE_WITHHOLDING",
+            Enchanted(Material.YELLOW_GLAZED_TERRACOTTA),
+            Theme.MACHINE,
+            "高级网络自动合成机（预留版）"
     );
     //网桥
     public static final SlimefunItemStack NE_BRIDGE_WHITE = Theme.themedSlimefunItemStack(

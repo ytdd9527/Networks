@@ -209,11 +209,12 @@ public class NetworksMain implements TabExecutor {
 
     public @NotNull List<String> onTabCompleteRaw(@NotNull String[] args) {
         if (args.length == 1) {
-            return List.of("fillquantum", "fixblueprint");
+            return List.of("fillquantum", "fixblueprint", "restore");
         } else if (args.length == 2) {
             return switch (args[0]) {
                 case "fillquantum" -> List.of("<amount>");
                 case "fixblueprint" -> List.of("<keyInMeta>");
+                case "restore" -> List.of();
                 default -> new ArrayList<>();
             };
         }

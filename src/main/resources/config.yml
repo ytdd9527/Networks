@@ -54,28 +54,28 @@ items:
       enable: false
 
   #高级网络链式推送器
-  NE_ADVANCED_CHAING_PUSHER:
+  NE_ADVANCED_CHAIN_PUSHER:
     max-distance: 32
     pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
   #高级网络链式推送器Plus
-  NE_ADVANCED_CHAING_PUSHER_PLUS:
+  NE_ADVANCED_CHAIN_PUSHER_PLUS:
     max-distance: 64
     pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
   #高级网络链式抓取器
-  NE_ADVANCED_CHAING_GRABBER:
+  NE_ADVANCED_CHAIN_GRABBER:
     max-distance: 32
     pushitem-tick: 6
     grabitem-tick: 12
     use-special-model:
       enable: false
   #高级网络链式抓取器Plus
-  NE_ADVANCED_CHAING_GRABBER_PLUS:
+  NE_ADVANCED_CHAIN_GRABBER_PLUS:
     max-distance: 64
     pushitem-tick: 6
     grabitem-tick: 12
@@ -90,7 +90,7 @@ items:
     use-special-model:
       enable: false
   #高级网链调度器Plus
-  NE_ADVANCED_CHAING_DISPATCHER_PLUS:
+  NE_ADVANCED_CHAIN_DISPATCHER_PLUS:
     max-distance: 64
     pushitem-tick: 4
     grabitem-tick: 12

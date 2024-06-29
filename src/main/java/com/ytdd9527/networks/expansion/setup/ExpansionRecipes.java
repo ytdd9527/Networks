@@ -57,6 +57,18 @@ public class ExpansionRecipes {
         ExpansionItemStacks.CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.CHAIN_GRABBER
     };
 
+    public static final ItemStack[] ADVANCED_CHAIN_PUSHER = new ItemStack[] {
+        NETWORK_PUSHER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_PUSHER.getItem(),
+        OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_PUSHER, OPTIC_CABLE.getItem(),
+        NETWORK_PUSHER.getItem(), NETWORK_EXPORT.getItem(), NETWORK_PUSHER.getItem()
+    };
+
+    public static final ItemStack[] ADVANCED_CHAIN_PUSHER_PLUS = new ItemStack[] {
+        ExpansionItemStacks.CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.CHAIN_GRABBER,
+        INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN), INTERDIMENSIONAL_PRESENCE.getItem(),
+        ExpansionItemStacks.CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.CHAIN_GRABBER
+    };
+
     //链式抓取
     public static final ItemStack[] CHAIN_GRABBER = new ItemStack[] {
         NETWORK_GRABBER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_GRABBER.getItem(),
@@ -67,6 +79,18 @@ public class ExpansionRecipes {
     public static final ItemStack[]CHAIN_GRABBER_PLUS = new ItemStack[] {
         ExpansionItemStacks.CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.CHAIN_GRABBER,
         INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN),INTERDIMENSIONAL_PRESENCE.getItem(),
+        ExpansionItemStacks.CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.CHAIN_GRABBER
+    };
+
+    public static final ItemStack[] ADVANCED_CHAIN_GRABBER = new ItemStack[] {
+        NETWORK_GRABBER.getItem(), PRISTINE_AI_CORE.getItem(), NETWORK_GRABBER.getItem(),
+        OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_GRABBER, OPTIC_CABLE.getItem(),
+        NETWORK_GRABBER.getItem(), NETWORK_IMPORT.getItem(), NETWORK_GRABBER.getItem()
+    };
+
+    public static final ItemStack[] ADVANCED_CHAIN_GRABBER_PLUS = new ItemStack[] {
+        ExpansionItemStacks.CHAIN_GRABBER, PRISTINE_AI_CORE.getItem(), ExpansionItemStacks.CHAIN_GRABBER,
+        INTERDIMENSIONAL_PRESENCE.getItem(), new ItemStack(Material.SEA_LANTERN), INTERDIMENSIONAL_PRESENCE.getItem(),
         ExpansionItemStacks.CHAIN_GRABBER, NETWORK_IMPORT.getItem(), ExpansionItemStacks.CHAIN_GRABBER
     };
     //链式调度器
@@ -82,13 +106,13 @@ public class ExpansionRecipes {
         NETWORK_BRIDGE.getItem(), NETWORK_EXPORT.getItem(), NETWORK_BRIDGE.getItem()
     };
 
-    public static final ItemStack[] NE_CHAIN_DISPATCHER_NUMBERABLE = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_CHAIN_DISPATCHER = new ItemStack[] {
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
         OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_DISPATCHER, OPTIC_CABLE.getItem(),
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
     };
 
-    public static final ItemStack[] NE_CHAIN_DISPATCHER_PLUS_NUMBERABLE = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_CHAIN_DISPATCHER_PLUS = new ItemStack[] {
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem(),
         OPTIC_CABLE.getItem(), ExpansionItemStacks.CHAIN_DISPATCHER_PLUS, OPTIC_CABLE.getItem(),
         OPTIC_GLASS.getItem(), PRISTINE_AI_CORE.getItem(), OPTIC_GLASS.getItem()
@@ -268,13 +292,13 @@ public class ExpansionRecipes {
         OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem()
     };
     //高级合成机
-    public static final ItemStack[] ADVANCED_AUTO_CRAFTER = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE = new ItemStack[] {
         NETWORK_AUTO_CRAFTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_AUTO_CRAFTER.getItem(),
         ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
         NETWORK_AUTO_CRAFTER.getItem(), NETWORK_RECIPE_ENCODER.getItem(), NETWORK_AUTO_CRAFTER.getItem()
     };
 
-    public static final ItemStack[] ADVANCED_AUTO_CRAFTER_WITHHOLDING = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE_WITHHOLDING = new ItemStack[] {
         NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(),
         ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
         NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(),NETWORK_RECIPE_ENCODER.getItem(),NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem()

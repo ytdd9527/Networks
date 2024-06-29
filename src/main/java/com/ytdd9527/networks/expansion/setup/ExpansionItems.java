@@ -24,7 +24,6 @@ import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.Advanc
 import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.AdvancedImport;
 import com.ytdd9527.networks.expansion.core.item.machine.network.advanced.AdvancedPurger;
 import com.ytdd9527.networks.expansion.core.item.tool.CoordinateConfigurator;
-import com.ytdd9527.networks.expansion.core.cargoexpansion.items.storage.StorageUnitUpgradeTable;
 import com.ytdd9527.networks.expansion.core.cargoexpansion.items.storage.CargoStorageUnit;
 
 import io.github.sefiraat.networks.Networks;
@@ -33,7 +32,6 @@ import io.github.sefiraat.networks.slimefun.network.NetworkBridge;
 import io.github.sefiraat.networks.slimefun.network.NetworkPowerNode;
 import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
-import io.github.thebusybiscuit.slimefun4.api.network.Network;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import lombok.experimental.UtilityClass;
 import org.bukkit.NamespacedKey;
@@ -132,7 +130,7 @@ public class ExpansionItems {
 
     public static final ChainPusher CHAIN_PUSHER = new ChainPusher(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
-            ExpansionItemStacks.CHAING_PUSHER,
+            ExpansionItemStacks.CHAIN_PUSHER,
             ExpansionWorkbench.TYPE,
             ExpansionRecipes.CHAIN_PUSHER,
             "NE_CHAIN_PUSHER"
@@ -182,39 +180,39 @@ public class ExpansionItems {
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.ADVANCED_CHAIN_PUSHER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.NULL,
-            "NE_ADVANCED_CHAING_PUSHER"
+            ExpansionRecipes.ADVANCED_CHAIN_PUSHER,
+            "NE_ADVANCED_CHAIN_PUSHER"
     );
 
     public static final AdvancedChainPusher ADVANCED_CHAIN_PUSHER_PLUS = new AdvancedChainPusher(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.ADVANCED_CHAIN_PUSHER_PLUS,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.NULL,
-            "NE_ADVANCED_CHAING_PUSHER_PLUS"
+            ExpansionRecipes.ADVANCED_CHAIN_PUSHER_PLUS,
+            "NE_ADVANCED_CHAIN_PUSHER_PLUS"
     );
 
     public static final AdvancedChainGrabber ADVANCED_CHAIN_GRABBER = new AdvancedChainGrabber(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.ADVANCED_CHAIN_GRABBER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.NULL,
-            "NE_ADVANCED_CHAING_GRABBER"
+            ExpansionRecipes.ADVANCED_CHAIN_GRABBER,
+            "NE_ADVANCED_CHAIN_GRABBER"
     );
 
     public static final AdvancedChainGrabber ADVANCED_CHAIN_GRABBER_PLUS = new AdvancedChainGrabber(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.ADVANCED_CHAIN_GRABBER_PLUS,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.NULL,
-            "NE_ADVANCED_CHAING_GRABBER_PLUS"
+            ExpansionRecipes.ADVANCED_CHAIN_GRABBER_PLUS,
+            "NE_ADVANCED_CHAIN_GRABBER_PLUS"
     );
 
     public static final AdvancedChainDispatcher ADVANCED_CHAIN_DISPATCHER = new AdvancedChainDispatcher(
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.ADVANCED_CHAIN_DISPATCHER,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.NULL,
+            ExpansionRecipes.ADVANCED_CHAIN_DISPATCHER,
             "NE_ADVANCED_CHAIN_DISPATCHER"
     );
 
@@ -222,8 +220,8 @@ public class ExpansionItems {
             NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.ADVANCED_CHAIN_DISPATCHER_PLUS,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.NULL,
-            "NE_ADVANCED_CHAING_DISPATCHER_PLUS"
+            ExpansionRecipes.ADVANCED_CHAIN_DISPATCHER_PLUS,
+            "NE_ADVANCED_CHAIN_DISPATCHER_PLUS"
     );
 
     public static final CoordinateTransmitter COORDINATE_TRANSMITTER = new CoordinateTransmitter(
@@ -284,7 +282,7 @@ public class ExpansionItems {
     );
 
     //编码器
-    public static final MagicEncoder MAGIC_WORKBENCH_RECIPE_ENCODER = new MagicEncoder(
+    public static final MagicWorkbenchEncoder MAGIC_WORKBENCH_RECIPE_ENCODER = new MagicWorkbenchEncoder(
             NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
             ExpansionItemStacks.MAGIC_WORKBENCH_RECIPE_ENCODER,
             ExpansionWorkbench.TYPE,
@@ -327,7 +325,7 @@ public class ExpansionItems {
     );
 
     //合成机
-    public static final AutoMagicCrafter AUTO_MAGIC_WORKBENCH = new AutoMagicCrafter(
+    public static final AutoMagicWorkbenchCrafter AUTO_MAGIC_WORKBENCH = new AutoMagicWorkbenchCrafter(
             NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
             ExpansionItemStacks.AUTO_MAGIC_WORKBENCH,
             ExpansionWorkbench.TYPE,
@@ -336,7 +334,7 @@ public class ExpansionItems {
             false
     );
 
-    public static final AutoMagicCrafter AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AutoMagicCrafter(
+    public static final AutoMagicWorkbenchCrafter AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AutoMagicWorkbenchCrafter(
             NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
             ExpansionItemStacks.AUTO_MAGIC_WORKBENCH_WITHHOLDING,
             ExpansionWorkbench.TYPE,
@@ -436,7 +434,7 @@ public class ExpansionItems {
     );
 
     //高级合成机
-    public static final AdvancedAutoMagicCrafter ADVANCED_AUTO_MAGIC_WORKBENCH = new AdvancedAutoMagicCrafter(
+    public static final AdvancedAutoMagicWorkbenchCrafter ADVANCED_AUTO_MAGIC_WORKBENCH = new AdvancedAutoMagicWorkbenchCrafter(
             NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
             ExpansionItemStacks.ADVANCED_AUTO_MAGIC_WORKBENCH,
             ExpansionWorkbench.TYPE,
@@ -445,7 +443,7 @@ public class ExpansionItems {
             false
     );
 
-    public static final AdvancedAutoMagicCrafter ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AdvancedAutoMagicCrafter(
+    public static final AdvancedAutoMagicWorkbenchCrafter ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING = new AdvancedAutoMagicWorkbenchCrafter(
             NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
             ExpansionItemStacks.ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING,
             ExpansionWorkbench.TYPE,
@@ -544,6 +542,24 @@ public class ExpansionItems {
             true
     );
 
+    public static final AdvancedAutoEnhancedCraftingTableCrafter ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE = new AdvancedAutoEnhancedCraftingTableCrafter(
+            NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
+            ExpansionItemStacks.ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            ExpansionRecipes.ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE,
+            6400,
+            false
+    );
+
+    public static final AdvancedAutoEnhancedCraftingTableCrafter ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE_WITHHOLDING = new AdvancedAutoEnhancedCraftingTableCrafter(
+            NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
+            ExpansionItemStacks.ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE_WITHHOLDING,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            ExpansionRecipes.ADVANCED_AUTO_ENHANCED_CRAFTING_TABLE_WITHHOLDING,
+            12800,
+            true
+    );
+
     public static final CargoNodeQuickTool CARGO_NODE_QUICK_TOOL = new CargoNodeQuickTool(
             NetworksItemGroups.TOOLS,
             ExpansionItemStacks.CARGO_NODE_QUICK_TOOL,
@@ -607,7 +623,7 @@ public class ExpansionItems {
     );
 
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_7 = new CargoStorageUnit(
-            NetworksItemGroups.NETWORK_ITEMS_EXPANSION,
+            NetworksItemGroups.NETWORK_TRANSPOR_TATION,
             ExpansionItemStacks.CARGO_STORAGE_UNIT_7,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_7,
