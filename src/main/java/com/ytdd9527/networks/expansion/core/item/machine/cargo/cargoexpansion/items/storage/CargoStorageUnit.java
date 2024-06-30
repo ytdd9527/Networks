@@ -339,10 +339,16 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
             clone.setItemMeta(Bukkit.getItemFactory().getItemMeta(clone.getType()));
         }
         ItemMeta meta = clone.getItemMeta();
+        if (meta == null) {
+            clone.setItemMeta(Bukkit.getItemFactory().getItemMeta(clone.getType()));
+        }
         if (!meta.hasLore()) {
             meta.setLore(new ArrayList<>());
         }
         List<String> lore = meta.getLore();
+        if (lore == null) {
+            lore = new ArrayList<>();
+        }
         lore.add("");
         lore.add(ChatColor.BLUE+"存储数量: "+ChatColor.YELLOW+amount +ChatColor.GRAY+"/ "+ChatColor.GOLD+max);
         meta.setLore(lore);
