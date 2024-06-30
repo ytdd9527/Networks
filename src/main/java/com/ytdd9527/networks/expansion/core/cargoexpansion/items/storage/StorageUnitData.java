@@ -67,16 +67,24 @@ public class StorageUnitData {
     public int addStoredItem(ItemStack item, int amount, boolean contentLocked) {
         ItemStackWrapper wrapper = ItemStackWrapper.wrap(item);
         int add = 0;
+        boolean isVoidExcess = StorageCacheUtils.getData(getLastLocation(), "voidExcess") != null;
         for (ItemContainer each : storedItems.values()) {
             if(each.isSimilar(wrapper)) {
                 // Found existing one, add amount
-                add = Math.min(amount, sizeType.getEachMaxSize() - each.getAmount());
-                each.addAmount(add);
-                DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
-                return add;
+                if (isVoidExcess) {
+                    add = amount;
+                    each.setAmount(sizeType.getEachMaxSize());
+                    DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
+                    return add;
+                } else {
+                    add = Math.min(amount, sizeType.getEachMaxSize() - each.getAmount());
+                    each.addAmount(add);
+                    DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
+                    return add;
+                }
             }
         }
-        // If in content locked mode, no new input allowed
+        // If in content locked mode or void excess mode, no new input allowed
         if (contentLocked || StorageCacheUtils.getData(getLastLocation(), "locked") != null) return 0;
         // Not found, new one
         if (storedItems.size() < sizeType.getMaxItemCount()) {

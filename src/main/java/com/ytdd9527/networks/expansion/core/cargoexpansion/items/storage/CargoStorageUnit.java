@@ -5,6 +5,8 @@ import com.ytdd9527.networks.expansion.core.cargoexpansion.objects.ItemContainer
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
+import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -47,11 +49,14 @@ public class CargoStorageUnit extends SlimefunItem {
     private static final Map<Location, TransportMode> transportModes = new HashMap<>();
     private static final Map<Location, CargoReceipt> cargoRecords = new HashMap<>();
     private static final Set<Location> locked = new HashSet<>();
+
+    private static final Set<Location> voidExcesses = new HashSet<>();
     private static final int[] displaySlots = {10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43,46,47,48,49,50,51,52};
     private static final int storageInfoSlot = 4;
     private static final NamespacedKey idKey = new NamespacedKey(Networks.getInstance(),"CONTAINER_ID");
     private final StorageUnitType sizeType;
-    private final int[] border = {0,1,2,3,5,6,7,9,17,18,26,27,35,36,44,45,53};
+    private final int[] border = {0,1,2,3,5,6,9,17,18,26,27,35,36,44,45,53};
+    private final int voidModeSlot = 7;
     private final int lockModeSlot = 8;
     private static final ItemStack errorBorder = new CustomItemStack(Material.BARRIER, " ", " ", " ", " ");
 
@@ -66,12 +71,9 @@ public class CargoStorageUnit extends SlimefunItem {
                 for (int slot : border) {
                     addItem(slot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
                 }
-
-                for (int slot : displaySlots) {
-                    addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
-                }
                 addItem(storageInfoSlot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
                 addItem(lockModeSlot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
+                addItem(voidModeSlot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
             }
 
             @Override
@@ -90,9 +92,21 @@ public class CargoStorageUnit extends SlimefunItem {
                     menu.replaceExistingItem(lockModeSlot, getContentLockItem(false));
                 }
 
+                if(blockData.getData("voidExcess") != null) {
+                    voidExcesses.add(l);
+                    menu.replaceExistingItem(voidModeSlot, getVoidExcessItem(true));
+                } else {
+                    menu.replaceExistingItem(voidModeSlot, getVoidExcessItem(false));
+                }
+
                 // Add lock mode switcher
                 menu.addMenuClickHandler(lockModeSlot, (p, slot, item1, action) -> {
                     switchLock(menu, l);
+                    return false;
+                });
+
+                menu.addMenuClickHandler(voidModeSlot, (p, slot, item1, action) -> {
+                    switchVoidExcess(menu, l);
                     return false;
                 });
 
@@ -105,8 +119,6 @@ public class CargoStorageUnit extends SlimefunItem {
                         update(l, new CargoReceipt(data.getId(), 0, 0, data.getTotalAmount(), data.getStoredTypeCount(), data.getSizeType()), true);
                     }
                 }
-
-                menu.setPlayerInventoryClickable(false);
             }
 
             @Override
@@ -139,7 +151,7 @@ public class CargoStorageUnit extends SlimefunItem {
             int maxEach = receipt.getSizeType().getEachMaxSize();
 
             // Update information
-            menu.replaceExistingItem(storageInfoSlot, getStorageInfoItem(receipt.getContainerId(), receipt.getTypeCount(),receipt.getSizeType().getMaxItemCount(),maxEach, isLocked(l)));
+            menu.replaceExistingItem(storageInfoSlot, getStorageInfoItem(receipt.getContainerId(), receipt.getTypeCount(),receipt.getSizeType().getMaxItemCount(),maxEach, isLocked(l), isVoidExcess(l)));
 
             // Update item display
             List<ItemContainer> itemStored = storages.get(l).getStoredItems();
@@ -186,9 +198,14 @@ public class CargoStorageUnit extends SlimefunItem {
                     storages.put(l, data);
                 }
 
+                BlockMenu menu = StorageCacheUtils.getMenu(l);
+                if (menu != null) {
+                    // 如果存在菜单，添加点击事件
+                    addClickHandler(l);
+                }
+
                 // Save to block storage
                 addBlockInfo(l, id);
-
             }
         });
 
@@ -270,6 +287,19 @@ public class CargoStorageUnit extends SlimefunItem {
         });
     }
 
+    public static boolean canAddMoreType(Location l, ItemStack itemStack) {
+        return storages.get(l).getStoredItems().size() < storages.get(l).getSizeType().getMaxItemCount() && !isLocked(l) && !CargoStorageUnit.contains(l, itemStack);
+    }
+
+    public static boolean contains(Location l, ItemStack itemStack) {
+        for (ItemContainer each : storages.get(l).getStoredItems()) {
+            if (StackUtils.itemsMatch(each.getSample(), itemStack)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static int getBoundId(@NotNull ItemStack item) {
         // Get meta
         ItemMeta meta = item.getItemMeta();
@@ -303,6 +333,10 @@ public class CargoStorageUnit extends SlimefunItem {
         return locked.contains(l);
     }
 
+    public static boolean isVoidExcess(Location l) {
+        return voidExcesses.contains(l);
+    }
+
     private static ItemStack getDisplayItem(ItemStack item, int amount, int max) {
         return new CustomItemStack(item, (String)null, "", "&b存储数量: &e"+amount+" &7/ &6"+max);
     }
@@ -314,14 +348,110 @@ public class CargoStorageUnit extends SlimefunItem {
         } else {
             DataStorage.requestStorageData(id);
         }
+        addClickHandler(l);
     }
 
-    private static ItemStack getStorageInfoItem(int id, int typeCount, int maxType, int maxEach, boolean locked) {
+    private static void addClickHandler(Location l) {
+        BlockMenu blockMenu = StorageCacheUtils.getMenu(l);
+        StorageUnitData data = storages.get(l);
+        // 遍历每一个显示槽
+        for (int s : displaySlots) {
+            // 添加点击事件
+            blockMenu.addMenuClickHandler(s, (player, slot, clickItem, action) -> {
+                ItemStack itemOnCursor = player.getItemOnCursor();
+                if (StackUtils.itemsMatch(clickItem, errorBorder)) {
+                    // 如果点击的是空白
+                    if (itemOnCursor != null && itemOnCursor.getType() != Material.AIR) {
+                        ItemStack clone = itemOnCursor.clone();
+                        data.depositItemStack(clone, false);
+                        if (clone.getAmount() != 0) {
+                            // 如果存储可以增加更多类型
+                            if (canAddMoreType(l, clone)) {
+                                // 存储光标上的物品
+                                data.depositItemStack(clone, true);
+                            }
+                        }
+                        // 更新玩家光标上的物品
+                        player.setItemOnCursor(clone);
+                        // 数据更新
+                        CargoStorageUnit.update(l, new CargoReceipt(data.getId(), itemOnCursor.getAmount(), 0, data.getTotalAmount(), data.getStoredTypeCount(), data.getSizeType()), true);
+                    }
+                } else {
+                    // 如果点击的不是空白
+                    int camount = 1;
+                    if (action.isRightClicked()) {
+                        camount = 64;
+                    }
+
+                    // 获取实际物品
+                    ItemStack clone = clickItem.clone();
+                    ItemMeta meta = clone.getItemMeta();
+                    List<String> lore = meta.getLore();
+                    lore.remove(lore.size()-1);
+                    lore.remove(lore.size()-1);
+                    meta.setLore(lore);
+                    clone.setItemMeta(meta);
+
+
+                    if (action.isShiftClicked()) {
+                        // 如果Shift，加到背包里
+
+                        // 取出物品
+                        ItemStack requestingStack = data.requestItem(new ItemRequest(clone, camount));
+                        if (requestingStack == null) {
+                            return false;
+                        }
+
+                        HashMap<Integer, ItemStack> remnant = player.getInventory().addItem(requestingStack);
+                        requestingStack = remnant.values().stream().findFirst().orElse(null);
+                        if (requestingStack != null) {
+                            data.depositItemStack(requestingStack, false);
+                        }
+                    } else {
+                        // 没有Shift，放到光标上
+
+                        // 取出物品
+                        ItemStack requestingStack = data.requestItem(new ItemRequest(clone, camount));
+                        if (requestingStack == null) {
+                            return false;
+                        }
+
+                        if (itemOnCursor.getType() == Material.AIR) {
+                            // 如果光标是空气，直接替换就行
+                            player.setItemOnCursor(requestingStack.clone());
+                        } else if (StackUtils.itemsMatch(requestingStack, itemOnCursor)) {
+                            // 如果不是空气并且物品相同
+                            ItemStack cursorClone = itemOnCursor.clone();
+                            int cursorAmount = cursorClone.getAmount();
+                            int takeAmount = requestingStack.getAmount();
+                            if (cursorAmount + takeAmount <= cursorClone.getMaxStackSize()) {
+                                // 可以直接存储
+                                cursorClone.setAmount(cursorAmount + takeAmount);
+                            } else {
+                                // 超过最大容量，只取最大容量
+                                cursorClone.setAmount(cursorClone.getMaxStackSize());
+                                // 设置剩余的数量
+                                requestingStack.setAmount(takeAmount - (cursorClone.getMaxStackSize() - cursorAmount));
+                                // 数据更新
+                                data.depositItemStack(requestingStack, false);
+                            }
+                            // 更新玩家光标上的物品
+                            player.setItemOnCursor(cursorClone);
+                        }
+                    }
+                }
+                return false;
+            });
+        }
+    }
+
+    private static ItemStack getStorageInfoItem(int id, int typeCount, int maxType, int maxEach, boolean locked, boolean voidExcess) {
         return new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "&c存储信息", "",
                 "&b容器ID: &a"+id,
                 "&b物品种类: &e"+typeCount+" &7/ &6"+maxType,
                 "&b容量上限: &e"+maxType+" &7* &6"+maxEach,
-                "&b内容锁定模式: " + (locked ? (ChatColor.DARK_GREEN + "\u2714") : (ChatColor.DARK_RED + "\u2718"))
+                "&b内容锁定模式: " + (locked ? (ChatColor.DARK_GREEN + "\u2714") : (ChatColor.DARK_RED + "\u2718")),
+                "&b满载清空模式: " + (voidExcess ? (ChatColor.DARK_GREEN + "\u2714") : (ChatColor.DARK_RED + "\u2718"))
         );
     }
 
@@ -360,6 +490,18 @@ public class CargoStorageUnit extends SlimefunItem {
         }
     }
 
+    private void switchVoidExcess(BlockMenu menu, Location l) {
+        if (voidExcesses.contains(l)) {
+            StorageCacheUtils.removeData(l, "voidExcess");
+            voidExcesses.remove(l);
+            menu.replaceExistingItem(voidModeSlot, getVoidExcessItem(false));
+        } else {
+            StorageCacheUtils.setData(l, "voidExcess", "enable");
+            voidExcesses.add(l);
+            menu.replaceExistingItem(voidModeSlot, getVoidExcessItem(true));
+        }
+    }
+
     private ItemStack getContentLockItem(boolean locked) {
         return new CustomItemStack(
                 locked ? Material.RED_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE,
@@ -370,6 +512,18 @@ public class CargoStorageUnit extends SlimefunItem {
                 "&7当容器锁定后，将仅允许当前存在的物品输入",
                 "&7并且输出时将会留下至少一个物品",
                 locked ? "&e点击禁用" : "&e点击启用"
+        );
+    }
+
+    private ItemStack getVoidExcessItem(boolean voidExcess) {
+        return new CustomItemStack(
+                voidExcess ? Material.RED_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE,
+                "&6满载清空模式",
+                "",
+                "&b状态: " + (voidExcess ? "&c已锁定" : "&a未锁定"),
+                "",
+                "&7开启此模式后，超过存储上限的物品的数量不会再增加，但仍能存入",
+                voidExcess ? "&e点击禁用" : "&e点击启用"
         );
     }
 

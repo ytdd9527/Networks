@@ -7,6 +7,7 @@ import com.ytdd9527.networks.expansion.core.cargoexpansion.items.storage.CargoSt
 import com.ytdd9527.networks.expansion.core.cargoexpansion.items.storage.StorageUnitData;
 import com.ytdd9527.networks.expansion.setup.ExpansionItemStacks;
 import io.github.sefiraat.networks.network.stackcaches.BlueprintInstance;
+import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.network.stackcaches.QuantumCache;
 import io.github.sefiraat.networks.slimefun.NetworkSlimefunItems;
 import io.github.sefiraat.networks.slimefun.NetworksSlimefunItemStacks;
@@ -19,7 +20,10 @@ import io.github.sefiraat.networks.utils.datatypes.PersistentCraftingBlueprintTy
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -57,6 +61,9 @@ public class NetworksMain implements TabExecutor {
         switch (args[0]) {
             case "fillquantum":
             case "fixblueprint":
+            case "addstorageitem":
+            case "reducestorageitem":
+            case "setquantum":
             case "restore":
                 if (!(sender instanceof Player)) {
                     sender.sendMessage(Theme.ERROR + "只有玩家才能执行该命令");
@@ -70,30 +77,84 @@ public class NetworksMain implements TabExecutor {
 
             if (args[0].equalsIgnoreCase("fillquantum")) {
                 if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.fillquantum")) && args.length >= 2) {
-                    try {
-                        int number = Integer.parseInt(args[1]);
-                        fillQuantum(player, number);
-                        return true;
-                    } catch (NumberFormatException exception) {
-                        return false;
+                    if (args.length >= 2) {
+                        try {
+                            int number = Integer.parseInt(args[1]);
+                            fillQuantum(player, number);
+                            return true;
+                        } catch (NumberFormatException exception) {
+                            player.sendMessage(Theme.ERROR + "Wrong argument: <amount>. Range: 0 ~ 2147483647");
+                        }
+                    } else {
+                        player.sendMessage(Theme.ERROR + "Missing argument: <amount>");
                     }
+                } else {
+                    player.sendMessage(Theme.ERROR + "你没有权限执行该命令");
                 }
+                return true;
             }
             if (args[0].equalsIgnoreCase("fixblueprint")) {
                 if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.fixblueprint"))) {
                     if (args.length >= 2) {
                         String before = args[1];
                         fixBlueprint(player, before);
-                        return true;
+                    } else {
+                        player.sendMessage(Theme.ERROR + "Missing argument: <keyInMeta>");
                     }
+                } else {
+                    player.sendMessage(Theme.ERROR + "你没有权限执行该命令");
                 }
+                return true;
             }
 
             if (args[0].equalsIgnoreCase("restore")) {
-                if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.fixblueprint"))) {
+                if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.restore"))) {
                     restore(player);
-                    return true;
+                } else {
+                    player.sendMessage(Theme.ERROR + "你没有权限执行该命令");
                 }
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("setQuantum")) {
+                if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.setquantum"))) {
+                    if (args.length >= 2) {
+                        setQuantum(player, Integer.parseInt(args[1]));
+                    } else {
+                        player.sendMessage(Theme.ERROR + "Missing argument: <amount>");
+                    }
+                } else {
+                    player.sendMessage(Theme.ERROR + "你没有权限执行该命令");
+                }
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("addstorage")) {
+                if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.addstorage"))) {
+                    if (args.length >= 2) {
+                        int amount = Integer.parseInt(args[1]);
+                        addStorageItem(player, amount);
+                    } else {
+                        player.sendMessage(Theme.ERROR + "Missing argument: <amount>");
+                    }
+                } else {
+                    player.sendMessage(Theme.ERROR + "你没有权限执行该命令");
+                }
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("reducestorage")) {
+                if ((player.isOp() || player.hasPermission("networks.admin") || player.hasPermission("networks.commands.reducestorage"))) {
+                    if (args.length >= 2) {
+                        int amount = Integer.parseInt(args[1]);
+                        reduceStorageItem(player, amount);
+                    } else {
+                        player.sendMessage(Theme.ERROR + "Missing argument: <amount>");
+                    }
+                } else {
+                    player.sendMessage(Theme.ERROR + "你没有权限执行该命令");
+                }
+                return true;
             }
         } else {
             // 非玩家执行命令时的检测
@@ -200,6 +261,127 @@ public class NetworksMain implements TabExecutor {
         });
     }
 
+    public static void setQuantum(Player player, int amount) {
+        Block targetBlock = player.getTargetBlockExact(8, FluidCollisionMode.NEVER);
+        final ItemStack itemInHand = player.getInventory().getItemInMainHand();
+        if (itemInHand == null || itemInHand.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "你必须手持物品才能执行该指令!");
+            return;
+        }
+
+        if (targetBlock == null || targetBlock.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个网络存储才能执行该指令!");
+            return;
+        }
+
+        SlimefunBlockData blockData = StorageCacheUtils.getBlock(targetBlock.getLocation());
+        if (blockData == null) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个网络存储才能执行该指令!");
+            return;
+        }
+
+        SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(targetBlock.getLocation());
+        if (slimefunItem == null) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个网络存储才能执行该指令!");
+            return;
+        }
+
+        Location targetLocation = targetBlock.getLocation();
+        ItemStack clone = itemInHand.clone();
+        if (slimefunItem instanceof NetworkQuantumStorage) {
+            BlockMenu blockMenu = StorageCacheUtils.getMenu(targetLocation);
+            if (blockMenu == null) {
+                player.sendMessage(Theme.ERROR + "Cannot set item for air");
+                return;
+            }
+
+            NetworkQuantumStorage.setItem(blockMenu, clone, amount);
+        } else {
+            player.sendMessage(ChatColor.RED + "你必须指着一个网络存储才能执行该指令!");
+            return;
+        }
+    }
+
+    private static void addStorageItem(Player player, int amount) {
+        Block targetBlock = player.getTargetBlockExact(8, FluidCollisionMode.NEVER);
+        final ItemStack itemInHand = player.getInventory().getItemInMainHand();
+        if (itemInHand == null || itemInHand.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "你必须手持物品才能执行该指令!");
+            return;
+        }
+
+        if (targetBlock == null || targetBlock.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
+        }
+
+        SlimefunBlockData blockData = StorageCacheUtils.getBlock(targetBlock.getLocation());
+        if (blockData == null) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
+        }
+
+        SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(targetBlock.getLocation());
+        if (slimefunItem == null) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
+        }
+
+        Location targetLocation = targetBlock.getLocation();
+        ItemStack clone = itemInHand.clone();
+        if (slimefunItem instanceof CargoStorageUnit) {
+            StorageUnitData data = CargoStorageUnit.getStorageData(targetLocation);
+            if (data == null) {
+                player.sendMessage(Theme.ERROR + "该存储单元不存在或已损坏!");
+                return;
+            }
+
+            clone.setAmount(amount);
+            data.depositItemStack(clone, false);
+
+        }
+    }
+
+    private static void reduceStorageItem(Player player, int amount) {
+        Block targetBlock = player.getTargetBlockExact(8, FluidCollisionMode.NEVER);
+        final ItemStack itemInHand = player.getInventory().getItemInMainHand();
+        if (itemInHand == null || itemInHand.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "你必须手持物品才能执行该指令!");
+            return;
+        }
+
+        if (targetBlock == null || targetBlock.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
+        }
+
+        SlimefunBlockData blockData = StorageCacheUtils.getBlock(targetBlock.getLocation());
+        if (blockData == null) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
+        }
+
+        SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(targetBlock.getLocation());
+        if (slimefunItem == null) {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
+        }
+
+        Location targetLocation = targetBlock.getLocation();
+        ItemStack clone = itemInHand.clone();
+        if (slimefunItem instanceof CargoStorageUnit) {
+            StorageUnitData data = CargoStorageUnit.getStorageData(targetLocation);
+            if (data == null) {
+                player.sendMessage(Theme.ERROR + "该存储单元不存在或已损坏!");
+                return;
+            }
+
+            clone.setAmount(1);
+            data.requestItem(new ItemRequest(clone, amount));
+
+        }
+    }
+
     @Override
     public @Nullable List<String> onTabComplete(
             @NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -214,8 +396,11 @@ public class NetworksMain implements TabExecutor {
             return switch (args[0]) {
                 case "fillquantum" -> List.of("<amount>");
                 case "fixblueprint" -> List.of("<keyInMeta>");
+                case "addstorageitem"  -> List.of("<amount>");
+                case "reducestorageitem"  -> List.of("<amount>");
+                case "setquantum" -> List.of("<amount>");
                 case "restore" -> List.of();
-                default -> new ArrayList<>();
+                default -> List.of();
             };
         }
         return new ArrayList<>();

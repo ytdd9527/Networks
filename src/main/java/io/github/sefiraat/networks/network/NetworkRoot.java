@@ -730,12 +730,13 @@ public class NetworkRoot extends NetworkNode {
 
         // Units
         for (StorageUnitData cache: getCargoStorageUnits()) {
-            final List<ItemContainer> storedItems = cache.getStoredItems();
             ItemStack take = cache.requestItem(request);
             if (take != null) {
                 if (stackToReturn == null) {
                     stackToReturn = take.clone();
                     stackToReturn.setAmount(take.getAmount());
+                } else {
+                    stackToReturn.setAmount(stackToReturn.getAmount() + take.getAmount());
                 }
             }
         }

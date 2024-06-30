@@ -162,7 +162,6 @@ public abstract class AbstractEncoder extends NetworkObject {
         }
         final ItemStack blueprintClone = StackUtils.getAsQuantity(blueprint, 1);
 
-        blueprint.setAmount(blueprint.getAmount() - 1);
         blueprintSetter(blueprintClone, inputs, crafted);
         if (blockMenu.fits(blueprintClone, OUTPUT_SLOT)) {
             blueprint.setAmount(blueprint.getAmount() - 1);

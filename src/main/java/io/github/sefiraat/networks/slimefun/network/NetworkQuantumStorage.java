@@ -244,6 +244,23 @@ public class NetworkQuantumStorage extends SlimefunItem implements DistinctiveIt
         CACHES.put(blockMenu.getLocation(), cache);
     }
 
+    public static void setItem(@Nonnull BlockMenu blockMenu, @Nonnull ItemStack itemStack, @Nonnull int amount) {
+        if (isBlacklisted(itemStack)) {
+            return;
+        }
+
+        final QuantumCache cache = CACHES.get(blockMenu.getLocation());
+        if (cache == null || cache.getAmount() > 0) {
+            return;
+        }
+        itemStack.setAmount(1);
+        cache.setItemStack(itemStack);
+        cache.setAmount(amount);
+        updateDisplayItem(blockMenu, cache);
+        syncBlock(blockMenu.getLocation(), cache);
+        CACHES.put(blockMenu.getLocation(), cache);
+    }
+
     private void setCustomMaxAmount(@Nonnull BlockMenu blockMenu, @Nonnull Player player, @Nonnull int newMaxAmount ) {
         final QuantumCache cache = CACHES.get(blockMenu.getLocation());
         if (cache == null || !cache.supportsCustomMaxAmount()) {
