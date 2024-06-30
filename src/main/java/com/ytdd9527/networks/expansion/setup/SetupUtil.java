@@ -122,7 +122,8 @@ public class SetupUtil {
                 ExpansionItems.ADVANCED_AUTO_SMELTERY.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_QUANTUM_WORKBENCH.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_ANCIENT_ALTAR.registerThis(),
-                ExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH.registerThis()
+                ExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH.registerThis(),
+                ExpansionItems.ADVANCED_AUTO_CRAFTING_TABLE.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_CRAFTER_MACHINE.addTo(
                 ExpansionItems.ADVANCED_AUTO_MAGIC_WORKBENCH_WITHHOLDING.registerThis(),
@@ -131,7 +132,6 @@ public class SetupUtil {
                 ExpansionItems.ADVANCED_AUTO_QUANTUM_WORKBENCH_WITHHOLDING.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_ANCIENT_ALTAR_WITHHOLDING.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH_WITHHOLDING.registerThis(),
-                ExpansionItems.ADVANCED_AUTO_CRAFTING_TABLE.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING.registerThis()
         );
     }
