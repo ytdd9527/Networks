@@ -39,6 +39,9 @@
 - [ ] 6 添加粘液小木斧(只能op使用)其实就是复制粘液机器和清理机器
 
 - [ ] 7 清理没用的代码
+
+- [ ] 8 添加作者菜单和贡献
+
 ![](https://cdn.jsdelivr.net/gh/SlimefunGuguProject/Networks@master/images/logo/logo_large.png)
 
 网络是一个Slimefun附属插件，可以创建一个简单有效的物品存储与运输系统，并可以与货运系统交互。
