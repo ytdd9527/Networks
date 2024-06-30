@@ -5,6 +5,8 @@ import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.da
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.data.QueryQueue;
 
 import com.ytdd9527.networks.expansion.setup.SetupUtil;
+
+import com.ytdd9527.networks.expansion.setup.depreacte.DepreacteExpansionItems;
 import com.ytdd9527.networks.expansion.util.ConfigManager;
 import io.github.sefiraat.networks.commands.NetworksMain;
 import io.github.sefiraat.networks.managers.ListenerManager;
@@ -166,6 +168,7 @@ public class Networks extends JavaPlugin implements SlimefunAddon {
     }
     public void setupSlimefun() {
         NetworkSlimefunItems.setup();
+        DepreacteExpansionItems.setup();
         SetupUtil.init();
         WikiUtils.setupJson(this);
         if (supportedPluginManager.isNetheopoiesis()){

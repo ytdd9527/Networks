@@ -21,7 +21,11 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -32,7 +36,11 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CargoStorageUnit extends AbstractMySlimefunItem {
 
@@ -40,24 +48,20 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
     private static final Map<Location, TransportMode> transportModes = new HashMap<>();
     private static final Map<Location, CargoReceipt> cargoRecords = new HashMap<>();
     private static final Set<Location> locked = new HashSet<>();
-    private static final int[] displaySlots = {10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43,46,47,51,52};
-    private static final int statusSlot = 48;
-    private static final int cargoInfoSlot = 50;
+    private static final int[] displaySlots = {10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43,46,47,48,49,50,51,52};
     private static final int storageInfoSlot = 4;
     private static final NamespacedKey idKey = new NamespacedKey(Networks.getInstance(),"CONTAINER_ID");
     private final StorageUnitType sizeType;
     private final int[] border = {0,1,2,3,5,6,7,9,17,18,26,27,35,36,44,45,53};
-    private final int switcher = 49;
     private final int lockModeSlot = 8;
-    private final ItemStack switcherItem = new CustomItemStack(Material.LEVER, "&b切换模式", "","&6模式列表:", "&e- 允许全部", "&e- 拒绝全部", "&e- 仅输入", "&e- 仅输出", "", "&a左键 - 切换下一个", "&c右键 - 切换上一个");
-    private final ItemStack errorBorder = new CustomItemStack(Material.BARRIER, "", "");
+    private static final ItemStack errorBorder = new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, " ", " ", " ", " ");
 
     public CargoStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, StorageUnitType sizeType) {
         super(itemGroup, item, recipeType, recipe);
 
         this.sizeType = sizeType;
 
-        new BlockMenuPreset(getId(), "&e货运存储单元") {
+        new BlockMenuPreset(this.getId(), this.getItemName()) {
             @Override
             public void init() {
                 for (int slot : border) {
@@ -69,8 +73,6 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                 }
                 addItem(storageInfoSlot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
                 addItem(lockModeSlot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
-                addItem(statusSlot, TransportMode.ACCEPT.getDisplayItem(), ChestMenuUtils.getEmptyClickHandler());
-                addItem(cargoInfoSlot, getInfoItem(0,0,0),ChestMenuUtils.getEmptyClickHandler());
             }
 
             @Override
@@ -82,7 +84,6 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                 String modeStr = blockData.getData("transportMode");
                 TransportMode mode = modeStr == null ? TransportMode.REJECT : TransportMode.valueOf(modeStr);
                 transportModes.put(l, mode);
-                menu.replaceExistingItem(statusSlot, mode.getDisplayItem());
                 if(blockData.getData("locked") != null) {
                     locked.add(l);
                     menu.replaceExistingItem(lockModeSlot, getContentLockItem(true));
@@ -95,14 +96,6 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                     switchLock(menu, l);
                     return false;
                 });
-
-                // Handle the switcher
-                menu.addMenuClickHandler(switcher, (p, slot, item1, action) -> {
-                    TransportMode current = transportModes.get(l);
-                    setMode(menu, l, action.isRightClicked() ? current.previous() : current.next());
-                    return false;
-                });
-                menu.replaceExistingItem(switcher, switcherItem);
 
                 StorageUnitData data = storages.get(l);
                 if (data != null) {
@@ -148,8 +141,6 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
 
             // Update information
             menu.replaceExistingItem(storageInfoSlot, getStorageInfoItem(receipt.getContainerId(), receipt.getTypeCount(),receipt.getSizeType().getMaxItemCount(),maxEach, isLocked(l)));
-            menu.replaceExistingItem(statusSlot, getTransportMode(l).getDisplayItem());
-            menu.replaceExistingItem(cargoInfoSlot, getInfoItem(receipt.getAmountIn(), receipt.getAmountOut(), receipt.getTotal()));
 
             // Update item display
             List<ItemContainer> itemStored = storages.get(l).getStoredItems();
@@ -158,7 +149,7 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                     ItemContainer each = itemStored.get(i);
                     menu.replaceExistingItem(displaySlots[i], getDisplayItem(each.getSample(), each.getAmount(), maxEach));
                 } else {
-                    menu.replaceExistingItem(displaySlots[i], new ItemStack(Material.BARRIER));
+                    menu.replaceExistingItem(displaySlots[i], errorBorder);
                 }
             }
         }
@@ -249,13 +240,13 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                 }
                 for (ItemContainer each : data.getStoredItems()) {
                     if (each.getAmount() == 0) {
-                        data.removeItem(DataStorage.getItemId(each.getSample()));
+                        data.removeItem(each.getId());
                     }
                 }
                 BlockMenu menu = StorageCacheUtils.getMenu(l);
                 if (!l.equals(data.getLastLocation())) {
                     ItemStack itemInBorder = menu.getItemInSlot(0);
-                    if (data.isPlaced() && itemInBorder!=null && itemInBorder.getType()!=Material.BARRIER) {
+                    if (data.isPlaced() && itemInBorder != null) {
                         menu.replaceExistingItem(storageInfoSlot, getLocationErrorItem(data.getId(), data.getLastLocation()));
 
                         for (int slot : border) {
@@ -272,9 +263,10 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                     CargoReceipt receipt = cargoRecords.get(l);
                     if(receipt != null) {
                         CargoStorageUnit.update(l, receipt, true);
+                    } else {
+                        CargoStorageUnit.update(l, new CargoReceipt(data.getId(), 0, 0, data.getTotalAmount(), data.getStoredTypeCount(), data.getSizeType()), true);
                     }
                 }
-
             }
         });
     }
@@ -325,15 +317,6 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
         }
     }
 
-    private static ItemStack getInfoItem(int in, int out, int total) {
-        return new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&b货运信息", "",
-                "&a上次输入: &e"+in,
-                "&c上次输出: &e"+out,
-                "",
-                "&6存储总量: &e"+total
-        );
-    }
-
     private static ItemStack getStorageInfoItem(int id, int typeCount, int maxType, int maxEach, boolean locked) {
         return new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "&c存储信息", "",
                 "&b容器ID: &a"+id,
@@ -346,11 +329,6 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
     private static void setMode(Location l, TransportMode mode) {
         transportModes.put(l, mode);
         StorageCacheUtils.setData(l, "transportMode", mode.name());
-    }
-
-    private void setMode(BlockMenu menu, Location l, TransportMode mode) {
-        setMode(l, mode);
-        menu.replaceExistingItem(statusSlot, mode.getDisplayItem());
     }
 
     private ItemStack getLocationErrorItem(int id, Location lastLoc) {
