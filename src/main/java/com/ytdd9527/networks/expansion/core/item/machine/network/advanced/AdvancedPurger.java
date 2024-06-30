@@ -6,6 +6,7 @@ import com.ytdd9527.networks.expansion.util.DisplayGroupGenerators;
 
 import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.sefiraat.networks.NetworkStorage;
+import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.network.NodeDefinition;
 import io.github.sefiraat.networks.network.NodeType;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
@@ -36,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -89,7 +91,7 @@ public class AdvancedPurger extends NetworkObject implements RecipeDisplayItem {
                 public void tick(Block block, SlimefunItem item, SlimefunBlockData data) {
                     if (tick <= 1) {
                         addToRegistry(block);
-                        tryKillItem(data.getBlockMenu());
+                        performKillItemOperationAsync(data.getBlockMenu());
                     }
                 }
 
@@ -107,6 +109,17 @@ public class AdvancedPurger extends NetworkObject implements RecipeDisplayItem {
             }
         );
 
+    }
+
+    private void performKillItemOperationAsync(@Nullable BlockMenu blockMenu) {
+        if (blockMenu != null) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    tryKillItem(blockMenu);
+                }
+            }.runTaskAsynchronously(Networks.getInstance());
+        }
     }
 
 
