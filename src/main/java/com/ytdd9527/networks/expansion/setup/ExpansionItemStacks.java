@@ -463,6 +463,19 @@ public final class ExpansionItemStacks {
             "高级网络自动网络拓展工作台 (预留版)"
     );
 
+    public static final SlimefunItemStack ADVANCED_AUTO_CRAFTING_TABLE = Theme.Random(
+            "NTW_EXPANSION_ADVANCED_AUTO_CRAFTING",
+            Enchanted(Material.CRAFTING_TABLE),
+            Theme.MACHINE,
+            "高级网络自动合成机"
+    );
+    public static final SlimefunItemStack ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING = Theme.Random(
+            "NTW_EXPANSION_ADVANCED_AUTO_CRAFTING_WITHHOLDING",
+            Enchanted(Material.CRAFTING_TABLE),
+            Theme.MACHINE,
+            "高级网络自动合成机工作台 (预留版)"
+    );
+
     //网桥
     public static final SlimefunItemStack NETWORK_BRIDGE_WHITE = Theme.Random(
             "NTW_EXPANSION_BRIDGE_WHITE",

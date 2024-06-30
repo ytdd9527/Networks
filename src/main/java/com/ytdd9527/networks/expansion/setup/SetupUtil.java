@@ -20,8 +20,9 @@ public class SetupUtil {
                 ExpansionItems.EXPANSION_WORKBENCH_BLUEPRINT.registerThis()
         );
         /* 货运与存储 */
+        ExpansionItems.ADVANCED_QUANTUM_STORAGE.setSupportsCustomMaxAmount(true);
         ExpansionItemsMenus.SUB_MENU_ADVANCED_STORAGE.addTo(
-                ExpansionItems.ADVANCED_QUANTUM_STORAGE .registerThis()
+                ExpansionItems.ADVANCED_QUANTUM_STORAGE.registerThis()
         );
         ExpansionItemsMenus.SUB_MENU_ADVANCED_STORAGE.addTo(
                 ExpansionItems.CARGO_STORAGE_UNIT_1.registerThis(),
@@ -129,7 +130,9 @@ public class SetupUtil {
                 ExpansionItems.ADVANCED_AUTO_SMELTERY_WITHHOLDING.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_QUANTUM_WORKBENCH_WITHHOLDING.registerThis(),
                 ExpansionItems.ADVANCED_AUTO_ANCIENT_ALTAR_WITHHOLDING.registerThis(),
-                ExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH_WITHHOLDING.registerThis()
+                ExpansionItems.ADVANCED_AUTO_EXPANSION_WORKBENCH_WITHHOLDING.registerThis(),
+                ExpansionItems.ADVANCED_AUTO_CRAFTING_TABLE.registerThis(),
+                ExpansionItems.ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING.registerThis()
         );
     }
     private static void setupMenu() {

@@ -1060,6 +1060,7 @@ public class NetworkRoot extends NetworkNode {
                     }
                 }
             }
+            return;
         }
 
         // Run for matching greedy blocks

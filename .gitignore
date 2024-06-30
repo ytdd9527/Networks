@@ -4,6 +4,9 @@
 /.idea/
 /.vscode/
 *.iml
+*.zip
+*.rar
+*.7z
 .project
 .classpath
 dependency-reduced-pom.xml
