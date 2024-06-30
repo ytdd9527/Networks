@@ -134,7 +134,7 @@ public class ExpansionRecipes {
         NETWORK_TRASH.getItem(), OPTIC_CABLE.getItem(), NETWORK_TRASH.getItem()
     };
 
-    public static final ItemStack[] ADVANCED_GREEDY_BLOCK = {
+    public static final ItemStack[] ADVANCED_GREEDY_BLOCK = new ItemStack[] {
         NETWORK_GREEDY_BLOCK.getItem(), OPTIC_CABLE.getItem(), NETWORK_GREEDY_BLOCK.getItem(),
         OPTIC_CABLE.getItem(), ADVANCED_NANOBOTS.getItem(), OPTIC_CABLE.getItem(),
         NETWORK_GREEDY_BLOCK.getItem(), OPTIC_CABLE.getItem(), NETWORK_GREEDY_BLOCK.getItem()
@@ -290,13 +290,13 @@ public class ExpansionRecipes {
         OPTIC_GLASS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), OPTIC_GLASS.getItem()
     };
     //高级合成机
-    public static final ItemStack[] ADVANCED_AUTO_CRAFTER = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_AUTO_CRAFTING_TABLE = new ItemStack[] {
         NETWORK_AUTO_CRAFTER.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_AUTO_CRAFTER.getItem(),
         ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
         NETWORK_AUTO_CRAFTER.getItem(), NETWORK_RECIPE_ENCODER.getItem(), NETWORK_AUTO_CRAFTER.getItem()
     };
 
-    public static final ItemStack[] ADVANCED_AUTO_CRAFTER_WITHHOLDING = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING = new ItemStack[] {
         NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(), ADVANCED_NANOBOTS.getItem(), NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(),
         ADVANCED_NANOBOTS.getItem(), INTERDIMENSIONAL_PRESENCE.getItem(), ADVANCED_NANOBOTS.getItem(),
         NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem(),NETWORK_RECIPE_ENCODER.getItem(),NETWORK_AUTO_CRAFTER_WITHHOLDING.getItem()

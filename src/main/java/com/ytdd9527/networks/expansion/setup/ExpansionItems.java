@@ -99,8 +99,8 @@ public class ExpansionItems {
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
             ExpansionItemStacks.ADVANCED_QUANTUM_STORAGE,
             ExpansionWorkbench.TYPE,
-            ExpansionRecipes.ADVANCED_QUANTUM_STORAGE,NetworkQuantumStorage.getSizes(
-    )[10]
+            ExpansionRecipes.ADVANCED_QUANTUM_STORAGE,
+            NetworkQuantumStorage.getSizes()[10]
     );
 
     public static final NetworkGridNewStyle NETWORK_GRID_NEW_STYLE = new NetworkGridNewStyle(
@@ -422,6 +422,24 @@ public class ExpansionItems {
             ExpansionItemStacks.ADVANCED_AUTO_EXPANSION_WORKBENCH_WITHHOLDING,
             ExpansionWorkbench.TYPE,
             ExpansionRecipes.ADVANCED_AUTO_EXPANSION_WORKBENCH_WITHHOLDING,
+            12800,
+            true
+    );
+
+    public static final AdvancedAutoCraftingCrafter ADVANCED_AUTO_CRAFTING_TABLE = new AdvancedAutoCraftingCrafter(
+            ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
+            ExpansionItemStacks.ADVANCED_AUTO_CRAFTING_TABLE,
+            ExpansionWorkbench.TYPE,
+            ExpansionRecipes.ADVANCED_AUTO_CRAFTING_TABLE,
+            6400,
+            false
+    );
+
+    public static final AdvancedAutoCraftingCrafter ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING = new AdvancedAutoCraftingCrafter(
+            ExpansionItemsMenus.MENU_FUNCTIONAL_MACHINE,
+            ExpansionItemStacks.ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING,
+            ExpansionWorkbench.TYPE,
+            ExpansionRecipes.ADVANCED_AUTO_CRAFTING_TABLE_WITHHOLDING,
             12800,
             true
     );

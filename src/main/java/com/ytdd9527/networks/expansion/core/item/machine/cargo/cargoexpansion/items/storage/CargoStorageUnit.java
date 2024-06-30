@@ -24,11 +24,7 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -39,11 +35,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CargoStorageUnit extends AbstractMySlimefunItem {
 
@@ -200,8 +192,10 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                     storages.put(l, data);
                 }
 
+                StorageUnitData cache = storages.get(l);
                 BlockMenu menu = StorageCacheUtils.getMenu(l);
                 if (menu != null) {
+                    update(l, new CargoReceipt(id, 0, 0, cache.getTotalAmount(), cache.getStoredTypeCount(), cache.getSizeType()), true);
                     // 如果存在菜单，添加点击事件
                     addClickHandler(l);
                 }
@@ -340,7 +334,26 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
     }
 
     private static ItemStack getDisplayItem(ItemStack item, int amount, int max) {
-        return new CustomItemStack(item, (String)null, "", "&b存储数量: &e"+amount+" &7/ &6"+max);
+        ItemStack clone = item.clone();
+        if (!clone.hasItemMeta()) {
+            clone.setItemMeta(Bukkit.getItemFactory().getItemMeta(clone.getType()));
+        }
+        ItemMeta meta = clone.getItemMeta();
+        if (meta == null) {
+            clone.setItemMeta(Bukkit.getItemFactory().getItemMeta(clone.getType()));
+        }
+        if (!meta.hasLore()) {
+            meta.setLore(new ArrayList<>());
+        }
+        List<String> lore = meta.getLore();
+        if (lore == null) {
+            lore = new ArrayList<>();
+        }
+        lore.add("");
+        lore.add(ChatColor.BLUE+"存储数量: "+ChatColor.YELLOW+amount +ChatColor.GRAY+"/ "+ChatColor.GOLD+max);
+        meta.setLore(lore);
+        clone.setItemMeta(meta);
+        return clone;
     }
 
     private void requestData(Location l, int id) {
