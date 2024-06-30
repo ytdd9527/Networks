@@ -5,6 +5,7 @@ import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.data.DataStorage;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.objects.ItemContainer;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
+import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import org.bukkit.Bukkit;
@@ -70,9 +71,11 @@ public class StorageUnitData {
             if(each.isSimilar(wrapper)) {
                 // Found existing one, add amount
                 if (isVoidExcess) {
-                    add = amount;
-                    each.setAmount(sizeType.getEachMaxSize());
-                    DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
+                    add = Math.min(amount, sizeType.getEachMaxSize() - each.getAmount());
+                    if (add > 0) {
+                        each.addAmount(add);
+                        DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
+                    }
                     return add;
                 } else {
                     add = Math.min(amount, sizeType.getEachMaxSize() - each.getAmount());
@@ -192,8 +195,15 @@ public class StorageUnitData {
 
         int amount = itemRequest.getAmount();
         for (ItemContainer itemContainer: getStoredItems()) {
+            int containerAmount = itemContainer.getAmount();
             if (StackUtils.itemsMatch(itemContainer.getSample(), item)) {
-                int take = Math.min(amount, itemContainer.getAmount());
+                if (StorageCacheUtils.getData(getLastLocation(), "locked") != null) {
+                    containerAmount--;
+                }
+                int take = Math.min(amount, containerAmount);
+                if (take <= 0) {
+                    break;
+                }
                 itemContainer.removeAmount(take);
                 DataStorage.setStoredAmount(id, itemContainer.getId(), itemContainer.getAmount());
                 ItemStack clone = item.clone();
@@ -213,9 +223,13 @@ public class StorageUnitData {
     }
 
     public void depositItemStack(ItemStack itemsToDeposit, boolean contentLocked) {
+        if (itemsToDeposit == null || NetworkQuantumStorage.isBlacklisted(itemsToDeposit)) {
+            return;
+        }
         int actualAdded = addStoredItem(itemsToDeposit, contentLocked);
         itemsToDeposit.setAmount(itemsToDeposit.getAmount() - actualAdded);
         CargoReceipt receipt = new CargoReceipt(this.id, actualAdded, 0, this.getTotalAmount(), this.getStoredTypeCount(), this.sizeType);
         CargoStorageUnit.putRecord(getLastLocation(), receipt);
     }
+
 }
