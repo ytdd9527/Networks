@@ -606,7 +606,8 @@ public class NetworkQuantumStorage extends AbstractMySlimefunItem implements Dis
     public static boolean isBlacklisted(@Nonnull ItemStack itemStack) {
         return itemStack.getType() == Material.AIR
             || itemStack.getType().getMaxDurability() < 0
-            || Tag.SHULKER_BOXES.isTagged(itemStack.getType());
+            || Tag.SHULKER_BOXES.isTagged(itemStack.getType())
+            || itemStack.getType() == Material.BUNDLE;
     }
 
     @ParametersAreNonnullByDefault

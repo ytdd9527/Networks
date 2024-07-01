@@ -157,6 +157,7 @@ public class NetworksMain implements TabExecutor {
                 }
                 return true;
             }
+
         } else {
             // 非玩家执行命令时的检测
         }
@@ -328,10 +329,11 @@ public class NetworksMain implements TabExecutor {
             return;
         }
 
-        Location targetLocation = targetBlock.getLocation();
-        ItemStack clone = itemInHand.clone();
         if (slimefunItem instanceof CargoStorageUnit) {
+            Location targetLocation = targetBlock.getLocation();
+            ItemStack clone = itemInHand.clone();
             StorageUnitData data = CargoStorageUnit.getStorageData(targetLocation);
+
             if (data == null) {
                 player.sendMessage(Theme.ERROR + "该存储单元不存在或已损坏!");
                 return;
@@ -339,7 +341,9 @@ public class NetworksMain implements TabExecutor {
 
             clone.setAmount(amount);
             data.depositItemStack(clone, false);
-
+        } else {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
         }
     }
 
@@ -368,10 +372,11 @@ public class NetworksMain implements TabExecutor {
             return;
         }
 
-        Location targetLocation = targetBlock.getLocation();
-        ItemStack clone = itemInHand.clone();
         if (slimefunItem instanceof CargoStorageUnit) {
+            Location targetLocation = targetBlock.getLocation();
+            ItemStack clone = itemInHand.clone();
             StorageUnitData data = CargoStorageUnit.getStorageData(targetLocation);
+
             if (data == null) {
                 player.sendMessage(Theme.ERROR + "该存储单元不存在或已损坏!");
                 return;
@@ -379,7 +384,9 @@ public class NetworksMain implements TabExecutor {
 
             clone.setAmount(1);
             data.requestItem(new ItemRequest(clone, amount));
-
+        } else {
+            player.sendMessage(ChatColor.RED + "你必须指着一个货运存储才能执行该指令!");
+            return;
         }
     }
 
@@ -392,7 +399,14 @@ public class NetworksMain implements TabExecutor {
 
     public @NotNull List<String> onTabCompleteRaw(@NotNull String[] args) {
         if (args.length == 1) {
-            return List.of("fillquantum", "fixblueprint", "restore");
+            return List.of(
+                    "fillquantum",
+                    "fixblueprint",
+                    "restore",
+                    "addstorageitem",
+                    "reducestorageitem",
+                    "setquantum"
+            );
         } else if (args.length == 2) {
             return switch (args[0]) {
                 case "fillquantum" -> List.of("<amount>");

@@ -7,6 +7,7 @@ import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.ob
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.util.CargoExpansionItemUtils;
 import io.github.sefiraat.networks.Networks;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import lombok.extern.java.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -108,6 +109,7 @@ public class DataSource {
     }
 
     int getItemId(ItemStack item) {
+        ItemStack clone = item.clone();
         ItemStackWrapper wrapper = ItemStackWrapper.wrap(item);
         for (Map.Entry<Integer, ItemStack> each : itemMap.entrySet()) {
             if (CargoExpansionItemUtils.isItemSimilar(each.getValue(), wrapper)) {
@@ -129,7 +131,7 @@ public class DataSource {
                 stat.execute(sql);
 
                 // Save item map
-                stat.execute("INSERT INTO " + DataTables.ITEM_STACK + " VALUES (" + re + ",'" + getBase64String(item) + "');");
+                stat.execute("INSERT INTO " + DataTables.ITEM_STACK + " VALUES (" + re + ",'" + getBase64String(clone) + "');");
                 return true;
             } catch (SQLException | IOException e) {
                 logger.warning("物品更新发生异常：");
@@ -311,6 +313,7 @@ public class DataSource {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         BukkitObjectOutputStream bs = new BukkitObjectOutputStream(stream);
         bs.writeObject(item);
+
         bs.close();
         return Base64Coder.encodeLines(stream.toByteArray());
     }
