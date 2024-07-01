@@ -24,6 +24,7 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import net.guizhanss.guizhanlib.minecraft.helper.inventory.ItemStackHelper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -36,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class CargoStorageUnit extends AbstractMySlimefunItem {
 
@@ -334,35 +336,23 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
     }
 
     private static ItemStack getDisplayItem(ItemStack item, int amount, int max) {
-        ItemStack clone = item.clone();
-        if (!clone.hasItemMeta()) {
-            clone.setItemMeta(Bukkit.getItemFactory().getItemMeta(clone.getType()));
-        }
-        ItemMeta meta = clone.getItemMeta();
-        if (meta == null) {
-            clone.setItemMeta(Bukkit.getItemFactory().getItemMeta(clone.getType()));
-        }
-        if (!meta.hasLore()) {
-            meta.setLore(new ArrayList<>());
-        }
-        List<String> lore = meta.getLore();
-        if (lore == null) {
-            lore = new ArrayList<>();
-        }
+        CustomItemStack itemStack = new CustomItemStack(item);
+        List<String> lore = itemStack.hasItemMeta() ? itemStack.getItemMeta().hasLore() ? itemStack.getItemMeta().getLore() : new ArrayList<>() : new ArrayList<>();
         lore.add("");
-        lore.add(ChatColor.BLUE+"存储数量: "+ChatColor.YELLOW+amount +ChatColor.GRAY+"/ "+ChatColor.GOLD+max);
-        meta.setLore(lore);
-        clone.setItemMeta(meta);
-        return clone;
+        lore.add("&b存储数量: &e"+amount+" &7/ &6"+max);
+        return new CustomItemStack(item, ItemStackHelper.getDisplayName(item), lore.toArray(new String[0]));
     }
 
-    private void requestData(Location l, int id) {
+    public static void requestData(Location l, int id) {
+        Logger logger = Networks.getInstance().getLogger();
+        logger.info("Requesting data for container " + id + " at " + l.toString());
         if (id == -1) return;
         if (DataStorage.isContainerLoaded(id)) {
             DataStorage.getCachedStorageData(id).ifPresent(data -> storages.put(l,data));
         } else {
             DataStorage.requestStorageData(id);
         }
+        logger.info("Done.");
         addClickHandler(l);
     }
 

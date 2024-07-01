@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 public class NetworkRoot extends NetworkNode {
 
@@ -454,6 +455,8 @@ public class NetworkRoot extends NetworkNode {
 
     @Nonnull
     public Set<StorageUnitData> getCargoStorageUnits() {
+        Logger logger = Networks.getInstance().getLogger();
+        logger.info("@NetworkRoot: getCargoStorageUnits()");
         if (this.cargoStorageUnits != null) {
             return this.cargoStorageUnits;
         }
@@ -473,19 +476,34 @@ public class NetworkRoot extends NetworkNode {
             if (addedLocations.contains(testLocation)) {
                 continue;
             } else {
+                logger.info("Found new location: " + testLocation.toString());
                 addedLocations.add(testLocation);
             }
 
             final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(testLocation);
 
             if (slimefunItem instanceof CargoStorageUnit) {
+                logger.info("Found CargoStorageUnit at: " + testLocation.toString());
                 final BlockMenu menu = StorageCacheUtils.getMenu(testLocation);
                 if (menu != null) {
+                    logger.info("Found CargoStorageUnit menu at: " + testLocation.toString());
                     final StorageUnitData storage = getCargoStorageUnitData(menu);
                     if (storage != null) {
+                        logger.info("Found CargoStorageUnit data at: " + testLocation.toString());
                         unitSet.add(storage);
+                    } else {
+                        logger.info("CargoStorageUnit data is null at: " + testLocation.toString());
+                        Integer id = Integer.parseInt(StorageCacheUtils.getData(testLocation, "containerId"));
+                        if (id != null) {
+                            logger.info("Try request data for CargoStorageUnit at: " + testLocation.toString());
+                            CargoStorageUnit.requestData(testLocation, id);
+                        }
                     }
+                } else {
+                    logger.info("CargoStorageUnit menu is null at: " + testLocation.toString());
                 }
+            } else {
+                logger.info("Not a CargoStorageUnit at: " + testLocation.toString());
             }
         }
 
@@ -1030,37 +1048,45 @@ public class NetworkRoot extends NetworkNode {
         BlockMenu fallbackBlockMenu = null;
         int fallBackSlot = 0;
         for (BlockMenu menu : getAdvancedGreedyBlocks()) {
-            for (int slot : AdvancedGreedyBlock.INPUT_SLOTS) {
-                final ItemStack itemStack = menu.getItemInSlot(slot);
-                // If this is an empty slot - move on, if it's our first, store it for later.
-                if (itemStack == null || itemStack.getType().isAir()) {
-                    if (fallbackBlockMenu == null) {
-                        fallbackBlockMenu = menu;
-                        fallBackSlot = slot;
+            if (StackUtils.itemsMatch(menu.getItemInSlot(AdvancedGreedyBlock.TEMPLATE_SLOT), incoming)) {
+                for (int slot : AdvancedGreedyBlock.INPUT_SLOTS) {
+                    final ItemStack itemStack = menu.getItemInSlot(slot);
+                    // If this is an empty slot - move on, if it's our first, store it for later.
+                    if (itemStack == null || itemStack.getType().isAir()) {
+                        if (fallbackBlockMenu == null) {
+                            fallbackBlockMenu = menu;
+                            fallBackSlot = slot;
+                        }
+                        continue;
                     }
-                    continue;
+
+                    final int itemStackAmount = itemStack.getAmount();
+                    final int incomingStackAmount = incoming.getAmount();
+
+                    if (itemStackAmount < itemStack.getMaxStackSize() && StackUtils.itemsMatch(incoming, itemStack)) {
+                        final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
+                        final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
+
+                        itemStack.setAmount(itemStackAmount + amountToAdd);
+                        incoming.setAmount(incomingStackAmount - amountToAdd);
+
+                        // Mark dirty otherwise changes will not save
+                        menu.markDirty();
+
+                        // All distributed, can escape
+                        if (incomingStackAmount == 0) {
+                            return;
+                        }
+                    }
                 }
 
-                final int itemStackAmount = itemStack.getAmount();
-                final int incomingStackAmount = incoming.getAmount();
-
-                if (itemStackAmount < itemStack.getMaxStackSize() && StackUtils.itemsMatch(incoming, itemStack)) {
-                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
-                    final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
-
-                    itemStack.setAmount(itemStackAmount + amountToAdd);
-                    incoming.setAmount(incomingStackAmount - amountToAdd);
-
-                    // Mark dirty otherwise changes will not save
-                    menu.markDirty();
-
-                    // All distributed, can escape
-                    if (incomingStackAmount == 0) {
-                        return;
-                    }
-                }
+                return;
             }
-            return;
+        }
+
+        if (fallbackBlockMenu != null) {
+            fallbackBlockMenu.replaceExistingItem(fallBackSlot, incoming.clone());
+            incoming.setAmount(0);
         }
 
         // Run for matching greedy blocks

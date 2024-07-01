@@ -586,7 +586,10 @@ public abstract class AdvancedDirectional extends NetworkDirectional {
 
         BlockMenu blockMenu = StorageCacheUtils.getMenu(block.getLocation());
         if (blockMenu != null) {
-            blockMenu.replaceExistingItem(getTransportModeSlot(), this.transportModeIconClone);
+            int slot = getTransportModeSlot();
+            if (slot != -1) {
+                blockMenu.replaceExistingItem(slot, this.transportModeIconClone);
+            }
         }
     }
     public String toText(String mode) {
