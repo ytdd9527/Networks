@@ -1,6 +1,7 @@
 package com.ytdd9527.networks.expansion.core.item.machine.autocrafter.advanced;
 
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.items.storage.CargoStorageUnit;
 import com.ytdd9527.networks.expansion.setup.ExpansionItems;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.network.NetworkRoot;
@@ -190,18 +191,30 @@ public class AdvancedAutoCraftingCrafter extends NetworkObject {
         final ItemStack[] inputs = new ItemStack[9];
         final ItemStack[] actualFetches = new ItemStack[9];
 
+
         /* Make sure the network has the required items
          * Needs to be revisited as matching is happening stacks 2x when I should
          * only need the one
          */
+        Location storageLocation = blockMenu.getLocation();
+        boolean isRetainMode = CargoStorageUnit.isLocked(storageLocation);
         HashMap<ItemStack, Integer> requiredItems = new HashMap<>();
+
         for (int i = 0; i < 9; i++) {
             final ItemStack requested = instance.getRecipeItems()[i];
             if (requested != null) {
                 requiredItems.merge(requested, requested.getAmount()*blueprintAmount, Integer::sum);
             }
         }
-
+        for (ItemStack requested : instance.getRecipeItems()) {
+            if (requested != null) {
+                int requiredAmount = requested.getAmount() * blueprintAmount;
+                if (isRetainMode && requiredAmount > 1) {
+                    requiredAmount = Math.max(1, requiredAmount - 1);
+                }
+                requiredItems.put(requested, requiredAmount);
+            }
+        }
         for (Map.Entry<ItemStack, Integer> entry : requiredItems.entrySet()) {
             if (!root.contains(new ItemRequest(entry.getKey(), entry.getValue()))) {
                 return false;
