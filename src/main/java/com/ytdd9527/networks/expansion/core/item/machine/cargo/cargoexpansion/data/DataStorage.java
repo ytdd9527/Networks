@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 public class DataStorage {
 
@@ -25,6 +26,8 @@ public class DataStorage {
 
     public static void requestStorageData(int id) {
         // First check if loading or already loaded
+        Logger logger = Networks.getInstance().getLogger();
+        logger.info("state has key? " + state.containsKey(id));
         if (!state.containsKey(id)) {
             Networks.getQueryQueue().scheduleQuery(() -> {
                 loadContainer(id);

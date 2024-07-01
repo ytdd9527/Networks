@@ -493,6 +493,11 @@ public class NetworkRoot extends NetworkNode {
                         unitSet.add(storage);
                     } else {
                         logger.info("CargoStorageUnit data is null at: " + testLocation.toString());
+                        Integer id = Integer.parseInt(StorageCacheUtils.getData(testLocation, "containerId"));
+                        if (id != null) {
+                            logger.info("Try request data for CargoStorageUnit at: " + testLocation.toString());
+                            CargoStorageUnit.requestData(testLocation, id);
+                        }
                     }
                 } else {
                     logger.info("CargoStorageUnit menu is null at: " + testLocation.toString());
@@ -1043,38 +1048,45 @@ public class NetworkRoot extends NetworkNode {
         BlockMenu fallbackBlockMenu = null;
         int fallBackSlot = 0;
         for (BlockMenu menu : getAdvancedGreedyBlocks()) {
-            for (int slot : AdvancedGreedyBlock.INPUT_SLOTS) {
-                final ItemStack itemStack = menu.getItemInSlot(slot);
-                // If this is an empty slot - move on, if it's our first, store it for later.
-                if (itemStack == null || itemStack.getType().isAir()) {
-                    if (fallbackBlockMenu == null) {
-                        fallbackBlockMenu = menu;
-                        fallBackSlot = slot;
+            if (StackUtils.itemsMatch(menu.getItemInSlot(AdvancedGreedyBlock.TEMPLATE_SLOT), incoming)) {
+                for (int slot : AdvancedGreedyBlock.INPUT_SLOTS) {
+                    final ItemStack itemStack = menu.getItemInSlot(slot);
+                    // If this is an empty slot - move on, if it's our first, store it for later.
+                    if (itemStack == null || itemStack.getType().isAir()) {
+                        if (fallbackBlockMenu == null) {
+                            fallbackBlockMenu = menu;
+                            fallBackSlot = slot;
+                        }
+                        continue;
                     }
-                    continue;
-                }
 
-                final int itemStackAmount = itemStack.getAmount();
-                final int incomingStackAmount = incoming.getAmount();
+                    final int itemStackAmount = itemStack.getAmount();
+                    final int incomingStackAmount = incoming.getAmount();
 
-                if (itemStackAmount < itemStack.getMaxStackSize() && StackUtils.itemsMatch(incoming, itemStack)) {
-                    final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
-                    final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
+                    if (itemStackAmount < itemStack.getMaxStackSize() && StackUtils.itemsMatch(incoming, itemStack)) {
+                        final int maxCanAdd = itemStack.getMaxStackSize() - itemStackAmount;
+                        final int amountToAdd = Math.min(maxCanAdd, incomingStackAmount);
 
-                    itemStack.setAmount(itemStackAmount + amountToAdd);
-                    incoming.setAmount(incomingStackAmount - amountToAdd);
+                        itemStack.setAmount(itemStackAmount + amountToAdd);
+                        incoming.setAmount(incomingStackAmount - amountToAdd);
 
-                    // Mark dirty otherwise changes will not save
-                    menu.markDirty();
+                        // Mark dirty otherwise changes will not save
+                        menu.markDirty();
 
-                    // All distributed, can escape
-                    if (incomingStackAmount == 0) {
-                        return;
+                        // All distributed, can escape
+                        if (incomingStackAmount == 0) {
+                            return;
+                        }
                     }
                 }
 
                 return;
             }
+        }
+
+        if (fallbackBlockMenu != null) {
+            fallbackBlockMenu.replaceExistingItem(fallBackSlot, incoming.clone());
+            incoming.setAmount(0);
         }
 
         // Run for matching greedy blocks
