@@ -40,7 +40,7 @@ public class StorageUnitUpgradeTable extends AbstractMySlimefunItem {
             ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
 
-        new BlockMenuPreset(getId(), "&6货运存储单元升级台") {
+        new BlockMenuPreset(this.getId(), this.getItemName()) {
 
             @Override
             public void init() {

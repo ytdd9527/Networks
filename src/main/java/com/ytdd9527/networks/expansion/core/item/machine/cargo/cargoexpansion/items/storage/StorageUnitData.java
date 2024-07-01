@@ -71,9 +71,11 @@ public class StorageUnitData {
             if(each.isSimilar(wrapper)) {
                 // Found existing one, add amount
                 if (isVoidExcess) {
-                    add = amount;
-                    each.setAmount(sizeType.getEachMaxSize());
-                    DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
+                    add = Math.min(amount, sizeType.getEachMaxSize() - each.getAmount());
+                    if (add > 0) {
+                        each.addAmount(add);
+                        DataStorage.setStoredAmount(id, each.getId(), each.getAmount());
+                    }
                     return add;
                 } else {
                     add = Math.min(amount, sizeType.getEachMaxSize() - each.getAmount());
@@ -229,4 +231,5 @@ public class StorageUnitData {
         CargoReceipt receipt = new CargoReceipt(this.id, actualAdded, 0, this.getTotalAmount(), this.getStoredTypeCount(), this.sizeType);
         CargoStorageUnit.putRecord(getLastLocation(), receipt);
     }
+
 }
