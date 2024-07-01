@@ -636,7 +636,7 @@ public class ExpansionItems {
     );
     public static final CargoStorageUnit CARGO_STORAGE_UNIT_12 = new CargoStorageUnit(
             ExpansionItemsMenus.MENU_CARGO_SYSTEM,
-            ExpansionItemStacks.CARGO_STORAGE_UNIT_11,
+            ExpansionItemStacks.CARGO_STORAGE_UNIT_12,
             STORAGE_UPGRADE_TABLE,
             ExpansionRecipes.CARGO_STORAGE_UNIT_12,
             StorageUnitType.END_GAME_ADVANCED
