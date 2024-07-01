@@ -7,6 +7,7 @@ import com.ytdd9527.networks.expansion.core.item.AbstractMySlimefunItem;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.data.DataStorage;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.objects.ItemContainer;
 import io.github.sefiraat.networks.Networks;
+import io.github.sefiraat.networks.network.NetworkRoot;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -33,11 +34,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class CargoStorageUnit extends AbstractMySlimefunItem {
 
@@ -245,44 +247,57 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
             }
 
             @Override
-            public void tick(Block b, SlimefunItem item, Config conf) {
-                Location l = b.getLocation();
-                StorageUnitData data = storages.get(l);
-                if (data == null) {
-                    requestData(l, getContainerId(l));
-                    return;
-                }
-                for (ItemContainer each : data.getStoredItems()) {
-                    if (each.getAmount() == 0) {
-                        data.removeItem(each.getId());
-                    }
-                }
-                BlockMenu menu = StorageCacheUtils.getMenu(l);
-                if (!l.equals(data.getLastLocation())) {
-                    ItemStack itemInBorder = menu.getItemInSlot(0);
-                    if (data.isPlaced() && itemInBorder != null) {
-                        menu.replaceExistingItem(storageInfoSlot, getLocationErrorItem(data.getId(), data.getLastLocation()));
-
-                        for (int slot : border) {
-                            menu.replaceExistingItem(slot, errorBorder);
-                        }
-                        return;
-                    }
-                    // Not placed, update state
-                    data.setPlaced(true);
-                    data.setLastLocation(l);
-                }
-                if(menu.hasViewer()) {
-                    // Update display item
-                    CargoReceipt receipt = cargoRecords.get(l);
-                    if(receipt != null) {
-                        CargoStorageUnit.update(l, receipt, true);
-                    } else {
-                        CargoStorageUnit.update(l, new CargoReceipt(data.getId(), 0, 0, data.getTotalAmount(), data.getStoredTypeCount(), data.getSizeType()), true);
-                    }
-                }
+            public void tick(Block block, SlimefunItem item, Config conf) {
+                onTick(block);
             }
         });
+    }
+
+    private void performTickOperationAsync(@Nonnull Block block) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                onTick(block);
+            }
+        }.runTaskAsynchronously(Networks.getInstance());
+    }
+
+    private void onTick(@Nonnull Block block) {
+        Location l = block.getLocation();
+        StorageUnitData data = storages.get(l);
+        if (data == null) {
+            requestData(l, getContainerId(l));
+            return;
+        }
+        for (ItemContainer each : data.getStoredItems()) {
+            if (each.getAmount() == 0) {
+                data.removeItem(each.getId());
+            }
+        }
+        BlockMenu menu = StorageCacheUtils.getMenu(l);
+        if (!l.equals(data.getLastLocation())) {
+            ItemStack itemInBorder = menu.getItemInSlot(0);
+            if (data.isPlaced() && itemInBorder != null) {
+                menu.replaceExistingItem(storageInfoSlot, getLocationErrorItem(data.getId(), data.getLastLocation()));
+
+                for (int slot : border) {
+                    menu.replaceExistingItem(slot, errorBorder);
+                }
+                return;
+            }
+            // Not placed, update state
+            data.setPlaced(true);
+            data.setLastLocation(l);
+        }
+        if(menu.hasViewer()) {
+            // Update display item
+            CargoReceipt receipt = cargoRecords.get(l);
+            if(receipt != null) {
+                CargoStorageUnit.update(l, receipt, false);
+            } else {
+                CargoStorageUnit.update(l, new CargoReceipt(data.getId(), 0, 0, data.getTotalAmount(), data.getStoredTypeCount(), data.getSizeType()), false);
+            }
+        }
     }
 
     public static boolean canAddMoreType(Location l, ItemStack itemStack) {
@@ -336,23 +351,29 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
     }
 
     private static ItemStack getDisplayItem(ItemStack item, int amount, int max) {
-        CustomItemStack itemStack = new CustomItemStack(item);
-        List<String> lore = itemStack.hasItemMeta() ? itemStack.getItemMeta().hasLore() ? itemStack.getItemMeta().getLore() : new ArrayList<>() : new ArrayList<>();
-        lore.add("");
-        lore.add("&b存储数量: &e"+amount+" &7/ &6"+max);
-        return new CustomItemStack(item, ItemStackHelper.getDisplayName(item), lore.toArray(new String[0]));
+        if (item == null) {
+            return errorBorder;
+        }
+        try {
+            return new CustomItemStack(item, (String) null, "", "&b存储数量: &e" + amount + " &7/ &6" + max);
+        } catch (NullPointerException e) {
+            return item.clone();
+        }
     }
 
     public static void requestData(Location l, int id) {
-        Logger logger = Networks.getInstance().getLogger();
-        logger.info("Requesting data for container " + id + " at " + l.toString());
         if (id == -1) return;
         if (DataStorage.isContainerLoaded(id)) {
-            DataStorage.getCachedStorageData(id).ifPresent(data -> storages.put(l,data));
+            DataStorage.getCachedStorageData(id).ifPresent(data -> {
+                if (data != null) {
+                    storages.put(l, data);
+                } else {
+                    DataStorage.requestStorageData(id);
+                }
+            });
         } else {
             DataStorage.requestStorageData(id);
         }
-        logger.info("Done.");
         addClickHandler(l);
     }
 
@@ -389,15 +410,20 @@ public class CargoStorageUnit extends AbstractMySlimefunItem {
                     }
 
                     // 获取实际物品
-                    ItemStack clone = clickItem.clone();
-                    ItemMeta meta = clone.getItemMeta();
-                    List<String> lore = meta.getLore();
-                    lore.remove(lore.size()-1);
-                    lore.remove(lore.size()-1);
-                    meta.setLore(lore);
-                    clone.setItemMeta(meta);
+                    int index = -1;
+                    for (int i = 0; i < displaySlots.length; i++) {
+                        if (displaySlots[i] == slot) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == -1) {
+                        return false;
+                    }
+                    ItemStack clone = storages.get(l).getStoredItems().get(index).getSample().clone();
 
 
+                    camount = Math.min(camount, clone.getMaxStackSize());
                     if (action.isShiftClicked()) {
                         // 如果Shift，加到背包里
 

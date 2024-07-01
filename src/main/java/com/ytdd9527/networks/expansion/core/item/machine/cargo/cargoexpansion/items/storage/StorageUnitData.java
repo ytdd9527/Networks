@@ -5,22 +5,19 @@ import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.data.DataStorage;
 import com.ytdd9527.networks.expansion.core.item.machine.cargo.cargoexpansion.objects.ItemContainer;
 import io.github.sefiraat.networks.network.stackcaches.ItemRequest;
-import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.StackUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class StorageUnitData {
 
@@ -222,8 +219,15 @@ public class StorageUnitData {
         }
     }
 
+    public static boolean isBlacklisted(@Nonnull ItemStack itemStack) {
+        return itemStack.getType() == Material.AIR
+                || itemStack.getType().getMaxDurability() < 0
+                || Tag.SHULKER_BOXES.isTagged(itemStack.getType())
+                || itemStack.getType() == Material.BUNDLE;
+    }
+
     public void depositItemStack(ItemStack itemsToDeposit, boolean contentLocked) {
-        if (itemsToDeposit == null || NetworkQuantumStorage.isBlacklisted(itemsToDeposit)) {
+        if (itemsToDeposit == null || isBlacklisted(itemsToDeposit)) {
             return;
         }
         int actualAdded = addStoredItem(itemsToDeposit, contentLocked);
@@ -232,4 +236,14 @@ public class StorageUnitData {
         CargoStorageUnit.putRecord(getLastLocation(), receipt);
     }
 
+    public String toString() {
+        return "StorageUnitData{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", storedItems=" + storedItems +
+                ", isPlaced=" + isPlaced +
+                ", sizeType=" + sizeType +
+                ", lastLocation=" + lastLocation +
+                '}';
+    }
 }

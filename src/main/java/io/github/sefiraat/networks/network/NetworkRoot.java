@@ -30,7 +30,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
 
 public class NetworkRoot extends NetworkNode {
 
@@ -455,8 +454,6 @@ public class NetworkRoot extends NetworkNode {
 
     @Nonnull
     public Set<StorageUnitData> getCargoStorageUnits() {
-        Logger logger = Networks.getInstance().getLogger();
-        logger.info("@NetworkRoot: getCargoStorageUnits()");
         if (this.cargoStorageUnits != null) {
             return this.cargoStorageUnits;
         }
@@ -476,34 +473,19 @@ public class NetworkRoot extends NetworkNode {
             if (addedLocations.contains(testLocation)) {
                 continue;
             } else {
-                logger.info("Found new location: " + testLocation.toString());
                 addedLocations.add(testLocation);
             }
 
             final SlimefunItem slimefunItem = StorageCacheUtils.getSfItem(testLocation);
 
             if (slimefunItem instanceof CargoStorageUnit) {
-                logger.info("Found CargoStorageUnit at: " + testLocation.toString());
                 final BlockMenu menu = StorageCacheUtils.getMenu(testLocation);
                 if (menu != null) {
-                    logger.info("Found CargoStorageUnit menu at: " + testLocation.toString());
                     final StorageUnitData storage = getCargoStorageUnitData(menu);
                     if (storage != null) {
-                        logger.info("Found CargoStorageUnit data at: " + testLocation.toString());
                         unitSet.add(storage);
-                    } else {
-                        logger.info("CargoStorageUnit data is null at: " + testLocation.toString());
-                        Integer id = Integer.parseInt(StorageCacheUtils.getData(testLocation, "containerId"));
-                        if (id != null) {
-                            logger.info("Try request data for CargoStorageUnit at: " + testLocation.toString());
-                            CargoStorageUnit.requestData(testLocation, id);
-                        }
                     }
-                } else {
-                    logger.info("CargoStorageUnit menu is null at: " + testLocation.toString());
                 }
-            } else {
-                logger.info("Not a CargoStorageUnit at: " + testLocation.toString());
             }
         }
 
@@ -1080,13 +1062,13 @@ public class NetworkRoot extends NetworkNode {
                     }
                 }
 
+                if (fallbackBlockMenu != null) {
+                    fallbackBlockMenu.replaceExistingItem(fallBackSlot, incoming.clone());
+                    incoming.setAmount(0);
+                }
+
                 return;
             }
-        }
-
-        if (fallbackBlockMenu != null) {
-            fallbackBlockMenu.replaceExistingItem(fallBackSlot, incoming.clone());
-            incoming.setAmount(0);
         }
 
         // Run for matching greedy blocks
